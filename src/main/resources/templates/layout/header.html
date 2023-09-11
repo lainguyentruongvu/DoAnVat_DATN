@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<!-- Header -->
+	<header class="header shop">
+		<!-- Topbar -->
+
+		<!-- End Topbar -->
+		<div class="middle-inner">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 col-md-2 col-12">
+						<!-- Logo -->
+						<div class="logo">
+							<a href="/"><img src="../../images/logo_noback.png" width="120px"></a>
+						</div>
+						<!--/ End Logo -->
+						<!-- Search Form -->
+						<div class="search-top">
+							<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
+							<!-- Search Form -->
+							<div class="search-top">
+								<form class="search-form">
+									<input type="text" placeholder="Search here..." name="search">
+									<button value="search" type="submit"><i class="ti-search"></i></button>
+								</form>
+							</div>
+							<!--/ End Search Form -->
+						</div>
+						<!--/ End Search Form -->
+						<div class="mobile-nav"></div>
+					</div>
+					<div class="col-lg-8 col-md-7 col-12">
+						<div class="search-bar-top">
+							<div class="search-bar ">
+								<form>
+									<input name="search" placeholder="Tìm kiếm sản phẩm..." type="search">
+									<button class="btnn"><i class="ti-search"></i></button>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-2 col-md-3 col-12">
+						<div class="right-bar">
+							<!-- Search Form -->
+							<div class="sinlge-bar">
+								<a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+							</div>
+							
+							<!-- Icon User -->
+							<div class="sinlge-bar shopping">
+								<th:block th:unless="${#request.remoteUser}">
+									<a href="#" class="single-icon"><i class="fa fa-user-circle-o"
+											aria-hidden="true"></i></a>
+								</th:block>
+								
+								<a th:if="${#request.remoteUser}">[[${#request.remoteUser}]]</a>	
+										
+								
+								<div class="shopping-item">
+									<ul class="">
+									<!-- Phan quyen tai khoan -->
+										<th:block th:unless="${#request.remoteUser}">
+											<li>
+												<a th:href="@{/auth/login/form}">Đăng nhập</a>
+											</li>
+											<li>
+												<a th:href="@{/auth/register}">Đăng ký</a>
+											</li>
+											<li>
+												<a th:href="@{/auth/forgot-password}">Quên mật khẩu</a>
+											</li>
+										</th:block>
+										<th:block th:if="${#request.remoteUser}">
+											<li th:if="${#request.isUserInRole('Dire') or #request.isUserInRole('STAF')}">
+												<a th:href="@{/admin}">Công cụ quản trị</a>
+											</li>
+											<li>
+												<a th:href="@{/order/list}">Đơn mua</a>
+											</li>
+											<li>
+												<a th:href="@{/auth/change-password}">Đổi mật khẩu</a>
+											</li>
+											<li>
+												<a th:href="@{/auth/logout}">Đăng xuất</a>
+											</li>
+										</th:block>
+										<!-- Ket thuc phan quyen tai khoan -->
+									
+							
+									</ul>
+								</div>
+							
+							</div>
+							<!-- Icon User -->
+							
+							<div class="sinlge-bar shopping">
+								<a href="cart" class="single-icon"><i class="ti-bag"></i> <span
+										class="total-count">2</span></a>
+								<!-- Shopping Item -->
+								<div class="shopping-item">
+									<div class="dropdown-cart-header">
+										<span>2 Items</span>
+										<a href="#">View Cart</a>
+									</div>
+									<ul class="shopping-list">
+										<li>
+											<a href="#" class="remove" title="Remove this item"><i
+													class="fa fa-remove"></i></a>
+											<a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70"
+													alt="#"></a>
+											<h4><a href="#">Woman Ring</a></h4>
+											<p class="quantity">1x - <span class="amount">$99.00</span></p>
+										</li>
+										<li>
+											<a href="#" class="remove" title="Remove this item"><i
+													class="fa fa-remove"></i></a>
+											<a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70"
+													alt="#"></a>
+											<h4><a href="#">Woman Necklace</a></h4>
+											<p class="quantity">1x - <span class="amount">$35.00</span></p>
+										</li>
+									</ul>
+									<div class="bottom">
+										<div class="total">
+											<span>Total</span>
+											<span class="total-amount">$134.00</span>
+										</div>
+										<a href="checkout.html" class="btn animate">Checkout</a>
+									</div>
+								</div>
+								<!--/ End Shopping Item -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Header Inner -->
+		<div class="header-inner">
+			<div class="container">
+				<div class="cat-nav-head">
+					<div class="row">
+						<div class="col-lg-3">
+							<div class="all-category">
+								<h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="true"></i>CATEGORIES</h3>
+								<ul class="main-category">
+									<li><a href="#">accessories</a></li>
+									<li><a href="#">top 100 offer</a></li>
+									<li><a href="#">sunglass</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-9 col-12">
+							<div class="menu-area">
+								<!-- Main Menu -->
+								<nav class="navbar navbar-expand-lg">
+									<div class="navbar-collapse">
+										<div class="nav-inner">
+											<ul class="nav main-menu menu navbar-nav">
+												<li class="active"><a href="#">Trang chủ</a></li>
+												<li><a href="#">Sản phẩm</a></li>
+												<li><a href="#">Dịch vụ</a></li>
+												<li><a href="#">Cửa hàng<i class="ti-angle-down"></i><span
+															class="new">New</span></a>
+													<ul class="dropdown">
+														<li><a href="shop-grid.html">Shop Grid</a></li>
+														<li><a href="cart.html">Cart</a></li>
+														<li><a href="checkout.html">Checkout</a></li>
+													</ul>
+												</li>
+												<li><a href="#">Pages</a></li>
+												<li><a href="#">Blog<i class="ti-angle-down"></i></a>
+													<ul class="dropdown">
+														<li><a href="blog-single-sidebar.html">Blog Single Sidebar</a>
+														</li>
+													</ul>
+												</li>
+												<li><a href="/contact">Contact Us</a></li>
+											</ul>
+										</div>
+									</div>
+								</nav>
+								<!--/ End Main Menu -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/ End Header Inner -->
+	</header>
+	<!--/ End Header -->
+</body>
+
+</html>
