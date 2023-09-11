@@ -14,23 +14,22 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
-
 import lombok.Data;
 
 @SuppressWarnings("serial")
 @Data
 @Entity
 @Table(name = "Carts")
-public class Cart implements Serializable{
+public class Cart implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Createdate")
-	Date createDate = new Date();	
+	Date createDate = new Date();
+	
 	@ManyToOne
 	@JoinColumn(name = "Username")
 	Account account;
-	
+
 }

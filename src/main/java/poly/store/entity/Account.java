@@ -28,15 +28,11 @@ public class Account implements Serializable {
 	String phone;
 	Boolean activeted;
 	String token;
-	
-	
-	
+		
 	@JsonIgnore
 	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
 	List<Authorities> authorities;
-	
-	
-	
+		
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	List<Favorite> favorite;

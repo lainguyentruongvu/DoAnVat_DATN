@@ -1,11 +1,12 @@
 package poly.store.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import poly.store.entity.Cart;
 import poly.store.entity.Cartdetail;
 
-
-
-public interface CartdetailDAO  extends JpaRepository<Cartdetail, Integer> {
-
+public interface CartdetailDAO extends JpaRepository<Cartdetail, Integer> {
+	List<Cartdetail> findByCart(Cart cart);
 }

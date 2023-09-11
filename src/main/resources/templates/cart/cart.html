@@ -46,25 +46,25 @@
 						</thead>
 						<tbody>
 
-							<tr>
+							<tr ng-repeat="item in cartdetails">
 								<td> <input type="checkbox"></td>
-								<td class="image" data-title="No"><img src="https://via.placeholder.com/100x100"
-										alt="#"></td>
+								<td class="image"><img src="../images/products/{{item.product.image}}"
+										alt="{{item.image}}"></td>
 								<td class="product-des" data-title="Description">
-									<p class="product-name"><a href="#">Women Dress</a></p>
-									<p class="product-des">Maboriosam in a tonto nesciung eget distingy magndapibus.</p>
+									<p class="product-name"><a href="#">{{item.product.name}}</a></p>
+									<p class="product-des">{{item.product.discription}}</p>
 								</td>
-								<td class="price" data-title="Price"><span>$110.00 </span></td>
+								<td class="price" data-title="Price"><span>{{item.price}} </span></td>
 								<td class="qty" data-title="Qty"><!-- Input Order -->
 									<div class="input-group">
 										<div class="button minus">
-											<button type="button" class="btn btn-primary btn-number" disabled="disabled"
+											<button type="button" class="btn btn-primary btn-number" 
 												data-type="minus" data-field="quant[3]">
 												<i class="ti-minus"></i>
 											</button>
 										</div>
 										<input type="text" name="quant[3]" class="input-number" data-min="1"
-											data-max="100" value="3">
+											data-max="100" value="{{item.quantity}}">
 										<div class="button plus">
 											<button type="button" class="btn btn-primary btn-number" data-type="plus"
 												data-field="quant[3]">
@@ -74,7 +74,7 @@
 									</div>
 									<!--/ End Input Order -->
 								</td>
-								<td class="total-amount" data-title="Total"><span>$220.88</span></td>
+								<td class="total-amount" data-title="Total"><span>{{item.price * item.quantity}} </span></td>
 								<td class="action" data-title="Remove"><a href="#"><i
 											class="ti-trash remove-icon"></i></a></td>
 							</tr>

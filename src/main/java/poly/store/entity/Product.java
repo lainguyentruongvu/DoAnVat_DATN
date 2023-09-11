@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 import lombok.Data;
 
 @SuppressWarnings("serial")
@@ -31,27 +32,29 @@ public class Product implements Serializable {
 	Date createdate;
 	Boolean activeted;
 	String discription;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "Categoryid")
 	Category category;
-	
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<Favorite> favorites;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<Orderdetail> orderdetail;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<Discount> discount;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	List<Productweight> productweight;
-	
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "product")
+	List<Cartdetail> cartdetail;
 
 }
