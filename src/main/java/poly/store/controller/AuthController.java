@@ -1,5 +1,7 @@
 package poly.store.controller;
 
+import java.util.Date;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,15 +24,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.bytebuddy.utility.RandomString;
 import poly.store.dao.AccountDAO;
+import poly.store.dao.CartDAO;
 import poly.store.entity.Account;
+import poly.store.entity.Cart;
 import poly.store.services.AccountService;
 import poly.store.services.MailerService;
+import poly.store.services.SessionService;
 
 @Controller
 public class AuthController {
 
 	@Autowired
+	SessionService session;
+
+	@Autowired
 	AccountDAO accountDAO;
+	@Autowired
+	CartDAO cartDAO;
 
 	@Autowired
 	AccountService accountService;
@@ -52,28 +62,38 @@ public class AuthController {
 
 	@RequestMapping("/auth/login/success")
 	public String logInSuccess(Model model, @ModelAttribute("account") Account account) {
-		model.addAttribute("message", "Logged in successfully");
+
+		String username = session.get("username");
+		Account acc = accountDAO.findById(username).get();
+		Cart checkcart = cartDAO.findByAccount(acc);
+
+		if (checkcart == null) {
+			Cart cart = new Cart();
+			cart.setAccount(acc);
+			cart.setCreateDate(new Date());
+			cartDAO.save(cart);
+			session.set("cart", cart);
+		}
 		return "redirect:/";
 	}
 
 	@RequestMapping("/auth/login/error")
 	public String logInError(Model model, @Validated @ModelAttribute("account") Account account, Errors errors) {
-		if (errors.hasErrors()) {
-			model.addAttribute("message", "Wrong login information!");
-			return "auth/login";
-		}
+		
+			model.addAttribute("message", "Sai thông đăng nhập");
+			
 		return "auth/login";
 	}
 
 	@RequestMapping("/auth/unauthoried")
 	public String unauthoried(Model model, @ModelAttribute("account") Account account) {
-		model.addAttribute("message", "You don't have access!");
+		model.addAttribute("message", "Bạn không có quyền truy cập");
 		return "auth/login";
 	}
 
 	@RequestMapping("/auth/logout/success")
 	public String logOutSuccess(Model model, @ModelAttribute("account") Account account) {
-		model.addAttribute("message", "You are logged out!");
+		model.addAttribute("message", "Đăng xuất thành công");
 		return "auth/login";
 	}
 
@@ -94,13 +114,13 @@ public class AuthController {
 	public String signUpSuccess(Model model, @Validated @ModelAttribute("account") Account account, Errors error,
 			HttpServletResponse response) {
 		if (error.hasErrors()) {
-			model.addAttribute("message", "Please correct the error below!");
+			model.addAttribute("message", "Vui lòng nhập thông ");
 			return "auth/register";
 		}
 		account.setImage("user.png");
 		account.setToken("token");
 		accountService.create(account);
-		model.addAttribute("message", "New account registration successful!");
+		model.addAttribute("message", "Đăng ký tài khoản thành c");
 		response.addHeader("refresh", "2;url=/auth/login/form");
 		return "auth/register";
 	}
@@ -118,11 +138,11 @@ public class AuthController {
 			accountService.updateToken(token, email);
 			String resetLink = getSiteURL(request) + "/auth/reset-password?token=" + token;
 			mailer.sendEmail(email, resetLink);
-			model.addAttribute("message", "We have sent a reset password link to your email. "
-					+ "If you don't see the email, check your spam folder.");
+			model.addAttribute("message", "Chúng tôi đã gửi đường dẫn trong email của bạn"
+					+ "Nếu bạn không thấy email vui lòng kiểm tra thư rác của bạn");
 		} catch (MessagingException e) {
 			e.printStackTrace();
-			model.addAttribute("error", "Error while sending email");
+			model.addAttribute("error", "Lỗi email");
 		}
 		return "auth/forgot-password";
 	}
@@ -132,7 +152,7 @@ public class AuthController {
 		Account account = accountService.getByToken(token);
 		model.addAttribute("token", token);
 		if (account == null) {
-			model.addAttribute("message", "Invalid token!");
+			model.addAttribute("message", "Mã không hợp lệ");
 			return "redirect:/auth/login/form";
 		}
 		return "auth/reset-password";
@@ -143,10 +163,10 @@ public class AuthController {
 			HttpServletResponse response, Model model) {
 		Account token = accountService.getByToken(code);
 		if (token == null) {
-			model.addAttribute("message", "Invalid token!");
+			model.addAttribute("message", "Mã không hợp lệ");
 		} else {
 			accountService.updatePassword(token, password);
-			model.addAttribute("message", "You have successfully changed your password!");
+			model.addAttribute("message", "Thay đổi mật khẩu thành công");
 			response.addHeader("refresh", "2;url=/auth/login/form");
 		}
 		return "auth/reset-password";
@@ -159,20 +179,18 @@ public class AuthController {
 
 	@PostMapping("/auth/change-password")
 	public String processChangePassword(Model model, @RequestParam("username") String username,
-			@RequestParam("newPassword") String newPassword,@RequestParam("password") String password) {
+			@RequestParam("newPassword") String newPassword, @RequestParam("password") String password) {
 		Account account = accountService.findById(username);
-		
-		if(newPassword.equals(password)) {
+
+		if (newPassword.equals(password)) {
 			accountService.changePassword(account, newPassword);
-			model.addAttribute("message", "Change password successfully!");
+			model.addAttribute("message", "Đổi mật khẩu thành công");
 			return "redirect:/auth/login/form";
-		}else {
-			model.addAttribute("message", "Change password unsuccessful!");
+		} else {
+			model.addAttribute("message", "Đổi mật khẩu thất bại ");
 			return "auth/change-password";
 		}
-		
-		
-		
+
 	}
 
 	public String getSiteURL(HttpServletRequest request) {

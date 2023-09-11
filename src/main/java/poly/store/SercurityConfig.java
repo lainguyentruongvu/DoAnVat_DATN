@@ -24,6 +24,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 
 import poly.store.entity.Account;
 import poly.store.services.AccountService;
+import poly.store.services.SessionService;
 
 @Configuration
 @EnableWebSecurity
@@ -35,7 +36,7 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 	BCryptPasswordEncoder pe;
 
 	@Autowired
-	HttpSession session;
+	SessionService session;
 
 	/* Cơ chế mã hóa mật khẩu */
 	@Bean
@@ -56,7 +57,8 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 			try {
 				Account user = accountService.findById(username);
 				
-				session.setAttribute("user", user);
+				session.set("user", user);
+				session.set("username", user.getUsername());
 				
 				String password = pe.encode(user.getPassword()); // Mã hóa mật khấu
 				String[] roles = user.getAuthorities().stream().map(er -> er.getRole().getId())
@@ -65,7 +67,7 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 				authentication.put("user", user);
 				byte[] token = (username + ":" + user.getPassword()).getBytes();
 				authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
-				session.setAttribute("authentication", authentication);
+				session.set("authentication", authentication);
 				return User.withUsername(username).password(password).roles(roles).build();
 			} catch (NoSuchElementException e) {
 				throw new UsernameNotFoundException(username + " not found!");
