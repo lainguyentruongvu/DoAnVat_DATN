@@ -242,7 +242,6 @@ app.controller("ctrl", function($scope, $http, $interval) {
 			$scope.favorite = resp.data.length;
 			if ($scope.favorite == 0) {
 				$scope.addfavorite(id);
-				$scope.proid = id;
 			} else {
 				$scope.removefavorite(id);
 				$scope.defaul = 0;
