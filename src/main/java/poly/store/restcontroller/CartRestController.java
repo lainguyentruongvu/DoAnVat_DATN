@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,6 +41,17 @@ public class CartRestController {
 		Account account = accountService.findById(username);
 		Cart cart = cartservice.findByAccount(account);
 		return cartservice.findByCart(cart);
+	}
+	
+	@PostMapping("/addcart")
+	public Cartdetail addcart(@RequestBody Cartdetail cd) {
+		Cartdetail cdetail = cartservice.findByCartAndBook(cd.getCart(), cd.getProduct());
+		if (cdetail == null) {
+			return cartservice.save(cd);
+		} else {
+			cdetail.setQuantity(cdetail.getQuantity()+1);
+			return cartservice.save(cdetail);
+		}
 	}
 
 }

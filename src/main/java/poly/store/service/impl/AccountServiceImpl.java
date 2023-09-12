@@ -27,7 +27,9 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account findById(String username) {
-		return adao.findById(username).get();
+		//Cập nhật lỗi sửa ở đây
+//		return adao.findById(username);
+		return adao.findByUsername(username);
 	}
 
 	@Override

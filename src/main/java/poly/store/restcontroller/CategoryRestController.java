@@ -5,34 +5,37 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
 import poly.store.dao.ProductDAO;
+import poly.store.entity.Category;
 import poly.store.entity.Product;
+import poly.store.services.CategoryService;
 import poly.store.services.ProductService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/rest/products")
-public class IndexRestController {	
+@RequestMapping("/rest/category")
+public class CategoryRestController {	
 	@Autowired
-	ProductService productservice;
+	CategoryService categoryservice;
 	
 	@Autowired
-	ProductDAO productdao;
+	 ProductDAO productdao;
 	
 	@GetMapping()
-	public List<Product> findAll(){
-		return productservice.findAll();
-	}
-	@GetMapping("search")
-	public List<Product> search(@RequestParam(name = "keyword") String keyword) {
-		List<Product> searchbooks = productdao.searchProductsByKeyword(keyword);
-		return searchbooks;
+	public List<Category> findAll(){
+		return categoryservice.findAll();
 	}
 
+	@GetMapping("product/{id}")
+	public List<Product> getproductcategori(@PathVariable("id") Integer id) {
+		Category cate = categoryservice.findById(id);
+		return productdao.findByCategory(cate);
+	}
+	
+	
 }
