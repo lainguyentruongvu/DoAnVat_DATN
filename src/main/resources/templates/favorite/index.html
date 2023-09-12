@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::title},~{::body})}">
+
+<head>
+	<title>Yêu thích</title>
+</head>
+
+<body class="js">
+
+	<!-- Breadcrumbs -->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a href="/">Trang chủ<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="blog-single.html">Yêu thích</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="product-info">
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active" id="man" role="tabpanel">
+							<div class="tab-single">
+								<div class="row">
+									<div ng-repeat="item in pagerfavorite.favorites"
+										class="col-xl-3 col-lg-4 col-md-4 col-12">
+										<div class="single-product">
+											<div class="product-img">
+												<a href="product-details.html">
+													<img style=" height: 300px;" class="default-img"
+														src="../../images/products/{{item.product.image}}" alt="#">
+													<img style="  height: 300px;" class="hover-img"
+														src="../../images/products/{{item.product.image}}" alt="#">
+													<span class="out-of-stock">Hot</span>
+												</a>
+												<div class="button-head">
+													<div class="product-action">
+														<a data-toggle="modal" data-target="#exampleModal"
+															title="Quick View" href="#"><i
+																class=" ti-eye"></i><span>Quick Shop</span></a>
+														<a title="Wishlist" href="#"><svg
+																xmlns="http://www.w3.org/2000/svg" width="16"
+																height="16" fill="currentColor" class="bi bi-heart-fill" style="color: red;"
+																viewBox="0 0 16 16">
+																<path fill-rule="evenodd"
+																	d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+															</svg><span>Add to
+																Wishlist</span></a>
+													</div>
+													<div class="product-action-2 ">
+														<a title="Add to cart" ng-click="addcart(item.product)">Thêm vào
+															giỏ hàng</a>
+													</div>
+												</div>
+											</div>
+											<div class="product-content">
+												<h3><a href="product-details.html">{{item.product.name}}</a></h3>
+												<div class="product-price">
+													<span>{{item.product.price | number :0}} VNĐ</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="container" style="margin-top: 20px;">
+										<div class="text-center">
+											<button ng-click="pagerproduct.first()" class="page-link btn">First</button>
+											<button ng-click="pagerfavorite.prev()" class="page-link btn">Prev</button>
+											<button class="page-link btn">{{pagerfavorite.page + 1}}
+												of {{pagerfavorite.count}}</button>
+											<button ng-click="pagerproduct.next()" class="page-link btn">Next</button>
+											<button ng-click="pagerproduct.last()" class="page-link btn">Last</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Start Shop Services Area  -->
+	<section class="shop-services section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6 col-12">
+					<!-- Start Single Service -->
+					<div class="single-service">
+						<i class="ti-rocket"></i>
+						<h4>Free shiping</h4>
+						<p>Orders over $100</p>
+					</div>
+					<!-- End Single Service -->
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+					<!-- Start Single Service -->
+					<div class="single-service">
+						<i class="ti-reload"></i>
+						<h4>Free Return</h4>
+						<p>Within 30 days returns</p>
+					</div>
+					<!-- End Single Service -->
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+					<!-- Start Single Service -->
+					<div class="single-service">
+						<i class="ti-lock"></i>
+						<h4>Sucure Payment</h4>
+						<p>100% secure payment</p>
+					</div>
+					<!-- End Single Service -->
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+					<!-- Start Single Service -->
+					<div class="single-service">
+						<i class="ti-tag"></i>
+						<h4>Best Peice</h4>
+						<p>Guaranteed price</p>
+					</div>
+					<!-- End Single Service -->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Shop Newsletter -->
+
+	<!-- Start Shop Newsletter  -->
+	<section class="shop-newsletter section">
+		<div class="container">
+			<div class="inner-top">
+				<div class="row">
+					<div class="col-lg-8 offset-lg-2 col-12">
+						<!-- Start Newsletter Inner -->
+						<div class="inner">
+							<h4>Newsletter</h4>
+							<p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
+							<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+								<input name="EMAIL" placeholder="Your email address" required="" type="email">
+								<button class="btn">Subscribe</button>
+							</form>
+						</div>
+						<!-- End Newsletter Inner -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Shop Newsletter -->
+</body>
+
+</html>

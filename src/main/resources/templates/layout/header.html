@@ -21,14 +21,14 @@
 							<a href="/"><img src="../../images/logo_noback.png" width="120px"></a>
 						</div>
 						<!--/ End Logo -->
-						
+
 						<div class="mobile-nav"></div>
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
 							<div class="search-bar" style="width: 390px;">
 								<form ng-submit="submitForm()">
-									<input ng-model="searchKeyword"  placeholder="Tìm kiếm sản phẩm..." type="search">
+									<input ng-model="searchKeyword" placeholder="Tìm kiếm sản phẩm..." type="search">
 									<button class="btnn"><i class="ti-search"></i></button>
 								</form>
 							</div>
@@ -38,7 +38,7 @@
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
-								<a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+								<a th:href="@{/favorites}" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
 
 							<!-- Icon User -->
@@ -129,7 +129,6 @@
 								<li><a ng-click="product()"><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;CATEGORIES</a>
 									<ul style="width: 262px;" class="dropdown">
 										<li ng-repeat="c in category"><a ng-click="productcategory(c.id)">{{c.name}}</a></li>
-										
 									</ul>
 								</li>
 							</div>
@@ -142,7 +141,7 @@
 									<div class="navbar-collapse">
 										<div class="nav-inner">
 											<ul class="nav main-menu menu navbar-nav">
-												<li class="active"><a href="#">Trang chủ</a></li>
+												<li class="active"><a href="/">Trang chủ</a></li>
 												<li><a href="#">Sản phẩm</a></li>
 												<li><a href="#">Dịch vụ</a></li>
 												<li><a href="#">Cửa hàng<i class="ti-angle-down"></i><span

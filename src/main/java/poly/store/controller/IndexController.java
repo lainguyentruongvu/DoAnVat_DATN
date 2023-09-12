@@ -16,6 +16,15 @@ public class IndexController {
 		return "cart/cart";
 
 	}
+	@RequestMapping("/favorites")
+	public String favorite() {
+		return "favorite/index";
+	}
+	@RequestMapping("/favorite/error")
+	public String error() {
+		return "redirect:/";
+	}
+	
 	@RequestMapping("checkout")
 	public String checkout(Model model) {
 		return "cart/checkout";
