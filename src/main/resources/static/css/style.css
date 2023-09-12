@@ -1182,7 +1182,7 @@ Version:1.0
 .header.sticky .header-inner .nav li.active a {
 	color: #fff;
 }
-.header.sticky .header-inner{
+.header.sticky .header-inner {
 	position:fixed;
 	top:0;
 	left:0;
