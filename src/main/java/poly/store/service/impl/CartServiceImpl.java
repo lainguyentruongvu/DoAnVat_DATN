@@ -14,6 +14,7 @@ import poly.store.dao.CartdetailDAO;
 import poly.store.entity.Account;
 import poly.store.entity.Cart;
 import poly.store.entity.Cartdetail;
+import poly.store.entity.Product;
 import poly.store.services.CartService;
 
 @Service
@@ -32,6 +33,17 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public List<Cartdetail> findByCart(Cart cart) {
 		return cartdetaildao.findByCart(cart);
+	}
+
+	@Override
+	public Cartdetail findByCartAndBook(Cart cart, Product product) {		
+		return cartdetaildao.findByCartAndProduct(cart,product);
+	}
+
+	@Override
+	public Cartdetail save(Cartdetail cd) {
+		
+		return cartdetaildao.save(cd);
 	}
 	
 	
