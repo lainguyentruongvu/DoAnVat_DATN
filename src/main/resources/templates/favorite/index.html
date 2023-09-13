@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::title},~{::body})}">
+
+<head>
+	<title>Yêu thích</title>
+</head>
+
+<body class="js">
+
+	<!-- Breadcrumbs -->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a href="/">Trang chủ<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="blog-single.html">Yêu thích</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="product-info">
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active" id="man" role="tabpanel">
+							<div class="tab-single">
+								<div class="row">
+									<div ng-repeat="item in pagerfavorite.favorites"
+										class="col-xl-3 col-lg-4 col-md-4 col-12">
+										<div class="single-product">
+											<div class="product-img">
+												<a href="product-details.html">
+													<img style=" height: 300px;" class="default-img"
+														src="../../images/products/{{item.product.image}}" alt="#">
+													<img style="  height: 300px;" class="hover-img"
+														src="../../images/products/{{item.product.image}}" alt="#">
+													<span class="out-of-stock">Hot</span>
+												</a>
+												<div class="button-head">
+													<div class="product-action">
+														<a data-toggle="modal" data-target="#exampleModal"
+															title="Quick View" href="#"><i
+																class=" ti-eye"></i><span>Quick Shop</span></a>
+														<a title="Wishlist" ng-click="checkAddOrRemove(item.product.id)"><svg
+																xmlns="http://www.w3.org/2000/svg" width="16"
+																height="16" fill="currentColor" class="bi bi-heart-fill" style="color: red;"
+																viewBox="0 0 16 16">
+																<path fill-rule="evenodd"
+																	d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+															</svg><span>Add to
+																Wishlist</span></a>
+													</div>
+													<div class="product-action-2 ">
+														<a title="Add to cart" ng-click="addcart(item.product)">Thêm vào
+															giỏ hàng</a>
+													</div>
+												</div>
+											</div>
+											<div class="product-content">
+												<h3><a href="product-details.html">{{item.product.name}}</a></h3>
+												<div class="product-price">
+													<span>{{item.product.price | number :0}} VNĐ</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="container" style="margin-top: 20px;">
+										<div class="text-center">
+											<button ng-click="pagerfavorite.first()" class="page-link btn">First</button>
+											<button ng-click="pagerfavorite.prev()" class="page-link btn">Prev</button>
+											<button class="page-link btn">{{pagerfavorite.page + 1}}
+												of {{pagerfavorite.count}}</button>
+											<button ng-click="pagerfavorite.next()" class="page-link btn">Next</button>
+											<button ng-click="pagerfavorite.last()" class="page-link btn">Last</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<!-- End Shop Newsletter -->
+</body>
+
+</html>

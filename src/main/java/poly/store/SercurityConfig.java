@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,10 +54,10 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(username -> {
 			try {
 				Account user = accountService.findById(username);
-				
+
 				session.set("user", user);
 				session.set("username", user.getUsername());
-				
+
 				String password = pe.encode(user.getPassword()); // Mã hóa mật khấu
 				String[] roles = user.getAuthorities().stream().map(er -> er.getRole().getId())
 						.collect(Collectors.toList()).toArray(new String[0]);
@@ -79,9 +78,9 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 		// Tắt thuật tấn công giả mạo
 		http.csrf().disable();
 		// Quyền yêu cầu truy cập
-		http.authorizeRequests().antMatchers("/order/**", "/auth/change-password").authenticated()
-				.antMatchers("/admin/**").hasAnyRole("STAF", "DIRE").antMatchers("/rest/authorities").hasRole("DIRE")
-				.anyRequest().permitAll();
+		http.authorizeRequests().antMatchers("/favorites").authenticated().antMatchers("/favorite/error").authenticated()
+				.antMatchers("/order/**", "/auth/change-password").authenticated().antMatchers("/admin/**")
+				.hasAnyRole("STAF", "DIRE").antMatchers("/rest/authorities").hasRole("DIRE").anyRequest().permitAll();
 		// Đăng nhập
 		http.formLogin().loginPage("/auth/login/form").loginProcessingUrl("/auth/login")
 				.defaultSuccessUrl("/auth/login/success", false).failureUrl("/auth/login/error");
