@@ -45,6 +45,12 @@ public class CartServiceImpl implements CartService {
 		
 		return cartdetaildao.save(cd);
 	}
+
+	@Override
+	public void deleteById(Integer id) {
+		cartdetaildao.deleteById(id);
+		
+	}
 	
 	
 	

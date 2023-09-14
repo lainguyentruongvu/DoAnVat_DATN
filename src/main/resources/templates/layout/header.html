@@ -98,11 +98,11 @@
 									<div class="dropdown-cart-header">
 										<span>{{
 											getTotalItem()}} Sản phẩm</span>
-										<a href="/cart">View Cart</a>
+										<a href="/cart">Xem ngay</a>
 									</div>
 									<ul class="shopping-list">
 										<li ng-repeat="cd in cartdetails">
-											<a href="#" class="remove" title="Remove this item"><i
+											<a ng-click="deleteid(cd.id)" class="remove" title="Remove this item"><i
 													class="fa fa-remove"></i></a>
 											<a class="cart-img" href="#"><img src="../../images/products/{{cd.product.image}}"
 													alt="#"></a>
