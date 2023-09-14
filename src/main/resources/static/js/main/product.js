@@ -163,9 +163,13 @@ app.controller("ctrl", function($scope, $http, $interval) {
 		});
 		if (index !== -1) {
 			$scope.selectedItems[index].quantity = newquantity + 1;
+			localStorage.setItem('selectedItems', JSON.stringify($scope.selectedItems));
+
+			$scope.giamgia();
+			$scope.tinhtien();
 		}
-		localStorage.setItem('selectedItems', JSON.stringify($scope.selectedItems));
-		$scope.tinhtien();
+
+
 	}
 
 
@@ -189,6 +193,10 @@ app.controller("ctrl", function($scope, $http, $interval) {
 			});
 			if (index !== -1) {
 				$scope.selectedItems[index].quantity = newquantity - 1;
+				localStorage.setItem('selectedItems', JSON.stringify($scope.selectedItems));
+
+				$scope.giamgia();
+				$scope.tinhtien();
 			}
 		}
 
@@ -197,14 +205,6 @@ app.controller("ctrl", function($scope, $http, $interval) {
 		$scope.tinhtien();
 
 	}
-
-
-	//Checkbox cart
-	//	$scope.checkbox = function(cd) {
-	//		var idx = $scope.selected.indexOf(cd);
-	//		console.log(cd);
-	//
-	//	}
 
 
 
@@ -222,16 +222,25 @@ app.controller("ctrl", function($scope, $http, $interval) {
 
 		if (index !== -1) {
 			// Nếu sản phẩm đã tồn tại trong localStorage, xóa nó ra khỏi danh sách
+
 			selectedItems.splice(index, 1);
+			localStorage.setItem(localStorageKey, JSON.stringify(selectedItems));
+			$scope.giamgia();
+			$scope.tinhtien();
+
 		} else {
+
 			// Nếu sản phẩm chưa tồn tại trong localStorage, thêm nó vào danh sách
+
 			selectedItems.push(item);
+			localStorage.setItem(localStorageKey, JSON.stringify(selectedItems));
+			$scope.giamgia();
+			$scope.tinhtien();
 		}
 
 		// Cập nhật localStorage với danh sách sản phẩm đã được chọn
 		localStorage.setItem(localStorageKey, JSON.stringify(selectedItems));
 
-		$scope.tinhtien();
 
 
 	};
@@ -243,15 +252,63 @@ app.controller("ctrl", function($scope, $http, $interval) {
 		$scope.totalPrice = 0;
 		$scope.products.forEach(function(product) {
 			$scope.totalPrice += product.price * product.quantity;
+			$scope.total = $scope.totalPrice;
 		});
+
+	}
+
+	//Danh sách voucher
+
+
+
+
+
+	//Giảm giá 
+	$scope.coupon = "";
+	$scope.total = 0;
+	$scope.giamgia = function() {
+
+
+		$http.get("/rest/voucher").then(resp => {
+			$scope.voucher = resp.data;
+
+			for (var i = 0; i < $scope.voucher.length; i++) {
+
+				if ($scope.voucher[i].id === $scope.coupon) {
+					var ngayHetHan = new Date($scope.voucher[i].enddate);
+					var ngayHienTai = new Date();
+					console.log(ngayHienTai);
+					console.log(ngayHetHan);
+					if (ngayHetHan > ngayHienTai) {
+						var giamgia = $scope.voucher[i].discount / 100;
+						var tiengiam = parseFloat($scope.totalPrice) * parseFloat(giamgia);
+						$scope.total = $scope.totalPrice - tiengiam;
+						$scope.viewgiamgia = tiengiam;
+						break;
+					} else {
+						alert("aa")
+						Swal.fire("error", "Mã giảm giá hết hạn", "error");
+						break;
+					}
+				} else {
+					$scope.viewgiamgia = 0;
+					$scope.tinhtien();
+					break;
+				}
+			}
+		});
+
+
+
 
 	}
 
 
 	//Trang khi load lại xóa localStorage
 	window.onbeforeunload = function() {
-		// Xóa dữ liệu trong localStorage
+		// Xóa dữ liệu trong localStorage		
 		localStorage.clear();
+
 	}
 
 
