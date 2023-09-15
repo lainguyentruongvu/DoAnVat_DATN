@@ -1,5 +1,7 @@
 const app = angular.module("app", []);
 app.controller("ctrl", function($scope, $http, $interval) {
+
+
 	//Lấy tên tài khoản
 	$scope.username = $("#username").text();
 
@@ -99,12 +101,18 @@ app.controller("ctrl", function($scope, $http, $interval) {
 	// lấy dữ liệu từ giỏ hàng chi tiết
 	$scope.getcartdetails = function() {
 		$http.get(`/rest/cart/cartdetails/` + $scope.username).then(resp => {
+
 			$scope.cartdetails = resp.data;
+			$scope.checkbox();
+			$scope.tinhtien();
 		}).catch(error => {
 			console.log("Error", error)
 		})
+
 	}
+
 	$scope.getcartdetails();
+
 
 
 	//tổng item
@@ -240,19 +248,71 @@ app.controller("ctrl", function($scope, $http, $interval) {
 
 		// Cập nhật localStorage với danh sách sản phẩm đã được chọn
 		localStorage.setItem(localStorageKey, JSON.stringify(selectedItems));
-
-
-
 	};
+
+	//		 Kiểm tra và tô màu các checkbox dựa trên danh sách đã lưu trong localStorage
+
+
+
+	var selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
+
+	$scope.checkbox = function() {
+		$http.get(`/rest/cart/cartdetails/` + $scope.username).then(resp => {
+			$scope.cartdetails = resp.data;
+
+			selectedItems.forEach(function(selectedItem) {
+				var item = $scope.cartdetails.find(function(item) {
+					return item.id === selectedItem.id;
+				});
+				//
+				if (item) {
+					item.selected = true;
+				}
+			});
+
+
+
+		}).catch(error => {
+			console.log("Error", error)
+		})
+	}
+
+
+
+
+
+	//	$scope.kiemtracheckbox = function() {
+	//	console.log($scope.selectedItems);
+	//		$scope.selectedItems.forEach(function(item) {
+	//			if (selectedItems.some(function(selectedItem) {
+	//				return selectedItem.id === item.id;
+	//			})) {
+	//				item.selected = true;
+	//			}
+	//		});
+
+
+
+	//	}
+
+	//	$scope.kiemtracheckbox();
+
+
+
+
+
 
 	//Tính tiền
 	$scope.tinhtien = function() {
 		var storedProducts = localStorage.getItem('selectedItems');
-		$scope.products = JSON.parse(storedProducts);
+		$scope.tinhtienproduct = JSON.parse(storedProducts);
 		$scope.totalPrice = 0;
-		$scope.products.forEach(function(product) {
+		$scope.tinhtienproduct.forEach(function(product) {
 			$scope.totalPrice += product.price * product.quantity;
 			$scope.total = $scope.totalPrice;
+
+
+
 		});
 
 	}
@@ -295,25 +355,30 @@ app.controller("ctrl", function($scope, $http, $interval) {
 	}
 
 
-	//Trang khi load lại xóa localStorage
-	window.onbeforeunload = function() {
-		// Xóa dữ liệu trong localStorage		
-		localStorage.clear();
+
+	$scope.purchase = function() {
+		$scope.gia = $scope.total;
+		console.log($scope.gia);
+
+
+		window.location.href = '/checkout';
+		//		 sessionStorage.setItem('data',localStorage.getItem('selectedItems'));
+		$scope.data = storedProducts;
+		console.log(data);
 
 	}
 
+	//Trang khi load lại xóa localStorage
+	//	window.onbeforeunload = function() {
+	//		// Xóa dữ liệu trong localStorage		
+	//		localStorage.clear();
+	//
+	//	}
 
 
 
-	// Kiểm tra và tô màu các checkbox dựa trên danh sách đã lưu trong localStorage
-	//	var selectedItems = JSON.parse(localStorage.getItem('selectedItems')) || [];
-	//	$scope.items.forEach(function(item) {
-	//		if (selectedItems.some(function(selectedItem) {
-	//			return selectedItem.id === item.id;
-	//		})) {
-	//			item.selected = true;
-	//		}
-	//	});
+
+
 
 
 	//Favorites
