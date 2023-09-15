@@ -65,5 +65,7 @@ public class CartRestController {
 	public Cartdetail updateqty(@RequestBody Cartdetail cd) {
 		return cartservice.save(cd);
 	}
+	
+	
 
 }
