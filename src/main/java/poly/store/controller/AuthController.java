@@ -57,7 +57,7 @@ public class AuthController {
 
 	@RequestMapping("/auth/login/form")
 	public String logInForm(Model model, @ModelAttribute("account") Account account) {
-		return "auth/login";
+		return "auth/login1";
 	}
 
 	@RequestMapping("/auth/login/success")
@@ -82,19 +82,19 @@ public class AuthController {
 		
 			model.addAttribute("message", "Sai thông đăng nhập");
 			
-		return "auth/login";
+		return "auth/login1";
 	}
 
 	@RequestMapping("/auth/unauthoried")
 	public String unauthoried(Model model, @ModelAttribute("account") Account account) {
 		model.addAttribute("message", "Bạn không có quyền truy cập");
-		return "auth/login";
+		return "auth/login1";
 	}
 
 	@RequestMapping("/auth/logout/success")
 	public String logOutSuccess(Model model, @ModelAttribute("account") Account account) {
 		model.addAttribute("message", "Đăng xuất thành công");
-		return "auth/login";
+		return "auth/login1";
 	}
 
 	// OAuth2
