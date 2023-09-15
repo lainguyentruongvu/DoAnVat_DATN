@@ -267,40 +267,31 @@ app.controller("ctrl", function($scope, $http, $interval) {
 	$scope.coupon = "";
 	$scope.total = 0;
 	$scope.giamgia = function() {
-
-
 		$http.get("/rest/voucher").then(resp => {
 			$scope.voucher = resp.data;
 
-			for (var i = 0; i < $scope.voucher.length; i++) {
-
+			for (var i = 0; i <= $scope.voucher.length; i++) {
 				if ($scope.voucher[i].id === $scope.coupon) {
-					var ngayHetHan = new Date($scope.voucher[i].enddate);
-					var ngayHienTai = new Date();
-					console.log(ngayHienTai);
-					console.log(ngayHetHan);
-					if (ngayHetHan > ngayHienTai) {
+
+					var timeVoucherEnd = new Date($scope.voucher[i].enddate).toISOString().slice(0, 10);
+					var timenow = new Date().toISOString().slice(0, 10);
+
+					if (timeVoucherEnd >= timenow) {
 						var giamgia = $scope.voucher[i].discount / 100;
 						var tiengiam = parseFloat($scope.totalPrice) * parseFloat(giamgia);
 						$scope.total = $scope.totalPrice - tiengiam;
 						$scope.viewgiamgia = tiengiam;
 						break;
 					} else {
-						alert("aa")
 						Swal.fire("error", "Mã giảm giá hết hạn", "error");
 						break;
 					}
-				} else {
+				} else if ($scope.voucher[i].id !== $scope.coupon) {
 					$scope.viewgiamgia = 0;
 					$scope.tinhtien();
-					break;
 				}
 			}
 		});
-
-
-
-
 	}
 
 
