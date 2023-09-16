@@ -8,15 +8,20 @@ import org.springframework.stereotype.Service;
 import poly.store.dao.ProductDAO;
 import poly.store.entity.Product;
 import poly.store.services.ProductService;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ProductDAO productdao;
-	
-	
+
 	@Override
-	public List<Product> findAll() {		
+	public List<Product> findAll() {
 		return productdao.findAll();
+	}
+
+	@Override
+	public Product findById(Integer id) {
+		return productdao.findById(id).get();
 	}
 
 }

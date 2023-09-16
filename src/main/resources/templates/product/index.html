@@ -81,7 +81,8 @@
 							<div class="tab-pane fade show active" id="man" role="tabpanel">
 								<div class="tab-single">
 									<div class="row">
-										<div ng-repeat="item in pagerproduct.products" class="col-xl-3 col-lg-4 col-md-4 col-12">
+										<div ng-repeat="item in pagerproduct.products"
+											class="col-xl-3 col-lg-4 col-md-4 col-12">
 											<div class="single-product">
 												<div class="product-img">
 													<a href="product-details.html">
@@ -93,8 +94,8 @@
 													</a>
 													<div class="button-head">
 														<div class="product-action">
-															<a data-toggle="modal" data-target="#exampleModal"
-																title="Quick View" href="#"><i
+															<a ng-click="productdetails(item.id)" data-toggle="modal"
+																data-target="#exampleModal" title="Quick View"><i
 																	class=" ti-eye"></i><span>Quick Shop</span></a>
 															<a title="Wishlist" ng-click="checkAddOrRemove(item.id)"><i
 																	class=" ti-heart "></i><span>Add to
@@ -102,7 +103,8 @@
 
 														</div>
 														<div class="product-action-2 ">
-															<a title="Add to cart" ng-click="addcart(item)">Thêm vào giỏ hàng</a>
+															<a title="Add to cart" ng-click="addcart(item)">Thêm vào giỏ
+																hàng</a>
 														</div>
 													</div>
 												</div>
@@ -2095,18 +2097,9 @@
 						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 							<!-- Product Slider -->
 							<div class="product-gallery">
-								<div class="quickview-slider-active">
+								<div class="quickview-slider">
 									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
+										<img src="../../images/products/{{productdetail.image}}" alt="">
 									</div>
 								</div>
 							</div>
@@ -2114,7 +2107,7 @@
 						</div>
 						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 							<div class="quickview-content">
-								<h2>Flared Shift Dress</h2>
+								<h2>{{productdetail.name}}</h2>
 								<div class="quickview-ratting-review">
 									<div class="quickview-ratting-wrap">
 										<div class="quickview-ratting">
@@ -2127,35 +2120,32 @@
 										<a href="#"> (1 customer review)</a>
 									</div>
 									<div class="quickview-stock">
-										<span><i class="fa fa-check-circle-o"></i> in stock</span>
+										<p  ng-if="check===1">Số lượng: {{quantityandprice.quantity}}</p>
+
 									</div>
 								</div>
-								<h3>$29.00</h3>
+
+								<h3 id="price" ng-if="check===0">{{productdetail.price}}</h3>
+								<h3 id="price" ng-if="check===1">{{quantityandprice.price}}</h3>
+
 								<div class="quickview-peragraph">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum
-										ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui
-										nemo ipsum numquam.</p>
+									<p>{{productdetail.discription}}</p>
 								</div>
 								<div class="size">
 									<div class="row">
 										<div class="col-lg-6 col-12">
-											<h5 class="title">Size</h5>
-											<select>
-												<option selected="selected">s</option>
-												<option>m</option>
-												<option>l</option>
-												<option>xl</option>
-											</select>
+											<h5 class="title">Trọng lượng</h5>
+											<label ng-repeat="item in productweight" class="radio-label">
+
+												<p ng-if="check===0" id="weightvalue" hidden>0.5</p>
+												<p ng-if="check===1" id="weightvalue" hidden>{{weightvalue}}</p>
+												<input ng-click="weightquantityandprice(item.weight.id)" type="radio"
+													name="product-weight" value="{{item.weight.weightvalue}}">
+												{{item.weight.weightvalue}} KG
+											</label>
+
 										</div>
-										<div class="col-lg-6 col-12">
-											<h5 class="title">Color</h5>
-											<select>
-												<option selected="selected">orange</option>
-												<option>purple</option>
-												<option>black</option>
-												<option>pink</option>
-											</select>
-										</div>
+										<p>{{productweight.weight}}</p>
 									</div>
 								</div>
 								<div class="quantity">
@@ -2167,8 +2157,8 @@
 												<i class="ti-minus"></i>
 											</button>
 										</div>
-										<input type="text" name="quant[1]" class="input-number" data-min="1"
-											data-max="1000" value="1">
+										<input ng-model="quantity"  type="number" name="quant[1]" class="input-number" data-min="1"
+											data-max="100" >
 										<div class="button plus">
 											<button type="button" class="btn btn-primary btn-number" data-type="plus"
 												data-field="quant[1]">
@@ -2179,7 +2169,7 @@
 									<!--/ End Input Order -->
 								</div>
 								<div class="add-to-cart">
-									<a href="#" class="btn">Add to cart</a>
+									<a ng-click="addcart(productdetail)" class="btn">Add to cart</a>
 									<a href="#" class="btn min"><i class="ti-heart"></i></a>
 									<a href="#" class="btn min"><i class="fa fa-compress"></i></a>
 								</div>

@@ -17,14 +17,14 @@ import lombok.Data;
 @SuppressWarnings("serial")
 @Data
 @Entity
-@Table(name = "Cartdetails", uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"Cartid", "Productid"})})
+@Table(name = "Cartdetails")
 public class Cartdetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	Double price;
 	Integer quantity;
+	String weightvalue;
 	@ManyToOne
 	@JoinColumn(name = "Productid")
 	Product product;

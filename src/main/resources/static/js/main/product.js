@@ -123,13 +123,37 @@ app.controller("ctrl", function($scope, $http, $interval) {
 
 
 	// thêm sản phẩm vào giỏ hàng
+	//	$scope.addcart = function(p) {
+	//		if ($scope.username == "") {
+	//			location.href = "/auth/login/form";
+	//		} else {
+	//			$scope.data = {
+	//				price: p.price,
+	//				quantity: 1,
+	//				product: { id: p.id },
+	//				cart: { id: $scope.cartid }
+	//			}
+	//			$http.post("/rest/cart/addcart", $scope.data).then(resp => {
+	//				Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+	//				$scope.getcartdetails();
+	//				$scope.getTotalItem()
+	//			}).catch(error => {
+	//				console.log(error)
+	//			})
+	//		}
+	//
+	//	}
+
+
+	$scope.quantity = 1;
 	$scope.addcart = function(p) {
 		if ($scope.username == "") {
 			location.href = "/auth/login/form";
 		} else {
 			$scope.data = {
-				price: p.price,
-				quantity: 1,
+				price: $("#price").text(),
+				quantity: $scope.quantity,
+				weightvalue: $("#weightvalue").text(),
 				product: { id: p.id },
 				cart: { id: $scope.cartid }
 			}
@@ -143,6 +167,10 @@ app.controller("ctrl", function($scope, $http, $interval) {
 		}
 
 	}
+
+
+
+
 
 
 	// xóa sản phẩm khỏi giỏ hàng
@@ -269,38 +297,10 @@ app.controller("ctrl", function($scope, $http, $interval) {
 					item.selected = true;
 				}
 			});
-
-
-
 		}).catch(error => {
 			console.log("Error", error)
 		})
 	}
-
-
-
-
-
-	//	$scope.kiemtracheckbox = function() {
-	//	console.log($scope.selectedItems);
-	//		$scope.selectedItems.forEach(function(item) {
-	//			if (selectedItems.some(function(selectedItem) {
-	//				return selectedItem.id === item.id;
-	//			})) {
-	//				item.selected = true;
-	//			}
-	//		});
-
-
-
-	//	}
-
-	//	$scope.kiemtracheckbox();
-
-
-
-
-
 
 	//Tính tiền
 	$scope.tinhtien = function() {
@@ -368,12 +368,41 @@ app.controller("ctrl", function($scope, $http, $interval) {
 
 	}
 
-	//Trang khi load lại xóa localStorage
-	//	window.onbeforeunload = function() {
-	//		// Xóa dữ liệu trong localStorage		
-	//		localStorage.clear();
-	//
-	//	}
+	//Đăng xuất xóa localStorage
+	$scope.logout = function() {
+		localStorage.clear();
+	}
+
+	//trang chi tiết	
+	$scope.productdetails = function(id) {
+		$http.get(`/rest/products/${id}`).then(resp => {
+			$scope.productdetail = resp.data;
+			console.log($scope.productdetail);
+		}).catch(error => {
+			console.log("Error", error);
+		})
+
+		$http.get(`/rest/products/weight/${id}`).then(resp => {
+			$scope.productweight = resp.data;
+			console.log($scope.productweight);
+		}).catch(error => {
+			console.log("Error", error);
+		})
+	}
+
+	$scope.check = 0;
+	$scope.weightquantityandprice = function(id) {
+		$scope.check = 1;
+		$http.get(`/rest/products/weight/quantityandprice/${id}`).then(resp => {
+			$scope.quantityandprice = resp.data;
+			$scope.weightvalue = $scope.quantityandprice.weightvalue
+			console.log($scope.weightvalue);
+		}).catch(error => {
+			console.log("Error", error);
+		})
+	}
+
+
 
 
 

@@ -39,6 +39,7 @@
 								<th>Hình ảnh</th>
 								<th>Tên</th>
 								<th class="text-center">Giá</th>
+								<th class="text-center">Khối lượng</th>
 								<th class="text-center">Số lượng</th>
 								<th class="text-center">Tổng</th>
 								<th class="text-center"><i class="ti-trash remove-icon"></i></th>
@@ -57,6 +58,7 @@
 									<p class="product-des">{{item.product.discription}}</p>
 								</td>
 								<td class="price" data-title="Price"><span>{{item.price | number :0}} </span></td>
+								<td class="weight" data-title="Weight"><span>{{item.weightvalue }} KG</span></td>
 								<td class="qty" data-title="Qty"><!-- Input Order -->
 									<div class="input-group">
 										<div class="button minus">
