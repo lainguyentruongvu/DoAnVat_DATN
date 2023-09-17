@@ -1,5 +1,5 @@
 const app = angular.module("app", []);
-app.controller("ctrl", function($scope, $http, $interval) {
+app.controller("ctrl", function($scope, $http) {
 
 
 	//Lấy tên tài khoản
@@ -157,7 +157,7 @@ app.controller("ctrl", function($scope, $http, $interval) {
 				product: { id: p.id },
 				cart: { id: $scope.cartid }
 			}
-			$http.post("/rest/cart/addcart", $scope.data).then(resp => {
+			$http.post("/rest/cart/addcart?quantity=" + $scope.quantity, $scope.data).then(resp => {
 				Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
 				$scope.getcartdetails();
 				$scope.getTotalItem()
@@ -167,6 +167,22 @@ app.controller("ctrl", function($scope, $http, $interval) {
 		}
 
 	}
+
+
+	//Tăng giảm số lượng sản phẩm chi tiết
+	$scope.productdetailincrease = function() {
+		$scope.quantity = $scope.quantity + 1;
+	}
+	$scope.productdetaireduce = function() {
+		if ($scope.quantity <= 1) {
+			Swal.fire("error", "Số lượng không nhỏ hơn một", "error");
+		} else {
+			$scope.quantity = $scope.quantity - 1;
+		}
+
+	}
+
+
 
 
 
@@ -374,9 +390,12 @@ app.controller("ctrl", function($scope, $http, $interval) {
 	}
 
 	//trang chi tiết	
+
 	$scope.productdetails = function(id) {
+
 		$http.get(`/rest/products/${id}`).then(resp => {
 			$scope.productdetail = resp.data;
+			$scope.check = 0.5;
 			console.log($scope.productdetail);
 		}).catch(error => {
 			console.log("Error", error);
@@ -384,19 +403,18 @@ app.controller("ctrl", function($scope, $http, $interval) {
 
 		$http.get(`/rest/products/weight/${id}`).then(resp => {
 			$scope.productweight = resp.data;
-			console.log($scope.productweight);
 		}).catch(error => {
 			console.log("Error", error);
 		})
+		$scope.weightquantityandprice(id);
 	}
 
-	$scope.check = 0;
+
 	$scope.weightquantityandprice = function(id) {
 		$scope.check = 1;
 		$http.get(`/rest/products/weight/quantityandprice/${id}`).then(resp => {
 			$scope.quantityandprice = resp.data;
 			$scope.weightvalue = $scope.quantityandprice.weightvalue
-			console.log($scope.weightvalue);
 		}).catch(error => {
 			console.log("Error", error);
 		})

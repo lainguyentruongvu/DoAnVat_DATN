@@ -1402,10 +1402,10 @@ Version:1.0
 }
 
 .header.sticky .header-inner {
-	position:fixed;
-	top:0;
-	left:0;
-	background:#fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: #fff;
 }
 
 .header.sticky .header-inner {
@@ -5837,23 +5837,54 @@ Version:1.0
 	End Footer CSS
 ===============================*/
 
+/*input[type="radio"] {*/
+/*	display: none;*/
+/*}*/
+
+/* Thiết kế label tùy chỉnh cho input radio */
+/*.radio-label {*/
+/*	display: inline-block;*/
+/*	padding: 8px 16px;*/
+/*	background-color: #f0f0f0;*/
+/*	border: 1px solid orange;*/
+/*	border-radius: 5px;*/
+/*	cursor: pointer;*/
+/*	margin-right: 10px;*/
+/*}*/
+
+/* Tạo kiểu tùy chỉnh cho label khi radio button được chọn */
+/*input[type="radio"]:checked+.radio-label {*/
+/*	background-color: #000;*/
+/*	color: #fff;*/
+/*}*/
+
 input[type="radio"] {
 	display: none;
 }
 
-/* Thiết kế label tùy chỉnh cho input radio */
-.radio-label {
+/* Thiết lập kiểu cho label gần input radio */
+.weight  {
+	width: 100px;
+	float: left;
 	display: inline-block;
-	padding: 8px 16px;
-	background-color: #f0f0f0;
-	border: 1px solid orange;
+	padding: 10px 20px;
+	background-color: #3498db;
+	color: #fff;
 	border-radius: 5px;
 	cursor: pointer;
-	margin-right: 10px;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	text-align: center;
+	margin: 5px;
+	font-size: 18px;
 }
 
-/* Tạo kiểu tùy chỉnh cho label khi radio button được chọn */
-input[type="radio"]:checked+.radio-label {
-	background-color: #000;
-	color: #fff;
+/* Thiết lập kiểu cho label gần input radio đã chọn */
+input[type="radio"]:checked+.weight {
+	background-color: #e74c3c;
+	transform: scale(1.1);
+}
+
+/* Hiệu ứng hover cho label */
+.weight:hover {
+	background-color: #2980b9;
 }

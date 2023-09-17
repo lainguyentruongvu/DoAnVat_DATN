@@ -2107,7 +2107,10 @@
 						</div>
 						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 							<div class="quickview-content">
-								<h2>{{productdetail.name}}</h2>
+								<h2>{{productdetail.name}}
+								</h2>
+								<h2 ng-if="check===0" id="weightvalue">0.5 KG</h2>
+								<h2 ng-if="check===1" id="weightvalue">{{weightvalue}} KG</h2>
 								<div class="quickview-ratting-review">
 									<div class="quickview-ratting-wrap">
 										<div class="quickview-ratting">
@@ -2120,7 +2123,7 @@
 										<a href="#"> (1 customer review)</a>
 									</div>
 									<div class="quickview-stock">
-										<p  ng-if="check===1">Số lượng: {{quantityandprice.quantity}}</p>
+										<p ng-if="check===1">Số lượng: {{quantityandprice.quantity}}</p>
 
 									</div>
 								</div>
@@ -2135,15 +2138,19 @@
 									<div class="row">
 										<div class="col-lg-6 col-12">
 											<h5 class="title">Trọng lượng</h5>
-											<label ng-repeat="item in productweight" class="radio-label">
 
-												<p ng-if="check===0" id="weightvalue" hidden>0.5</p>
-												<p ng-if="check===1" id="weightvalue" hidden>{{weightvalue}}</p>
-												<input ng-click="weightquantityandprice(item.weight.id)" type="radio"
-													name="product-weight" value="{{item.weight.weightvalue}}">
-												{{item.weight.weightvalue}} KG
-											</label>
+											<div ng-repeat="item in productweight">
 
+												<input class="weight" 
+													ng-class="{{check==item.weight.weightvalue}} ? 'bg-danger' : 'bg-primary'"
+													id="{{item.weight.weightvalue}}"
+													ng-click="weightquantityandprice(item.weight.id)" type="radio"
+													name="weight" value="{{item.weight.weightvalue}}">
+											
+												<label  ng-class="{{check==item.weight.weightvalue}} ? 'bg-danger' : 'bg-primary'" class="weight"
+													for="{{item.weight.weightvalue}}">{{item.weight.weightvalue}}
+													KG</label>
+											</div>
 										</div>
 										<p>{{productweight.weight}}</p>
 									</div>
@@ -2152,15 +2159,16 @@
 									<!-- Input Order -->
 									<div class="input-group">
 										<div class="button minus">
-											<button type="button" class="btn btn-primary btn-number" disabled="disabled"
+											<button ng-click="productdetaireduce()" class="btn btn-primary btn-number"
 												data-type="minus" data-field="quant[1]">
 												<i class="ti-minus"></i>
 											</button>
 										</div>
-										<input ng-model="quantity"  type="number" name="quant[1]" class="input-number" data-min="1"
-											data-max="100" >
+										<input ng-model="quantity" type="number" name="quantity" class="input-number"
+											data-min="1" data-max="100">
 										<div class="button plus">
-											<button type="button" class="btn btn-primary btn-number" data-type="plus"
+											<button ng-click="productdetailincrease()"
+												class="btn btn-primary btn-number" data-type="plus"
 												data-field="quant[1]">
 												<i class="ti-plus"></i>
 											</button>
