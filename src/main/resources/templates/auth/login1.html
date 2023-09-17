@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::title},~{::body})}">
+
+<head>
+    <title>Đăng nhập</title>
+</head>
+
+<body>
+    <div class="container ">
+        <div class="row d-flex justify-content-center align-items-center ">
+            <div class="col-lg-12 col-xl-9">
+                <div class="text-black">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-12 col-xl-6 order-2 order-lg-1">
+
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">ĐĂNG NHẬP</p>
+
+                                <form th:object="${account}" th:action="@{/auth/login}" method="post">
+                                    <div class="row">
+                                        <div class="col-12" th:if="${message}">
+                                            <div class="alert alert-warning p-2">
+                                                <i class="text-danger" th:text="${message}"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Username</label>
+                                                <input th:field="*{username}" class="form-control mb-1" type="text"
+                                                    placeholder="Enter your username">
+                                                <small th:errors="*{username}" style="color: red"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Mật khẩu</label>
+                                                <input th:field="*{password}" class="form-control mb-1"
+                                                    type="password" placeholder="Enter your password">
+                                                <small th:errors="*{password}" style="color: red"></small>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="remember-me">
+                                                    <span class="text">Nhớ tài khoản?</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12" style="padding-left: 120px">
+                                            <div class="login-form-group">
+                                                <button class="btn-sign bg btn btn-primary btn-lg"
+                                                    type="submit">Đăng nhập</button><br>
+
+                                            </div>
+                                            <a class="btn-pass-forgot" th:href="@{/auth/forgot-password}">Quên mật
+                                                khẩu?</a>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="account-optional-group">
+                                                <div class="text-center">
+                                                    Bạn không có tài khoản?
+                                                    <a class="btn-create fw-bold " th:href="@{/auth/register}">Đăng
+                                                        ký ngay!</a>
+                                                </div>
+                                                <div class="text-center my-3">
+                                                    <p class="fw-bold">Đăng nhập bằng</p>
+                                                    <a href="/oauth2/authorization/google"
+                                                        class="btn btn-danger rounded-0">
+                                                        <i class="bi bi-google"></i> Google
+                                                    </a>
+                                                    <a href="/oauth2/authorization/facebook"
+                                                        class="btn btn-primary rounded-0">
+                                                        <i class="bi bi-facebook"></i> Facebook
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
