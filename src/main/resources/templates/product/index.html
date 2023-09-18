@@ -111,7 +111,7 @@
 												<div class="product-content">
 													<h3><a href="product-details.html">{{item.name}}</a></h3>
 													<div class="product-price">
-														<span>{{item.price | number :0}} VNĐ</span>
+														<span>{{item.price | number :0}}</span>&emsp13;<span>VNĐ</span>
 													</div>
 												</div>
 											</div>
@@ -2108,9 +2108,9 @@
 						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 							<div class="quickview-content">
 								<strong style="font-size: 20px;">{{productdetail.name}}</strong>
-								<strong style="font-size: 20px;" ng-if="check===0.5"
+								<strong style="font-size: 20px;" ng-if="check==true"
 									id="weightvalue">{{weightvalue}}</strong>&emsp13;
-								<strong style="font-size: 20px;" ng-if="check===1"
+								<strong style="font-size: 20px;" ng-if="check==false"
 									id="weightvalue">{{weightvalue}}</strong>
 								<div class="quickview-ratting-review">
 									<div class="quickview-ratting-wrap">
@@ -2124,13 +2124,13 @@
 										<a href="#"> (1 customer review)</a>
 									</div>
 									<div class="quickview-stock">
-										<p ng-if="check===1">Số lượng: {{quantityandprice.quantity}}</p>
+										<p ng-if="check==false">Số lượng: {{quantityandprice.quantity}}</p>
 
 									</div>
 								</div>
 
-								<h3 id="price" ng-if="check===0.5">{{productdetail.price}}</h3>
-								<h3 id="price" ng-if="check===1">{{quantityandprice.price}}</h3>
+								<h3 id="price" ng-if="check==true">{{productdetail.price}}</h3>
+								<h3 id="price" ng-if="check==false">{{quantityandprice.price}}</h3>
 
 								<div class="quickview-peragraph">
 									<p>{{productdetail.discription}}</p>
@@ -2146,14 +2146,11 @@
 													id="{{item.weight.weightvalue}}"
 													ng-click="weightquantityandprice(item.product.id,item.weight.id)"
 													type="radio" name="weight" value="{{item.weight.weightvalue}}">
-
 												<label class="weight"
-													for="{{item.weight.weightvalue}}">{{item.weight.weightvalue}}
-													KG</label>
+													for="{{item.weight.weightvalue}}">{{item.weight.weightvalue}}</label>
 											</div>
 
 										</div>
-										<p>{{productweight.weight}}</p>
 									</div>
 								</div>
 								<div class="quantity">

@@ -12,4 +12,6 @@ public interface ProductWeightDAO extends JpaRepository<Productweight, Integer> 
 	List<Productweight> findByProduct(Product id);
 
 	Productweight findByProductAndWeight(Product product, Weight weight);
+	
+	Productweight findByProductAndPrice(Product product, Double price);
 }

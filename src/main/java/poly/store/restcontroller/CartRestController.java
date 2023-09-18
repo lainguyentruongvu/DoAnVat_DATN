@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import poly.store.dao.CartDAO;
 import poly.store.dao.CartdetailDAO;
 import poly.store.dao.ProductDAO;
+import poly.store.dao.ProductWeightDAO;
 import poly.store.entity.Account;
 import poly.store.entity.Cart;
 import poly.store.entity.Cartdetail;
 import poly.store.entity.Product;
+import poly.store.entity.Productweight;
 import poly.store.services.AccountService;
 import poly.store.services.CartService;
 
@@ -39,6 +41,9 @@ public class CartRestController {
 
 	@Autowired
 	ProductDAO productDAO;
+	
+	@Autowired
+	ProductWeightDAO productWeightDAO;
 
 	@Autowired
 	CartdetailDAO cartdetailDAO;
@@ -81,12 +86,27 @@ public class CartRestController {
 		return cartservice.save(cd);
 	}
 
-	@GetMapping("checkweight/{id}/{idcart}/{wval}")
+	@GetMapping("/checkweight/{id}/{idcart}/{wval}")
 	public Cartdetail checkweight(@PathVariable("id") Integer id, @PathVariable("idcart") Integer idcart,
 			@PathVariable("wval") String wval) {
 		Cart cart = cartDAO.findById(idcart).get();
 		Product product = productDAO.findById(id).get();
 		Cartdetail cdetail = cartdetailDAO.findByCartAndProductAndWeightvalue(cart, product,wval);
 		return cdetail;
+	}
+	
+	@GetMapping("checkweightnull/{id}/{idcart}")
+	public Cartdetail checkweightnull(@PathVariable("id") Integer id, @PathVariable("idcart") Integer idcart) {
+		Cart cart = cartDAO.findById(idcart).get();
+		Product product = productDAO.findById(id).get();
+		Cartdetail cdetail = cartdetailDAO.findByCartAndProduct(cart, product);
+		return cdetail;
+	}
+	
+	@GetMapping("checkproductweight/{id}/{pricepro}")
+	public Productweight checkproductweight(@PathVariable("id") Integer id,@PathVariable("pricepro") Double pricepro) {
+		Product product = productDAO.findById(id).get();
+		Productweight productweight = productWeightDAO.findByProductAndPrice(product, pricepro);
+		return productweight;
 	}
 }
