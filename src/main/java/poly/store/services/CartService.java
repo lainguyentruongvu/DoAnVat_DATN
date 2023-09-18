@@ -12,5 +12,6 @@ public interface CartService {
 	List<Cartdetail> findByCart(Cart cart);	
 	Cartdetail save(Cartdetail cd);
 	void deleteById(Integer id);
+	Cartdetail findById(Integer id);
 
 }

@@ -13,6 +13,6 @@ public interface CartdetailDAO extends JpaRepository<Cartdetail, Integer> {
 
 	List<Cartdetail> findByCartAndProduct(Cart cart, Product product);	
 
-
+	Cartdetail findByCartAndProductAndWeightvalue(Cart cart, Product product, String wval);
 
 }

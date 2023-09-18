@@ -33,13 +33,15 @@ public class CartRestController {
 
 	@Autowired
 	CartService cartservice;
+
 	@Autowired
 	CartDAO cartDAO;
+
 	@Autowired
 	ProductDAO productDAO;
 
 	@Autowired
-	CartdetailDAO cartdetaiDAO;
+	CartdetailDAO cartdetailDAO;
 
 	@Autowired
 	AccountService accountService;
@@ -57,16 +59,17 @@ public class CartRestController {
 		return cartservice.findByCart(cart);
 	}
 
-//	@PostMapping("/addcart")
-//	public Cartdetail addcart(@RequestParam("quantity") Integer quantity, @RequestBody Cartdetail cd) {
-//		Cartdetail cdetail = cartservice.findByCartAndProduct(cd.getCart(), cd.getProduct());
-//		if (cdetail == null) {
-//			return cartservice.save(cd);
-//		} else {
-//			cdetail.setQuantity(cdetail.getQuantity() + quantity);
-//			return cartservice.save(cdetail);
-//		}
-//	}
+	@PostMapping("/addcartbyid")
+	public Cartdetail addcartbyid(@RequestBody Cartdetail cd, @RequestParam("id") Integer id) {
+		Cartdetail cdetail = cartdetailDAO.findById(id).get();
+		cdetail.setQuantity(cdetail.getQuantity() + cd.getQuantity());
+		return cartservice.save(cdetail);
+	}
+
+	@PostMapping("/addcart")
+	public Cartdetail addcart(@RequestBody Cartdetail cd) {
+		return cartservice.save(cd);
+	}
 
 	@DeleteMapping("/delete/{id}")
 	public void deleteId(@PathVariable("id") Integer id) {
@@ -78,11 +81,12 @@ public class CartRestController {
 		return cartservice.save(cd);
 	}
 
-	@GetMapping("checkweight/{id}/{idcart}")
-	public List<Cartdetail> checkweight(@PathVariable("id") Integer id, @PathVariable("idcart") Integer idcart) {
+	@GetMapping("checkweight/{id}/{idcart}/{wval}")
+	public Cartdetail checkweight(@PathVariable("id") Integer id, @PathVariable("idcart") Integer idcart,
+			@PathVariable("wval") String wval) {
 		Cart cart = cartDAO.findById(idcart).get();
 		Product product = productDAO.findById(id).get();
-		List<Cartdetail> cdetail = cartdetaiDAO.findByCartAndProduct(cart, product);
+		Cartdetail cdetail = cartdetailDAO.findByCartAndProductAndWeightvalue(cart, product,wval);
 		return cdetail;
 	}
 }
