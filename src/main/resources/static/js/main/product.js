@@ -6,49 +6,19 @@ app.controller("ctrl", function($scope, $http) {
 	$scope.username = $("#username").text();
 
 	$scope.products = [];
+
 	//Load product
 	$scope.product = function() {
 		$http.get("/rest/products").then(resp => {
 			$scope.products = resp.data;
 		});
 	}
-
-	$scope.pagerproduct = {
-		page: 0,
-		size: 12,
-		get products() {
-			var start = this.page * this.size;
-			return $scope.products.slice(start, start + this.size);
-
-		},
-		get count() {
-			return Math.ceil(1.0 * $scope.products.length / this.size);
-		},
-		first() {
-			this.page = 0;
-		},
-		prev() {
-			this.page--;
-			if (this.page < 0) {
-				this.last();
-			}
-		},
-		next() {
-			this.page++;
-			if (this.page >= this.count) {
-				this.first();
-			}
-		},
-		last() {
-			this.page = this.count - 1;
-		}
-	}
 	$scope.product();
 
 
 
 
-	//Load product
+	//Load category
 	$scope.category = function() {
 		$http.get("/rest/category").then(resp => {
 			$scope.category = resp.data;
@@ -101,7 +71,6 @@ app.controller("ctrl", function($scope, $http) {
 	// lấy dữ liệu từ giỏ hàng chi tiết
 	$scope.getcartdetails = function() {
 		$http.get(`/rest/cart/cartdetails/` + $scope.username).then(resp => {
-
 			$scope.cartdetails = resp.data;
 			$scope.checkbox();
 			$scope.tinhtien();
@@ -147,24 +116,55 @@ app.controller("ctrl", function($scope, $http) {
 
 	$scope.quantity = 1;
 	$scope.addcart = function(p) {
-		if ($scope.username == "") {
-			location.href = "/auth/login/form";
-		} else {
-			$scope.data = {
-				price: $("#price").text(),
-				quantity: $scope.quantity,
-				weightvalue: $("#weightvalue").text(),
-				product: { id: p.id },
-				cart: { id: $scope.cartid }
+		$scope.kiemtraweight = { weightvalue: $("#weightvalue").text() }
+		$http.get(`/rest/cart/checkweight/${p.id}/${$scope.cartid}`).then(resp => {
+			$scope.checkweight = resp.data;
+			for (var i = 0; i < $scope.checkweight.length; i++) {
+				console.log($scope.checkweight[i].weightvalue);
+				if ($scope.checkweight[i].weightvalue === $scope.kiemtraweight.weightvalue) {
+
+					$scope.data = {
+						price: $("#price").text(),
+						quantity: $scope.quantity,
+						weightvalue: $("#weightvalue").text(),
+						product: { id: p.id },
+						cart: { id: $scope.cartid }
+					}
+					$http.post("/rest/cart/addcart?quantity=" + $scope.quantity, $scope.data).then(resp => {
+						Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+						$scope.getcartdetails();
+						$scope.getTotalItem()
+					}).catch(error => {
+						console.log(error)
+					})
+
+				}
 			}
-			$http.post("/rest/cart/addcart?quantity=" + $scope.quantity, $scope.data).then(resp => {
-				Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
-				$scope.getcartdetails();
-				$scope.getTotalItem()
-			}).catch(error => {
-				console.log(error)
-			})
-		}
+			console.log($scope.checkweight);
+		}).catch(error => {
+			console.log(error)
+		})
+
+
+
+		//		if ($scope.username == "") {
+		//			location.href = "/auth/login/form";
+		//		} else {
+		//			$scope.data = {
+		//				price: $("#price").text(),
+		//				quantity: $scope.quantity,
+		//				weightvalue: $("#weightvalue").text(),
+		//				product: { id: p.id },
+		//				cart: { id: $scope.cartid }
+		//			}
+		//			$http.post("/rest/cart/addcart?quantity=" + $scope.quantity, $scope.data).then(resp => {
+		//				Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+		//				$scope.getcartdetails();
+		//				$scope.getTotalItem()
+		//			}).catch(error => {
+		//				console.log(error)
+		//			})
+		//		}
 
 	}
 
@@ -392,11 +392,9 @@ app.controller("ctrl", function($scope, $http) {
 	//trang chi tiết	
 
 	$scope.productdetails = function(id) {
-
 		$http.get(`/rest/products/${id}`).then(resp => {
 			$scope.productdetail = resp.data;
 			$scope.check = 0.5;
-			console.log($scope.productdetail);
 		}).catch(error => {
 			console.log("Error", error);
 		})
@@ -406,23 +404,18 @@ app.controller("ctrl", function($scope, $http) {
 		}).catch(error => {
 			console.log("Error", error);
 		})
-		$scope.weightquantityandprice(id);
 	}
 
 
-	$scope.weightquantityandprice = function(id) {
+	$scope.weightquantityandprice = function(idpro, idw) {
 		$scope.check = 1;
-		$http.get(`/rest/products/weight/quantityandprice/${id}`).then(resp => {
+		$http.get(`/rest/products/weight/quantityandprice/${idpro}/${idw}`).then(resp => {
 			$scope.quantityandprice = resp.data;
-			$scope.weightvalue = $scope.quantityandprice.weightvalue
+			$scope.weightvalue = $scope.quantityandprice.weight.weightvalue
 		}).catch(error => {
 			console.log("Error", error);
 		})
 	}
-
-
-
-
 
 
 
@@ -575,5 +568,38 @@ app.controller("ctrl", function($scope, $http) {
 	}
 
 	$scope.getfavorite();
+
+
+
+	$scope.pagerproduct = {
+		page: 0,
+		size: 12,
+		get products() {
+			var start = this.page * this.size;
+			return $scope.products.slice(start, start + this.size);
+
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.products.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+	}
 
 })

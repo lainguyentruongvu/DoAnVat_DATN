@@ -2107,10 +2107,13 @@
 						</div>
 						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 							<div class="quickview-content">
-								<h2>{{productdetail.name}}
-								</h2>
-								<h2 ng-if="check===0" id="weightvalue">0.5 KG</h2>
-								<h2 ng-if="check===1" id="weightvalue">{{weightvalue}} KG</h2>
+								<strong style="font-size: 20px;">{{productdetail.name}}</strong>
+								<strong style="font-size: 20px;" ng-if="check===0.5"
+									id="weightvalue">0.5</strong>&emsp13;<strong style="font-size: 20px;"
+									ng-if="check===0.5">KG</strong>
+								<strong style="font-size: 20px;" ng-if="check===1"
+									id="weightvalue">{{weightvalue}}</strong>&emsp13;<strong style="font-size: 20px;"
+									ng-if="check===1">KG</strong>
 								<div class="quickview-ratting-review">
 									<div class="quickview-ratting-wrap">
 										<div class="quickview-ratting">
@@ -2128,7 +2131,7 @@
 									</div>
 								</div>
 
-								<h3 id="price" ng-if="check===0">{{productdetail.price}}</h3>
+								<h3 id="price" ng-if="check===0.5">{{productdetail.price}}</h3>
 								<h3 id="price" ng-if="check===1">{{quantityandprice.price}}</h3>
 
 								<div class="quickview-peragraph">
@@ -2140,17 +2143,17 @@
 											<h5 class="title">Trọng lượng</h5>
 
 											<div ng-repeat="item in productweight">
-
-												<input class="weight" 
+												<input class="weight"
 													ng-class="{{check==item.weight.weightvalue}} ? 'bg-danger' : 'bg-primary'"
 													id="{{item.weight.weightvalue}}"
-													ng-click="weightquantityandprice(item.weight.id)" type="radio"
-													name="weight" value="{{item.weight.weightvalue}}">
-											
-												<label  ng-class="{{check==item.weight.weightvalue}} ? 'bg-danger' : 'bg-primary'" class="weight"
+													ng-click="weightquantityandprice(item.product.id,item.weight.id)"
+													type="radio" name="weight" value="{{item.weight.weightvalue}}">
+
+												<label class="weight"
 													for="{{item.weight.weightvalue}}">{{item.weight.weightvalue}}
 													KG</label>
 											</div>
+
 										</div>
 										<p>{{productweight.weight}}</p>
 									</div>

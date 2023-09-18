@@ -55,9 +55,11 @@ public class IndexRestController {
 		List<Productweight> productweight = productweightdao.findByProduct(product);
 		return productweight;
 	}
-	@GetMapping("weight/quantityandprice/{id}")
-	public Weight weightandprice(@PathVariable("id") Integer id) {	
-		return weightdao.findById(id).get();
-	}
 
+	@GetMapping("weight/quantityandprice/{idpro}/{idw}")
+	public Productweight weightandprice(@PathVariable("idpro") Integer idpro, @PathVariable("idw") Integer idw) {
+		Product product = productservice.findById(idpro);
+		Weight weight = weightdao.findById(idw).get();
+		return productweightdao.findByProductAndWeight(product, weight);
+	}
 }

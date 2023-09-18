@@ -1,7 +1,5 @@
 package poly.store.entity;
 
-
-
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -12,19 +10,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
-
 import lombok.Data;
 
 @SuppressWarnings("serial")
 @Data
 @Entity
 @Table(name = "Productweights")
-public class Productweight  implements Serializable{
+public class Productweight implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
-	
+	Integer quantity;
+	Double price;
 	@ManyToOne
 	@JoinColumn(name = "Productid")
 	Product product;

@@ -11,5 +11,8 @@ import poly.store.entity.Product;
 public interface CartdetailDAO extends JpaRepository<Cartdetail, Integer> {
 	List<Cartdetail> findByCart(Cart cart);
 
-	Cartdetail findByCartAndProduct(Cart cart, Product product);
+	List<Cartdetail> findByCartAndProduct(Cart cart, Product product);	
+
+
+
 }

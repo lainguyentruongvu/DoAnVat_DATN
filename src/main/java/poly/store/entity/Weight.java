@@ -26,8 +26,7 @@ public class Weight implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	String weightvalue;
-	Integer quantity;
-	Double price;
+
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "weight")

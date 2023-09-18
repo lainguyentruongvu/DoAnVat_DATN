@@ -9,8 +9,7 @@ import poly.store.entity.Product;
 
 public interface CartService {
 	Cart findByAccount(Account account);
-	List<Cartdetail> findByCart(Cart cart);
-	Cartdetail findByCartAndBook(Cart cart, Product product);
+	List<Cartdetail> findByCart(Cart cart);	
 	Cartdetail save(Cartdetail cd);
 	void deleteById(Integer id);
 

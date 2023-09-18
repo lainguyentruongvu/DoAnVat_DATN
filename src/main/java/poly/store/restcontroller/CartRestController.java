@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import poly.store.dao.CartDAO;
+import poly.store.dao.CartdetailDAO;
+import poly.store.dao.ProductDAO;
 import poly.store.entity.Account;
 import poly.store.entity.Cart;
 import poly.store.entity.Cartdetail;
+import poly.store.entity.Product;
 import poly.store.services.AccountService;
 import poly.store.services.CartService;
 
@@ -29,6 +33,13 @@ public class CartRestController {
 
 	@Autowired
 	CartService cartservice;
+	@Autowired
+	CartDAO cartDAO;
+	@Autowired
+	ProductDAO productDAO;
+
+	@Autowired
+	CartdetailDAO cartdetaiDAO;
 
 	@Autowired
 	AccountService accountService;
@@ -46,16 +57,16 @@ public class CartRestController {
 		return cartservice.findByCart(cart);
 	}
 
-	@PostMapping("/addcart")
-	public Cartdetail addcart(@RequestParam("quantity") Integer quantity, @RequestBody Cartdetail cd) {
-		Cartdetail cdetail = cartservice.findByCartAndBook(cd.getCart(), cd.getProduct());
-		if (cdetail == null) {
-			return cartservice.save(cd);
-		} else {
-			cdetail.setQuantity(cdetail.getQuantity() + quantity);
-			return cartservice.save(cdetail);
-		}
-	}
+//	@PostMapping("/addcart")
+//	public Cartdetail addcart(@RequestParam("quantity") Integer quantity, @RequestBody Cartdetail cd) {
+//		Cartdetail cdetail = cartservice.findByCartAndProduct(cd.getCart(), cd.getProduct());
+//		if (cdetail == null) {
+//			return cartservice.save(cd);
+//		} else {
+//			cdetail.setQuantity(cdetail.getQuantity() + quantity);
+//			return cartservice.save(cdetail);
+//		}
+//	}
 
 	@DeleteMapping("/delete/{id}")
 	public void deleteId(@PathVariable("id") Integer id) {
@@ -67,4 +78,11 @@ public class CartRestController {
 		return cartservice.save(cd);
 	}
 
+	@GetMapping("checkweight/{id}/{idcart}")
+	public List<Cartdetail> checkweight(@PathVariable("id") Integer id, @PathVariable("idcart") Integer idcart) {
+		Cart cart = cartDAO.findById(idcart).get();
+		Product product = productDAO.findById(id).get();
+		List<Cartdetail> cdetail = cartdetaiDAO.findByCartAndProduct(cart, product);
+		return cdetail;
+	}
 }
