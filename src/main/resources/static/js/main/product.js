@@ -115,21 +115,37 @@ app.controller("ctrl", function ($scope, $http) {
 	//
 	//	}
 
+	var modal = document.getElementById("exampleModal");
+	document.addEventListener("keydown", function (event) {
+		// Kiểm tra xem phím đã nhấn có phải là phím Esc (mã phím 27) không
+		if (event.keyCode === 27) {
+			$scope.weightvalue = null;
+			console.log($scope.weightvalue)
+		}
+	});
+	document.addEventListener("click", function (event) {
+		// Kiểm tra xem người dùng đã nhấp chuột bên ngoài modal chưa
+		if (event.target === modal) {
+			// Nếu người dùng đã nhấp chuột bên ngoài modal, đóng modal
+			$scope.weightvalue = null;
+			console.log($scope.weightvalue)
+		}
+	});
+	$scope.thoatmodal = function () {
+		$scope.weightvalue = null;
+		console.log($scope.weightvalue)
+	}
 
 	$scope.quantity = 1;
-	$scope.addcart = function (p) {
-		if ($scope.weightvalue == null) {
-			$http.get(`/rest/cart/checkproductweight/${p.id}/${p.price}`).then(resp => {
-				$scope.checkproweight = resp.data;
-				$scope.weightvalue = $scope.checkproweight.weight.weightvalue;
-				console.log($scope.weightvalue)
-			}).catch(error => {
-				console.log(error)
-			})
 
+	$scope.addcart = function (p) {
+		$http.get(`/rest/cart/checkproductweight/${p.id}/${p.price}`).then(resp => {
+			$scope.checkproweight = resp.data;
+			$scope.weightvalue = $scope.checkproweight.weight.weightvalue;
+			
 			$http.get(`/rest/cart/checkweightnull/${p.id}/${$scope.cartid}`).then(resp => {
-				$scope.checkweight = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
-				if ($scope.checkweight.length == 0) {
+				$scope.checkweightnull = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
+				if ($scope.checkweightnull.length == 0) {
 					$scope.data = {
 						price: p.price,
 						quantity: $scope.quantity,
@@ -161,7 +177,7 @@ app.controller("ctrl", function ($scope, $http) {
 							id: $scope.cartid
 						}
 					}
-					$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweight.id, $scope.data).then(resp => {
+					$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweightnull.id, $scope.data).then(resp => {
 						$scope.data = {};
 						Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
 						$scope.getcartdetails();
@@ -173,6 +189,69 @@ app.controller("ctrl", function ($scope, $http) {
 			}).catch(error => {
 				console.log(error)
 			})
+
+		}).catch(error => {
+			console.log(error)
+		})
+	}
+	$scope.addcartdetail = function (p) {
+		if ($scope.weightvalue == null) {
+			$http.get(`/rest/cart/checkproductweight/${p.id}/${p.price}`).then(resp => {
+				$scope.checkproweight = resp.data;
+				$scope.weightvalue = $scope.checkproweight.weight.weightvalue;
+
+				$http.get(`/rest/cart/checkweight/${p.id}/${$scope.cartid}/${$scope.weightvalue}`).then(resp => {
+					$scope.checkweight = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
+					console.log($scope.checkweight.length)
+					if ($scope.checkweight.length == 0) {
+						$scope.data = {
+							price: $("#price").text(),
+							quantity: $scope.quantity,
+							weightvalue: $scope.weightvalue,
+							product: {
+								id: p.id
+							},
+							cart: {
+								id: $scope.cartid
+							}
+						}
+						$http.post("/rest/cart/addcart", $scope.data).then(resp => {
+							$scope.data = {};
+							Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+							$scope.getcartdetails();
+							$scope.getTotalItem()
+						}).catch(error => {
+							console.log(error)
+						})
+					} else {
+						$scope.data = {
+							price: $("#price").text(),
+							quantity: $scope.quantity,
+							weightvalue: $scope.weightvalue,
+							product: {
+								id: p.id
+							},
+							cart: {
+								id: $scope.cartid
+							}
+						}
+						$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweight.id, $scope.data).then(resp => {
+							$scope.data = {};
+							Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+							$scope.getcartdetails();
+							$scope.getTotalItem()
+						}).catch(error => {
+							console.log(error)
+						})
+					}
+				}).catch(error => {
+					console.log(error)
+				})
+
+			}).catch(error => {
+				console.log(error)
+			})
+
 		} else {
 			$http.get(`/rest/cart/checkweight/${p.id}/${$scope.cartid}/${$scope.weightvalue}`).then(resp => {
 				$scope.checkweight = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
