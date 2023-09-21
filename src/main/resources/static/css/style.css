@@ -5863,14 +5863,14 @@ input[type="radio"] {
 }
 
 /* Thiết lập kiểu cho label gần input radio */
-.weight  {
-	width: 100px;
+.weight {
+	width: 90px;
 	float: left;
 	display: inline-block;
 	padding: 10px 20px;
-	background-color: #3498db;
-	color: #fff;
-	border-radius: 5px;
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+	border: #000 solid 3px;
 	cursor: pointer;
 	transition: background-color 0.3s ease, transform 0.2s ease;
 	text-align: center;
@@ -5880,11 +5880,10 @@ input[type="radio"] {
 
 /* Thiết lập kiểu cho label gần input radio đã chọn */
 input[type="radio"]:checked+.weight {
-	background-color: #e74c3c;
+	border: rgb(255, 128, 64) solid 3px;
 	transform: scale(1.1);
 }
 
-/* Hiệu ứng hover cho label */
-.weight:hover {
+Hiệu ứng hover cho label .weight:hover {
 	background-color: #2980b9;
 }

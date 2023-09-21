@@ -62,14 +62,19 @@ function service(districtid) {
 		data: {
 			shop_id: 4463615,
 			from_district: 1572,
-			to_district: districtid
+			to_district: districtid,
+			
 		},
+		
 		success: function(data) {
 			renderDataS(data.data)
 			console.log(data);
+			console.log(districtid);
 		},
+		
 		error: function(error) {
-			alert("Đã xảy ra lỗi: " + error.responseText);
+			console.log( error);
+//			alert("Đã xảy ra lỗi: " + error.responseText);
 		}
 	})
 }
@@ -95,11 +100,14 @@ function phivc(serviceid, districtid, wardcode) {
 			width: 15
 		},
 		success: function(data) {
+			var event = new CustomEvent('phiDataAvailable', { detail: data.data.total });
+			document.dispatchEvent(event);
 			//renderDataP(data.data, "ward")
 			console.log(data.data.total);
+
 		},
 		error: function(error) {
-			alert("Đã xảy ra lỗi: " + error.responseText);
+//			alert("Đã xảy ra lỗi: " + error.responseText);
 		}
 	})
 }
@@ -190,6 +198,7 @@ $("#service").change(() => {
 	// lay wardcode tu select
 	var ward = document.getElementById("ward");
 	var wardcode = ward.value;
+
 	console.log(wardcode)
 	phivc(sid, dtid, wardcode)
 	//printResult();
@@ -203,6 +212,12 @@ var printResult = () => {
 			", " + $("#district option:selected").text() + ", " +
 			$("#province option:selected").text();
 		$("#result").val(result);
+
+		var event = new CustomEvent('resultAvailable', { detail: result });
+		document.dispatchEvent(event);
+		console.log(result);
+
 	}
+
 
 }

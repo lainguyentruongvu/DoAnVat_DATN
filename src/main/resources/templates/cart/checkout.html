@@ -46,7 +46,8 @@
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
 										<label>Số điện thoại<span>*</span></label>
-										<input type="number" name="number" placeholder="" required="required">
+										<input type="number"  ng-model="phone" id="phone" name="number" placeholder=""
+											required="required">
 									</div>
 								</div>
 
@@ -86,7 +87,7 @@
 								<div class="col-lg-12 ">
 									<div class="form-group">
 										<label>Lời nhắn cho người bán<span>*</span></label>
-										<input type="text" name="name" placeholder="">
+										<input type="text" id="message" name="message" placeholder="">
 									</div>
 								</div>
 
@@ -102,9 +103,9 @@
 							<h2>CART TOTALS</h2>
 							<div class="content">
 								<ul>
-									<li>Sub Total<span>{{gia}}</span></li>
-									<li>(+) Shipping<span>$10.00</span></li>
-									<li class="last">Total<span>$340.00</span></li>
+									<li>Tổng tiền<span>{{total | number :0}}</span></li>
+									<li>(+) Phí ship<span id="ship">{{ship | number:0}}</span></li>
+									<li class="last">Thành tiền<span>{{tongtienthanhtoan | number:0}}</span></li>
 								</ul>
 							</div>
 						</div>
@@ -135,7 +136,7 @@
 						<div class="single-widget get-button">
 							<div class="content">
 								<div class="button">
-									<a ng-click="checkoutaa()" class="btn">proceed to checkout</a>
+									<button ng-click="thanhtoan()" class="btn">Thanh toán</button>
 								</div>
 							</div>
 						</div>
@@ -223,7 +224,7 @@
 		integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script th:src="@{/js/main/API.js}"></script>
-	
+
 </body>
 
 </html>

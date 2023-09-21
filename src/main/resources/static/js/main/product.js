@@ -1,5 +1,5 @@
 const app = angular.module("app", []);
-app.controller("ctrl", function ($scope, $http) {
+app.controller("ctrl", function($scope, $http, $location, $window) {
 
 
 	//Lấy tên tài khoản
@@ -8,7 +8,7 @@ app.controller("ctrl", function ($scope, $http) {
 	$scope.products = [];
 
 	//Load product
-	$scope.product = function () {
+	$scope.product = function() {
 		$http.get("/rest/products").then(resp => {
 			$scope.products = resp.data;
 		});
@@ -19,7 +19,7 @@ app.controller("ctrl", function ($scope, $http) {
 
 
 	//Load category
-	$scope.category = function () {
+	$scope.category = function() {
 		$http.get("/rest/category").then(resp => {
 			$scope.category = resp.data;
 		});
@@ -29,7 +29,7 @@ app.controller("ctrl", function ($scope, $http) {
 
 
 	//Sản phẩm theo loại
-	$scope.productcategory = function (id) {
+	$scope.productcategory = function(id) {
 		var url = `/rest/category/product/${id}`;
 		$http.get(url).then(resp => {
 			$scope.products = resp.data;
@@ -41,12 +41,12 @@ app.controller("ctrl", function ($scope, $http) {
 
 	//Tìm kiếm theo ký tự	
 	$scope.searchKeyword = '';
-	$scope.submitForm = function () {
+	$scope.submitForm = function() {
 		$http.get('/rest/products/search/', {
 			params: {
 				keyword: $scope.searchKeyword
 			}
-		}).then(function (response) {
+		}).then(function(response) {
 			$scope.products = response.data;
 			$scope.pager.first();
 			console.log('Search results:', response.data);
@@ -58,7 +58,7 @@ app.controller("ctrl", function ($scope, $http) {
 
 
 	// load cart username
-	$scope.getcartid = function () {
+	$scope.getcartid = function() {
 		$http.get(`/rest/cart/` + $scope.username).then(resp => {
 			$scope.cart = resp.data;
 			$scope.cartid = resp.data.id;
@@ -71,11 +71,12 @@ app.controller("ctrl", function ($scope, $http) {
 
 
 	// lấy dữ liệu từ giỏ hàng chi tiết
-	$scope.getcartdetails = function () {
+	$scope.getcartdetails = function() {
 		$http.get(`/rest/cart/cartdetails/` + $scope.username).then(resp => {
 			$scope.cartdetails = resp.data;
 			$scope.checkbox();
 			$scope.tinhtien();
+
 		}).catch(error => {
 			console.log("Error", error)
 		})
@@ -87,7 +88,7 @@ app.controller("ctrl", function ($scope, $http) {
 
 
 	//tổng item
-	$scope.getTotalItem = function () {
+	$scope.getTotalItem = function() {
 		var totalQuantity = $scope.cartdetails.length;
 		return totalQuantity;
 	}
@@ -97,7 +98,7 @@ app.controller("ctrl", function ($scope, $http) {
 	//	$scope.addcart = function(p) {
 	//		if ($scope.username == "") {
 	//			location.href = "/auth/login/form";
-	//		} else {
+	//		} else {}
 	//			$scope.data = {
 	//				price: p.price,
 	//				quantity: 1,
@@ -116,14 +117,14 @@ app.controller("ctrl", function ($scope, $http) {
 	//	}
 
 	var modal = document.getElementById("exampleModal");
-	document.addEventListener("keydown", function (event) {
+	document.addEventListener("keydown", function(event) {
 		// Kiểm tra xem phím đã nhấn có phải là phím Esc (mã phím 27) không
 		if (event.keyCode === 27) {
 			$scope.weightvalue = null;
 			console.log($scope.weightvalue)
 		}
 	});
-	document.addEventListener("click", function (event) {
+	document.addEventListener("click", function(event) {
 		// Kiểm tra xem người dùng đã nhấp chuột bên ngoài modal chưa
 		if (event.target === modal) {
 			// Nếu người dùng đã nhấp chuột bên ngoài modal, đóng modal
@@ -131,78 +132,140 @@ app.controller("ctrl", function ($scope, $http) {
 			console.log($scope.weightvalue)
 		}
 	});
-	$scope.thoatmodal = function () {
+	$scope.thoatmodal = function() {
 		$scope.weightvalue = null;
 		console.log($scope.weightvalue)
 	}
 
 	$scope.quantity = 1;
 
-	$scope.addcart = function (p) {
-		$http.get(`/rest/cart/checkproductweight/${p.id}/${p.price}`).then(resp => {
-			$scope.checkproweight = resp.data;
-			$scope.weightvalue = $scope.checkproweight.weight.weightvalue;
-			
-			$http.get(`/rest/cart/checkweightnull/${p.id}/${$scope.cartid}`).then(resp => {
-				$scope.checkweightnull = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
-				if ($scope.checkweightnull.length == 0) {
-					$scope.data = {
-						price: p.price,
-						quantity: $scope.quantity,
-						weightvalue: $scope.weightvalue,
-						product: {
-							id: p.id
-						},
-						cart: {
-							id: $scope.cartid
-						}
-					}
-					$http.post("/rest/cart/addcart", $scope.data).then(resp => {
-						$scope.data = {};
-						Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
-						$scope.getcartdetails();
-						$scope.getTotalItem()
-					}).catch(error => {
-						console.log(error)
-					})
-				} else {
-					$scope.data = {
-						price: p.price,
-						quantity: $scope.quantity,
-						weightvalue: $scope.weightvalue,
-						product: {
-							id: p.id
-						},
-						cart: {
-							id: $scope.cartid
-						}
-					}
-					$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweightnull.id, $scope.data).then(resp => {
-						$scope.data = {};
-						Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
-						$scope.getcartdetails();
-						$scope.getTotalItem()
-					}).catch(error => {
-						console.log(error)
-					})
-				}
-			}).catch(error => {
-				console.log(error)
-			})
+	$scope.addcart = function(p) {
+		if ($scope.username == "") {
+			location.href = "/auth/login/form";
+		} else {
 
-		}).catch(error => {
-			console.log(error)
-		})
-	}
-	$scope.addcartdetail = function (p) {
-		if ($scope.weightvalue == null) {
 			$http.get(`/rest/cart/checkproductweight/${p.id}/${p.price}`).then(resp => {
 				$scope.checkproweight = resp.data;
 				$scope.weightvalue = $scope.checkproweight.weight.weightvalue;
 
+				$http.get(`/rest/cart/checkweightnull/${p.id}/${$scope.cartid}`).then(resp => {
+					$scope.checkweightnull = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
+					if ($scope.checkweightnull.length == 0) {
+						$scope.data = {
+							price: p.price,
+							quantity: $scope.quantity,
+							weightvalue: $scope.weightvalue,
+							product: {
+								id: p.id
+							},
+							cart: {
+								id: $scope.cartid
+							}
+						}
+						$http.post("/rest/cart/addcart", $scope.data).then(resp => {
+							$scope.data = {};
+							Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+							$scope.getcartdetails();
+							$scope.getTotalItem()
+						}).catch(error => {
+							console.log(error)
+						})
+					} else {
+						$scope.data = {
+							price: p.price,
+							quantity: $scope.quantity,
+							weightvalue: $scope.weightvalue,
+							product: {
+								id: p.id
+							},
+							cart: {
+								id: $scope.cartid
+							}
+						}
+						$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweightnull.id, $scope.data).then(resp => {
+							$scope.data = {};
+							Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+							$scope.getcartdetails();
+							$scope.getTotalItem()
+						}).catch(error => {
+							console.log(error)
+						})
+					}
+				}).catch(error => {
+					console.log(error)
+				})
+
+
+			}).catch(error => {
+				console.log(error)
+			})
+		}
+	}
+	$scope.addcartdetail = function(p) {
+		if ($scope.username == "") {
+			location.href = "/auth/login/form";
+		} else {
+
+			if ($scope.weightvalue == null) {
+				$http.get(`/rest/cart/checkproductweight/${p.id}/${p.price}`).then(resp => {
+					$scope.checkproweight = resp.data;
+					$scope.weightvalue = $scope.checkproweight.weight.weightvalue;
+
+					$http.get(`/rest/cart/checkweight/${p.id}/${$scope.cartid}/${$scope.weightvalue}`).then(resp => {
+						$scope.checkweight = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
+						console.log($scope.checkweight.length)
+						if ($scope.checkweight.length == 0) {
+							$scope.data = {
+								price: $("#price").text(),
+								quantity: $scope.quantity,
+								weightvalue: $scope.weightvalue,
+								product: {
+									id: p.id
+								},
+								cart: {
+									id: $scope.cartid
+								}
+							}
+							$http.post("/rest/cart/addcart", $scope.data).then(resp => {
+								$scope.data = {};
+								Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+								$scope.getcartdetails();
+								$scope.getTotalItem()
+							}).catch(error => {
+								console.log(error)
+							})
+						} else {
+							$scope.data = {
+								price: $("#price").text(),
+								quantity: $scope.quantity,
+								weightvalue: $scope.weightvalue,
+								product: {
+									id: p.id
+								},
+								cart: {
+									id: $scope.cartid
+								}
+							}
+							$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweight.id, $scope.data).then(resp => {
+								$scope.data = {};
+								Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+								$scope.getcartdetails();
+								$scope.getTotalItem()
+							}).catch(error => {
+								console.log(error)
+							})
+						}
+					}).catch(error => {
+						console.log(error)
+					})
+
+				}).catch(error => {
+					console.log(error)
+				})
+
+			} else {
 				$http.get(`/rest/cart/checkweight/${p.id}/${$scope.cartid}/${$scope.weightvalue}`).then(resp => {
 					$scope.checkweight = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
-					console.log($scope.checkweight.length)
 					if ($scope.checkweight.length == 0) {
 						$scope.data = {
 							price: $("#price").text(),
@@ -247,67 +310,16 @@ app.controller("ctrl", function ($scope, $http) {
 				}).catch(error => {
 					console.log(error)
 				})
-
-			}).catch(error => {
-				console.log(error)
-			})
-
-		} else {
-			$http.get(`/rest/cart/checkweight/${p.id}/${$scope.cartid}/${$scope.weightvalue}`).then(resp => {
-				$scope.checkweight = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
-				if ($scope.checkweight.length == 0) {
-					$scope.data = {
-						price: $("#price").text(),
-						quantity: $scope.quantity,
-						weightvalue: $scope.weightvalue,
-						product: {
-							id: p.id
-						},
-						cart: {
-							id: $scope.cartid
-						}
-					}
-					$http.post("/rest/cart/addcart", $scope.data).then(resp => {
-						$scope.data = {};
-						Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
-						$scope.getcartdetails();
-						$scope.getTotalItem()
-					}).catch(error => {
-						console.log(error)
-					})
-				} else {
-					$scope.data = {
-						price: $("#price").text(),
-						quantity: $scope.quantity,
-						weightvalue: $scope.weightvalue,
-						product: {
-							id: p.id
-						},
-						cart: {
-							id: $scope.cartid
-						}
-					}
-					$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweight.id, $scope.data).then(resp => {
-						$scope.data = {};
-						Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
-						$scope.getcartdetails();
-						$scope.getTotalItem()
-					}).catch(error => {
-						console.log(error)
-					})
-				}
-			}).catch(error => {
-				console.log(error)
-			})
+			}
 		}
 	}
 
 
 	//Tăng giảm số lượng sản phẩm chi tiết
-	$scope.productdetailincrease = function () {
+	$scope.productdetailincrease = function() {
 		$scope.quantity = $scope.quantity + 1;
 	}
-	$scope.productdetaireduce = function () {
+	$scope.productdetaireduce = function() {
 		if ($scope.quantity <= 1) {
 			Swal.fire("error", "Số lượng không nhỏ hơn một", "error");
 		} else {
@@ -324,7 +336,7 @@ app.controller("ctrl", function ($scope, $http) {
 
 
 	// xóa sản phẩm khỏi giỏ hàng
-	$scope.deleteid = function (id) {
+	$scope.deleteid = function(id) {
 		$http.delete(`/rest/cart/delete/${id}`).then(resp => {
 			$scope.getcartdetails();
 			localStorage.clear();
@@ -336,14 +348,14 @@ app.controller("ctrl", function ($scope, $http) {
 
 
 	//Tăng số lượng sản phẩm
-	$scope.updateincrease = function (cd, newquantity) {
+	$scope.updateincrease = function(cd, newquantity) {
 		cd.quantity++;
-		$http.put(`/rest/cart/updateqty`, cd).then(resp => {}).catch(error => {
+		$http.put(`/rest/cart/updateqty`, cd).then(resp => { }).catch(error => {
 			console.log("Error", error);
 		})
 		$scope.selectedItems = JSON.parse(localStorage.getItem("selectedItems"))
 
-		var index = $scope.selectedItems.findIndex(function (p) {
+		var index = $scope.selectedItems.findIndex(function(p) {
 			return p.id === cd.id;
 		});
 		if (index !== -1) {
@@ -360,19 +372,19 @@ app.controller("ctrl", function ($scope, $http) {
 
 
 	//Giảm số lượng sản phẩm
-	$scope.updatereduce = function (cd, newquantity) {
+	$scope.updatereduce = function(cd, newquantity) {
 		if (cd.quantity <= 1) {
 			localStorage.clear();
 			$scope.deleteid(cd.id)
 		} else {
 			cd.quantity--;
-			$http.put(`/rest/cart/updateqty`, cd).then(resp => {}).catch(error => {
+			$http.put(`/rest/cart/updateqty`, cd).then(resp => { }).catch(error => {
 				console.log("Error", error);
 			})
 
 			$scope.selectedItems = JSON.parse(localStorage.getItem("selectedItems"))
 
-			var index = $scope.selectedItems.findIndex(function (p) {
+			var index = $scope.selectedItems.findIndex(function(p) {
 				return p.id === cd.id;
 			});
 			if (index !== -1) {
@@ -394,13 +406,12 @@ app.controller("ctrl", function ($scope, $http) {
 
 
 	// Kiểm tra và cập nhật localStorage khi checkbox thay đổi
-	$scope.toggleSelected = function (item) {
-
+	$scope.toggleSelected = function(item) {
 		var localStorageKey = 'selectedItems';
 		var selectedItems = JSON.parse(localStorage.getItem(localStorageKey)) || [];
 
 		// Kiểm tra xem sản phẩm có trong danh sách đã lưu trước đó không
-		var index = selectedItems.findIndex(function (selectedItem) {
+		var index = selectedItems.findIndex(function(selectedItem) {
 			return selectedItem.id === item.id;
 		});
 
@@ -432,12 +443,12 @@ app.controller("ctrl", function ($scope, $http) {
 
 	var selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
 
-	$scope.checkbox = function () {
+	$scope.checkbox = function() {
 		$http.get(`/rest/cart/cartdetails/` + $scope.username).then(resp => {
 			$scope.cartdetails = resp.data;
 
-			selectedItems.forEach(function (selectedItem) {
-				var item = $scope.cartdetails.find(function (item) {
+			selectedItems.forEach(function(selectedItem) {
+				var item = $scope.cartdetails.find(function(item) {
 					return item.id === selectedItem.id;
 				});
 				//
@@ -451,11 +462,11 @@ app.controller("ctrl", function ($scope, $http) {
 	}
 
 	//Tính tiền
-	$scope.tinhtien = function () {
+	$scope.tinhtien = function() {
 		var storedProducts = localStorage.getItem('selectedItems');
 		$scope.tinhtienproduct = JSON.parse(storedProducts);
 		$scope.totalPrice = 0;
-		$scope.tinhtienproduct.forEach(function (product) {
+		$scope.tinhtienproduct.forEach(function(product) {
 			$scope.totalPrice += product.price * product.quantity;
 			$scope.total = $scope.totalPrice;
 
@@ -465,7 +476,7 @@ app.controller("ctrl", function ($scope, $http) {
 
 	}
 
-	//Danh sách voucher
+
 
 
 
@@ -474,7 +485,7 @@ app.controller("ctrl", function ($scope, $http) {
 	//Giảm giá 
 	$scope.coupon = "";
 	$scope.total = 0;
-	$scope.giamgia = function () {
+	$scope.giamgia = function() {
 		$http.get("/rest/voucher").then(resp => {
 			$scope.voucher = resp.data;
 
@@ -503,27 +514,130 @@ app.controller("ctrl", function ($scope, $http) {
 	}
 
 
+	//kiểm tra checkbox
+	$scope.batdk = function() {
+		var checkboxes = document.getElementsByName("cdid");
+		var count = 0;
 
-	$scope.purchase = function () {
-		$scope.gia = $scope.total;
-		console.log($scope.gia);
+		for (var i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].checked) {
+				count++;
+			}
+		}
+		if (count < 1) {
+			// Nếu không có checkbox nào được chọn, vô hiệu hóa checkbox và button
+			checkboxes = document.getElementById("place-order").disabled = true;
+			checkboxes = document.getElementById("voucher").disabled = true;
+		} else {
+			// Nếu có ít nhất một checkbox được chọn, kích hoạt checkbox và button
+			checkboxes = document.getElementById("place-order").disabled = false;
+			checkboxes = document.getElementById("voucher").disabled = false;
+		}
+	}
+	window.onload = function() {
+		$scope.batdk();
+	};
 
 
+	$scope.dathang = function() {
 		window.location.href = '/checkout';
-		//		 sessionStorage.setItem('data',localStorage.getItem('selectedItems'));
-		$scope.data = storedProducts;
-		console.log(data);
+		$location.replace();
+		$scope.total;
+		sessionStorage.setItem('coupon', $scope.coupon);
+		;
+
+	}
+	$scope.thanhtoan = function() {
+		$scope.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
+		$scope.coupon = sessionStorage.getItem('coupon');
+		console.log($scope.myString);
+
+		$scope.bill = {
+			createdate: new Date(),
+			address: $scope.address,
+			totalamount: $scope.tongtienthanhtoan,
+			ship: $scope.ship,
+			account: { username: $scope.username },
+			phone: $("#phone").val(),
+			voucher: $scope.coupon,
+			status: { id: 1 },
+			message: $("#message").text(),
+			get orderdetail() {
+				return $scope.selectedItems.map(item => {
+					return {
+						product: { id: item.product.id },
+						price: item.price,
+						quantity: item.quantity
+					}
+				});
+			},
+			purchase() {
+				var order = angular.copy(this);
+				$http.post("/rest/order", order).then(resp => {
+					Swal.fire("Success", "Đặt hàng thành công!", "success");
+					for (var i = 0; i < $scope.selectedItems.length; i++) {
+						$scope.deleteid($scope.selectedItems[i].id)
+					}
+
+					console.log(resp.data);
+				}).catch(error => {
+					Swal.fire("Error", "Đặt hàng thất bại!", "error");
+					console.log(error)
+				})
+
+
+			}
+
+		}
+		$scope.bill.purchase();
+		console.log($scope.bill);
+
+
 
 	}
 
+
+
+	//Lấy phí ship API
+	document.addEventListener('phiDataAvailable', function(event) {
+
+		$scope.$apply(function() {
+			// Truy cập dữ liệu từ event.detail
+			$scope.ship = event.detail;
+			//Tính tổng tiền thanh toán
+			$scope.tongtienthanhtoan = $scope.total + $scope.ship;
+
+			// Sử dụng dữ liệu trong controller này
+			console.log($scope.ship);
+		});
+	});
+
+
+	//Lấy phí Address API
+	document.addEventListener('resultAvailable', function(event) {
+		// Truy cập dữ liệu từ event.detail
+		$scope.$apply(function() {
+			$scope.address = event.detail;
+
+			// Sử dụng dữ liệu trong controller này
+			console.log($scope.address);
+		});
+	});
+
+
+
+
+
+
+
 	//Đăng xuất xóa localStorage
-	$scope.logout = function () {
+	$scope.logout = function() {
 		localStorage.clear();
 	}
 
 	//trang chi tiết	
 
-	$scope.productdetails = function (id) {
+	$scope.productdetails = function(id) {
 		$http.get(`/rest/products/${id}`).then(resp => {
 			$scope.productdetail = resp.data;
 			$scope.check = true;
@@ -540,7 +654,7 @@ app.controller("ctrl", function ($scope, $http) {
 	}
 
 
-	$scope.weightquantityandprice = function (idpro, idw) {
+	$scope.weightquantityandprice = function(idpro, idw) {
 		$scope.check = false;
 		$http.get(`/rest/products/weight/quantityandprice/${idpro}/${idw}`).then(resp => {
 			$scope.quantityandprice = resp.data;
@@ -557,7 +671,7 @@ app.controller("ctrl", function ($scope, $http) {
 
 	//Favorites
 	$scope.favorites = [];
-	$scope.getfavorite = function () {
+	$scope.getfavorite = function() {
 		$http.get(`/rest/favorites/` + $scope.username).then(resp => {
 			$scope.favorites = resp.data;
 		}).catch(error => {
@@ -595,7 +709,7 @@ app.controller("ctrl", function ($scope, $http) {
 		}
 	}
 
-	$scope.addfavorite = function (id) {
+	$scope.addfavorite = function(id) {
 		$scope.data = {
 			account: {
 				username: $scope.username
@@ -631,7 +745,7 @@ app.controller("ctrl", function ($scope, $http) {
 
 	}
 
-	$scope.removefavorite = function (id) {
+	$scope.removefavorite = function(id) {
 		$http.delete(`/rest/favorites/${id}`).then(resp => {
 			Swal.fire({
 				type: 'success',
@@ -655,7 +769,7 @@ app.controller("ctrl", function ($scope, $http) {
 		})
 	}
 
-	$scope.checkAddOrRemove = function (id) {
+	$scope.checkAddOrRemove = function(id) {
 		$http.get(`/rest/favorites/check/${id}`).then(resp => {
 			$scope.favorite = resp.data.length;
 			if ($scope.favorite == 0) {

@@ -26,8 +26,5 @@ public class Voucher implements Serializable {
 	String image;
 	Date startdate;
 	Date enddate;
-	
-	@JsonIgnore
-	@OneToMany
-	List<Order> order;
+
 }

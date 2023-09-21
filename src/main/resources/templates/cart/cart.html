@@ -38,7 +38,7 @@
 								<th></th>
 								<th>Hình ảnh</th>
 								<th>Tên</th>
-								<th class="text-center">Giá</th>		
+								<th class="text-center">Giá</th>
 								<th class="text-center">Số lượng</th>
 								<th class="text-center">Tổng</th>
 								<th class="text-center"><i class="ti-trash remove-icon"></i></th>
@@ -47,17 +47,18 @@
 						<tbody>
 
 							<tr ng-repeat="item in cartdetails">
-								<td> <input ng-model="item.selected" onchange="batdk()" name="cdid"
+								<td> <input ng-model="item.selected" ng-click="batdk()" name="cdid"
 										ng-change="toggleSelected(item)" type="checkbox">
 								</td>
 								<td class="image"><img src="../images/products/{{item.product.image}}"
 										alt="{{item.image}}"></td>
 								<td class="product-des" data-title="Description">
-									<p class="product-name"><a href="#">{{item.product.name}}  {{item.weightvalue}}</a></p>
+									<p class="product-name"><a href="#">{{item.product.name}} {{item.weightvalue}}</a>
+									</p>
 									<p class="product-des">{{item.product.discription}}</p>
 								</td>
 								<td class="price" data-title="Price"><span>{{item.price | number :0}} </span></td>
-						
+
 								<td class="qty" data-title="Qty"><!-- Input Order -->
 									<div class="input-group">
 										<div class="button minus">
@@ -98,7 +99,7 @@
 								<div class="left">
 									<div class="coupon">
 										<form>
-											<input type="text" ng-change="giamgia()" ng-model="coupon"
+											<input  type="text" ng-change="giamgia()" ng-model="coupon"
 												placeholder="Nhập mã giảm giá">
 											<button ng-click="giamgia()" class="btn" id="voucher"
 												style="background-color: orange; color: black;" disabled>Áp
@@ -121,9 +122,9 @@
 									</ul>
 									<div class="button5">
 
-										<a ng-click="purchase()"> <button class="btn"
-												id="place-order">Checkout</button></a>
-										<a href="#" class="btn">Tiếp tục mua sắm</a>
+										<a ng-click="dathang()"> <button class="btn" id="place-order">Thanh
+												toán</button></a>
+										<a href="/" class="btn">Tiếp tục mua sắm</a>
 									</div>
 								</div>
 							</div>
@@ -204,31 +205,27 @@
 	</section>
 	<!-- End Shop Newsletter -->
 
+<!--	<script>-->
+<!--		batdk();-->
+<!--		function batdk() {-->
+<!--			var checkboxes = document.getElementsByName("cdid");-->
+<!--			var count = 0;-->
+<!--			for (var i = 0; i < checkboxes.length; i++) {-->
+<!--				if (checkboxes[i].checked) {-->
+<!--					count++;-->
+<!--				}-->
+<!--			}-->
+<!--			if (count < 1) {-->
+<!--				document.getElementById("place-order").disabled = true;-->
+<!--				document.getElementById("voucher").disabled = true;-->
 
+<!--			} else {-->
+<!--				document.getElementById("place-order").disabled = false;-->
+<!--				document.getElementById("voucher").disabled = false;-->
+<!--			}-->
+<!--		}-->
 
-
-
-
-	<script>
-		function batdk() {
-			var checkboxes = document.getElementsByName("cdid");
-			var count = 0;
-			for (var i = 0; i < checkboxes.length; i++) {
-				if (checkboxes[i].checked) {
-					count++;
-				}
-			}
-			if (count < 1) {
-				document.getElementById("place-order").disabled = true;
-				document.getElementById("voucher").disabled = true;
-
-			} else {
-				document.getElementById("place-order").disabled = false;
-				document.getElementById("voucher").disabled = false;
-			}
-		}
-		batdk();
-	</script>
+<!--	</script>-->
 </body>
 
 </html>

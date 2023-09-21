@@ -30,10 +30,12 @@ public class Order implements Serializable {
 	Integer id;
 	@Temporal(TemporalType.DATE)	
 	Date createdate = new Date();
-	Double tatolamount;
+	Double totalamount;
 	Double ship;
 	String address;
 	String phone;
+	String voucher;
+	String message;
 	
 	@OneToMany(mappedBy = "order")
 	@JsonIgnore
@@ -47,8 +49,6 @@ public class Order implements Serializable {
 	@JoinColumn(name = "Statusid")
 	Status status;
 	
-	@ManyToOne
-	@JoinColumn(name = "Voucherid")
-	Voucher voucher;
+	
 
 }

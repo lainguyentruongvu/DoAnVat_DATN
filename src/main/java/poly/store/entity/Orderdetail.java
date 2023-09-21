@@ -31,7 +31,7 @@ public class Orderdetail implements Serializable{
 	Date orderdate = new Date();
 	
 	@ManyToOne
-	@JoinColumn(name = "Orderid")
+	@JoinColumn(name = "Ordersid")
 	Order order;
 	@ManyToOne
 	@JoinColumn(name = "Productid")

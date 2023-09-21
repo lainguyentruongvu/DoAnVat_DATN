@@ -12,19 +12,18 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 import lombok.Data;
 
 @SuppressWarnings("serial")
 @Data
 @Entity
 @Table(name = "Statuss")
-public class Status implements Serializable{
+public class Status implements Serializable {
 	@Id
 	Integer id;
 	String name;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "status")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
 	List<Order> order;
 }
