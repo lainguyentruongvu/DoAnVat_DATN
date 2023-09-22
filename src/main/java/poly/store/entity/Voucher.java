@@ -27,4 +27,8 @@ public class Voucher implements Serializable {
 	Date startdate;
 	Date enddate;
 
+	@OneToMany(mappedBy = "voucher")
+	@JsonIgnore
+	List<Order> orders;
+
 }

@@ -1,11 +1,20 @@
 const app = angular.module("app", []);
 app.controller("ctrl", function($scope, $http, $location, $window) {
-
+	$scope.products = [];
 
 	//Lấy tên tài khoản
 	$scope.username = $("#username").text();
 
-	$scope.products = [];
+	//Lấy thông tin tài khoản
+	$scope.account = function() {
+		$http.get(`/rest/accounts/` + $scope.username).then(resp => {
+			$scope.account = resp.data;
+		});
+
+	}
+	$scope.account();
+
+
 
 	//Load product
 	$scope.product = function() {
@@ -328,22 +337,38 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 
 	}
 
-
-
-
-
-
-
-
 	// xóa sản phẩm khỏi giỏ hàng
 	$scope.deleteid = function(id) {
-		$http.delete(`/rest/cart/delete/${id}`).then(resp => {
-			$scope.getcartdetails();
-			localStorage.clear();
-		}).catch(error => {
-			Swal.fire("Error", "Xóa sản phẩm thất bại!", "error");
-			console.log("Error", error);
-		})
+		$scope.selectedItems = JSON.parse(localStorage.getItem("selectedItems"))
+		var index = $scope.selectedItems.findIndex(function(p) {
+			return p.id === id;
+		});
+		var currentUrl = $location.absUrl(); // Lấy URL hoàn chỉnh
+		if (currentUrl === "http://localhost:8080/") {
+			$http.delete(`/rest/cart/delete/${id}`).then(resp => {
+				$scope.getcartdetails();
+				if (index !== -1) {
+					$scope.selectedItems.splice(index, 1);
+					localStorage.setItem('selectedItems', JSON.stringify($scope.selectedItems));
+				}
+			}).catch(error => {
+				Swal.fire("Error", "Xóa sản phẩm thất bại!", "error");
+				console.log("Error", error);
+			})
+		} else {
+			$scope.batdk();
+
+			$http.delete(`/rest/cart/delete/${id}`).then(resp => {
+				$scope.getcartdetails();
+				if (index !== -1) {
+					$scope.selectedItems.splice(index, 1);
+					localStorage.setItem('selectedItems', JSON.stringify($scope.selectedItems));
+				}
+			}).catch(error => {
+				Swal.fire("Error", "Xóa sản phẩm thất bại!", "error");
+				console.log("Error", error);
+			})
+		}
 	}
 
 
@@ -358,8 +383,11 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 		var index = $scope.selectedItems.findIndex(function(p) {
 			return p.id === cd.id;
 		});
+
 		if (index !== -1) {
 			$scope.selectedItems[index].quantity = newquantity + 1;
+
+
 			localStorage.setItem('selectedItems', JSON.stringify($scope.selectedItems));
 
 			$scope.giamgia();
@@ -438,8 +466,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 	};
 
 	//		 Kiểm tra và tô màu các checkbox dựa trên danh sách đã lưu trong localStorage
-
-
 
 	var selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
 
@@ -550,8 +576,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 	$scope.thanhtoan = function() {
 		$scope.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
 		$scope.coupon = sessionStorage.getItem('coupon');
-		console.log($scope.myString);
-
 		$scope.bill = {
 			createdate: new Date(),
 			address: $scope.address,
@@ -559,7 +583,7 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 			ship: $scope.ship,
 			account: { username: $scope.username },
 			phone: $("#phone").val(),
-			voucher: $scope.coupon,
+			voucher: { id: $scope.coupon },
 			status: { id: 1 },
 			message: $("#message").text(),
 			get orderdetail() {
@@ -567,7 +591,8 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 					return {
 						product: { id: item.product.id },
 						price: item.price,
-						quantity: item.quantity
+						quantity: item.quantity,
+						weight: item.weightvalue
 					}
 				});
 			},
@@ -575,10 +600,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 				var order = angular.copy(this);
 				$http.post("/rest/order", order).then(resp => {
 					Swal.fire("Success", "Đặt hàng thành công!", "success");
-					for (var i = 0; i < $scope.selectedItems.length; i++) {
-						$scope.deleteid($scope.selectedItems[i].id)
-					}
-
 					console.log(resp.data);
 				}).catch(error => {
 					Swal.fire("Error", "Đặt hàng thất bại!", "error");
@@ -636,21 +657,35 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 	}
 
 	//trang chi tiết	
-
 	$scope.productdetails = function(id) {
+
 		$http.get(`/rest/products/${id}`).then(resp => {
 			$scope.productdetail = resp.data;
+			$scope.priceww = $scope.productdetail.price
 			$scope.check = true;
 			$scope.weightvalue = null;
 		}).catch(error => {
 			console.log("Error", error);
 		})
-
+		var stytecssw = 0;
 		$http.get(`/rest/products/weight/${id}`).then(resp => {
+			console.log($scope.priceww);
 			$scope.productweight = resp.data;
+			for (var i = 0; i < $scope.productweight.length; i++) {
+				if ($scope.productweight[i].price === $scope.priceww) {
+					$scope.weightvalue = $scope.productweight[i].weight.weightvalue;
+					$scope.quantityview = $scope.productweight[i].quantity;
+					$scope.weightStyle = {
+						'border': ' rgb(255, 128, 64) solid 3px'
+
+					};
+				}
+			}
+
 		}).catch(error => {
 			console.log("Error", error);
 		})
+
 	}
 
 

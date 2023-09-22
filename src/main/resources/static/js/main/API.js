@@ -63,18 +63,18 @@ function service(districtid) {
 			shop_id: 4463615,
 			from_district: 1572,
 			to_district: districtid,
-			
+
 		},
-		
+
 		success: function(data) {
 			renderDataS(data.data)
 			console.log(data);
 			console.log(districtid);
 		},
-		
+
 		error: function(error) {
-			console.log( error);
-//			alert("Đã xảy ra lỗi: " + error.responseText);
+			console.log(error);
+			//			alert("Đã xảy ra lỗi: " + error.responseText);
 		}
 	})
 }
@@ -107,14 +107,14 @@ function phivc(serviceid, districtid, wardcode) {
 
 		},
 		error: function(error) {
-//			alert("Đã xảy ra lỗi: " + error.responseText);
+			//			alert("Đã xảy ra lỗi: " + error.responseText);
 		}
 	})
 }
 
 // Hàm renderData để tạo tùy chọn cho select
 var renderData = (array, select) => {
-	let row = '<option disabled value="">chọn</option>';
+	let row = '<option value="">Chọn Tỉnh/Thành Phố</option>';
 	array.forEach(element => {
 		row += `<option value="${element.ProvinceID}">${element.ProvinceName}</option>`;
 	});
@@ -122,7 +122,7 @@ var renderData = (array, select) => {
 }
 
 var renderDataH = (array, select) => {
-	let row = '<option disabled value="">chọn</option>';
+	let row = '<option disabled value="">Chọn</option>';
 	array.forEach(element => {
 		row += `<option value="${element.DistrictID}">${element.DistrictName}</option>`;
 	});
@@ -130,7 +130,7 @@ var renderDataH = (array, select) => {
 }
 
 var renderDataP = (array, select) => {
-	let row = '<option disabled value="">chọn</option>';
+	let row = '<option disabled value="">Chọn</option>';
 	array.forEach(element => {
 		row += `<option value="${element.WardCode}">${element.WardName}</option>`;
 	});
@@ -138,7 +138,7 @@ var renderDataP = (array, select) => {
 }
 
 var renderDataS = (array) => {
-	let row = '<option disabled value="">chọn</option>';
+	let row = '<option  value="">Chọn</option>';
 	array.forEach(element => {
 		row += `<option value="${element.service_id}">${element.short_name}</option>`;
 	});

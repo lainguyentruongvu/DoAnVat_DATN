@@ -2125,6 +2125,7 @@
 									</div>
 									<div class="quickview-stock">
 										<p ng-if="check==false">Số lượng: {{quantityandprice.quantity}}</p>
+										<p ng-if="check==true">Số lượng: {{quantityview}}</p>
 
 									</div>
 								</div>
@@ -2146,7 +2147,7 @@
 													id="{{item.weight.weightvalue}}"
 													ng-click="weightquantityandprice(item.product.id,item.weight.id)"
 													type="radio" name="weight" value="{{item.weight.weightvalue}}">
-												<label class="weight"
+												<label ng-style="weightStyle" class="weight"
 													for="{{item.weight.weightvalue}}">{{item.weight.weightvalue}}</label>
 											</div>
 

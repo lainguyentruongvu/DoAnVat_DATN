@@ -18,8 +18,8 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 import lombok.Data;
+
 @SuppressWarnings("serial")
 @Data
 @Entity
@@ -28,27 +28,28 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
-	@Temporal(TemporalType.DATE)	
+	@Temporal(TemporalType.DATE)
 	Date createdate = new Date();
 	Double totalamount;
 	Double ship;
 	String address;
 	String phone;
-	String voucher;
 	String message;
-	
+
 	@OneToMany(mappedBy = "order")
 	@JsonIgnore
 	List<Orderdetail> orderdetail;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "Username")
 	Account account;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "Statusid")
 	Status status;
-	
-	
+
+	@ManyToOne
+	@JoinColumn(name = "voucher")
+	Voucher voucher;
 
 }

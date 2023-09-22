@@ -26,7 +26,7 @@ public class Orderdetail implements Serializable{
 	Integer id;
 	Double price;
 	Integer quantity;
-	Double totalamount;
+	String weight;
 	@Temporal(TemporalType.DATE)
 	Date orderdate = new Date();
 	
