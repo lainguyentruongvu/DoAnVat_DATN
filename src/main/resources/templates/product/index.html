@@ -2124,8 +2124,10 @@
 										<a href="#"> (1 customer review)</a>
 									</div>
 									<div class="quickview-stock">
-										<p ng-if="check==false">Số lượng: {{quantityandprice.quantity}}</p>
-										<p ng-if="check==true">Số lượng: {{quantityview}}</p>
+										<p ng-if="check==false">Số lượng:</p>
+										<p ng-if="check==false" id="checkqtt">{{quantityandprice.quantity}}</p>
+										<p ng-if="check==true">Số lượng:</p>
+										<p ng-if="check==true" id="checkqtt">{{quantityview}}</p>
 
 									</div>
 								</div>
@@ -2138,7 +2140,7 @@
 								</div>
 								<div class="size">
 									<div class="row">
-										<div class="col-lg-6 col-12">
+										<div class="col-lg-12 col-12">
 											<h5 class="title">Trọng lượng</h5>
 
 											<div ng-repeat="item in productweight">
@@ -2147,7 +2149,9 @@
 													id="{{item.weight.weightvalue}}"
 													ng-click="weightquantityandprice(item.product.id,item.weight.id)"
 													type="radio" name="weight" value="{{item.weight.weightvalue}}">
-												<label ng-style="weightStyle" class="weight"
+												<label
+													ng-style="{'border': (weightvalue === item.weight.weightvalue) ? 'rgb(255, 128, 64)solid 3px' : '#000 solid 3px'}"
+													class="weight"
 													for="{{item.weight.weightvalue}}">{{item.weight.weightvalue}}</label>
 											</div>
 
@@ -2163,8 +2167,8 @@
 												<i class="ti-minus"></i>
 											</button>
 										</div>
-										<input ng-model="quantity" type="number" name="quantity" class="input-number"
-											data-min="1" data-max="100">
+										<input readonly  ng-model="quantity" type="number" name="quantity"
+											class="input-number" data-min="1" max="{{quantityview}}">
 										<div class="button plus">
 											<button ng-click="productdetailincrease()"
 												class="btn btn-primary btn-number" data-type="plus"

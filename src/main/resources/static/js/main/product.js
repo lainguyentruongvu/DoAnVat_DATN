@@ -326,7 +326,14 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 
 	//Tăng giảm số lượng sản phẩm chi tiết
 	$scope.productdetailincrease = function() {
-		$scope.quantity = $scope.quantity + 1;
+		var quantity = document.getElementById("checkqtt").innerText;
+
+		console.log($scope.quantity)
+		if ($scope.quantity >= quantity) {
+			Swal.fire("error", "Vượt quá số lượng trong kho", "error");
+		} else {
+			$scope.quantity = $scope.quantity + 1;
+		}
 	}
 	$scope.productdetaireduce = function() {
 		if ($scope.quantity <= 1) {
@@ -646,11 +653,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 	});
 
 
-
-
-
-
-
 	//Đăng xuất xóa localStorage
 	$scope.logout = function() {
 		localStorage.clear();
@@ -667,7 +669,7 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 		}).catch(error => {
 			console.log("Error", error);
 		})
-		var stytecssw = 0;
+
 		$http.get(`/rest/products/weight/${id}`).then(resp => {
 			console.log($scope.priceww);
 			$scope.productweight = resp.data;
@@ -675,10 +677,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 				if ($scope.productweight[i].price === $scope.priceww) {
 					$scope.weightvalue = $scope.productweight[i].weight.weightvalue;
 					$scope.quantityview = $scope.productweight[i].quantity;
-					$scope.weightStyle = {
-						'border': ' rgb(255, 128, 64) solid 3px'
-
-					};
 				}
 			}
 
