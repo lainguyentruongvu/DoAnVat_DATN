@@ -48,21 +48,16 @@ public class IndexController {
 		return "product/contact";
 
 	}
-//	@RequestMapping({ "/", "/index" })
-//	public String home(Model model, @RequestParam("cid") Optional<String> cid) {
-//		if (cid.isPresent()) {
-//			List<Product> list = productService.findByCategoryId(cid.get());
-//			model.addAttribute("items", list);
-//		} else {
-//			List<Product> list = productService.findAll();
-//			model.addAttribute("items", list);
-//		}
-//		return "product/index";
-//	}
-//
-//	@RequestMapping({ "/admin", "/admin/index" })
-//	public String admin(Model model) {
-//		return "redirect:/admin/index.html";
-//	}
+	@RequestMapping("bill")
+	public String bill(Model model) {
+		return "bill/index";
+
+	}
+	@RequestMapping("detail")
+	public String detail(Model model) {
+		return "detail/index";
+
+	}
+
 
 }

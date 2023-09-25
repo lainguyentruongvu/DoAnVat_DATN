@@ -90,7 +90,7 @@ public class AuthController {
 		model.addAttribute("message", "Bạn không có quyền truy cập");
 		return "auth/login1";
 	}
-
+	
 	@RequestMapping("/auth/logout/success")
 	public String logOutSuccess(Model model, @ModelAttribute("account") Account account) {
 		model.addAttribute("message", "Đăng xuất thành công");

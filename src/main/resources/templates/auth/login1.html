@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::title},~{::body})}">
 
 <head>
-    <title>Yêu thích</title>
+    <title>Đăng nhập</title>
 </head>
 
 <body>
@@ -14,8 +14,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-10 col-lg-12 col-xl-6 order-2 order-lg-1">
 
-                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">ĐĂNG
-                                    NHẬP</p>
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">ĐĂNG NHẬP</p>
 
                                 <form th:object="${account}" th:action="@{/auth/login}" method="post">
                                     <div class="row">

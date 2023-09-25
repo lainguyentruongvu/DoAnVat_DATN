@@ -34,9 +34,9 @@ public class AccountRestController {
 		return accountService.findAll();
 	}
 
-	@GetMapping("{id}")
-	public Account getOne(@PathVariable("id") String id) {
-		return accountService.findById(id);
+	@GetMapping("{username}")
+	public Account getOne(@PathVariable("username") String username) {
+		return accountService.findById(username);
 	}
 
 	@PostMapping
@@ -44,13 +44,13 @@ public class AccountRestController {
 		return accountService.create(account);
 	}
 
-	@PutMapping("{id}")
-	public Account update(@PathVariable("id") String id, @RequestBody Account account) {
+	@PutMapping("{username}")
+	public Account update(@PathVariable("username") String username, @RequestBody Account account) {
 		return accountService.update(account);
 	}
 
-	@DeleteMapping("{id}")
-	public void delete(@PathVariable("id") String id) {
-		accountService.delete(id);
+	@DeleteMapping("{username}")
+	public void delete(@PathVariable("username") String username) {
+		accountService.delete(username);
 	}
 }
