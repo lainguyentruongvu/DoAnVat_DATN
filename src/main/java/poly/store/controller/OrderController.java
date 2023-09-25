@@ -13,17 +13,12 @@ public class OrderController {
 	@Autowired
 	OrderService orderservice;
 
-//	@RequestMapping("/order/detail/{id}")
-//	public String orderdetail(@PathVariable("id") Integer id, Model model) {
-//		model.addAttribute("order", orderservice.findById(id));
-//		return "cart/order";
-//
-//	}
-	@RequestMapping("/order/detail")
-	public String orderdetail() {
-
-		return "detail/index";
+	@RequestMapping("/order/detail/{id}")
+	public String orderdetail(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("order", orderservice.findById(id));
+		return "cart/order";
 
 	}
+
 
 }

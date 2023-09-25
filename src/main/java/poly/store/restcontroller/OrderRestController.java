@@ -37,22 +37,5 @@ public class OrderRestController {
 	public Order create(@RequestBody JsonNode orderData) {
 		return orderservice.create(orderData);
 	}
-//	@GetMapping("{id}")
-//	public Order orderdetail(@PathVariable("id") Integer id) {
-//		return orderservice.findById(id);
-//	}
 
-//	@GetMapping("/redirect")
-//	public ResponseEntity<Void> redirect() {
-//		// Chuyển hướng đến một URL khác
-//		return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, "http://localhost:8080/cart/order")
-//				.build();
-//	}
-//
-//	@GetMapping("/detail/{id}")
-//	public ResponseEntity<Order> returnData(@PathVariable("id") Integer id) {
-//		// Trả về dữ liệu
-//			
-//		return ResponseEntity.ok(orderservice.findById(id));
-//	}
 }

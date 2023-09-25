@@ -216,7 +216,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 		if ($scope.username == "") {
 			location.href = "/auth/login/form";
 		} else {
-
 			if ($scope.weightvalue == null) {
 				$http.get(`/rest/cart/checkproductweight/${p.id}/${p.price}`).then(resp => {
 					$scope.checkproweight = resp.data;
@@ -370,7 +369,7 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 			})
 		} else {
 			$scope.batdk();
-
+			$scope.checkbox();
 			$http.delete(`/rest/cart/delete/${id}`).then(resp => {
 				$scope.getcartdetails();
 				if (index !== -1) {
@@ -508,9 +507,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 		$scope.tinhtienproduct.forEach(function(product) {
 			$scope.totalPrice += product.price * product.quantity;
 			$scope.total = $scope.totalPrice;
-
-
-
 		});
 
 	}
@@ -601,7 +597,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 		$scope.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
 		//Gọi hàm kiểm tra mã giãm giá
 		$scope.kiemtragiamgia();
-		console.log($scope.coupon);
 
 		$scope.bill = {
 			createdate: new Date(),
