@@ -18,7 +18,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 import poly.store.dao.AccountDAO;
 import poly.store.dao.OrderDAO;
 import poly.store.dao.OrderdetailDAO;
@@ -36,21 +35,25 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	OrderdetailDAO orderdetaildao;
 
-	public Order create(JsonNode orderData ) {
+	public Order create(JsonNode orderData) {
 		ObjectMapper mapper = new ObjectMapper();
-		
+
 		Order order = mapper.convertValue(orderData, Order.class);
-		
+
 		orderdao.save(order);
-		
-		TypeReference<List<Orderdetail>> type = new TypeReference<List<Orderdetail>>(){};
-		List<Orderdetail> details = mapper.convertValue(orderData.get("orderdetail"), type)
-				.stream().peek(d -> d.setOrder(order)).collect(Collectors.toList());
+
+		TypeReference<List<Orderdetail>> type = new TypeReference<List<Orderdetail>>() {
+		};
+		List<Orderdetail> details = mapper.convertValue(orderData.get("orderdetail"), type).stream()
+				.peek(d -> d.setOrder(order)).collect(Collectors.toList());
 		orderdetaildao.saveAll(details);
-		
+
 		return order;
 	}
 
+	@Override
+	public Order findById(Integer id) {
+		return orderdao.findById(id).get();
+	}
 
-	
 }

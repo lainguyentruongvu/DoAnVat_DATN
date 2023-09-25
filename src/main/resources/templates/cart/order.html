@@ -2,192 +2,91 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::title},~{::body})}">
 
 <head>
-  <title>Quản lý tài khoản</title>
+	<title>Đơn hàng </title>
 </head>
 
-<body class="vertical light" ng-app="app" ng-controller="account-ctrl">
+<body th:object="${order}" class="vertical light" ng-app="app" ng-controller="ctrl">
 
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-
-
-
-  <!-- Small table -->
-  <div class="col-md-12 my-4">
-    <h2 class="h4 mb-1">ĐƠN HÀNG ĐÃ ĐẶT</h2>
-    <p class="mb-3">Thông tin các sản phẩm và địa chỉ đơn hàng của bạn</p>
-    <div class="card shadow">
-      <div class="card-body">
-        <div class="toolbar">
-          <form class="form">
-            <div class="form-row">
-              <div class="form-group col-auto mr-auto">
-                <b> Thông tin </b>
-              </div>
-
-              <div class="form-group col-auto">
-                <label for="">Mã hóa đơn:</label>
-                <input type="text" value="HD001" class="form-group"> &nbsp;
-                <label for="">Tên giao hàng:</label>
-                <input type="text" value="Linh bịp" class="form-group"> &nbsp;
-                <label for="">Ngày đặt hàng:</label>
-                <input type="text" value="20/10/2023" class=""> &nbsp;
-                <label for="">Địa chỉ giao hàng:</label>
-                <input type="text" value="Vĩnh Long Việt Nam" class=""> &nbsp;
-              </div>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-            </div>
-          </form>
-        </div>
-        <!-- table -->
-        <table class="table table-borderless table-hover">
-          <thead>
-            <tr>
-              <td>
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="all2">
-                  <label class="custom-control-label" for="all2"></label>
-                </div>
-              </td>
-              <th>Hình ảnh</th>
-              <th>Tên sản phẩm</th>
-              <th>Đơn giá</th>
-              <th>Số lượng</th>
-              <th>Tổng</th>
 
-            </tr>
-          </thead>
-          <tbody>
+	<!-- Small table -->
+	<div class="col-md-12 my-4">
+		<h2 class="h4 mb-1">ĐƠN HÀNG ĐÃ ĐẶT</h2>
+		<p class="mb-3">Thông tin các sản phẩm và địa chỉ đơn hàng của bạn</p>
+		<div class="card shadow">
+			<div class="card-body">
+				<div class="toolbar">
+					<form class="form">
+						<div class="form-row">
+							<div class="form-group col-auto mr-auto">
+								<b> Thông tin </b>
+							</div>
+							<div class="form-group col-auto">
+								<label for="">Mã hóa đơn:</label>
+								<input type="text" th:field="*{id}" class="form-group"> &nbsp;
+								<label for="">Họ và tên :</label>
+								<input type="text" th:field="*{account.name}" class="form-group"> &nbsp;
+								<label for="">Ngày đặt hàng:</label>
+								<input type="text" th:field="*{createdate}" class="form-group"> &nbsp;
+								<label for="">Địa chỉ giao hàng:</label>
+								<input type="text" th:field="*{address}" class=""> &nbsp;
+							</div>
 
-            <tr>
-              <td>
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="2639">
-                  <label class="custom-control-label" for="2639"></label>
-                </div>
-              </td>
-              <td>
-                <div class="avatar avatar-md">
-                  <img src="../../assets/avatars/face-4.jpg" alt="..." class="avatar-img rounded-circle">
-                </div>
-              </td>
-              <td>
-                <p class="mb-0 text-muted"><strong>Khô heo quay</strong></p>
 
-              </td>
-              <td>
-                <p class="mb-0 text-muted">250.000 VNĐ</p>
+						</div>
+					</form>
+				</div>
+				<!-- table -->
+				<table class="table table-borderless table-hover">
+					<thead>
+						<tr>
+							<td>
+								<div class="custom-control custom-checkbox">
+									<input type="checkbox" class="custom-control-input" id="all2">
+									<label class="custom-control-label" for="all2"></label>
+								</div>
+							</td>
+							<th>Hình ảnh</th>
+							<th>Tên sản phẩm</th>
+							<th>Đơn giá</th>
+							<th>Số lượng</th>
+							<th>Tổng</th>
 
-              </td>
-              <td>
-                <p class="mb-0 text-muted"> 5 kg</p>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="detail:*{orderDetails}" th:object="${detail}>
 
-              </td>
+							<td>
+								<div class=" avatar avatar-md">
+							<img src="../../assets/avatars/face-4.jpg" alt="..." class="avatar-img rounded-circle">
+			</div>
+			</td>
+			<td>
+				<p class="mb-0 text-muted"><strong>Khô heo quay</strong></p>
 
-              <td>
-                <p class="mb-0 text-muted"> 1.200.000 VNĐ</p>
+			</td>
+			<td>
+				<p class="mb-0 text-muted">250.000 VNĐ</p>
 
-              </td>
-            </tr>
+			</td>
+			<td>
+				<p class="mb-0 text-muted"> 5 kg</p>
 
-            <tr>
-              <td>
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="2639">
-                  <label class="custom-control-label" for="2639"></label>
-                </div>
-              </td>
-              <td>
-                <div class="avatar avatar-md">
-                  <img src="../../assets/avatars/face-4.jpg" alt="..." class="avatar-img rounded-circle">
-                </div>
-              </td>
-              <td>
-                <p class="mb-0 text-muted"><strong>Khô heo quay</strong></p>
+			</td>
 
-              </td>
-              <td>
-                <p class="mb-0 text-muted">250.000 VNĐ</p>
+			<td>
+				<p class="mb-0 text-muted"> 1.200.000 VNĐ</p>
+			</td>
+			</tr>
+			</tbody>
+			</table>
 
-              </td>
-              <td>
-                <p class="mb-0 text-muted"> 5 kg</p>
-
-              </td>
-
-              <td>
-                <p class="mb-0 text-muted"> 1.200.000 VNĐ</p>
-
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="2639">
-                  <label class="custom-control-label" for="2639"></label>
-                </div>
-              </td>
-              <td>
-                <div class="avatar avatar-md">
-                  <img src="../../assets/avatars/face-4.jpg" alt="..." class="avatar-img rounded-circle">
-                </div>
-              </td>
-              <td>
-                <p class="mb-0 text-muted"><strong>Khô heo quay</strong></p>
-
-              </td>
-              <td>
-                <p class="mb-0 text-muted">250.000 VNĐ</p>
-
-              </td>
-              <td>
-                <p class="mb-0 text-muted"> 5 kg</p>
-
-              </td>
-
-              <td>
-                <p class="mb-0 text-muted"> 1.200.000 VNĐ</p>
-
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="2639">
-                  <label class="custom-control-label" for="2639"></label>
-                </div>
-              </td>
-              <td>
-                <div class="avatar avatar-md">
-                  <img src="../../assets/avatars/face-4.jpg" alt="..." class="avatar-img rounded-circle">
-                </div>
-              </td>
-              <td>
-                <p class="mb-0 text-muted"><strong>Khô heo quay</strong></p>
-
-              </td>
-              <td>
-                <p class="mb-0 text-muted">250.000 VNĐ</p>
-
-              </td>
-              <td>
-                <p class="mb-0 text-muted"> 5 kg</p>
-
-              </td>
-
-              <td>
-                <p class="mb-0 text-muted"> 1.200.000 VNĐ</p>
-
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
-
-      </div>
-    </div>
-  </div> <!-- customized table -->
+		</div>
+	</div>
+	</div> <!-- customized table -->
 
 
 

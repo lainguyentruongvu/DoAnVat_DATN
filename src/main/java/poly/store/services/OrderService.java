@@ -8,4 +8,6 @@ public interface OrderService {
 
 	Order create(JsonNode orderData);
 
+	Order findById(Integer id);
+
 }

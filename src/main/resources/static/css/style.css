@@ -5322,13 +5322,13 @@ Version:1.0
 	margin-left: 110px;
 }
 
-.blog-single .comments .single-comment img {
-	height: 70px;
-	width: 70px;
-	border-radius: 100%;
-	position: absolute;
-	left: 0;
-}
+/*.blog-single .comments .single-comment img {*/
+/*	height: 70px;*/
+/*	width: 70px;*/
+/*	border-radius: 100%;*/
+/*	position: absolute;*/
+/*	left: 0;*/
+/*}*/
 
 .blog-single .single-comment .content {}
 

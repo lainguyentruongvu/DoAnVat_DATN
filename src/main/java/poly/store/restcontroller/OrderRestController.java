@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,4 +37,22 @@ public class OrderRestController {
 	public Order create(@RequestBody JsonNode orderData) {
 		return orderservice.create(orderData);
 	}
+//	@GetMapping("{id}")
+//	public Order orderdetail(@PathVariable("id") Integer id) {
+//		return orderservice.findById(id);
+//	}
+
+//	@GetMapping("/redirect")
+//	public ResponseEntity<Void> redirect() {
+//		// Chuyển hướng đến một URL khác
+//		return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, "http://localhost:8080/cart/order")
+//				.build();
+//	}
+//
+//	@GetMapping("/detail/{id}")
+//	public ResponseEntity<Order> returnData(@PathVariable("id") Integer id) {
+//		// Trả về dữ liệu
+//			
+//		return ResponseEntity.ok(orderservice.findById(id));
+//	}
 }

@@ -48,7 +48,7 @@ public class Order implements Serializable {
 	@JoinColumn(name = "Statusid")
 	Status status;
 
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "voucher")
 	Voucher voucher;
 
