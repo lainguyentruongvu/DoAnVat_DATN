@@ -17,6 +17,6 @@ public interface ProductService {
 
 	void delete(Integer id);
 
-	Product findById(Integer id);
+//	Product findById(Integer id);
 
 }
