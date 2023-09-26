@@ -67,7 +67,7 @@
 											</li>
 										</th:block>
 										<th:block th:if="${#request.remoteUser}">
-											<li th:if="${#request.isUserInRole('Dire') or #request.isUserInRole('STAF')}">
+											<li th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}">
 												<a th:href="@{/admin}">Công cụ quản trị</a>
 											</li>
 											<li>
