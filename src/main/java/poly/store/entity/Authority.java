@@ -22,7 +22,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Authorities", uniqueConstraints = { @UniqueConstraint(columnNames = { "Username", "Roleid" }) })
-public class Authorities  implements Serializable{
+public class Authority  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

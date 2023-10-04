@@ -13,4 +13,8 @@ public class adcontroller {
 	public String account() {
 		return "admin/account/index";
 	}
+	@RequestMapping("/admin/authority")
+	public String authority() {
+		return "admin/authority/index";
+	}
 }
