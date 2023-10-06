@@ -1,5 +1,9 @@
 package poly.store.services;
 
-public interface RoleService {
+import java.util.List;
 
+import poly.store.entity.Role;
+
+public interface RoleService {
+	public List<Role> findAll();
 }

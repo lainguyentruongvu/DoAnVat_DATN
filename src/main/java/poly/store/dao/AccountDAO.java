@@ -12,11 +12,8 @@ import poly.store.entity.Account;
 public interface AccountDAO extends JpaRepository<Account, String>{
 	Account findByUsername(String username);
 	
-	
-	
-	
-	
-	@Query("SELECT DISTINCT ar.account FROM Authorities ar WHERE ar.role.id IN('DIRE','STAF')")
+
+	@Query("SELECT DISTINCT ar.account FROM Authority ar WHERE ar.role.id IN('DIRE','STAF')")
 	List<Account> getAdministrators();
 
 	@Query("SELECT a FROM Account a WHERE a.username =?1 and a.password=?2")
