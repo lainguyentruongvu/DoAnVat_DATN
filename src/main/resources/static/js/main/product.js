@@ -190,7 +190,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 							},
 							cart: {
 								id: $scope.cartid
-
 							}
 						}
 						$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweightnull.id, $scope.data).then(resp => {
@@ -349,20 +348,8 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 		}
 
 	}
-	//Xóa sản phâm khỏi giỏ hàng phụ
-	$scope.deleteida = function(id) {
-		$http.delete(`/rest/cart/delete/${id}`).then(resp => {
-			$scope.getcartdetails();
-		}).catch(error => {
-			console.log("Error", error);
-		})
-	}
 
-
-
-
-
-	// xóa sản phẩm khỏi giỏ hàng và localStorage
+	// xóa sản phẩm khỏi giỏ hàng
 	$scope.deleteid = function(id) {
 		$scope.selectedItems = JSON.parse(localStorage.getItem("selectedItems"))
 		var index = $scope.selectedItems.findIndex(function(p) {
@@ -395,6 +382,8 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 			})
 		}
 	}
+
+
 	//Tăng số lượng sản phẩm
 	$scope.updateincrease = function(cd, newquantity) {
 		cd.quantity++;
@@ -402,15 +391,22 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 			console.log("Error", error);
 		})
 		$scope.selectedItems = JSON.parse(localStorage.getItem("selectedItems"))
+
 		var index = $scope.selectedItems.findIndex(function(p) {
 			return p.id === cd.id;
 		});
+
 		if (index !== -1) {
 			$scope.selectedItems[index].quantity = newquantity + 1;
+
+
 			localStorage.setItem('selectedItems', JSON.stringify($scope.selectedItems));
+
 			$scope.giamgia();
 			$scope.tinhtien();
 		}
+
+
 	}
 
 
@@ -461,20 +457,20 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 
 		if (index !== -1) {
 			// Nếu sản phẩm đã tồn tại trong localStorage, xóa nó ra khỏi danh sách
+
 			selectedItems.splice(index, 1);
 			localStorage.setItem(localStorageKey, JSON.stringify(selectedItems));
-
-			$scope.tinhtien();
 			$scope.giamgia();
+			$scope.tinhtien();
 
 		} else {
 
 			// Nếu sản phẩm chưa tồn tại trong localStorage, thêm nó vào danh sách
+
 			selectedItems.push(item);
 			localStorage.setItem(localStorageKey, JSON.stringify(selectedItems));
-
-			$scope.tinhtien();
 			$scope.giamgia();
+			$scope.tinhtien();
 		}
 
 		// Cập nhật localStorage với danh sách sản phẩm đã được chọn
@@ -521,7 +517,7 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 
 
 
-	//	Giảm giá 
+	//Giảm giá 
 	$scope.coupon = "";
 	$scope.total = 0;
 	$scope.giamgia = function() {
@@ -539,7 +535,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 						var tiengiam = parseFloat($scope.totalPrice) * parseFloat(giamgia);
 						$scope.total = $scope.totalPrice - tiengiam;
 						$scope.viewgiamgia = tiengiam;
-
 						break;
 					} else {
 						Swal.fire("error", "Mã giảm giá hết hạn", "error");
@@ -589,23 +584,18 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 
 
 	$scope.dathang = function() {
-		var encodedTotalPrice = btoa($scope.total);
-		var url = '/checkout/' + encodedTotalPrice;
-		window.location.href = url;
-		sessionStorage.setItem('coupon', $scope.coupon);
+		window.location.href = '/checkout';
+		$location.replace();
+		$scope.total;
+		sessionStorage.setItem('coupon', $scope.coupon);;
 
 	}
 
 
-
-
-
 	$scope.thanhtoan = function() {
-		console.log($scope.statusorder);
 		//Lấy dữ liệu từ localStore
 		$scope.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
-		console.log($scope.selectedItems)
-		//Gọi hàm kiểm tra mã giãm giá		
+		//Gọi hàm kiểm tra mã giãm giá
 		$scope.kiemtragiamgia();
 
 		$scope.bill = {
@@ -623,7 +613,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 			status: {
 				id: 1
 			},
-			statusorder: $scope.statusorder,
 			message: $("#message").text(),
 			get orderdetail() {
 				return $scope.selectedItems.map(item => {
@@ -640,95 +629,57 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 			purchase() {
 				var order = angular.copy(this);
 				$http.post("/rest/order", order).then(resp => {
-					for (var i = 0; i < $scope.selectedItems.length; i++) {
-						$scope.deleteida($scope.selectedItems[i].id)
-					}
-					localStorage.clear();
 					Swal.fire("Success", "Đặt hàng thành công!", "success");
-					location.href = "/order/detail/" + resp.data.id;
+					$http.get(`/rest/order/${resp.data.id}`).then(resp => {
+						console.log(resp.data);
+					}).catch(error => {
+						console.log(error)
+					})
+
+
+					//					location.href = "/order/detail/" + resp.data.id;
 					console.log(resp.data.id);
 				}).catch(error => {
 					Swal.fire("Error", "Đặt hàng thất bại!", "error");
 					console.log(error)
 				})
-			}
-		}
 
+
+			}
+
+		}
 		$scope.bill.purchase();
+		console.log($scope.bill);
 
 
 
 	}
-	//Kiểm tra thanh toán
-
-	$scope.cbthanhtoan = function() {
-		var check = $('input[name="payment"]:checked').val();
-
-		if ($scope.address == null || $scope.ship == null) {
-			if ($scope.address == null) {
-				Swal.fire("Error", "Vui lòng chọn địa chỉ", "error");
-			} else {
-				Swal.fire("Error", "Vui lòng chọn phương thức vận chuyển", "error");
-			}
-
-		} else {
-			if (check >= 1) {
-				$scope.statusorder = "Chưa thanh toán";
-				$scope.thanhtoan();
-			} else {
-				$scope.statusorder = "Đã thanh toán";
-				$scope.thanhtoan();
-				var encodedTotalPrice = btoa($scope.tongtienthanhtoan);
-				var url = '/vnpay/test/' + encodedTotalPrice;
-				window.location.href = url;
-			}
-		}
-	}
-	//Thanh toán vnpay	
-	$scope.generatePayment = function() {
-
-		var tongtienthanhtoanElement = document.getElementById("tongtienthanhtoan");
-
-		// Lấy nội dung từ phần tử
-		var tongtienthanhtoanText = tongtienthanhtoanElement.innerHTML;
-
-		// Chuyển đổi chuỗi thành kiểu số
-		var tongtienthanhtoan = parseFloat(tongtienthanhtoanText.replace('.', ''));
-
-
-		var params = {
-			bankCode: $scope.bankCode,
-			amount: tongtienthanhtoan
-		};
-		console.log('Request Params:', params)
-		$http.get(`/api/vnpay/createpayment`, { params: params })
-			.then(function(response) {
-				console.log('Response:', response);
-				$scope.payment = response.data;
-			})
-			.catch(function(error) {
-				console.error('Error:', error);
-			});
-	};
 
 
 
 	//Lấy phí ship API
 	document.addEventListener('phiDataAvailable', function(event) {
+
 		$scope.$apply(function() {
 			// Truy cập dữ liệu từ event.detail
 			$scope.ship = event.detail;
 			//Tính tổng tiền thanh toán
 			$scope.tongtienthanhtoan = $scope.total + $scope.ship;
+
+			// Sử dụng dữ liệu trong controller này
+			console.log($scope.ship);
 		});
 	});
 
 
-	//Lấy  Address API
+	//Lấy phí Address API
 	document.addEventListener('resultAvailable', function(event) {
 		// Truy cập dữ liệu từ event.detail
 		$scope.$apply(function() {
 			$scope.address = event.detail;
+
+			// Sử dụng dữ liệu trong controller này
+			console.log($scope.address);
 		});
 	});
 
@@ -740,7 +691,7 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 
 	//trang chi tiết	
 	$scope.productdetails = function(id) {
-		sessionStorage.setItem("item", JSON.stringify(id));
+
 		$http.get(`/rest/products/${id}`).then(resp => {
 			$scope.productdetail = resp.data;
 			$scope.priceww = $scope.productdetail.price
@@ -749,6 +700,7 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 		}).catch(error => {
 			console.log("Error", error);
 		})
+
 		$http.get(`/rest/products/weight/${id}`).then(resp => {
 			console.log($scope.priceww);
 			$scope.productweight = resp.data;
@@ -758,6 +710,7 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 					$scope.quantityview = $scope.productweight[i].quantity;
 				}
 			}
+
 		}).catch(error => {
 			console.log("Error", error);
 		})
@@ -775,9 +728,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 			console.log("Error", error);
 		})
 	}
-
-
-
 
 
 
