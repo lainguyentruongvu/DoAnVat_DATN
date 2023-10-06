@@ -633,7 +633,6 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 					$http.get(`/rest/order/${resp.data.id}`).then(resp => {
 						console.log(resp.data);
 					}).catch(error => {
-						;
 						console.log(error)
 					})
 

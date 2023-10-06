@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(title,view)">
+
 <head>
 	<meta charset="UTF-8">
 	<title th:replace="${title}"></title>
@@ -8,9 +9,26 @@
 
 <body ng-app="app" ng-controller="ctrl">
 	<header th:replace="layout/header"></header>
-	
+
 	<main th:replace="${view}"></main>
-	
+
 	<footer th:replace="/layout/footer"></footer>
+	<script lang="javascript">
+		var __vnp = {
+			code: 19441,
+			key: '',
+			secret: '0ef8569568c0db2956b3b15f09006e06'
+		};
+		(function () {
+			var ga = document.createElement('script');
+			ga.type = 'text/javascript';
+			ga.async = true;
+			ga.defer = true;
+			ga.src = '//core.vchat.vn/code/tracking.js?v=74384';
+			var s = document.getElementsByTagName('script');
+			s[0].parentNode.insertBefore(ga, s[0]);
+		})();
+	</script>
 </body>
+
 </html>
