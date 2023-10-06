@@ -19,6 +19,4 @@ public class OrderController {
 		return "cart/order";
 
 	}
-
-
 }

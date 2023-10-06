@@ -1,0 +1,64 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::title},~{::body})}">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<title>Thanh toán</title>
+
+</head>
+
+<body>
+	<div id="content-page" class="content-page">
+		<div class="container-fluid checkout-content">
+			<div class="card">
+				<div class="card-header text-center">
+					Cổng thanh toán điện tử VNpay <img src="../../images/vnpay.jpg" style="width: 10%;">
+				</div>
+				<div class="card-body">
+					<h5 class="card-title  text-center">Tạo thanh toán VNPay</h5>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="row">
+								<div class="col-sm-2"></div>
+								<div class="col-sm-4">
+									<div class="form-group">
+										<label>Số tiền cần thanh toán: *</label> <br>
+										<div><b style="font-size: large;"><b id="tongtienthanhtoan">[[${#numbers.formatDecimal(tongtienthanhtoan,
+												0, 'POINT', 0, 'POINT')}]]</b> VNĐ</b></div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>Chọn ngân hàng thanh toán: *</label> <br>
+										<select ng-model="bankCode" class="form-control col-sm-8">
+											<option value="">Ngân hàng thanh toán</option>
+											<option value="NCB">NGÂN HÀNG QUỐC DÂN NCB</option>
+											<option value="ACB">NGÂN HÀNG Á CHÂU ACB</option>
+											<option value="VCB">NGÂN HÀNG VIETCOMBANK</option>
+											Thêm các tùy chọn khác tại đây
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button ng-click="generatePayment()" onclick="hienlink()" class="btn btn-primary" id="pay"
+						style="margin-left: 40%;">Tạo thanh toán</button>
+					<a href="{{ payment.url }}" ng-click="thanhtoan()" target="_blank" hidden id="tieptuc"
+						class="btn btn-primary pull-right">Tiếp tục</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function hienlink() {
+			document.getElementById('tieptuc').removeAttribute('hidden');
+			document.getElementById('pay').setAttribute('hidden', true);
+		}
+	</script>
+</body>
+
+</html>

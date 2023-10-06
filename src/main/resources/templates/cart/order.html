@@ -52,8 +52,8 @@
 						<tr th:each="detail:*{orderdetail}" th:object="${detail}">
 							<td>
 								<div class="avatar avatar-md">
-									<img th:src="@{|/img/products/*{product.image}|}" alt="..."
-										class="avatar-img rounded-circle">
+									<img th:src="@{|/images/products/*{product.image}|}" style="width: 70px;"
+										class="avatar-img ">
 								</div>
 							</td>
 							<td>
@@ -76,12 +76,8 @@
 							<td>
 								<p class="mb-0 text-muted">
 									[[*{#numbers.formatDecimal(price*quantity,0,'COMMA',0,'POINT')}]]</p>
-
 							</td>
 						</tr>
-
-
-
 					</tbody>
 
 				</table>

@@ -5837,28 +5837,13 @@ Version:1.0
 	End Footer CSS
 ===============================*/
 
-/*input[type="radio"] {*/
-/*	display: none;*/
-/*}*/
+.checkboxnew {
+	margin-left: 30px;
+	margin-top: 10px;
+	font-size: 15px;
+}
 
-/* Thiết kế label tùy chỉnh cho input radio */
-/*.radio-label {*/
-/*	display: inline-block;*/
-/*	padding: 8px 16px;*/
-/*	background-color: #f0f0f0;*/
-/*	border: 1px solid orange;*/
-/*	border-radius: 5px;*/
-/*	cursor: pointer;*/
-/*	margin-right: 10px;*/
-/*}*/
-
-/* Tạo kiểu tùy chỉnh cho label khi radio button được chọn */
-/*input[type="radio"]:checked+.radio-label {*/
-/*	background-color: #000;*/
-/*	color: #fff;*/
-/*}*/
-
-input[type="radio"] {
+input[type="radio"].weight {
 	display: none;
 }
 
@@ -5882,8 +5867,4 @@ input[type="radio"] {
 input[type="radio"]:checked+.weight {
 	border: rgb(255, 128, 64) solid 3px;
 	transform: scale(1.1);
-}
-
-Hiệu ứng hover cho label .weight:hover {
-	background-color: #2980b9;
 }

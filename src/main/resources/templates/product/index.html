@@ -85,7 +85,7 @@
 											class="col-xl-3 col-lg-4 col-md-4 col-12">
 											<div class="single-product">
 												<div class="product-img">
-													<a href="product-details.html">
+													<a href="/detail/{{item.id}}" >
 														<img style=" height: 300px;" class="default-img"
 															src="../../images/products/{{item.image}}" alt="#">
 														<img style="  height: 300px;" class="hover-img"
@@ -149,8 +149,7 @@
 																title="Quick View" href="#"><i
 																	class=" ti-eye"></i><span>Quick Shop</span></a>
 															<a title="Wishlist" href="#">
-																<i
-																	class=" ti-heart "></i><span>Add to
+																<i class=" ti-heart "></i><span>Add to
 																	Wishlist</span></a>
 															<a title="Compare" href="#"><i
 																	class="ti-bar-chart-alt"></i><span>Add to
@@ -2142,15 +2141,17 @@
 								<div class="size">
 									<div class="row">
 										<div class="col-lg-12 col-12">
-											<h5 class="title">Trọng lượng</h5>
+											<h5 ng-if="weightvalue" class="title">Trọng lượng</h5>
 
 											<div ng-repeat="item in productweight">
 												<input class="weight"
-													ng-class="{{check==item.weight.weightvalue}} ? 'bg-danger' : 'bg-primary'"
+													
+													
 													id="{{item.weight.weightvalue}}"
 													ng-click="weightquantityandprice(item.product.id,item.weight.id)"
 													type="radio" name="weight" value="{{item.weight.weightvalue}}">
-												<label
+
+												<label ng-if="item.weight.weightvalue"
 													ng-style="{'border': (weightvalue === item.weight.weightvalue) ? 'rgb(255, 128, 64)solid 3px' : '#000 solid 3px'}"
 													class="weight"
 													for="{{item.weight.weightvalue}}">{{item.weight.weightvalue}}</label>
@@ -2168,7 +2169,7 @@
 												<i class="ti-minus"></i>
 											</button>
 										</div>
-										<input readonly  ng-model="quantity" type="number" name="quantity"
+										<input readonly ng-model="quantity" type="number" name="quantity"
 											class="input-number" data-min="1" max="{{quantityview}}">
 										<div class="button plus">
 											<button ng-click="productdetailincrease()"
