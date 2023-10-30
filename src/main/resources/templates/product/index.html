@@ -2128,7 +2128,6 @@
 										<p ng-if="check==false" id="checkqtt">{{quantityandprice.quantity}}</p>
 										<p ng-if="check==true">Số lượng:</p>
 										<p ng-if="check==true" id="checkqtt">{{quantityview}}</p>
-
 									</div>
 								</div>
 
@@ -2142,11 +2141,8 @@
 									<div class="row">
 										<div class="col-lg-12 col-12">
 											<h5 ng-if="weightvalue" class="title">Trọng lượng</h5>
-
 											<div ng-repeat="item in productweight">
 												<input class="weight"
-													
-													
 													id="{{item.weight.weightvalue}}"
 													ng-click="weightquantityandprice(item.product.id,item.weight.id)"
 													type="radio" name="weight" value="{{item.weight.weightvalue}}">

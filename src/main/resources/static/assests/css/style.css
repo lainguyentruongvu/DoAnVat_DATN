@@ -1,0 +1,15 @@
+.custom-radio {
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+	user-select: none;
+	margin-right: 10px;
+  }
+  
+  .custom-radio input[type="radio"] {
+	display: none;
+  }
+  
+  .custom-radio::before {
+	display: inline-block;
+  }

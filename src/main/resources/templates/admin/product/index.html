@@ -3,6 +3,7 @@
 
 <head>
   <title>Quản lý sản phẩm</title>
+  <link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body class="vertical light" ng-app="app" ng-controller="product-ctrl">
@@ -10,10 +11,7 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
   <div class="container">
     <div class="row flex-lg-nowrap">
-
-
       <div class="col">
-
         <!-- FORM NHẬP THÔNG TIN -->
         <div class="modal fade" role="dialog" tabindex="-1" id="user-form-modal">
           <div class="modal-dialog modal-lg" role="document">
@@ -33,7 +31,7 @@
                         <div class="row">
                           <div class="col-lg-6">
                             <div class="form-group img-thumbnail" style="padding-left: 50px;">
-                              <img src="../../images/product/{{form.image}}" style="border-radius: 10px;" width="250px"
+                              <img src="../../images/products/{{form.image}}" style="border-radius: 10px;" width="250px"
                                 height="250px">
                               <hr>
                               <div class="input-group">
@@ -156,7 +154,6 @@
     </div>
   </div>
 
-
   <main role="main" class="main-content">
     <div class="container-fluid">
       <div class="row justify-content-center">
@@ -185,7 +182,10 @@
                           <button style="color: white;" class="btn btn-success btn-block" type="button"
                             data-toggle="modal" data-target="#user-form-modal" ng-click="reset()"><i
                               class="bi bi-person-plus"></i>Thêm sản phẩm</button>
-                          <label class="sr-only">Tìm kiếm</label>
+                        </div>
+                        <div class="form-group col-auto">
+                          <a href="/admin/weight" style="color: white;" class="btn btn-success btn-block"
+                            type="button">Trọng lượng sản phẩm</a>
                         </div>
                         <div class="form-group col-auto"> <input type="text" class="form-control" id="search1" value=""
                             placeholder="Tìm kiếm"></div>
@@ -201,7 +201,6 @@
                         <th>Tên sản phẩm</th>
                         <th>Loại sản phẩm</th>
                         <th>Giá tiền</th>
-                        <th>Trọng lượng</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -211,7 +210,7 @@
                         <td><strong>{{item.id}}</strong></td>
                         <td>
                           <div class="avatar avatar-md">
-                            <img src="../../images/product/{{item.image}}" width="80px" height="50px"
+                            <img src="../../images/products/{{item.image}}" width="80px" height="50px"
                               style="border-radius: 10px;">
                           </div>
                         </td>
@@ -222,19 +221,12 @@
                         <td>
                           <p class="mb-0 text-muted">{{item.price}}</p>
                         </td>
-                        <td>
-                          <p class="mb-0 text-muted">{{w.weightvalue}}</p>
-
-                        </td>
-
                         <td style="color: white;">
                           <a class="btn btn-warning" data-toggle="modal" data-target="#user-form-modal"
                             ng-click="edit(item)"><i class="bi bi-pencil-square"></i> Sửa</a>
                           <a class="btn btn-danger" ng-click="deletepro(item)"><i class="bi bi-trash"></i> Xóa</a>
                         </td>
                       </tr>
-
-
                     </tbody>
                   </table>
 
@@ -256,7 +248,6 @@
 
   </main> <!-- main -->
   </div> <!-- .wrapper -->
-
 
 
 </body>

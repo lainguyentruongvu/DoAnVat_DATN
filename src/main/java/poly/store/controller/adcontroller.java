@@ -20,4 +20,8 @@ public class adcontroller {
 	public String product() {
 		return "admin/product/index";
 	}
+	@RequestMapping("/admin/weight")
+	public String weight() {
+		return "admin/weight/index";
+	}
 }
