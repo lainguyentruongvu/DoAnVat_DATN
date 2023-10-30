@@ -103,27 +103,27 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 	}
 
 
-	// thêm sản phẩm vào giỏ hàng
-	//	$scope.addcart = function(p) {
-	//		if ($scope.username == "") {
-	//			location.href = "/auth/login/form";
-	//		} else {}
-	//			$scope.data = {
-	//				price: p.price,
-	//				quantity: 1,
-	//				product: { id: p.id },
-	//				cart: { id: $scope.cartid }
-	//			}
-	//			$http.post("/rest/cart/addcart", $scope.data).then(resp => {
-	//				Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
-	//				$scope.getcartdetails();
-	//				$scope.getTotalItem()
-	//			}).catch(error => {
-	//				console.log(error)
-	//			})
-	//		}
-	//
-	//	}
+	 //thêm sản phẩm vào giỏ hàng
+//		$scope.addcart = function(p) {
+//			if ($scope.username == "") {
+//				location.href = "/auth/login/form";
+//			} else {}
+//				$scope.data = {
+//					price: p.price,
+//					quantity: 1,
+//					product: { id: p.id },
+//					cart: { id: $scope.cartid }
+//				}
+//				$http.post("/rest/cart/addcart", $scope.data).then(resp => {
+//					Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+//					$scope.getcartdetails();
+//					$scope.getTotalItem()
+//				}).catch(error => {
+//					console.log(error)
+//				})
+//			}
+//	
+//		}
 
 	var modal = document.getElementById("exampleModal");
 	document.addEventListener("keydown", function(event) {
@@ -422,7 +422,9 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 			$scope.deleteid(cd.id)
 		} else {
 			cd.quantity--;
-			$http.put(`/rest/cart/updateqty`, cd).then(resp => { }).catch(error => {
+			$http.put(`/rest/cart/updateqty`, cd).then(resp => {
+
+			}).catch(error => {
 				console.log("Error", error);
 			})
 
@@ -639,25 +641,47 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 			},
 			purchase() {
 				var order = angular.copy(this);
+				$scope.weightquantt = [];
 				$http.post("/rest/order", order).then(resp => {
 					for (var i = 0; i < $scope.selectedItems.length; i++) {
 						$scope.deleteida($scope.selectedItems[i].id)
 					}
-					localStorage.clear();
+
 					Swal.fire("Success", "Đặt hàng thành công!", "success");
-					location.href = "/order/detail/" + resp.data.id;
-					console.log(resp.data.id);
+					//					location.href = "/order/detail/" + resp.data.id;
+
+
+					for (var i = 0; i < $scope.selectedItems.length; i++) {
+						processProduct($scope.selectedItems[i]);
+					}
+
+					function processProduct(item) {
+						$http.get(`/rest/order/weight/${item.weightvalue}`).then(resp => {
+							$scope.weightquantt = resp.data;
+							$http.get(`/rest/order/productweight/${item.product.id}/${$scope.weightquantt.id}`).then(resp => {
+								console.log(resp.data.id);
+
+								$http.put(`/rest/order/putquantity/${resp.data.id}/${item.quantity}`).then(resp => {
+								}).catch(error => {
+									console.log(error)
+								});
+
+							}).catch(error => {
+								console.log(error)
+							});
+						}).catch(error => {
+							console.log(error);
+						});
+					}
+					localStorage.clear();
+					console.log(resp);
 				}).catch(error => {
 					Swal.fire("Error", "Đặt hàng thất bại!", "error");
 					console.log(error)
 				})
 			}
 		}
-
 		$scope.bill.purchase();
-
-
-
 	}
 	//Kiểm tra thanh toán
 
@@ -737,6 +761,7 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 	$scope.logout = function() {
 		localStorage.clear();
 	}
+	
 
 	//trang chi tiết	
 	$scope.productdetails = function(id) {

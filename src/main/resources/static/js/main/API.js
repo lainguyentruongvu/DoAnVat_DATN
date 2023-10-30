@@ -63,7 +63,7 @@ function service(districtid) {
 			shop_id: 4463615,
 			from_district: 1572,
 			to_district: districtid,
-
+			
 		},
 
 		success: function(data) {

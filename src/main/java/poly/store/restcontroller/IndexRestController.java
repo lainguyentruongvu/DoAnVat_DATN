@@ -98,4 +98,11 @@ public class IndexRestController {
 	public void delete(@PathVariable("id") Integer id) {
 		productservice.delete(id);
 	}
+	
+	//Hien thi 10 san pham ban chay
+	@GetMapping("/top10sanpham")
+	public void hienthitop10sanpham() {
+		
+	}
+	
 }

@@ -3,7 +3,7 @@ package poly.store.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
-public class adcontroller {
+public class Admincontroller {
 	@RequestMapping("/admin")
 	public String index() {
 		return "admin/index";
@@ -19,5 +19,9 @@ public class adcontroller {
 	@RequestMapping("/admin/product")
 	public String product() {
 		return "admin/product/index";
+	}
+	@RequestMapping("/admin/order")
+	public String order() {
+		return "admin/order/index";
 	}
 }

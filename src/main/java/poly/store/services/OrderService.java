@@ -10,4 +10,8 @@ public interface OrderService {
 
 	Order findById(Integer id);
 
+	Order getOne(Integer orderId);
+
+	void save(Order order);
+
 }
