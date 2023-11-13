@@ -85,11 +85,12 @@
 											class="col-xl-3 col-lg-4 col-md-4 col-12">
 											<div class="single-product">
 												<div class="product-img">
-													<a href="/detail/{{item.id}}" >
+													<a ng-click="productdetails(item.id)" data-toggle="modal"
+																data-target="#exampleModal">
 														<img style=" height: 300px;" class="default-img"
-															src="../../images/products/{{item.image}}" alt="#">
+															src="../../images/product/{{item.image}}" alt="#">
 														<img style="  height: 300px;" class="hover-img"
-															src="../../images/products/{{item.image}}" alt="#">
+															src="../../images/product/{{item.image}}" alt="#">
 														<span class="out-of-stock">Hot</span>
 													</a>
 													<div class="button-head">
@@ -109,7 +110,7 @@
 													</div>
 												</div>
 												<div class="product-content">
-													<h3><a href="product-details.html">{{item.name}}</a></h3>
+													<h3><a >{{item.name}}</a></h3>
 													<div class="product-price">
 														<span>{{item.price | number :0}}</span>&emsp13;<span>VNĐ</span>
 													</div>
@@ -1740,60 +1741,30 @@
 						</div>
 					</div>
 					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
+					<div ng-repeat="item in bestseller" class="single-list">
+						<div  class="row">
 							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
-									<img src="images/SP_4.jpg" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
+									<img src="images/product/{{item.product.image}}" alt="#">
+									<a ng-click="addcartbestseller(item,item.product.price - (item.product.price * (item.discount / 100)), calculateRemainingTime(item.enddate))" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h4 class="title"><a href="#">Bánh combos cuộn</a></h4>
-									<p><del> 25.000 VNĐ </del></p>
-									<p class="price with-discount">15.000 VNĐ ✓</p>
+									<h4 class="title"><a href="#">{{item.product.name}}</a>    <a href="#">{{item.weightvalue}}</a></h4>
+									<p><del> {{item.product.price| number:0}} VNĐ </del></p>
+									<p class="price with-discount">{{
+																	item.product.price - (item.product.price * (item.discount / 100)) |
+																	number:0 }} VNĐ ✓</p>
+																	<h4 class="title"><a >{{
+																calculateRemainingTime(item.enddate) }}</a></h4>
 								</div>
 							</div>
 						</div>
 					</div>
 					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$44</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$89</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
+					
+					
 				</div>
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="row">
@@ -2194,6 +2165,110 @@
 										<li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
 										<li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
 									</ul>
+									<!-- KHU VỰC ĐÁNH GIÁ SẢN PHẨMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
+									<div class="share-social" style="padding-left: 20px;">
+										<div class="row">
+											<div class="col-12">
+												<div class="content-tags">
+													<h3 style="color: orange;">4.9 trên 5<br>
+														<img src="../../images/star.gif" width="30px">
+														<img src="../../images/star.gif" width="30px">
+														<img src="../../images/star.gif" width="30px">
+														<img src="../../images/star.gif" width="30px">
+														<img src="../../images/star.gif" width="30px">
+													</h3>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="col-lg-12">
+							<div class=" container reply">
+								<div class="reply-head" style="padding-top: 10px;">
+									<h2 class="reply-title">Đánh giá</h2>
+									<!-- Comment Form -->
+									<form class="form" style="padding-top: 10px;padding-left: 10px;">
+										<div class="row">
+
+											<div class="col-12">
+												<div class="form-group">
+													<label>Đánh giá sản phẩm<span>*</span></label> <br>
+													Chọn sao:
+													<img src="../../images/star.gif" width="30px">
+													<img src="../../images/star.gif" width="30px">
+													<img src="../../images/star.gif" width="30px">
+													<img src="../../images/star.gif" width="30px">
+													<img src="../../images/star.gif" width="30px">
+													<textarea name="message" placeholder="Đánh giá của bạn"></textarea>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="form-group button">
+													<button type="submit" class="btn btn-warning">Đánh giá</button>
+												</div>
+											</div>
+										</div>
+									</form>
+									<!-- End Comment Form -->
+								</div>
+							</div>
+							<div class="col-lg-12">
+								
+								<div class="row">
+									
+									<div class="col-lg-12 form-group">
+									<div>
+										<img style="height: 70px;
+											width: 70px;
+											border-radius: 100%;
+											position: absolute;
+											left: 0; padding: 5px;" src="https://f9-zpcloud.zdn.vn/550627044704545625/b6673faa10cec19098df.jpg">
+									</div>
+									<div style="padding-left: 70px;">
+										<p style="font-weight: bold;font-size: 15px;"> Tiến bờ dừa
+											<br>
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<br>
+											<p style="font-size: 13px;">10-09-2023 13:29 | Phân loại hàng: 2.0kg</p>
+										</p>
+										<p style="font-size: 20px;">Như cức.</p>
+									</div>
+								</div>
+
+								<div class="col-lg-12  form-group">
+									<div>
+										
+								<img style="height: 70px;
+								width: 70px;
+								border-radius: 100%;
+								position: absolute;
+								left: 0; padding: 5px;" src="https://f10-zpcloud.zdn.vn/4031460762693235070/855f57242bbef8e0a1af.jpg">	
+								
+								</div>
+									<div style="padding-left: 70px;">
+										<p style="font-weight: bold;font-size: 15px;"> Minh Thiên
+											<br>
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<br>
+											<p style="font-size: 13px;">11-09-2023 13:29 | Phân loại hàng: 1.5kg</p>
+										</p>
+										<p style="font-size: 20px;">Ngon như cức.</p>
+									</div>
+								</div>
+
+								</div>
+<!-- KẾT THÚC KHU VỰC ĐÁNH GIÁ SẢN PHẨMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
 								</div>
 							</div>
 						</div>

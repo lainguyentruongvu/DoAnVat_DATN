@@ -544,10 +544,34 @@ app.controller("order-ctrl", function($scope, $http) {
 
 
 	$scope.changeStatus = function(orderId, newStatusId) {
+		console.log(orderId, newStatusId);
+
+		if (newStatusId === 4) {
+			// Sử dụng Swal.fire để hiển thị thông báo
+			Swal.fire({
+				icon: 'warning',
+				title: 'Xác nhận',
+				text: 'Bạn chắc chắn hủy đơn hàng không?',
+				showCancelButton: true,
+				confirmButtonText: 'OK',
+				cancelButtonText: 'Hủy'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Nếu người dùng chọn "OK," thực hiện thay đổi trạng thái
+					performStatusChange(orderId, newStatusId);
+				}
+			});
+		} else {
+			// Nếu newStatusId không phải 4, thực hiện ngay thay đổi trạng thái
+			performStatusChange(orderId, newStatusId);
+		}
+	};
+
+
+	function performStatusChange(orderId, newStatusId) {
 		$http.put("/rest/order/" + orderId + "/status?newStatusId=" + newStatusId)
 			.then(function(response) {
-				$scope.items.push(response.data); // Sửa lại thành response.data
-				// Update interface after successful status change
+				$scope.items.push(response.data);
 				for (var i = 0; i < $scope.items.length; i++) {
 					if ($scope.items[i].id === orderId) {
 						$scope.items[i].status.id = newStatusId;
@@ -565,6 +589,32 @@ app.controller("order-ctrl", function($scope, $http) {
 					confirmButtonText: 'OK'
 				});
 			});
+	}
+
+
+	$scope.trangthai = function(id) {
+		var url = `/rest/order/trangthai/${id}`;
+		$http.get(url).then(resp => {
+			$scope.orderlist = resp.data;
+		});
+	}
+
+	$scope.showOrderDetail = function(orderId) {
+		$http.get("/rest/order/orderDetails/" + orderId)
+			.then(function(response) {
+				//						$("#donhangdanggiao").modal("hide");
+				//						$("#dagiao").modal("hide");
+				//						$("#dahuy").modal("hide");
+				$scope.selectedOrderDetails = response.data;
+				$('#orderDetailModal').modal('show'); // Hiển thị modal chứa danh sách sản phẩm
+			})
+			.catch(function(error) {
+				console.error("Error fetching order details:", error);
+			});
+		$('#orderDetailModal').modal('show'); // Hiển thị modal chứa danh sách sản phẩm
+	};
+	$scope.closeModal = function() {
+		$("#orderDetailModal").modal("hide");
 	};
 
 

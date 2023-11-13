@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+
 import poly.store.dao.OrderDAO;
+import poly.store.dao.OrderdetailDAO;
 import poly.store.dao.ProductWeightDAO;
 import poly.store.dao.WeightDAO;
 import poly.store.entity.Order;
@@ -54,6 +56,9 @@ public class OrderRestController {
 
 	@Autowired
 	OrderDAO orderDao;
+	
+	@Autowired
+	OrderdetailDAO orderdetailDao;
 
 	@Autowired
 	StatusService statusservice;
@@ -137,5 +142,12 @@ public class OrderRestController {
 
 		return ResponseEntity.ok("Order status updated successfully");
 	}
+	
+	 @GetMapping("orderDetails/{orderId}")
+	    public List<Orderdetail> getOrderDetailsByOrderId(@PathVariable Integer orderId) {           
+	    	return orderdetailDao.findByOrderIdWithProducts(orderId);
+	    }
+	 
+	
 
 }

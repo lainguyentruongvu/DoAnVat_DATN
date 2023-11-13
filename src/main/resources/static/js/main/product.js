@@ -1,5 +1,5 @@
 const app = angular.module("app", []);
-app.controller("ctrl", function($scope, $http, $location, $window) {
+app.controller("ctrl", function($scope, $http, $location, $window, $interval) {
 	$scope.products = [];
 
 	//Lấy tên tài khoản
@@ -103,27 +103,7 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 	}
 
 
-	 //thêm sản phẩm vào giỏ hàng
-//		$scope.addcart = function(p) {
-//			if ($scope.username == "") {
-//				location.href = "/auth/login/form";
-//			} else {}
-//				$scope.data = {
-//					price: p.price,
-//					quantity: 1,
-//					product: { id: p.id },
-//					cart: { id: $scope.cartid }
-//				}
-//				$http.post("/rest/cart/addcart", $scope.data).then(resp => {
-//					Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
-//					$scope.getcartdetails();
-//					$scope.getTotalItem()
-//				}).catch(error => {
-//					console.log(error)
-//				})
-//			}
-//	
-//		}
+
 
 	var modal = document.getElementById("exampleModal");
 	document.addEventListener("keydown", function(event) {
@@ -326,6 +306,40 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 					console.log(error)
 				})
 			}
+		}
+	}
+
+
+	//Chuong trình giảm giá
+	$scope.addcartbestseller = function(item, discount, endate) {
+		if (endate == "Đã kết thúc") {
+			Swal.fire("Error", "Sản phẩm đã hết thời gian giảm giá!", "error");
+
+		} else {
+
+			$scope.data = {
+				price: discount,
+				quantity: 1,
+				weightvalue: item.weightvalue,
+				product: {
+					id: item.product.id
+				},
+				cart: {
+					id: $scope.cartid
+				}
+			}
+
+			console.log($scope.data);
+			$http.post("/rest/cart/addcart", $scope.data).then(resp => {
+				$scope.data = {};
+				Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
+				$scope.getcartdetails();
+				$scope.getTotalItem()
+				$scope.toggleSelected(resp.data)
+			}).catch(error => {
+				console.log(error)
+			})
+
 		}
 	}
 
@@ -761,7 +775,7 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 	$scope.logout = function() {
 		localStorage.clear();
 	}
-	
+
 
 	//trang chi tiết	
 	$scope.productdetails = function(id) {
@@ -988,5 +1002,61 @@ app.controller("ctrl", function($scope, $http, $location, $window) {
 			this.page = this.count - 1;
 		}
 	}
+
+	//bestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestseler
+
+
+	$scope.getbestsl = function() {
+		$http.get("/rest/bestseller/").then(resp => {
+			$scope.bestseller = resp.data;
+		}).catch(error => {
+			console.log("Error", error)
+		})
+	}
+
+	$scope.calculateRemainingTime = function(endDate) {
+		const currentTime = new Date();
+		const endTime = new Date(endDate);
+
+		if (currentTime > endTime) {
+			return 'Đã kết thúc';
+		}
+
+		const remainingMilliseconds = endTime - currentTime;
+		const remainingSeconds = Math.floor(remainingMilliseconds / 1000);
+		const hours = Math.floor(remainingSeconds / 3600);
+		const minutes = Math.floor((remainingSeconds % 3600) / 60);
+		const seconds = remainingSeconds % 60;
+
+		return `${hours} giờ ${minutes} phút ${seconds} giây`;
+	};
+
+	$scope.removeExpiredProducts = function() {
+		const currentTime = new Date();
+
+		$scope.bestseller = $scope.products.filter(product => {
+			const discount = $scope.discounts.find(discount => discount.book.id === book.id);
+			return !discount || currentTime < new Date(discount.endDate);
+		});
+	};
+
+	// Fetch data every minute
+	const fetchInterval = $interval($scope.getbestsl, 20000);
+
+	// Call the function to remove expired products immediately
+	$scope.removeExpiredProducts();
+	//	// Cancel the interval when the controller is destroyed
+	$scope.$on('$destroy', function() {
+		$interval.cancel(fetchInterval);
+	});
+
+
+	$scope.getbestsl();
+
+	//bestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestseler
+
+
+
+
 
 })
