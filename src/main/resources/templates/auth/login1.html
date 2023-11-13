@@ -20,18 +20,19 @@
 	
 	<div>
 		<h2><img src="../../images/logo_noback.png" alt="" style="width: 250px;"><br>Đăng nhập</h2>
-		<form>			
+		<form th:object="${account}" th:action="@{/auth/login}" method="post">			
 				<label>Tên đăng nhập</label>
-				<input type="email" name="email" placeholder="" required>
+				<input th:field="*{username}" type="text"  placeholder="">
 				<label>Mật khẩu</label>
-				<input type="password" name="password" placeholder="" required>
+				<input th:field="*{password}" type="password" placeholder="">
 				<input type="submit" name="submit" value="Đăng nhập">
+				
 				<div class="remember">
 						<div class="login"><div class="Oroption">Hoặc</div></div>
 						<div class="links">
 								<!-- <div class="facebook"><img src="images/facebook.png" alt="Facebook Icon" /> </div> -->
 								<!-- <div class="google"> <img src="images/google.png" alt="Facebook Icon" /> </div> -->
-								<button class="btn btn-danger google"><i class="bi bi-google"></i> Google</button> &nbsp;
+								<a class="btn btn-danger google" href="/oauth2/authorization/google"><i  class="bi bi-google"></i> Google</a> &nbsp;
 								<button class="btn btn-primary facebook"><i class="bi bi-facebook"></i> Facebook</button>
 						</div>
 						<div class="signup"> Bạn không có tài khoản? <a href="#">Đăng ký ngay!</a> </div>

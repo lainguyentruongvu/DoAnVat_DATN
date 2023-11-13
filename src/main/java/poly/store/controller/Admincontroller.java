@@ -24,4 +24,10 @@ public class Admincontroller {
 	public String order() {
 		return "admin/order/index";
 	}
+	@RequestMapping("/admin/weight")
+	public String weight() {
+		return "admin/weight/index";
+	}
+	
+	
 }
