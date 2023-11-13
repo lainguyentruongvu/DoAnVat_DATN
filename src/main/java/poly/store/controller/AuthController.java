@@ -107,7 +107,7 @@ public class AuthController {
 	@GetMapping("/auth/register")
 	public String signUpForm(Model model) {
 		model.addAttribute("account", new Account());
-		return "auth/register";
+		return "auth/dangky";
 	}
 
 	@PostMapping("/auth/register")
@@ -127,7 +127,12 @@ public class AuthController {
 
 	@GetMapping("/auth/forgot-password")
 	public String forgotPasswordForm(Model model) {
-		return "auth/forgot-password";
+		return "auth/quenMatkhau";
+	}
+	
+	@GetMapping("/auth/profile")
+	public String Profile(Model model) {
+		return "auth/profile";
 	}
 
 	@PostMapping("/auth/forgot-password")

@@ -38,6 +38,12 @@ public class IndexController {
 
 	}
 
+
+	@RequestMapping("orderuser")
+	public String OrderUser(Model model) {
+		return "product/status";
+
+	}
 	@RequestMapping("/favorites")
 	public String favorite() {
 		return "favorite/index";

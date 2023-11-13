@@ -27,7 +27,7 @@ public class Discount implements Serializable {
 	Integer discount;
 	Date startdate;
 	Date enddate;
-	
+	String weightvalue;
 	@ManyToOne
 	@JoinColumn(name = "Productid")
 	Product product;

@@ -56,4 +56,16 @@ public class OrderServiceImpl implements OrderService {
 		return orderdao.findById(id).get();
 	}
 
+	@Override
+	public Order getOne(Integer orderId) {		
+		return orderdao.getOne(orderId);
+	}
+
+	@Override
+	public void save(Order order) {
+		orderdao.save(order);
+		
+	}
+
+
 }
