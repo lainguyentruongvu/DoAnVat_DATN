@@ -94,15 +94,7 @@ public class IndexController {
 
 		return "detail/index";
 	}
-//	@RequestMapping("weight/{idprod}/{idw}")
-//	public String EditWeight(Model model, @PathVariable("idpro") Integer idpro, @PathVariable("idw") Integer idw) {
-//		
-//		return "/";
-//	}
-	
-	
-	
-	
+
 
 	@GetMapping("vnpay/test/{tongtienthanhtoan}")
 	public String getTest(Model model, @PathVariable("tongtienthanhtoan") String encodedTotal) {

@@ -503,7 +503,85 @@ app.controller("product-ctrl", function($scope, $http) {
 		}
 
 	}
+//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
+//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
+	$scope.weightadmin = function (id, price) {
+		$scope.showbtn_them = true;
+		$http.get(`/rest/cart/checkproductweight/${id}/${price}`).then(resp => {
+			$scope.productweight = resp.data;
+			$scope.priceww = price
+		}).catch(error => {
+			console.log("Error", error);
+		})
 
+		$http.get(`/rest/products/weight/${id}`).then(resp => {
+			$scope.productweights = resp.data;
+		}).catch(error => {
+			console.log("Error", error);
+		})
+
+	}
+
+
+	$scope.weightquantityandprice = function (idpro, idw) {
+		$scope.showbtn_del_upd = true;
+		$scope.showbtn_addweight = false;
+		$http.get(`/rest/products/weight/quantityandprice/${idpro}/${idw}`).then(resp => {
+			$scope.quantityandprice = resp.data;
+			$scope.weightvalue = $scope.quantityandprice.weight.weightvalue //hông biết có sài k nữa
+			$scope.productweight.price = $scope.quantityandprice.price
+			$scope.productweight.quantity = $scope.quantityandprice.quantity
+			$scope.productweight.id = $scope.quantityandprice.id;
+			$scope.productweight.weight.id = $scope.quantityandprice.weight.id
+		}).catch(error => {
+			console.log("Error", error);
+		})
+	}
+
+
+	$scope.resetformw = function () {
+		$scope.productweight.price = null;
+		$scope.productweight.quantity = null;
+		$scope.productweight.id = null;
+		$scope.productweight.weight.id = null;
+		$scope.showsel = true;
+		$scope.showbtn_addweight = true;
+		$scope.showbtn_del_upd = false;
+	}
+
+	$scope.addweight = function (item) {
+		$scope.productweight = angular.copy(item)
+		$http.post("/rest/products/productweight", $scope.productweight).then(resp => {	
+			alert("Thêm trọn lyuongwj thành công")
+			
+		}).catch(error => {
+			console.log("Error", error);
+		})
+	}
+
+	$scope.updateweight = function () {
+		var item = angular.copy($scope.productweight);
+		console.log(item)
+		$http.put(`/rest/products/productweight/${item.id}`, item).then(resp => {
+			var index = $scope.itempros.findIndex(p => p.id == item.id);
+			$scope.productweight[index] = item;
+			Swal.fire("Success", "Cập nhật thành công!", "success");
+		}).catch(error => {
+			Swal.fire("Error", "Cập nhật thất bại!", "error");
+			console.log("Error", error);
+		})
+	}
+
+	$scope.deleteweight = function(){
+		var idproweight = $scope.productweight.id;
+		console.log(idproweight)
+		$http.delete(`/rest/products/productweight/${idproweight}`).then(resp => {
+			
+		}).catch(error => {
+			Swal.fire("Error", "Cập nhật thất bại!", "error");
+			console.log("Error", error);
+		})
+	}
 	$scope.initialize();
 	$scope.weight();
 	$scope.categorys();

@@ -34,11 +34,9 @@ public class IndexRestController {
 
 	@Autowired
 	ProductWeightDAO productweightdao;
-	
+
 	@Autowired
 	WeightDAO weightdao;
-	
-	
 
 	@GetMapping()
 	public List<Product> findAll() {
@@ -55,7 +53,7 @@ public class IndexRestController {
 	public Product productdetail(@PathVariable("id") Integer id) {
 		return productservice.findById(id);
 	}
-	
+
 	@GetMapping("weight")
 	public List<Weight> weightAll() {
 		List<Weight> weight = weightdao.findAll();
@@ -75,34 +73,39 @@ public class IndexRestController {
 		Weight weight = weightdao.findById(idw).get();
 		return productweightdao.findByProductAndWeight(product, weight);
 	}
-	
-	// POST 
+
+	// POST
 	@PostMapping
 	public Product create(@RequestBody Product product) {
 		return productservice.create(product);
 	}
-	
+
 	@PostMapping("productweight")
 	public Productweight createproweight(@RequestBody Productweight productweight) {
 		return productweightdao.save(productweight);
 	}
-	
-	//PUT
+
+	// PUT
 	@PutMapping("{id}")
 	public Product update(@PathVariable("id") Integer id, @RequestBody Product product) {
 		return productservice.update(product);
 	}
-	
-	//DELETE
+
+	@PutMapping("/productweight/{id}")
+	public Productweight updateproweight(@PathVariable("id") Integer id, @RequestBody Productweight productweight) {
+		return productweightdao.save(productweight);
+	}
+
+	// DELETE
 	@DeleteMapping("{id}")
 	public void delete(@PathVariable("id") Integer id) {
 		productservice.delete(id);
 	}
-	
-	//Hien thi 10 san pham ban chay
-	@GetMapping("/top10sanpham")
-	public void hienthitop10sanpham() {
-		
+
+	// DELETE
+	@DeleteMapping("/productweight/{id}")
+	public void deleteproweight(@PathVariable("id") Integer id) {
+		productweightdao.deleteById(id);
 	}
-	
+
 }
