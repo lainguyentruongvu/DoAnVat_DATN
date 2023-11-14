@@ -57,7 +57,7 @@ public class AuthController {
 
 	@RequestMapping("/auth/login/form")
 	public String logInForm(Model model, @ModelAttribute("account") Account account) {
-		return "auth/login1";
+		return "auth/dangNhap";
 	}
 
 	@RequestMapping("/auth/login/success")
@@ -82,19 +82,19 @@ public class AuthController {
 		
 			model.addAttribute("message", "Sai thông đăng nhập");
 			
-		return "auth/login1";
+		return "auth/dangNhap";
 	}
 
 	@RequestMapping("/auth/unauthoried")
 	public String unauthoried(Model model, @ModelAttribute("account") Account account) {
 		model.addAttribute("message", "Bạn không có quyền truy cập");
-		return "auth/login1";
+		return "auth/dangNhap";
 	}
 	
 	@RequestMapping("/auth/logout/success")
 	public String logOutSuccess(Model model, @ModelAttribute("account") Account account) {
 		model.addAttribute("message", "Đăng xuất thành công");
-		return "auth/login1";
+		return "auth/dangNhap";
 	}
 
 	// OAuth2
@@ -115,14 +115,14 @@ public class AuthController {
 			HttpServletResponse response) {
 		if (error.hasErrors()) {
 			model.addAttribute("message", "Vui lòng nhập thông ");
-			return "auth/register";
+			return "auth/dangky";
 		}
 		account.setImage("user.png");
 		account.setToken("token");
 		accountService.create(account);
 		model.addAttribute("message", "Đăng ký tài khoản thành c");
 		response.addHeader("refresh", "2;url=/auth/login/form");
-		return "auth/register";
+		return "auth/dangky";
 	}
 
 	@GetMapping("/auth/forgot-password")
@@ -149,7 +149,7 @@ public class AuthController {
 			e.printStackTrace();
 			model.addAttribute("error", "Lỗi email");
 		}
-		return "auth/forgot-password";
+		return "auth/quenMatkhau";
 	}
 
 	@GetMapping("/auth/reset-password")
