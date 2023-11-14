@@ -20,25 +20,33 @@
 	
 		<div>
 			<h2><img src="../../images/logo_noback.png" alt="" style="width: 250px;"><br>Đăng ký tài khoản</h2>
-			<form>			
+			<form th:object="${account}" th:action="@{/auth/register}" method="post">			
 					<label>Tên đăng nhập</label>
-					<input type="text" name="email"  required>
+					<input type="text" name="username" th:field="*{username}"  required>
+					<small th:errors="*{username}" style="color: red"></small>
 					<label>Gmail</label>
-					<input type="email" name="email" required>
+					<input type="email" name="email" th:field="*{email}" required>
 					<label>Mật khẩu</label>
-					<input type="password" name="password" placeholder="" required>
+					<input type="password" name="password" th:field="*{password}" placeholder="" required>
 					<label>Nhập lại mật khẩu</label>
-					<input type="password" name="password" placeholder="" required>
+					<input type="password" name="repassword" placeholder="" required oninput="checkPassword(this);">
 					<input type="submit" name="submit" value="Đăng ký">
 					<div class="remember">
-							
 							<div class="signup"> Bạn đã có tài khoản? <a href="#">Đăng nhập ngay!</a> </div>
 					</div>
 			</form>
 		</div>
 	</div>
 
-
+	<script type="text/javascript">
+			function checkPassword(password) {
+				if (password.value != $("#password").val()) {
+					password.setCustomValidity("Passwords are not the same!");
+				} else {
+					password.setCustomValidity("");
+				}
+			}
+		</script>
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->

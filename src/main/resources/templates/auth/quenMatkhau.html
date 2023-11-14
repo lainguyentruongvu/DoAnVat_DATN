@@ -19,7 +19,7 @@
 	
 		<div>
 			<h2><img src="../../images/logo_noback.png" alt="" style="width: 250px;"><br>QUÊN MẬT KHẨU</h2>
-			<form>			
+			<form th:action="@{/auth/forgot-password}" method="post">			
 					
 					<label>Gmail</label>
 					<input type="email" name="email" required>
