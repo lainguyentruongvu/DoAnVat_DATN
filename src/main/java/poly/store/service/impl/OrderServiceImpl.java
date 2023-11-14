@@ -67,5 +67,10 @@ public class OrderServiceImpl implements OrderService {
 		
 	}
 
+	@Override
+	public List<Order> findByAccount(Account account) {
+		return orderdao.findByAccount(account);
+	}
+
 
 }

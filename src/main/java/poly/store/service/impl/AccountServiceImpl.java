@@ -96,4 +96,9 @@ public class AccountServiceImpl implements AccountService {
 		entity.setPassword(newPassword);
 		adao.save(entity);
 	}
+
+	@Override
+	public Account findByUsername(String username) {	
+		return adao.findByUsername(username);
+	}
 }

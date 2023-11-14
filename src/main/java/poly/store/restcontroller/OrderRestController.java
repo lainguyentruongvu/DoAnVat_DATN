@@ -27,12 +27,14 @@ import poly.store.dao.OrderDAO;
 import poly.store.dao.OrderdetailDAO;
 import poly.store.dao.ProductWeightDAO;
 import poly.store.dao.WeightDAO;
+import poly.store.entity.Account;
 import poly.store.entity.Order;
 import poly.store.entity.Orderdetail;
 import poly.store.entity.Product;
 import poly.store.entity.Productweight;
 import poly.store.entity.Status;
 import poly.store.entity.Weight;
+import poly.store.services.AccountService;
 import poly.store.services.OrderService;
 import poly.store.services.OrderdetailService;
 import poly.store.services.ProductService;
@@ -47,6 +49,9 @@ public class OrderRestController {
 
 	@Autowired
 	ProductService productservice;
+	
+	@Autowired
+	AccountService accountservice;
 
 	@Autowired
 	WeightDAO weightdao;
@@ -147,6 +152,12 @@ public class OrderRestController {
 	    public List<Orderdetail> getOrderDetailsByOrderId(@PathVariable Integer orderId) {           
 	    	return orderdetailDao.findByOrderIdWithProducts(orderId);
 	    }
+	 
+	 @GetMapping("{id}")
+		public List<Order> getbillid(@PathVariable("id") String id) {
+			Account account = accountservice.findById(id);
+			return orderservice.findByAccount(account);
+		}
 	 
 	
 

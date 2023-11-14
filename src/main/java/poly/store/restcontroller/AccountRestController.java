@@ -53,4 +53,12 @@ public class AccountRestController {
 	public void delete(@PathVariable("username") String username) {
 		accountService.delete(username);
 	}
+	
+	@PutMapping("updatepassword/{username}")
+	public Account put1(@PathVariable("username") String username, @RequestBody String matkhau) {
+		Account ac=accountService.findByUsername(username);
+		
+		ac.setPassword(matkhau);
+		return accountService.update(ac);
+	}
 }

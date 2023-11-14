@@ -1056,6 +1056,122 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval) {
 	//bestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestseler
 
 
+	//Profile
+	$scope.account = {};
+	$scope.updateAccount = function() {
+		$http.put(`/rest/accounts/${$scope.account.username}`, $scope.account).then(function(response) {
+			// Xử lý phản hồi sau khi cập nhật thành công
+			Swal.fire({
+				type: 'success',
+				title: 'Cập nhật thành công',
+				text: 'Thông tin người dùng đã được cập nhật',
+				icon: "success",
+				showConfirmButton: false,
+				timer: 2000
+			})
+		}).catch(function(error) {
+			// Xử lý lỗi nếu cập nhật không thành công
+			Swal.fire({
+				type: 'error',
+				title: 'Lỗi cập nhật thông tin người dùng',
+				text: error,
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Erorr", err);
+		});
+	};
+
+	$scope.imageChanged = function(files) {
+		var data = new FormData();
+		data.append('file', files[0]);
+		$http.post('/rest/upload/avt', data, {
+			transformRequest: angular.identity,
+			headers: {
+				'Content-Type': undefined
+			}
+		}).then(resp => {
+			$scope.account.image = resp.data.name;
+			Swal.fire({
+				type: 'success',
+				title: 'Thêm ảnh thành công',
+				text: '',
+				icon: "success",
+				showConfirmButton: false,
+				timer: 2000
+			})
+		}).catch(error => {
+			Swal.fire({
+				type: 'error',
+				title: 'Lỗi thêm ảnh',
+				text: error,
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+		})
+	}
+
+	//Profile
+
+
+	//Updatepassword
+	$scope.updatematkhau = function() {
+		let pwold = $scope.account.password;
+		let pwoldnl = document.getElementById("pwold").value;
+		let pw = document.getElementById("pawword").value;
+		let pwcf = document.getElementById("cfpw").value;
+
+		if (pwold == pwoldnl) {
+			if (pw == pwcf) {
+				$http.put(`/rest/accounts/updatepassword/${$scope.account.username}`, pw).then(function(response) {
+					// Xử lý phản hồi sau khi cập nhật thành công
+					Swal.fire({
+						type: 'success',
+						title: 'Cập nhật thành công',
+						text: 'Thông tin người dùng đã được cập nhật',
+						icon: "success",
+						showConfirmButton: false,
+						timer: 2000
+					})
+				}).catch(function(error) {
+					// Xử lý lỗi nếu cập nhật không thành công
+					Swal.fire({
+						type: 'error',
+						title: 'Lỗi cập nhật thông tin người dùng',
+						text: error,
+						icon: "error",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					console.log("Erorr", err);
+				});
+
+			} else {
+				Swal.fire("Error", "Xác nhận mật khẩu không chính xác!", "error");
+			}
+
+		} else {
+			Swal.fire("Error", "Mật khẩu cũ không chính xác!", "error");
+
+		}
+
+
+
+	};
+	//End Updatepassword
+
+	$scope.orderuser = function() {
+
+		var url = `rest/order/` + $scope.username;
+		$http.get(url).then(resp => {
+			$scope.orderuser = resp.data;
+		});
+	}
+
+	$scope.orderuser();
 
 
 

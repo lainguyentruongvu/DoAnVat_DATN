@@ -41,7 +41,7 @@ public class IndexController {
 
 	@RequestMapping("orderuser")
 	public String OrderUser(Model model) {
-		return "product/status";
+		return "product/orderuser";
 
 	}
 	@RequestMapping("/favorites")
