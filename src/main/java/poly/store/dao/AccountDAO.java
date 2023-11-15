@@ -25,4 +25,8 @@ public interface AccountDAO extends JpaRepository<Account, String>{
 
 	@Query("SELECT a FROM Account a WHERE a.token=?1")
 	public Account findByToken(String token);
+	
+	
+	
+	
 }

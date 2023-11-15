@@ -15,6 +15,7 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 	<style>
 		/* Tabs*/
 		section {
@@ -59,13 +60,20 @@
 
 <body>
 	<!-- Tabs -->
-	<section id="tabs">
+	<section id="tabs" style="padding-top: 10px;">
 		<div class="container">
-			<h6 class="section-title h1">Trạng thái đơn hàng</h6>
+			<h6 class="section-title h1" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;text-align: center;
+			color: #a77332;
+			margin-bottom: 50px;
+			text-transform: uppercase;color: #F35022;">TRẠNG THÁI ĐƠN HÀNG</h6>
 			<div class="row">
 				<div class="col-xs-12 ">
 					<nav>
-						<div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+						<div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist" style="border: 1px solid transparent;
+			border-top-left-radius: .25rem;
+			border-top-right-radius: .25rem;
+			color: #F35022;
+			font-size: 20px;">
 							<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
 								role="tab" aria-controls="nav-home" aria-selected="true">Tất cả</a>
 							<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
@@ -79,34 +87,36 @@
 								role="tab" aria-controls="nav-about" aria-selected="false">Hoàn thành</a>
 							<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about"
 								role="tab" aria-controls="nav-about" aria-selected="false">Đã hủy</a>
-							<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about"
-								role="tab" aria-controls="nav-about" aria-selected="false">Trả hàng/Hoàn tiền</a>
+							<!--							<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about"-->
+							<!--								role="tab" aria-controls="nav-about" aria-selected="false">Trả hàng/Hoàn tiền</a>-->
 						</div>
 					</nav>
 					<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
 						<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
 							aria-labelledby="nav-home-tab">
 
-							<form action="">
-								<div class="row">
-									<div class="col-lg-12 form-group">
-										<div></div>
-
+							<div class="row">
+								<div class="col-lg-12 form-group">
+									<div><input type="text" class="form-control"
+											placeholder="Bạn có thể tìm kiếm theo ID hoặc tên sản phẩm tại đây"
+											style="background-color: #EAEAEA;">
 									</div>
+								</div>
+							</div>
+
+
+							<form action="">
+
+								<!--	BẮT ĐẦU PHẦN NỘI DUNG ĐƠN HÀNGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG-->
+								<div class="row" ng-repeat="order in orderuser">
 									<div class="col-lg-12 form-group"
-										style="background-color: #eaeaea53;padding: 20px;">
+										style="background-color: #eaeaea53;padding: 20px;width: 1210px;border-radius: 10px;">
 										<div class="row">
+
 											<div class="col-lg-6">
-												<i class="bi bi-shop " style="color: #000000;"></i> <strong>THIÊN
-													SHOP</strong>
-												<button class="btn btn-warning btn-sm"
-													style="background-color: #F35022; color: white; font-weight: bold;">Liên
-													hệ</button>
-												<button class="btn btn-warning btn-sm"
-													style="background-color: #F35022; color: white; font-weight: bold;">
-													<i class="bi bi-shop " style="width: 150px;"></i> Xem shop</button>
+												Mã đơn: HD001
 											</div>
-											<div class="col-lg-6">
+											<div class="col-lg-6" style="padding-left: 120px;">
 												<i class="bi bi-truck" style="color: #26AA99;"></i> <label
 													style="color: #26AA99;"> Đơn hàng đang được vận chuyển đến SW
 													SOC</label> <i class="bi bi-question-circle"></i> | <label for=""
@@ -115,7 +125,9 @@
 
 										</div>
 										<hr>
-										<div class="row">
+
+										<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
+										<div class="row" ng-repeat="orderdetail in order.orderdetail">
 											<div class="col-lg-2">
 												<img class=""
 													src="https://f11-zpcloud.zdn.vn/2986500619099898410/45e96e61706da733fe7c.jpg"
@@ -133,8 +145,8 @@
 											</div>
 										</div>
 										<hr>
-
-										<div class="row">
+										<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
+										<div class="row" style="padding-top: 20px;">
 											<div class="col-lg-9">
 												<label for="" style="color: #757575;font-size: 13px;">Vui lòng chỉ nhấn
 													"Đã
@@ -154,14 +166,15 @@
 												<button class="btn btn-default btn-lg" disabled
 													style="color: #757575; border: 1px solid #757575;">Đã nhận được
 													hàng</button>
-												<button class="btn btn-default btn-lg"
-													style="color: #757575; border: 1px solid #757575;">Liên hệ người
-													bán</button>
+												<button class="btn btn-warning btn-lg"
+													style="color: white; border: 1px solid #757575;">Liên hệ
+													shop</button>
 											</div>
 										</div>
 
 									</div>
 								</div>
+								<!--	KẾT THÚC PHẦN  1 NỘI DUNG ĐƠN HÀNGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG-->
 							</form>
 
 
@@ -170,27 +183,16 @@
 						</div>
 						<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
-
+							<!--	BẮT ĐẦU PHẦN NỘI DUNG ĐƠN HÀNGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG-->
 							<div class="row">
-								<div class="col-lg-12 form-group">
-									<div><input type="text" class="form-control"
-											placeholder="Bạn có thể tìm kiếm theo tên shop, ID hoặc tên sản phẩm tại đây"
-											style="background-color: #EAEAEA;"></div>
-
-								</div>
-								<div class="col-lg-12 form-group" style="background-color: #eaeaea53;padding: 20px;">
+								<div class="col-lg-12 form-group"
+									style="background-color: #eaeaea53;padding: 20px;width: 1210px;border-radius: 10px;">
 									<div class="row">
+
 										<div class="col-lg-6">
-											<i class="bi bi-shop " style="color: #000000;"></i> <strong>THIÊN
-												SHOP</strong>
-											<button class="btn btn-warning btn-sm"
-												style="background-color: #F35022; color: white; font-weight: bold;">Liên
-												hệ</button>
-											<button class="btn btn-warning btn-sm"
-												style="background-color: #F35022; color: white; font-weight: bold;"> <i
-													class="bi bi-shop " style="width: 150px;"></i> Xem shop</button>
+											Mã đơn: HD001
 										</div>
-										<div class="col-lg-6">
+										<div class="col-lg-6" style="padding-left: 120px;">
 											<i class="bi bi-truck" style="color: #26AA99;"></i> <label
 												style="color: #26AA99;"> Đơn hàng đang được vận chuyển đến SW
 												SOC</label> <i class="bi bi-question-circle"></i> | <label for=""
@@ -199,6 +201,8 @@
 
 									</div>
 									<hr>
+
+									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row">
 										<div class="col-lg-2">
 											<img class=""
@@ -207,7 +211,8 @@
 										</div>
 										<div class="col-lg-8" style="padding: 10px;">
 											<label for="" style="font-size: 20px;"> Thịt thiên thơm</label><br>
-											<label for="" style="color: #757575;">Phân loại hàng: Thịt đùi</label><br>
+											<label for="" style="color: #757575;">Phân loại hàng: Thịt
+												đùi</label><br>
 											<label for="" style="font-size: 20px;">x2</label>
 										</div>
 										<div class="col-lg-2">
@@ -216,11 +221,57 @@
 										</div>
 									</div>
 									<hr>
+									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 
+
+									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row">
+										<div class="col-lg-2">
+											<img class=""
+												src="https://f11-zpcloud.zdn.vn/2986500619099898410/45e96e61706da733fe7c.jpg"
+												alt="" width="150px">
+										</div>
+										<div class="col-lg-8" style="padding: 10px;">
+											<label for="" style="font-size: 20px;"> Thịt thiên thơm</label><br>
+											<label for="" style="color: #757575;">Phân loại hàng: Thịt
+												đùi</label><br>
+											<label for="" style="font-size: 20px;">x2</label>
+										</div>
+										<div class="col-lg-2">
+											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
+												120.000 VNĐ</label>
+										</div>
+									</div>
+									<hr>
+									<!--KẾT THÚC 1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
+
+									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
+									<div class="row">
+										<div class="col-lg-2">
+											<img class=""
+												src="https://f11-zpcloud.zdn.vn/2986500619099898410/45e96e61706da733fe7c.jpg"
+												alt="" width="150px">
+										</div>
+										<div class="col-lg-8" style="padding: 10px;">
+											<label for="" style="font-size: 20px;"> Thịt thiên thơm</label><br>
+											<label for="" style="color: #757575;">Phân loại hàng: Thịt
+												đùi</label><br>
+											<label for="" style="font-size: 20px;">x2</label>
+										</div>
+										<div class="col-lg-2">
+											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
+												120.000 VNĐ</label>
+										</div>
+									</div>
+									<hr>
+									<!--KẾT THÚC 1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
+
+									<div class="row" style="padding-top: 20px;">
 										<div class="col-lg-9">
-											<label for="" style="color: #757575;font-size: 13px;">Vui lòng chỉ nhấn "Đã
-												nhận được hàng" khi đơn hàng đã được giao đến <br> bạn và sản phẩm nhận
+											<label for="" style="color: #757575;font-size: 13px;">Vui lòng chỉ nhấn
+												"Đã
+												nhận được hàng" khi đơn hàng đã được giao đến <br> bạn và sản phẩm
+												nhận
 												được không có vấn đề nào.</label>
 										</div>
 										<div class="col-lg-3">
@@ -235,14 +286,15 @@
 											<button class="btn btn-default btn-lg" disabled
 												style="color: #757575; border: 1px solid #757575;">Đã nhận được
 												hàng</button>
-											<button class="btn btn-default btn-lg"
-												style="color: #757575; border: 1px solid #757575;">Liên hệ người
-												bán</button>
+											<button class="btn btn-warning btn-lg"
+												style="color: white; border: 1px solid #757575;">Liên hệ shop</button>
 										</div>
 									</div>
 
 								</div>
 							</div>
+							<!--	KẾT THÚC PHẦN  1 NỘI DUNG ĐƠN HÀNGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG-->
+
 
 
 

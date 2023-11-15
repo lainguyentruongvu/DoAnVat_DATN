@@ -1168,6 +1168,9 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval) {
 		var url = `rest/order/` + $scope.username;
 		$http.get(url).then(resp => {
 			$scope.orderuser = resp.data;
+			console.log($scope.orderuser)
+			
+			
 		});
 	}
 

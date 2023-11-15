@@ -40,5 +40,15 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 
 	List<Order> findByAccount(Account account);
 
+//	@Query("SELECT o FROM Order o WHERE Username = :id ORDER BY createdate DESC")
+//	List<Order> getDonHangTheoNguoiDung(String id);
+
+	 @Query("SELECT o FROM Order o "
+	            + "JOIN FETCH o.orderdetail od "
+	            + "JOIN FETCH od.product p "
+	            + "WHERE Username = :id")
+
+//	@Query("SELECT o FROM Order o JOIN FETCH o.orderdetail WHERE Username = :id")
+	List<Order> findDonHangWithDetailsByIUsername(String id);
 
 }

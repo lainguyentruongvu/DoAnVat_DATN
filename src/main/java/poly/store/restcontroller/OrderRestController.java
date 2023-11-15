@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-
+import poly.store.dao.AccountDAO;
 import poly.store.dao.OrderDAO;
 import poly.store.dao.OrderdetailDAO;
 import poly.store.dao.ProductWeightDAO;
@@ -55,6 +55,8 @@ public class OrderRestController {
 
 	@Autowired
 	WeightDAO weightdao;
+	@Autowired
+	AccountDAO accountdao;
 
 	@Autowired
 	OrderdetailService orderdetailservice;
@@ -154,9 +156,9 @@ public class OrderRestController {
 	    }
 	 
 	 @GetMapping("{id}")
-		public List<Order> getbillid(@PathVariable("id") String id) {
-			Account account = accountservice.findById(id);
-			return orderservice.findByAccount(account);
+		public List<Order> getbillid(@PathVariable("id") String id) {		 		 		 
+//			Account account = accountservice.findById(id);			
+			return orderDao.findDonHangWithDetailsByIUsername(id);
 		}
 	 
 	
