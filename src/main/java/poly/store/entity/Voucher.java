@@ -23,7 +23,6 @@ public class Voucher implements Serializable {
 	String id;
 	String name;
 	Integer discount;
-	String image;
 	Date startdate;
 	Date enddate;
 
