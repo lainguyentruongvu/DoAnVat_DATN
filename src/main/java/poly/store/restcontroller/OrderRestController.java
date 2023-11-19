@@ -72,6 +72,9 @@ public class OrderRestController {
 
 	@Autowired
 	ProductWeightDAO productweightdao;
+	
+	@Autowired
+	OrderdetailService orderDetailService;
 
 	@PostMapping
 	public Order create(@RequestBody JsonNode orderData) {
@@ -160,6 +163,7 @@ public class OrderRestController {
 //			Account account = accountservice.findById(id);			
 			return orderDao.findDonHangWithDetailsByIUsername(id);
 		}
+	 
 	 
 	
 

@@ -1165,13 +1165,12 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval) {
 
 	$scope.orderuser = function() {
 
-		var url = `rest/order/` + $scope.username;
-		$http.get(url).then(resp => {
+		var url222 = `rest/order/` + $scope.username;
+		$http.get(url22).then(resp => {
 			$scope.orderuser = resp.data;
-			console.log($scope.orderuser)
-			
-			
+			console.log($scope.orderuser)	
 		});
+		
 	}
 
 	$scope.orderuser();

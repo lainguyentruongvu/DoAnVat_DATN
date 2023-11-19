@@ -114,7 +114,7 @@
 										<div class="row">
 
 											<div class="col-lg-6">
-												Mã đơn: HD001
+												Mã đơn: {{order.id}}
 											</div>
 											<div class="col-lg-6" style="padding-left: 120px;">
 												<i class="bi bi-truck" style="color: #26AA99;"></i> <label
@@ -127,14 +127,14 @@
 										<hr>
 
 										<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
-										<div class="row" ng-repeat="orderdetail in order.orderdetail">
+										<div class="row" ng-repeat="orderDetail in order.orderDetail" >
 											<div class="col-lg-2">
 												<img class=""
 													src="https://f11-zpcloud.zdn.vn/2986500619099898410/45e96e61706da733fe7c.jpg"
 													alt="" width="150px">
 											</div>
 											<div class="col-lg-8" style="padding: 10px;">
-												<label for="" style="font-size: 20px;"> Thịt thiên thơm</label><br>
+												<label for="" style="font-size: 20px;">{{orderDetail.product.name}}</label><br>
 												<label for="" style="color: #757575;">Phân loại hàng: Thịt
 													đùi</label><br>
 												<label for="" style="font-size: 20px;">x2</label>
@@ -221,51 +221,7 @@
 										</div>
 									</div>
 									<hr>
-									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
-
-
-									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
-									<div class="row">
-										<div class="col-lg-2">
-											<img class=""
-												src="https://f11-zpcloud.zdn.vn/2986500619099898410/45e96e61706da733fe7c.jpg"
-												alt="" width="150px">
-										</div>
-										<div class="col-lg-8" style="padding: 10px;">
-											<label for="" style="font-size: 20px;"> Thịt thiên thơm</label><br>
-											<label for="" style="color: #757575;">Phân loại hàng: Thịt
-												đùi</label><br>
-											<label for="" style="font-size: 20px;">x2</label>
-										</div>
-										<div class="col-lg-2">
-											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
-												120.000 VNĐ</label>
-										</div>
-									</div>
-									<hr>
-									<!--KẾT THÚC 1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
-
-									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
-									<div class="row">
-										<div class="col-lg-2">
-											<img class=""
-												src="https://f11-zpcloud.zdn.vn/2986500619099898410/45e96e61706da733fe7c.jpg"
-												alt="" width="150px">
-										</div>
-										<div class="col-lg-8" style="padding: 10px;">
-											<label for="" style="font-size: 20px;"> Thịt thiên thơm</label><br>
-											<label for="" style="color: #757575;">Phân loại hàng: Thịt
-												đùi</label><br>
-											<label for="" style="font-size: 20px;">x2</label>
-										</div>
-										<div class="col-lg-2">
-											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
-												120.000 VNĐ</label>
-										</div>
-									</div>
-									<hr>
-									<!--KẾT THÚC 1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
-
+									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->									
 									<div class="row" style="padding-top: 20px;">
 										<div class="col-lg-9">
 											<label for="" style="color: #757575;font-size: 13px;">Vui lòng chỉ nhấn
@@ -294,11 +250,6 @@
 								</div>
 							</div>
 							<!--	KẾT THÚC PHẦN  1 NỘI DUNG ĐƠN HÀNGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG-->
-
-
-
-
-
 						</div>
 						<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
 							Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim

@@ -28,4 +28,8 @@ public class Admincontroller {
 	public String weight() {
 		return "admin/weight/index";
 	}
+	@RequestMapping("/admin/voucher")
+	public String voucher() {
+		return "admin/voucher/index";
+	}
 }
