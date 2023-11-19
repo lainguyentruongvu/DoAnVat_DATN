@@ -49,7 +49,7 @@ public class OrderRestController {
 
 	@Autowired
 	ProductService productservice;
-	
+
 	@Autowired
 	AccountService accountservice;
 
@@ -63,7 +63,7 @@ public class OrderRestController {
 
 	@Autowired
 	OrderDAO orderDao;
-	
+
 	@Autowired
 	OrderdetailDAO orderdetailDao;
 
@@ -126,7 +126,7 @@ public class OrderRestController {
 	public ResponseEntity<String> PutProductWeight(@PathVariable("idproductweight") Integer idproductweight,
 			@PathVariable("quantity") Integer quantity) {
 		Productweight productweight = productweightdao.findById(idproductweight).get();
-		productweight.setQuantity(productweight.getQuantity()-quantity);
+		productweight.setQuantity(productweight.getQuantity() - quantity);
 		productweightdao.save(productweight);
 		return ResponseEntity.ok("Số lượng sản phẩm đã được cập nhật.");
 
@@ -149,18 +149,17 @@ public class OrderRestController {
 
 		return ResponseEntity.ok("Order status updated successfully");
 	}
-	
-	 @GetMapping("orderDetails/{orderId}")
-	    public List<Orderdetail> getOrderDetailsByOrderId(@PathVariable Integer orderId) {           
-	    	return orderdetailDao.findByOrderIdWithProducts(orderId);
-	    }
-	 
-	 @GetMapping("{id}")
-		public List<Order> getbillid(@PathVariable("id") String id) {		 		 		 
-//			Account account = accountservice.findById(id);			
-			return orderDao.findDonHangWithDetailsByIUsername(id);
-		}
-	 
-	
+
+	@GetMapping("orderDetails/{orderId}")
+	public List<Orderdetail> getOrderDetailsByOrderId(@PathVariable Integer orderId) {
+		return orderdetailDao.findByOrderIdWithProducts(orderId);
+	}
+
+	@GetMapping("{id}")
+	public List<Order> getbillid(@PathVariable("id") String id) {
+		List<Order> order = orderDao.findOrderByUsername(id);
+		return order;
+
+	}
 
 }

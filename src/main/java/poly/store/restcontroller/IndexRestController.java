@@ -1,8 +1,12 @@
 package poly.store.restcontroller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import poly.store.dao.OrderDAO;
+import poly.store.dao.OrderdetailDAO;
 import poly.store.dao.ProductDAO;
 import poly.store.dao.ProductWeightDAO;
 import poly.store.dao.WeightDAO;
+import poly.store.entity.Order;
 import poly.store.entity.Product;
 import poly.store.entity.Productweight;
 import poly.store.entity.Weight;
@@ -31,6 +38,8 @@ public class IndexRestController {
 
 	@Autowired
 	ProductDAO productdao;
+	@Autowired
+	OrderdetailDAO orderdetaildao;
 
 	@Autowired
 	ProductWeightDAO productweightdao;
@@ -106,6 +115,19 @@ public class IndexRestController {
 	@DeleteMapping("/productweight/{id}")
 	public void deleteproweight(@PathVariable("id") Integer id) {
 		productweightdao.deleteById(id);
+	}
+
+	@GetMapping("/findtop10product")
+	public List<Product> Top10Product() {
+		Pageable pageable = PageRequest.of(0, 4);
+		List<Object[]> orderproduct = orderdetaildao.findTop10BestSellingProducts(pageable);
+		List<Product> productIds = new ArrayList<>();
+		for (Object[] orderProduct : orderproduct) {
+			Integer productId = (Integer) orderProduct[0];
+			Product listproduct = productservice.findById(productId);
+			productIds.add(listproduct);
+		}
+		return productIds;
 	}
 
 }

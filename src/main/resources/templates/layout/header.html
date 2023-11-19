@@ -60,31 +60,37 @@
 												<a th:href="@{/auth/login/form}">Đăng nhập</a>
 											</li>
 											<li>
-												<a th:href="@{/auth/register}">Đăng ký</a>
-											</li>
-											<li>
-												<a th:href="@{/orderuser}">Đơn mua</a>
+												<a th:href="@{/signup}">Đăng ký</a>
 											</li>
 											<li>
 												<a th:href="@{/auth/forgot-password}">Quên mật khẩu</a>
 											</li>
 										</th:block>
 										<th:block th:if="${#request.remoteUser}">
-											<li th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}">
-												<a th:href="@{/admin}">Công cụ quản trị</a>
-											</li>
-											<li>
-												<a th:href="@{/orderuser}">Đơn mua</a>
-											</li>
-											<li>
-												<a th:href="@{/auth/profile}">Thông tin người dùng</a>
-											</li>
-											<li>
-												<a th:href="@{/auth/change-password}">Đổi mật khẩu</a>
-											</li>
-											<li>
-												<a ng-click="logout()" th:href="@{/auth/logout}">Đăng xuất</a>
-											</li>
+											<li
+															th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}">
+
+
+															<a th:href="@{/admin}"><i class="bi bi-tools"></i> Công cụ
+																quản trị</a>
+														</li>
+														<li>
+															<a th:href="@{/orderuser}"><i class="bi bi-bag"></i> Đơn
+																mua</a>
+														</li>
+														<li>
+															<a th:href="@{/auth/profile}"><i
+																	class="bi bi-person-lines-fill"></i> Thông tin người
+																dùng</a>
+														</li>
+														<li>
+															<a th:href="@{/auth/change-password}"><i
+																	class="bi bi-arrow-clockwise"></i> Đổi mật khẩu</a>
+														</li>
+														<li>
+															<a ng-click="logout()" th:href="@{/auth/logout}"><i
+																	class="bi bi-box-arrow-left"></i> Đăng xuất</a>
+														</li>
 										</th:block>
 										<!-- Ket thuc phan quyen tai khoan -->
 

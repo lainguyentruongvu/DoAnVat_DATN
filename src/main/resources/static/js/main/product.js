@@ -1,9 +1,11 @@
 const app = angular.module("app", []);
-app.controller("ctrl", function($scope, $http, $location, $window, $interval) {
+app.controller("ctrl", function($scope, $http, $location, $window, $interval, $filter) {
 	$scope.products = [];
 
 	//Lấy tên tài khoản
 	$scope.username = $("#username").text();
+	
+	console.log($scope.username);
 
 	//Lấy thông tin tài khoản
 	$scope.account = function() {
@@ -662,7 +664,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval) {
 					}
 
 					Swal.fire("Success", "Đặt hàng thành công!", "success");
-					//					location.href = "/order/detail/" + resp.data.id;
+					location.href = "/order/detail/" + resp.data.id;
 
 
 					for (var i = 0; i < $scope.selectedItems.length; i++) {
@@ -1163,19 +1165,95 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval) {
 	};
 	//End Updatepassword
 
-	$scope.orderuser = function() {
-
+	$scope.orderuserfc = function() {
 		var url = `rest/order/` + $scope.username;
 		$http.get(url).then(resp => {
 			$scope.orderuser = resp.data;
-			console.log($scope.orderuser)
-			
-			
+
 		});
 	}
 
-	$scope.orderuser();
+	$scope.orderuserfc();
 
 
+	//Hiển thị đơn hàng chi tiết
+	$scope.showOrderDetail = function(orderId) {
+		$http.get(`/rest/order/orderDetails/` + orderId)
+			.then(function(response) {
+				$scope.selectedOrderDetails = response.data;
+				$('#orderDetailModal').modal('show'); // Hiển thị modal chứa danh sách sản phẩm
+			})
+			.catch(function(error) {
+				console.error("Error fetching order details:", error);
+			});
+	};
+	$scope.closeModal = function() {
+		$("#orderDetailModal").modal("hide");
+	};
+	$scope.trangthai = function(id) {
+		var url = `/rest/order/trangthai/${id}`;
+		$http.get(url).then(resp => {
+			$scope.orderlist = resp.data;
+		});
+	}
+	$scope.changeStatus = function(orderId, newStatusId) {
+		console.log(orderId, newStatusId);
 
+		if (newStatusId === 4) {
+			// Sử dụng Swal.fire để hiển thị thông báo
+			Swal.fire({
+				icon: 'warning',
+				title: 'Xác nhận',
+				text: 'Bạn chắc chắn hủy đơn hàng không?',
+				showCancelButton: true,
+				confirmButtonText: 'OK',
+				cancelButtonText: 'Hủy'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Nếu người dùng chọn "OK," thực hiện thay đổi trạng thái
+					performStatusChange(orderId, newStatusId);
+
+				}
+			});
+		} else {
+			// Nếu newStatusId không phải 4, thực hiện ngay thay đổi trạng thái
+			performStatusChange(orderId, newStatusId);
+		}
+	};
+
+
+	function performStatusChange(orderId, newStatusId) {
+		$http.put("/rest/order/" + orderId + "/status?newStatusId=" + newStatusId)
+			.then(function(response) {
+				$scope.items.push(response.data);
+				for (var i = 0; i < $scope.items.length; i++) {
+					if ($scope.items[i].id === orderId) {
+						$scope.items[i].status.id = newStatusId;
+						break;
+					}
+				}
+				$scope.orderuserfc();
+			}).catch(function(error) {
+				$scope.trangthai(newStatusId);
+				$scope.orderuserfc();
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công',
+					text: 'Trạng thái đơn hàng được cập nhật thành công',
+					confirmButtonText: 'OK'
+				});
+			});
+	}
+
+
+	//Hiển thị top sản phẩm bán chạy
+	$scope.topproduct = function() {
+		var url = `rest/products/findtop10product`;
+		$http.get(url).then(resp => {
+			$scope.top10product = resp.data;
+			console.log($scope.top10product);
+		});
+	}
+	$scope.topproduct();
+	//Kết thúc Hiển thị top sản phẩm bán chạy
 })

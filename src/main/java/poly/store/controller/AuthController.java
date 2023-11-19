@@ -110,20 +110,20 @@ public class AuthController {
 		return "auth/dangky";
 	}
 
-	@PostMapping("/auth/register")
-	public String signUpSuccess(Model model, @Validated @ModelAttribute("account") Account account, Errors error,
-			HttpServletResponse response) {
-		if (error.hasErrors()) {
-			model.addAttribute("message", "Vui lòng nhập thông ");
-			return "auth/dangky";
-		}
-		account.setImage("user.png");
-		account.setToken("token");
-		accountService.create(account);
-		model.addAttribute("message", "Đăng ký tài khoản thành c");
-		response.addHeader("refresh", "2;url=/auth/login/form");
-		return "auth/dangky";
-	}
+//	@PostMapping("/auth/register")
+//	public String signUpSuccess(Model model, @Validated @ModelAttribute("account") Account account, Errors error,
+//			HttpServletResponse response) {
+//		if (error.hasErrors()) {
+//			model.addAttribute("message", "Vui lòng nhập thông ");
+//			return "auth/dangky";
+//		}
+//		account.setImage("user.png");
+//		account.setToken("token");
+//		accountService.create(account);
+//		model.addAttribute("message", "Đăng ký tài khoản thành c");
+//		response.addHeader("refresh", "2;url=/auth/login/form");
+//		return "auth/dangky";
+//	}
 
 	@GetMapping("/auth/forgot-password")
 	public String forgotPasswordForm(Model model) {

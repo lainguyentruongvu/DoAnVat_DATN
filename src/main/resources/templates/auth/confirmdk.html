@@ -3,49 +3,33 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Login</title>
+	<title>Đăng ký</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Transparent login form using html and css" />
 	<meta name="keywords"
 		content="Transparent login form, login form, HTML, css, Background Blur, login form using html and css, Avatar Icon, Login With Facebook, Login with Google" />
 	<meta name="author" content="HTMLCSS3TUTORIALS" />
-	<link rel="stylesheet" type="text/css" href="../../css/login.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/dangKy.css" />
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 </head>
 
 <body>
-
 	<div class="formContent blur">
 
 		<div>
-			<h2><img src="../../images/logo_noback.png" alt="" style="width: 250px;"><br>Đăng nhập</h2>
-			<form th:action="@{/auth/login}" method="post">
-				<label>Tên đăng nhập</label>
-				<input name="username" id="username" type="text" placeholder="">
-				<label>Mật khẩu</label>
-				<input name="password" id="password" type="password" placeholder="">
-				<input type="submit" name="submit" value="Đăng nhập">
-				<div class="remember">
-					<div class="login">
-						<div class="Oroption">Hoặc</div>
-					</div>
-					<div class="links">
-						<!-- <div class="facebook"><img src="images/facebook.png" alt="Facebook Icon" /> </div> -->
-						<!-- <div class="google"> <img src="images/google.png" alt="Facebook Icon" /> </div> -->
-						<a class="btn btn-danger google" href="/oauth2/authorization/google"><i
-								class="bi bi-google"></i> Google</a> &nbsp;
-						<button class="btn btn-primary facebook"><i class="bi bi-facebook"></i> Facebook</button>
-					</div>
-					<div class="signup"> Bạn không có tài khoản? <a href="#">Đăng ký ngay!</a> </div>
-				</div>
+			<h2><img src="../../images/logo_noback.png" alt="" style="width: 250px;"><br>Vui Lòng Nhập Mã Xác Nhận</h2>
+			<form th:action="@{/confirm}" method="post">
+				<input type="text" name="confirm" required>
+				<input type="submit" name="submit" value="Xác nhận">
+				<h5 style="color: red;">[[${error}]]</h5>
 			</form>
 		</div>
 	</div>
-
 
 
 	<!-- Optional JavaScript -->

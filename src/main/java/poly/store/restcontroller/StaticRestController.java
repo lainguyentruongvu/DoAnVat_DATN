@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
 import poly.store.dao.OrderDAO;
 import poly.store.dao.ProductDAO;
 import poly.store.entity.Order;
+import poly.store.entity.OrderStatistics;
+import poly.store.entity.Revenuestatistics;
 
 @CrossOrigin("*")
 @RestController
@@ -60,6 +64,25 @@ public class StaticRestController {
 	public Integer demslsp() {
 		return productDao.countProduct();
 	}
+	
+
+    @GetMapping("/getDateRevenue")
+    public List<Revenuestatistics> getDateRevenue() {
+        return orderDao.getDateRevenue();
+    }
+    @GetMapping("/getMonthRevenue")
+    public List<Revenuestatistics> getMonthRevenue() {
+        return orderDao.getMonthRevenue();
+    }
+    @GetMapping("/getYearRevenue")
+    public List<Revenuestatistics> getYearRevenue() {
+        return orderDao.getYearRevenue();
+    }
+    
+    @GetMapping("/countOrdersByMonth")
+    public List<OrderStatistics> countOrdersByMonth() {
+        return orderDao.countOrdersByMonth();
+    }
 
 	
 	

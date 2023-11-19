@@ -503,9 +503,9 @@ app.controller("product-ctrl", function($scope, $http) {
 		}
 
 	}
-//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
-//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
-	$scope.weightadmin = function (id, price) {
+	//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
+	//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
+	$scope.weightadmin = function(id, price) {
 		$scope.showbtn_them = true;
 		$http.get(`/rest/cart/checkproductweight/${id}/${price}`).then(resp => {
 			$scope.productweight = resp.data;
@@ -523,7 +523,7 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 
 
-	$scope.weightquantityandprice = function (idpro, idw) {
+	$scope.weightquantityandprice = function(idpro, idw) {
 		$scope.showbtn_del_upd = true;
 		$scope.showbtn_addweight = false;
 		$http.get(`/rest/products/weight/quantityandprice/${idpro}/${idw}`).then(resp => {
@@ -539,7 +539,7 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 
 
-	$scope.resetformw = function () {
+	$scope.resetformw = function() {
 		$scope.productweight.price = null;
 		$scope.productweight.quantity = null;
 		$scope.productweight.id = null;
@@ -549,17 +549,17 @@ app.controller("product-ctrl", function($scope, $http) {
 		$scope.showbtn_del_upd = false;
 	}
 
-	$scope.addweight = function (item) {
+	$scope.addweight = function(item) {
 		$scope.productweight = angular.copy(item)
-		$http.post("/rest/products/productweight", $scope.productweight).then(resp => {	
+		$http.post("/rest/products/productweight", $scope.productweight).then(resp => {
 			alert("Thêm trọn lyuongwj thành công")
-			
+
 		}).catch(error => {
 			console.log("Error", error);
 		})
 	}
 
-	$scope.updateweight = function () {
+	$scope.updateweight = function() {
 		var item = angular.copy($scope.productweight);
 		console.log(item)
 		$http.put(`/rest/products/productweight/${item.id}`, item).then(resp => {
@@ -572,11 +572,11 @@ app.controller("product-ctrl", function($scope, $http) {
 		})
 	}
 
-	$scope.deleteweight = function(){
+	$scope.deleteweight = function() {
 		var idproweight = $scope.productweight.id;
 		console.log(idproweight)
 		$http.delete(`/rest/products/productweight/${idproweight}`).then(resp => {
-			
+
 		}).catch(error => {
 			Swal.fire("Error", "Cập nhật thất bại!", "error");
 			console.log("Error", error);
@@ -756,19 +756,36 @@ app.controller("order-ctrl", function($scope, $http) {
 
 
 app.controller("home-ctrl", function($scope, $http) {
-	$scope.initialize = function() {
+	angular.element(document.getElementById('getMonthRevenue')).on('click', function() {
+		$scope.getMonthRevenue();
+	});
+	angular.element(document.getElementById('getYearRevenue')).on('click', function() {
+		$scope.getYearRevenue();
+	});
+	angular.element(document.getElementById('getDateRevenue')).on('click', function() {
+		$scope.getDateRevenue();
+	});
+
+
+
+
+	$scope.viewstatistics = function() {
+		$http.get("/rest/static/tongthunhap").then(resp => {
+			$scope.tongthunhap = resp.data;
+			console.log($scope.tongthunhap);
+		});
 		$http.get("/rest/static/demslsp").then(resp => {
 			$scope.slsp = resp.data;
 		});
-		//		$http.get("/rest/products/demslkh").then(resp => {
-		//			$scope.slkh = resp.data;
-		//		});
-		//		$http.get("/rest/products/demsldh").then(resp => {
-		//			$scope.sldh = resp.data;
-		//		});
-		//		$http.get("/rest/products/demslcd").then(resp => {
-		//			$scope.slcd = resp.data;
-		//		});
+		$http.get("/rest/products/demslkh").then(resp => {
+			$scope.slkh = resp.data;
+		});
+		$http.get("/rest/products/demsldh").then(resp => {
+			$scope.sldh = resp.data;
+		});
+		$http.get("/rest/products/demslcd").then(resp => {
+			$scope.slcd = resp.data;
+		});
 		$http.get("/rest/static/ddhanghna").then(resp => {
 			$scope.ddhanghna = resp.data;
 
@@ -777,10 +794,7 @@ app.controller("home-ctrl", function($scope, $http) {
 			$scope.tongtienhomnay = resp.data;
 
 		});
-		$http.get("/rest/static/tongthunhap").then(resp => {
-			$scope.tongthunhap = resp.data;
 
-		});
 		$http.get("/rest/static/tongdonhanghomnay").then(resp => {
 			$scope.tongdonhanghomnay = resp.data;
 
@@ -788,10 +802,559 @@ app.controller("home-ctrl", function($scope, $http) {
 		$http.get("/rest/static/tongdonhang").then(resp => {
 			$scope.tongdonhang = resp.data;
 		});
+	}
+	$scope.viewstatistics();
 
 
 
+
+
+	$scope.initialize = function() {
+
+		var lineChart = document.getElementById('lineChart').getContext('2d'),
+			barChart = document.getElementById('barChart').getContext('2d'),
+			pieChart = document.getElementById('pieChart').getContext('2d'),
+			doughnutChart = document.getElementById('doughnutChart').getContext('2d'),
+			radarChart = document.getElementById('radarChart').getContext('2d'),
+			bubbleChart = document.getElementById('bubbleChart').getContext('2d'),
+			multipleLineChart = document.getElementById('multipleLineChart').getContext('2d'),
+			multipleBarChart = document.getElementById('multipleBarChart').getContext('2d'),
+			htmlLegendsChart = document.getElementById('htmlLegendsChart').getContext('2d');
+
+
+		//Thống kê theo năm
+		$scope.getYearRevenue = function() {
+			$http.get("/rest/static/getYearRevenue").then(resp => {
+				$scope.revenuestatistics = resp.data;
+				$scope.calendar = "năm"
+				var totalRevenueData = $scope.revenuestatistics.map(item => item.totalRevenue);
+				var calendar = $scope.revenuestatistics.map(item => item.calendar);
+				myLineChart.data.datasets[0].data = totalRevenueData;
+				myLineChart.data.labels = calendar;
+				myLineChart.update();
+
+			});
+		}
+		$scope.getYearRevenue();
+
+		//Thống kê theo tháng
+		$scope.getMonthRevenue = function() {
+
+			$http.get("/rest/static/getMonthRevenue").then(resp => {
+				$scope.revenuestatistics = resp.data;
+				$scope.calendar = "tháng"
+				var totalRevenueData = $scope.revenuestatistics.map(item => item.totalRevenue);
+				var calendar = $scope.revenuestatistics.map(item => item.calendar);
+				myLineChart.data.datasets[0].data = totalRevenueData;
+				myLineChart.data.labels = calendar;
+				myLineChart.update();
+
+			});
+		}
+		$scope.getDateRevenue = function() {
+
+			$http.get("/rest/static/getDateRevenue").then(resp => {
+				$scope.revenuestatistics = resp.data;
+				$scope.calendar = "ngày"
+				var totalRevenueData = $scope.revenuestatistics.map(item => item.totalRevenue);
+				var calendar = $scope.revenuestatistics.map(item => item.calendar);
+				myLineChart.data.datasets[0].data = totalRevenueData;
+				myLineChart.data.labels = calendar;
+				myLineChart.update();
+
+			});
+		}
+		
+		$scope.countOrdersByMonthfc = function() {
+
+			$http.get("/rest/static/countOrdersByMonth").then(resp => {
+				$scope.countOrdersByMonth = resp.data;				
+				var countOrdersByMonth = $scope.countOrdersByMonth.map(item => item.orderCount);
+				var month = $scope.countOrdersByMonth.map(item => item.month);
+				myBarChart.data.datasets[0].data = countOrdersByMonth;		
+				myBarChart.data.labels = month;	
+				myBarChart.update();
+
+			});
+		}
+		$scope.countOrdersByMonthfc();
+		
+
+
+
+
+		var myLineChart = new Chart(lineChart, {
+			type: 'line',
+			data: {
+				labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+				datasets: [{
+					label: "Doanh thu: ",
+					borderColor: "#1d7af3",
+					pointBorderColor: "#FFF",
+					pointBackgroundColor: "#1d7af3",
+					pointBorderWidth: 2,
+					pointHoverRadius: 4,
+					pointHoverBorderWidth: 1,
+					pointRadius: 4,
+					backgroundColor: 'transparent',
+					fill: true,
+					borderWidth: 2,
+					data: []
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					position: 'bottom',
+					labels: {
+						padding: 10,
+						fontColor: '#1d7af3',
+					}
+				},
+				tooltips: {
+					callbacks: {
+						label: function(tooltipItem, data) {
+							var label = data.datasets[tooltipItem.datasetIndex].label || '';
+							var value = formatCurrency(tooltipItem.yLabel);
+							return label + ': ' + value;
+						}
+					},
+					bodySpacing: 4,
+					mode: "nearest",
+					intersect: 0,
+					position: "nearest",
+					xPadding: 10,
+					yPadding: 10,
+					caretPadding: 10
+				},
+				layout: {
+					padding: { left: 15, right: 15, top: 15, bottom: 15 }
+				}
+			}
+		});
+
+		function formatCurrency(value) {
+			return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+		}
+
+		var myBarChart = new Chart(barChart, {
+			type: 'bar',
+			data: {
+				labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+				datasets: [{
+					label: "Đơn đặt",
+					backgroundColor: 'rgb(23, 125, 255)',
+					borderColor: 'rgb(23, 125, 255)',
+					data: [],
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				},
+			}
+		});
+
+		var myPieChart = new Chart(pieChart, {
+			type: 'pie',
+			data: {
+				datasets: [{
+					data: [504, 365],
+					backgroundColor: ["#1d7af3", "#f3545d"],
+					borderWidth: 0
+				}],
+				labels: ['Khách mới', 'Khách cũ',]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					position: 'bottom',
+					labels: {
+						fontColor: 'rgb(154, 154, 154)',
+						fontSize: 11,
+						usePointStyle: true,
+						padding: 20
+					}
+				},
+				tooltips: {
+					callbacks: {
+						label: function(tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem.datasetIndex];
+							var total = dataset.data.reduce(function(previousValue, currentValue) {
+								return previousValue + currentValue;
+							});
+							var currentValue = dataset.data[tooltipItem.index];
+							var percentage = Math.floor(((currentValue / total) * 100) + 0.5);
+							return percentage + "%";
+						}
+					}
+				},
+				layout: {
+					padding: {
+						left: 20,
+						right: 20,
+						top: 20,
+						bottom: 20
+					}
+				}
+			}
+		});
+
+
+		var myDoughnutChart = new Chart(doughnutChart, {
+			type: 'doughnut',
+			data: {
+				datasets: [{
+					data: [10, 20, 30],
+					backgroundColor: ['#f3545d', '#fdaf4b', '#1d7af3']
+				}],
+
+				labels: [
+					'Red',
+					'Yellow',
+					'Blue'
+				]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					position: 'bottom'
+				},
+				layout: {
+					padding: {
+						left: 20,
+						right: 20,
+						top: 20,
+						bottom: 20
+					}
+				}
+			}
+		});
+
+		var myRadarChart = new Chart(radarChart, {
+			type: 'radar',
+			data: {
+				labels: ['Running', 'Swimming', 'Eating', 'Cycling', 'Jumping'],
+				datasets: [{
+					data: [20, 10, 30, 2, 30],
+					borderColor: '#1d7af3',
+					backgroundColor: 'rgba(29, 122, 243, 0.25)',
+					pointBackgroundColor: "#1d7af3",
+					pointHoverRadius: 4,
+					pointRadius: 3,
+					label: 'Team 1'
+				}, {
+					data: [10, 20, 15, 30, 22],
+					borderColor: '#716aca',
+					backgroundColor: 'rgba(113, 106, 202, 0.25)',
+					pointBackgroundColor: "#716aca",
+					pointHoverRadius: 4,
+					pointRadius: 3,
+					label: 'Team 2'
+				},
+				]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					position: 'bottom'
+				}
+			}
+		});
+
+		var myBubbleChart = new Chart(bubbleChart, {
+			type: 'bubble',
+			data: {
+				datasets: [{
+					label: "Car",
+					data: [{ x: 25, y: 17, r: 25 }, { x: 30, y: 25, r: 28 }, { x: 35, y: 30, r: 8 }],
+					backgroundColor: "#716aca"
+				},
+				{
+					label: "Motorcycles",
+					data: [{ x: 10, y: 17, r: 20 }, { x: 30, y: 10, r: 7 }, { x: 35, y: 20, r: 10 }],
+					backgroundColor: "#1d7af3"
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					position: 'bottom'
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}],
+					xAxes: [{
+						ticks: {
+							beginAtZero: true
+						}
+					}]
+				},
+			}
+		});
+
+		var myMultipleLineChart = new Chart(multipleLineChart, {
+			type: 'line',
+			data: {
+				labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+				datasets: [{
+					label: "Python",
+					borderColor: "#1d7af3",
+					pointBorderColor: "#FFF",
+					pointBackgroundColor: "#1d7af3",
+					pointBorderWidth: 2,
+					pointHoverRadius: 4,
+					pointHoverBorderWidth: 1,
+					pointRadius: 4,
+					backgroundColor: 'transparent',
+					fill: true,
+					borderWidth: 2,
+					data: [30, 45, 45, 68, 69, 90, 100, 158, 177, 200, 245, 256]
+				}, {
+					label: "PHP",
+					borderColor: "#59d05d",
+					pointBorderColor: "#FFF",
+					pointBackgroundColor: "#59d05d",
+					pointBorderWidth: 2,
+					pointHoverRadius: 4,
+					pointHoverBorderWidth: 1,
+					pointRadius: 4,
+					backgroundColor: 'transparent',
+					fill: true,
+					borderWidth: 2,
+					data: [10, 20, 55, 75, 80, 48, 59, 55, 23, 107, 60, 87]
+				}, {
+					label: "Ruby",
+					borderColor: "#f3545d",
+					pointBorderColor: "#FFF",
+					pointBackgroundColor: "#f3545d",
+					pointBorderWidth: 2,
+					pointHoverRadius: 4,
+					pointHoverBorderWidth: 1,
+					pointRadius: 4,
+					backgroundColor: 'transparent',
+					fill: true,
+					borderWidth: 2,
+					data: [10, 30, 58, 79, 90, 105, 117, 160, 185, 210, 185, 194]
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					position: 'top',
+				},
+				tooltips: {
+					bodySpacing: 4,
+					mode: "nearest",
+					intersect: 0,
+					position: "nearest",
+					xPadding: 10,
+					yPadding: 10,
+					caretPadding: 10
+				},
+				layout: {
+					padding: { left: 15, right: 15, top: 15, bottom: 15 }
+				}
+			}
+		});
+
+		var myMultipleBarChart = new Chart(multipleBarChart, {
+			type: 'bar',
+			data: {
+				labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+				datasets: [{
+					label: "First time visitors",
+					backgroundColor: '#59d05d',
+					borderColor: '#59d05d',
+					data: [95, 100, 112, 101, 144, 159, 178, 156, 188, 190, 210, 245],
+				}, {
+					label: "Visitors",
+					backgroundColor: '#fdaf4b',
+					borderColor: '#fdaf4b',
+					data: [145, 256, 244, 233, 210, 279, 287, 253, 287, 299, 312, 356],
+				}, {
+					label: "Pageview",
+					backgroundColor: '#177dff',
+					borderColor: '#177dff',
+					data: [185, 279, 273, 287, 234, 312, 322, 286, 301, 320, 346, 399],
+				}],
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					position: 'bottom'
+				},
+				title: {
+					display: true,
+					text: 'Traffic Stats'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false
+				},
+				responsive: true,
+				scales: {
+					xAxes: [{
+						stacked: true,
+					}],
+					yAxes: [{
+						stacked: true
+					}]
+				}
+			}
+		});
+
+		// Chart with HTML Legends
+
+		var gradientStroke = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+		gradientStroke.addColorStop(0, '#177dff');
+		gradientStroke.addColorStop(1, '#80b6f4');
+
+		var gradientFill = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+		gradientFill.addColorStop(0, "rgba(23, 125, 255, 0.7)");
+		gradientFill.addColorStop(1, "rgba(128, 182, 244, 0.3)");
+
+		var gradientStroke2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+		gradientStroke2.addColorStop(0, '#f3545d');
+		gradientStroke2.addColorStop(1, '#ff8990');
+
+		var gradientFill2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+		gradientFill2.addColorStop(0, "rgba(243, 84, 93, 0.7)");
+		gradientFill2.addColorStop(1, "rgba(255, 137, 144, 0.3)");
+
+		var gradientStroke3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+		gradientStroke3.addColorStop(0, '#fdaf4b');
+		gradientStroke3.addColorStop(1, '#ffc478');
+
+		var gradientFill3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+		gradientFill3.addColorStop(0, "rgba(253, 175, 75, 0.7)");
+		gradientFill3.addColorStop(1, "rgba(255, 196, 120, 0.3)");
+
+		var myHtmlLegendsChart = new Chart(htmlLegendsChart, {
+			type: 'line',
+			data: {
+				labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+				datasets: [{
+					label: "Subscribers",
+					borderColor: gradientStroke2,
+					pointBackgroundColor: gradientStroke2,
+					pointRadius: 0,
+					backgroundColor: gradientFill2,
+					legendColor: '#f3545d',
+					fill: true,
+					borderWidth: 1,
+					data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
+				}, {
+					label: "New Visitors",
+					borderColor: gradientStroke3,
+					pointBackgroundColor: gradientStroke3,
+					pointRadius: 0,
+					backgroundColor: gradientFill3,
+					legendColor: '#fdaf4b',
+					fill: true,
+					borderWidth: 1,
+					data: [256, 230, 245, 287, 240, 250, 230, 295, 331, 431, 456, 521]
+				}, {
+					label: "Active Users",
+					borderColor: gradientStroke,
+					pointBackgroundColor: gradientStroke,
+					pointRadius: 0,
+					backgroundColor: gradientFill,
+					legendColor: '#177dff',
+					fill: true,
+					borderWidth: 1,
+					data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				legend: {
+					display: false
+				},
+				tooltips: {
+					bodySpacing: 4,
+					mode: "nearest",
+					intersect: 0,
+					position: "nearest",
+					xPadding: 10,
+					yPadding: 10,
+					caretPadding: 10
+				},
+				layout: {
+					padding: { left: 15, right: 15, top: 15, bottom: 15 }
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							fontColor: "rgba(0,0,0,0.5)",
+							fontStyle: "500",
+							beginAtZero: false,
+							maxTicksLimit: 5,
+							padding: 20
+						},
+						gridLines: {
+							drawTicks: false,
+							display: false
+						}
+					}],
+					xAxes: [{
+						gridLines: {
+							zeroLineColor: "transparent"
+						},
+						ticks: {
+							padding: 20,
+							fontColor: "rgba(0,0,0,0.5)",
+							fontStyle: "500"
+						}
+					}]
+				},
+				legendCallback: function(chart) {
+					var text = [];
+					text.push('<ul class="' + chart.id + '-legend html-legend">');
+					for (var i = 0; i < chart.data.datasets.length; i++) {
+						text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>');
+						if (chart.data.datasets[i].label) {
+							text.push(chart.data.datasets[i].label);
+						}
+						text.push('</li>');
+					}
+					text.push('</ul>');
+					return text.join('');
+				}
+			}
+		});
+
+		//		var myLegendContainer = document.getElementById("myChartLegend");
 		//
+		//		// generate HTML legend
+		//		myLegendContainer.innerHTML = myHtmlLegendsChart.generateLegend();
+		//
+		//		// bind onClick event to all LI-tags of the legend
+		//		var legendItems = myLegendContainer.getElementsByTagName('li');
+		//		for (var i = 0; i < legendItems.length; i += 1) {
+		//			legendItems[i].addEventListener("click", legendClickCallback, false);
+		//		}
+
+
+
+
 	}
 	$scope.initialize();
 

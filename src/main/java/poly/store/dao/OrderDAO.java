@@ -3,12 +3,16 @@ package poly.store.dao;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import poly.store.entity.Account;
 import poly.store.entity.Order;
+import poly.store.entity.OrderStatistics;
+import poly.store.entity.Orderdetail;
 import poly.store.entity.Product;
+import poly.store.entity.Revenuestatistics;
 
 public interface OrderDAO extends JpaRepository<Order, Integer> {
 	@Query("SELECT o FROM Order o WHERE o.status.id = ?1")
@@ -40,15 +44,21 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 
 	List<Order> findByAccount(Account account);
 
-//	@Query("SELECT o FROM Order o WHERE Username = :id ORDER BY createdate DESC")
-//	List<Order> getDonHangTheoNguoiDung(String id);
+	@Query("SELECT o FROM Order o WHERE username = :id ORDER BY createdate DESC")
+	List<Order> findOrderByUsername(String id);
 
-	 @Query("SELECT o FROM Order o "
-	            + "JOIN FETCH o.orderdetail od "
-	            + "JOIN FETCH od.product p "
-	            + "WHERE Username = :id")
+	@Query("SELECT NEW Revenuestatistics(YEAR(o.createdate), SUM(o.totalamount)) FROM Order o GROUP BY YEAR(o.createdate)")
+	List<Revenuestatistics> getYearRevenue();
 
-//	@Query("SELECT o FROM Order o JOIN FETCH o.orderdetail WHERE Username = :id")
-	List<Order> findDonHangWithDetailsByIUsername(String id);
+	@Query("SELECT NEW Revenuestatistics(MONTH(o.createdate), SUM(o.totalamount)) FROM Order o GROUP BY MONTH(o.createdate)")
+	List<Revenuestatistics> getMonthRevenue();
 
+	@Query("SELECT NEW Revenuestatistics(FUNCTION('DAY', o.createdate), SUM(o.totalamount)) FROM Order o GROUP BY FUNCTION('DAY', o.createdate)")
+	List<Revenuestatistics> getDateRevenue();
+	
+	
+	  @Query("SELECT NEW OrderStatistics(MONTH(o.createdate), COUNT(o)) " +
+	           "FROM Order o " +
+	           "GROUP BY MONTH(o.createdate)")
+	    List<OrderStatistics> countOrdersByMonth();
 }

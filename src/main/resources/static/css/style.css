@@ -303,7 +303,7 @@ Version:1.0
 
 .header .nav li a i {
 	margin-left: 6px;
-	font-size: 10px;
+
 }
 
 /* Dropdown Menu */
@@ -366,9 +366,9 @@ Version:1.0
 }
 
 .header .nav li .dropdown li i {
-	float: right;
-	margin-top: 8px;
-	font-size: 10px;
+
+
+
 	z-index: 5;
 }
 
@@ -452,7 +452,7 @@ Version:1.0
 }
 
 /* Topbar Left Nav */
-.header.shop .left-nav {}
+
 
 .header.shop .top-left .list-main li:first-child {
 	padding-left: 0;
