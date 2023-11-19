@@ -986,6 +986,10 @@ app.controller("discount-ctrl", function($scope, $http) {
 				item.enddate = new Date(item.enddate)
 			})
 		});
+		$http.get('/rest/products').then(function(response) {
+			$scope.product = response.data;
+
+		});
 	}
 
 
