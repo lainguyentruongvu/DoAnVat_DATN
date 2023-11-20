@@ -35,8 +35,5 @@ public class Admincontroller {
 		return "admin/weight/index";
 	}
 
-	@RequestMapping("/admin/discount")
-	public String discount() {
-		return "admin/discount/index";
-	}
+	
 }
