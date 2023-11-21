@@ -1,10 +1,13 @@
 const app = angular.module("app", []);
 app.controller("ctrl", function($scope, $http, $location, $window, $interval, $filter) {
+
+
+
 	$scope.products = [];
 
 	//Lấy tên tài khoản
 	$scope.username = $("#username").text();
-	
+
 	console.log($scope.username);
 
 	//Lấy thông tin tài khoản
@@ -616,13 +619,14 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 
 
+	
 
 
 	$scope.thanhtoan = function() {
-		console.log($scope.statusorder);
+	
 		//Lấy dữ liệu từ localStore
 		$scope.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
-		console.log($scope.selectedItems)
+	
 		//Gọi hàm kiểm tra mã giãm giá		
 		$scope.kiemtragiamgia();
 
@@ -664,19 +668,21 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					}
 
 					Swal.fire("Success", "Đặt hàng thành công!", "success");
-					location.href = "/order/detail/" + resp.data.id;
+
 
 
 					for (var i = 0; i < $scope.selectedItems.length; i++) {
 						processProduct($scope.selectedItems[i]);
 					}
-
+					
+					
+				
+					
 					function processProduct(item) {
 						$http.get(`/rest/order/weight/${item.weightvalue}`).then(resp => {
 							$scope.weightquantt = resp.data;
 							$http.get(`/rest/order/productweight/${item.product.id}/${$scope.weightquantt.id}`).then(resp => {
 								console.log(resp.data.id);
-
 								$http.put(`/rest/order/putquantity/${resp.data.id}/${item.quantity}`).then(resp => {
 								}).catch(error => {
 									console.log(error)
@@ -689,8 +695,11 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 							console.log(error);
 						});
 					}
+
 					localStorage.clear();
+					location.href = "/order/detail/" + resp.data.id;
 					console.log(resp);
+
 				}).catch(error => {
 					Swal.fire("Error", "Đặt hàng thất bại!", "error");
 					console.log(error)

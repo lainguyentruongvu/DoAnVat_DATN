@@ -1,4 +1,4 @@
-const app = angular.module("app", []);
+ const app = angular.module("app", []);
 app.controller("account-ctrl", function($scope, $http) {
 
 	$scope.items = [];
@@ -851,6 +851,7 @@ app.controller("home-ctrl", function($scope, $http) {
 
 			});
 		}
+		//Thống kê theo ngày
 		$scope.getDateRevenue = function() {
 
 			$http.get("/rest/static/getDateRevenue").then(resp => {
@@ -866,7 +867,6 @@ app.controller("home-ctrl", function($scope, $http) {
 		}
 		
 		$scope.countOrdersByMonthfc = function() {
-
 			$http.get("/rest/static/countOrdersByMonth").then(resp => {
 				$scope.countOrdersByMonth = resp.data;				
 				var countOrdersByMonth = $scope.countOrdersByMonth.map(item => item.orderCount);
@@ -879,6 +879,18 @@ app.controller("home-ctrl", function($scope, $http) {
 		}
 		$scope.countOrdersByMonthfc();
 		
+		$scope.sumSoldProductsByCategoryfc = function() {
+			$http.get("/rest/static/sumSoldProductsByCategory").then(resp => {
+				$scope.sumSoldProductsByCategory = resp.data;				
+				var sumSoldProductsByCategory = $scope.sumSoldProductsByCategory.map(item => item.categoryName);				
+				var totalSoldQuantity = $scope.sumSoldProductsByCategory.map(item => item.totalSoldQuantity);
+				myPieChart.data.datasets[0].data = totalSoldQuantity;		
+				myPieChart.data.labels = sumSoldProductsByCategory;	
+				myPieChart.update();
+
+			});
+		}
+		$scope.sumSoldProductsByCategoryfc();
 
 
 
@@ -967,7 +979,7 @@ app.controller("home-ctrl", function($scope, $http) {
 			data: {
 				datasets: [{
 					data: [504, 365],
-					backgroundColor: ["#1d7af3", "#f3545d"],
+					backgroundColor: ["#1d7af3", "#f3545d","#00FF00","#FFFF00","#99CCFF","#FF3399","#9900CC"],
 					borderWidth: 0
 				}],
 				labels: ['Khách mới', 'Khách cũ',]

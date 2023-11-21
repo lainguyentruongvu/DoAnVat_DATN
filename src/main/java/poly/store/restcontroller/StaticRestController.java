@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import poly.store.dao.OrderDAO;
+import poly.store.dao.OrderdetailDAO;
 import poly.store.dao.ProductDAO;
+import poly.store.entity.CategoryStatistics;
 import poly.store.entity.Order;
 import poly.store.entity.OrderStatistics;
 import poly.store.entity.Revenuestatistics;
@@ -25,6 +27,8 @@ import poly.store.entity.Revenuestatistics;
 public class StaticRestController {
 	@Autowired
 	OrderDAO orderDao;
+	@Autowired
+	OrderdetailDAO orderdetailDao;
 
 	@Autowired
 	ProductDAO productDao;
@@ -82,6 +86,11 @@ public class StaticRestController {
     @GetMapping("/countOrdersByMonth")
     public List<OrderStatistics> countOrdersByMonth() {
         return orderDao.countOrdersByMonth();
+    }
+    
+    @GetMapping("/sumSoldProductsByCategory")
+    public List<CategoryStatistics> sumSoldProductsByCategory() {
+        return orderdetailDao.sumSoldProductsByCategory();
     }
 
 	

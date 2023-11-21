@@ -8,7 +8,7 @@
 
 <body>
 	<!-- Header -->
-	<header class="header shop" >
+	<header class="header shop">
 		<!-- Topbar -->
 
 		<!-- End Topbar -->
@@ -34,40 +34,98 @@
 							</div>
 						</div>
 					</div>
+
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
 							<!-- Search Form -->
+
 							<div class="sinlge-bar">
 								<a th:href="@{/favorites}" class="single-icon"><i class="fa fa-heart-o"
 										aria-hidden="true"></i></a>
 							</div>
 
-							<!-- Icon User -->
+
+
 							<div class="sinlge-bar shopping">
-								<th:block th:unless="${#request.remoteUser}">
-									<a href="#" class="single-icon"><i class="fa fa-user-circle-o"
-											aria-hidden="true"></i></a>
-								</th:block>
-
-								<a id="username" th:if="${#request.remoteUser}">[[${#request.remoteUser}]]</a>
-
-
+								<a href="/cart" class="single-icon"><i class="ti-bag"></i>
+									<span class="total-count">{{getTotalItem() }}</span></a>
+								<!-- Shopping Item -->
 								<div class="shopping-item">
-									<ul class="">
-										<!-- Phan quyen tai khoan -->
-										<th:block th:unless="${#request.remoteUser}">
-											<li>
-												<a th:href="@{/auth/login/form}">Đăng nhập</a>
-											</li>
-											<li>
-												<a th:href="@{/signup}">Đăng ký</a>
-											</li>
-											<li>
-												<a th:href="@{/auth/forgot-password}">Quên mật khẩu</a>
-											</li>
-										</th:block>
-										<th:block th:if="${#request.remoteUser}">
-											<li
+									<div class="dropdown-cart-header">
+										<span>{{
+											getTotalItem()}} Sản phẩm</span>
+										<a href="/cart">Xem ngay</a>
+									</div>
+
+									<a style="display: none;" id="username"
+										th:if="${#request.remoteUser}">[[${#request.remoteUser}]]</a>
+
+									<ul class="shopping-list">
+										<li ng-repeat="cd in cartdetails">
+											<a ng-click="deleteid(cd.id)" class="remove" title="Remove this item"><i
+													class="fa fa-remove"></i></a>
+											<a class="cart-img" href="#"><img
+													src="../../images/products/{{cd.product.image}}" alt="#"></a>
+											<h4><a href="#">{{cd.product.name}}</a></h4>
+											<p class="quantity">{{cd.quantity}} - <span
+													class="amount">{{cd.price}}</span></p>
+										</li>
+									</ul>
+								</div>
+								<!--/ End Shopping Item -->
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Header Inner -->
+		<div class="header-inner" style="font-family: Arial, Helvetica, sans-serif;font-weight: bold;">
+			<div class="container">
+				<div class="cat-nav-head">
+					<div class="row">
+						<div class="col-lg-3">
+							<div class="all-category nav">
+
+								<li><a ng-click="product()"><i class="fa fa-bars"></i>&nbsp;LOẠI SẢN PHẨM</a>
+									<ul style="width: 262px;" class="dropdown">
+										<li ng-repeat="c in category"><a ng-click="productcategory(c.id)">{{c.name}}</a>
+										</li>
+									</ul>
+								</li>
+
+							</div>
+						</div>
+
+						<div class="col-lg-9 col-12">
+							<div class="menu-area">
+								<!-- Main Menu -->
+								<nav class="navbar navbar-expand-lg">
+									<div class="navbar-collapse">
+										<div class="nav-inner">
+											<ul class="nav main-menu menu navbar-nav">
+												<li class=""><a href="/"><i class="bi bi-house"></i> TRANG CHỦ</a></li>
+												<li><a href="#">SẢN PHẨM</a></li>
+												<li><a th:href="@{/favorites}" class="single-icon">YÊU THÍCH</a></li>
+												<li><a href="#">GIỚI THIỆU</a></li>
+												<li><a href="#">CHÍNH SÁCH</a></li>
+
+												<th:block th:unless="${#request.remoteUser}">
+
+													<li><a th:href="@{/auth/login/form}">ĐĂNG NHẬP</a>
+													</li>
+												</th:block>
+
+												<li>
+													<a id="username" th:if="${#request.remoteUser}"><i
+															class="bi bi-person-fill"></i> [[${#request.remoteUser}]] <i
+															style="color: orange;" class="ti-angle-down"></i></a>
+													<ul class="dropdown"
+														style="font-family: Arial, Helvetica, sans-serif;">
+														<li
 															th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}">
 
 
@@ -91,89 +149,9 @@
 															<a ng-click="logout()" th:href="@{/auth/logout}"><i
 																	class="bi bi-box-arrow-left"></i> Đăng xuất</a>
 														</li>
-										</th:block>
-										<!-- Ket thuc phan quyen tai khoan -->
-
-
-									</ul>
-								</div>
-
-							</div>
-							<!-- Icon User -->
-
-							<div class="sinlge-bar shopping">
-								<a href="/cart"  class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{
-										getTotalItem() }}</span></a>
-								<!-- Shopping Item -->
-								<div class="shopping-item">
-									<div class="dropdown-cart-header">
-										<span>{{
-											getTotalItem()}} Sản phẩm</span>
-										<a href="/cart">Xem ngay</a>
-									</div>
-									<ul class="shopping-list">
-										<li ng-repeat="cd in cartdetails">
-											<a ng-click="deleteid(cd.id)" class="remove" title="Remove this item"><i
-													class="fa fa-remove"></i></a>
-											<a class="cart-img" href="#"><img
-													src="../../images/products/{{cd.product.image}}" alt="#"></a>
-											<h4><a href="#">{{cd.product.name}}</a></h4>
-											<p class="quantity">{{cd.quantity}} - <span
-													class="amount">{{cd.price}}</span></p>
-										</li>
-									</ul>
-
-								</div>
-								<!--/ End Shopping Item -->
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Header Inner -->
-		<div class="header-inner">
-			<div class="container">
-				<div class="cat-nav-head">
-					<div class="row">
-						<div class="col-lg-3">
-							<div class="all-category nav">
-								<li><a ng-click="product()"><i class="fa fa-bars"
-											aria-hidden="true"></i>&nbsp;CATEGORIES</a>
-									<ul style="width: 262px;" class="dropdown">
-										<li ng-repeat="c in category"><a ng-click="productcategory(c.id)">{{c.name}}</a>
-										</li>
-									</ul>
-								</li>
-							</div>
-						</div>
-
-						<div class="col-lg-9 col-12">
-							<div class="menu-area">
-								<!-- Main Menu -->
-								<nav class="navbar navbar-expand-lg">
-									<div class="navbar-collapse">
-										<div class="nav-inner">
-											<ul class="nav main-menu menu navbar-nav">
-												<li class="active"><a href="/">Trang chủ</a></li>
-												<li><a href="#">Sản phẩm</a></li>
-												<li><a href="#">Dịch vụ</a></li>
-												<li><a href="#">Cửa hàng<i class="ti-angle-down"></i><span
-															class="new">New</span></a>
-													<ul class="dropdown">
-														<li><a href="shop-grid.html">Shop Grid</a></li>
-														<li><a href="cart.html">Cart</a></li>
-														<li><a href="checkout.html">Checkout</a></li>
 													</ul>
 												</li>
-												<li><a href="#">Pages</a></li>
-												<li><a href="#">Blog<i class="ti-angle-down"></i></a>
-													<ul class="dropdown">
-														<li><a href="blog-single-sidebar.html">Blog Single Sidebar</a>
-														</li>
-													</ul>
-												</li>
-												<li><a href="/contact">Contact Us</a></li>
+
 											</ul>
 										</div>
 									</div>

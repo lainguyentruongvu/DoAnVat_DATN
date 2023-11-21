@@ -17,6 +17,5 @@ public class OrderController {
 	public String orderdetail(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("order", orderservice.findById(id));
 		return "cart/order";
-
 	}
 }
