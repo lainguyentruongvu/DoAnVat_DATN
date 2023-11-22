@@ -910,6 +910,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	}
 
 	$scope.removefavorite = function(id) {
+		console.log(id)
 		$http.delete(`/rest/favorites/${id}`).then(resp => {
 			Swal.fire({
 				type: 'success',
@@ -943,7 +944,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				$scope.defaul = 0;
 			}
 		}).catch(error => {
-			location.href = "/favorite/error";
 			console.log("Error", error)
 		})
 	}
