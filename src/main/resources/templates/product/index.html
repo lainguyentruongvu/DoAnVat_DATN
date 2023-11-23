@@ -95,9 +95,10 @@
 													</a>
 													<div class="button-head">
 														<div class="product-action">
-															<a ng-click="productdetails(item.id)" data-toggle="modal"
-																data-target="#exampleModal" title="Quick View"><i
-																	class=" ti-eye"></i><span>Quick Shop</span></a>
+															<a ng-click="productdetails(item.id);evalute(item.id)"
+																data-toggle="modal" data-target="#exampleModal"
+																title="Quick View"><i class=" ti-eye"></i><span>Quick
+																	Shop</span></a>
 															<a title="Wishlist" ng-click="checkAddOrRemove(item.id)"><i
 																	class=" ti-heart "></i><span>Add to
 																	Wishlist</span></a>
@@ -2097,92 +2098,31 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
-						<div class="col-lg-12">
-							<div class=" container reply">
-								<div class="reply-head" style="padding-top: 10px;">
-									<h2 class="reply-title">Đánh giá</h2>
-									<!-- Comment Form -->
-									<form class="form" style="padding-top: 10px;padding-left: 10px;">
-										<div class="row">
-
-											<div class="col-12">
-												<div class="form-group">
-													<label>Đánh giá sản phẩm<span>*</span></label> <br>
-													Chọn sao:
-													<img src="../../images/star.gif" width="30px">
-													<img src="../../images/star.gif" width="30px">
-													<img src="../../images/star.gif" width="30px">
-													<img src="../../images/star.gif" width="30px">
-													<img src="../../images/star.gif" width="30px">
-													<textarea name="message" placeholder="Đánh giá của bạn"></textarea>
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="form-group button">
-													<button type="submit" class="btn btn-warning">Đánh giá</button>
-												</div>
-											</div>
-										</div>
-									</form>
-									<!-- End Comment Form -->
-								</div>
-							</div>
+						<div class="row">
 							<div class="col-lg-12">
-
-								<div class="row">
-
-									<div class="col-lg-12 form-group">
-										<div>
-											<img style="height: 70px;
+								<div ng-repeat="evalute in evalutes"  class="col-lg-12 form-group">
+									<div>
+										<img style="height: 70px;
 											width: 70px;
 											border-radius: 100%;
 											position: absolute;
 											left: 0; padding: 5px;" src="https://f9-zpcloud.zdn.vn/550627044704545625/b6673faa10cec19098df.jpg">
-										</div>
-										<div style="padding-left: 70px;">
-											<p style="font-weight: bold;font-size: 15px;"> Tiến bờ dừa
-												<br>
-												<img src="images/star_2.png" width="20px" alt="">
-												<img src="images/star_3.png" width="20px" alt="">
-												<img src="images/star_3.png" width="20px" alt="">
-												<img src="images/star_3.png" width="20px" alt="">
-												<img src="images/star_3.png" width="20px" alt="">
-												<br>
-											<p style="font-size: 13px;">10-09-2023 13:29 | Phân loại hàng: 2.0kg</p>
-											</p>
-											<p style="font-size: 20px;">Như cức.</p>
-										</div>
 									</div>
-
-									<div class="col-lg-12  form-group">
-										<div>
-
-											<img style="height: 70px;
-								width: 70px;
-								border-radius: 100%;
-								position: absolute;
-								left: 0; padding: 5px;" src="https://f10-zpcloud.zdn.vn/4031460762693235070/855f57242bbef8e0a1af.jpg">
-
-										</div>
-										<div style="padding-left: 70px;">
-											<p style="font-weight: bold;font-size: 15px;"> Minh Thiên
-												<br>
-												<img src="images/star_2.png" width="20px" alt="">
-												<img src="images/star_2.png" width="20px" alt="">
-												<img src="images/star_2.png" width="20px" alt="">
-												<img src="images/star_2.png" width="20px" alt="">
-												<img src="images/star_2.png" width="20px" alt="">
-												<br>
-											<p style="font-size: 13px;">11-09-2023 13:29 | Phân loại hàng: 1.5kg</p>
-											</p>
-											<p style="font-size: 20px;">Ngon như cức.</p>
-										</div>
+									<div style="padding-left: 70px;">
+										<p style="font-weight: bold;font-size: 15px;"> {{evalute.id}}
+											<br>
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<br>
+										<p style="font-size: 13px;">{{evalute.commentdate}}</p>
+										</p>
+										<p style="font-size: 20px;">{{evalute.comment}}</p>
 									</div>
-
 								</div>
-								<!-- KẾT THÚC KHU VỰC ĐÁNH GIÁ SẢN PHẨMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
 							</div>
 						</div>
 					</div>

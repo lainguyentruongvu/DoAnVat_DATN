@@ -10,6 +10,7 @@ import poly.store.entity.Account;
 import poly.store.entity.Order;
 import poly.store.entity.OrderStatistics;
 import poly.store.entity.Revenuestatistics;
+import poly.store.entity.Status;
 
 public interface OrderDAO extends JpaRepository<Order, Integer> {
 	@Query("SELECT o FROM Order o WHERE o.status.id = ?1")
@@ -30,7 +31,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	@Query("SELECT SUM(b.totalamount) FROM Order b WHERE CAST(b.createdate AS date) = CAST(GETDATE() AS date)")
 	BigDecimal getTotalAmountOfOrdersPlacedToday();
 
-	@Query("SELECT SUM(o.totalamount) FROM Order o")
+	@Query("SELECT SUM(o.totalamount) FROM Order o WHERE o.statusorder = true")
 	Double calculateTotalAmountForAllOrders();
 
 	@Query("SELECT COUNT(*) FROM Order b WHERE CAST(b.createdate AS date) = CAST(GETDATE() AS date)")
@@ -44,18 +45,22 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	@Query("SELECT o FROM Order o WHERE username = :id ORDER BY createdate DESC")
 	List<Order> findOrderByUsername(String id);
 
-	@Query("SELECT NEW Revenuestatistics(YEAR(o.createdate), SUM(o.totalamount)) FROM Order o GROUP BY YEAR(o.createdate)")
+	@Query("SELECT o FROM Order o WHERE username = :id AND status = :status ORDER BY createdate DESC")
+	List<Order> findOrderByUsernameStatus(String id, Status status);
+
+	@Query("SELECT NEW Revenuestatistics(YEAR(o.createdate), SUM(o.totalamount)) FROM Order o WHERE o.statusorder = true GROUP BY YEAR(o.createdate)")
 	List<Revenuestatistics> getYearRevenue();
 
-	@Query("SELECT NEW Revenuestatistics(MONTH(o.createdate), SUM(o.totalamount)) FROM Order o GROUP BY MONTH(o.createdate)")
+	@Query("SELECT NEW Revenuestatistics(MONTH(o.createdate), SUM(o.totalamount)) FROM Order o WHERE o.statusorder = true GROUP BY MONTH(o.createdate)")
 	List<Revenuestatistics> getMonthRevenue();
 
-	@Query("SELECT NEW Revenuestatistics(FUNCTION('DAY', o.createdate), SUM(o.totalamount)) FROM Order o GROUP BY FUNCTION('DAY', o.createdate)")
+	@Query("SELECT NEW Revenuestatistics(FUNCTION('DAY', o.createdate), SUM(o.totalamount)) FROM Order o WHERE o.statusorder = true GROUP BY FUNCTION('DAY', o.createdate)")
 	List<Revenuestatistics> getDateRevenue();
-	
-	
-	  @Query("SELECT NEW OrderStatistics(MONTH(o.createdate), COUNT(o)) " +
-	           "FROM Order o " +
-	           "GROUP BY MONTH(o.createdate)")
-	    List<OrderStatistics> countOrdersByMonth();
+
+	@Query("SELECT NEW OrderStatistics(MONTH(o.createdate), COUNT(o)) " + "FROM Order o WHERE o.statusorder = true "
+			+ "GROUP BY MONTH(o.createdate) ")
+	List<OrderStatistics> countOrdersByMonth();
+
+	@Query("SELECT  COUNT(o) FROM Order o WHERE username = :username AND o.status.id = :status")
+	Long countOrdersByStatus(String username,Integer status);
 }

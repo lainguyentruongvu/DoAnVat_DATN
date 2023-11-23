@@ -156,10 +156,35 @@ public class OrderRestController {
 	}
 
 	@GetMapping("{id}")
-	public List<Order> getbillid(@PathVariable("id") String id) {
+	public List<Order> getOrderByUsername(@PathVariable("id") String id) {
 		List<Order> order = orderDao.findOrderByUsername(id);
 		return order;
 
 	}
+	@GetMapping("{id}/{status}")
+	public List<Order> getOrderByUsernameStatus(@PathVariable("id") String id,@PathVariable("status") Status status) {
+		List<Order> order = orderDao.findOrderByUsernameStatus(id,status);
+		return order;
+
+	}
+	@GetMapping("status/{id}")
+	public List<Long> getOrderByUsernameStatus(@PathVariable("id") String id ) {
+		Long status1 = orderDao.countOrdersByStatus(id,1);
+		Long status2 = orderDao.countOrdersByStatus(id,2);
+		Long status3 = orderDao.countOrdersByStatus(id,3);
+		Long status4 = orderDao.countOrdersByStatus(id,4);
+		Long status5 = orderDao.countOrdersByStatus(id,5);
+		List<Long> list = new ArrayList<>();
+		list.add(status1);
+		list.add(status2);
+		list.add(status3);
+		list.add(status4);
+		list.add(status5);
+		return list;
+
+	}
+
+	
+	
 
 }

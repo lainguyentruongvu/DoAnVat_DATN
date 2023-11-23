@@ -40,7 +40,7 @@ public class Evaluate implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "Productid")
-	Product pruduct;
+	Product product;
 	
 	
 }

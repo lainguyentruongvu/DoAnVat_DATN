@@ -36,7 +36,7 @@ public class Order implements Serializable {
 	String address;
 	String phone;
 	String message;
-	String statusorder;
+	Boolean statusorder;
 
 	@OneToMany(mappedBy = "order" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
