@@ -114,8 +114,11 @@
                           <div class="col">
                             <div class="form-group">
                               <label>Số lượng</label>
-                              <input class="form-control" ng-model="formprow.quantity" type="text"
+                              <input ng-hide="index == -1" class="form-control" ng-model="formprow.quantity" type="text"
                                 placeholder="Nhập số lượng">
+                              <input ng-show="index == -1" class="form-control" readonly
+                                style="background-color: white;" ng-model="formprow.quantity" />
+                              
                             </div>
                           </div>
                         </div>

@@ -508,6 +508,7 @@
  	//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
  	//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
  	$scope.weightadmin = function (id, price) {
+ 		console.log(id, price)
  		$scope.showbtn_them = true;
  		$scope.showbtn_addweight = true;
  		$http.get(`/rest/cart/checkproductweight/${id}/${price}`).then(resp => {
@@ -556,15 +557,18 @@
  	$scope.addweight = function (item) {
  		$scope.productweight = angular.copy(item)
  		$http.get(`/rest/products/weight/quantityandprice/${$scope.productweight.product.id}/${$scope.productweight.weight.id}`).then(resp => {
- 			if (resp.data == null) {
+ 			if (resp.data.length == 0) {
  				$http.post("/rest/products/productweight", $scope.productweight).then(resp => {
- 					alert("Thêm trọn lượng thành công")
+ 					$scope.weightadmin(item.product.id,item.product.price)
+					alert("Thêm trọn lượng thành công")
  				}).catch(error => {
  					console.log("Error", error);
  				})
- 			}else{alert("Có rồi bớt thêm");}
+ 			} else {
+ 				alert("Có rồi bớt thêm");
+ 			}
  		}).catch(error => {
-			
+
  			console.log("Error", error);
  		})
 
@@ -585,15 +589,23 @@
  		})
  	}
 
- 	$scope.deleteweight = function () {
+ 	$scope.deleteweight = function (idpro) {
  		var idproweight = $scope.productweight.id;
- 		console.log(idproweight)
- 		$http.delete(`/rest/products/productweight/${idproweight}`).then(resp => {
-
+ 		$http.get(`/rest/products/${idpro}`).then(resp => {
+ 			if ($scope.productweight.price != resp.data.price) { //So sánh giá của weight với giá của product mặc định --> nếu giống thì k cho xó
+ 				$http.delete(`/rest/products/productweight/${idproweight}`).then(resp => {
+ 					$scope.weightadmin(idpro,resp.data.price);
+ 				}).catch(error => {
+ 					Swal.fire("Error", "Xóa thất bại!", "error");
+ 					console.log("Error", error);
+ 				})
+ 			} else {
+ 				alert("Trọng lượng mặc định không được xó")
+ 			}
  		}).catch(error => {
- 			Swal.fire("Error", "Cập nhật thất bại!", "error");
  			console.log("Error", error);
  		})
+
  	}
  	$scope.initialize();
  	$scope.weight();
