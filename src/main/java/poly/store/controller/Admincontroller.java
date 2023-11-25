@@ -36,4 +36,8 @@ public class Admincontroller {
 	public String discount() {
 		return "admin/discount/index";
 	}
+	@RequestMapping("/admin/category")
+	public String category() {
+		return "admin/category/index";
+	}
 }

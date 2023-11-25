@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import poly.store.dao.CategoryDAO;
 import poly.store.dao.ProductDAO;
 import poly.store.entity.Category;
+import poly.store.entity.Discount;
 import poly.store.entity.Product;
 import poly.store.services.CategoryService;
 import poly.store.services.ProductService;
@@ -28,7 +29,21 @@ public class CategoryServiceImpl implements CategoryService {
 		return categorydao.findById(id).get();
 	}
 	
-	
+	@Override
+	public Category create(Category category) {
+		return categorydao.save(category);
+	}
+
+	@Override
+	public Category update(Category category) {
+		return categorydao.save(category);
+	}
+
+	@Override
+	public void delete(Integer categoryid) {
+		categorydao.deleteById(categoryid);
+
+	}
 
 
 }

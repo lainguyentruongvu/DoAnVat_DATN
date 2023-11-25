@@ -4,14 +4,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import poly.store.dao.ProductDAO;
 import poly.store.entity.Category;
+import poly.store.entity.Discount;
 import poly.store.entity.Product;
 import poly.store.services.CategoryService;
 import poly.store.services.ProductService;
@@ -35,6 +40,26 @@ public class CategoryRestController {
 	public List<Product> getproductcategori(@PathVariable("id") Integer id) {
 		Category cate = categoryservice.findById(id);
 		return productdao.findByCategory(cate);
+	}
+	
+	@GetMapping("{categoryid}")
+	public Category getOne(@PathVariable("categoryid") Integer categoryid) {
+		return categoryservice.findById(categoryid);
+	}
+	
+	@PostMapping
+	public Category create(@RequestBody Category discount) {
+		return categoryservice.create(discount);
+	}
+
+	@PutMapping("{categoryid}")
+	public Category update(@PathVariable("categoryid") Integer categoryid, @RequestBody Category Discount) {
+		return categoryservice.update(Discount);
+	}
+
+	@DeleteMapping("{categoryid}")
+	public void delete(@PathVariable("categoryid") Integer categoryid) {
+		categoryservice.delete(categoryid);
 	}
 	
 	
