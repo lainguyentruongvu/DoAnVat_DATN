@@ -8,12 +8,12 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	//Lấy tên tài khoản
 	$scope.username = $("#username").text();
 
-	console.log($scope.username);
 
 	//Lấy thông tin tài khoản
 	$scope.account = function() {
 		$http.get(`/rest/accounts/` + $scope.username).then(resp => {
 			$scope.account = resp.data;
+
 		});
 
 	}
@@ -619,14 +619,14 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 
 
-	
+
 
 
 	$scope.thanhtoan = function() {
-	
+
 		//Lấy dữ liệu từ localStore
 		$scope.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
-	
+
 		//Gọi hàm kiểm tra mã giãm giá		
 		$scope.kiemtragiamgia();
 
@@ -670,40 +670,55 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					Swal.fire("Success", "Đặt hàng thành công!", "success");
 
 
+					var count = 0;
+					var totalItems = $scope.selectedItems.length;
+
+					function checkComplete() {
+						count++;
+						if (count === totalItems) {
+							localStorage.clear();
+							console.log(count)
+							$window.location.href = "/orderuser";
+						}
+					}
 
 					for (var i = 0; i < $scope.selectedItems.length; i++) {
-						processProduct($scope.selectedItems[i]);
+						processProduct($scope.selectedItems[i], checkComplete);
 					}
-					
-					
-				
-					
-					function processProduct(item) {
-						$http.get(`/rest/order/weight/${item.weightvalue}`).then(resp => {
-							$scope.weightquantt = resp.data;
-							$http.get(`/rest/order/productweight/${item.product.id}/${$scope.weightquantt.id}`).then(resp => {
-								console.log(resp.data.id);
-								$http.put(`/rest/order/putquantity/${resp.data.id}/${item.quantity}`).then(resp => {
-								}).catch(error => {
-									console.log(error)
-								});
 
-							}).catch(error => {
-								console.log(error)
-							});
-						}).catch(error => {
-							console.log(error);
-						});
-					}
+
 
 					localStorage.clear();
-					location.href = "/order/detail/" + resp.data.id;
+
 					console.log(resp);
 
 				}).catch(error => {
 					Swal.fire("Error", "Đặt hàng thất bại!", "error");
 					console.log(error)
 				})
+
+
+
+				function processProduct(item, callback) {
+					$http.get(`/rest/order/weight/${item.weightvalue}`).then(resp => {
+						$scope.weightquantt = resp.data;
+						$http.get(`/rest/order/productweight/${item.product.id}/${$scope.weightquantt.id}`).then(resp => {
+							console.log(resp.data.id);
+							$http.put(`/rest/order/putquantity/${resp.data.id}/${item.quantity}`).then(resp => {
+								callback(); // Gọi callback khi công việc đã hoàn thành
+							}).catch(error => {
+								console.log(error);
+								callback(); // Gọi callback ngay cả khi có lỗi để tránh trường hợp lặp vô hạn
+							});
+						}).catch(error => {
+							console.log(error);
+							callback(); // Gọi callback ngay cả khi có lỗi để tránh trường hợp lặp vô hạn
+						});
+					}).catch(error => {
+						console.log(error);
+						callback(); // Gọi callback ngay cả khi có lỗi để tránh trường hợp lặp vô hạn
+					});
+				}
 			}
 		}
 		$scope.bill.purchase();
@@ -722,10 +737,10 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 		} else {
 			if (check >= 1) {
-				$scope.statusorder = "Chưa thanh toán";
+				$scope.statusorder = false;
 				$scope.thanhtoan();
 			} else {
-				$scope.statusorder = "Đã thanh toán";
+				$scope.statusorder = true;
 				$scope.thanhtoan();
 				var encodedTotalPrice = btoa($scope.tongtienthanhtoan);
 				var url = '/vnpay/test/' + encodedTotalPrice;
@@ -788,6 +803,11 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	}
 
 
+
+
+
+
+
 	//trang chi tiết	
 	$scope.productdetails = function(id) {
 		sessionStorage.setItem("item", JSON.stringify(id));
@@ -799,8 +819,11 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		}).catch(error => {
 			console.log("Error", error);
 		})
+
+
+
+
 		$http.get(`/rest/products/weight/${id}`).then(resp => {
-			console.log($scope.priceww);
 			$scope.productweight = resp.data;
 			for (var i = 0; i < $scope.productweight.length; i++) {
 				if ($scope.productweight[i].price === $scope.priceww) {
@@ -1174,31 +1197,93 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	};
 	//End Updatepassword
 
+
+	//Hiển thị đơn hàng người dùng
 	$scope.orderuserfc = function() {
-		var url = `rest/order/` + $scope.username;
+		var url = `rest/order/getOrderAndOrderdetail/` + $scope.username;
 		$http.get(url).then(resp => {
 			$scope.orderuser = resp.data;
-
 		});
 	}
-
 	$scope.orderuserfc();
 
 
-	//Hiển thị đơn hàng chi tiết
-	$scope.showOrderDetail = function(orderId) {
+
+
+	//Hiển thị đơn hàng người dùng theo trang thái số lượng
+	$scope.orderuserstatuss = function() {
+		var url = `rest/order/status/` + $scope.username;
+		$http.get(url).then(resp => {
+			$scope.orderuserstatus = resp.data;
+
+		});
+	}
+	$scope.orderuserstatuss();
+
+
+	//Hiển thị đơn hàng người dùng theo trang thái
+	$scope.status1 = function(idstatus) {
+		var url = `/rest/order/${$scope.username}/${idstatus}`;
+		$http.get(url).then(resp => {
+			$scope.orderuser1 = resp.data;
+		});
+	}
+
+
+	$scope.status2 = function(idstatus) {
+		var url = `/rest/order/${$scope.username}/${idstatus}`;
+		console.log(idstatus);
+		$http.get(url).then(resp => {
+			$scope.orderuser2 = resp.data;
+
+		});
+	}
+	$scope.status3 = function(idstatus) {
+		var url = `/rest/order/${$scope.username}/${idstatus}`;
+		console.log(idstatus);
+		$http.get(url).then(resp => {
+			$scope.orderuser3 = resp.data;
+
+		});
+	}
+	$scope.status4 = function(idstatus) {
+		var url = `/rest/order/${$scope.username}/${idstatus}`;
+		console.log(idstatus);
+		$http.get(url).then(resp => {
+			$scope.orderuser4 = resp.data;
+
+		});
+	}
+	$scope.status5 = function(idstatus) {
+		var url = `/rest/order/${$scope.username}/${idstatus}`;
+		console.log(idstatus);
+		$http.get(url).then(resp => {
+			$scope.orderuser5 = resp.data;
+
+		});
+	}
+	// Kết thúc hiển thị đơn hàng người dùng theo trang thái
+
+
+
+	$scope.showOrderDetailDanhgia = function(orderId) {
 		$http.get(`/rest/order/orderDetails/` + orderId)
 			.then(function(response) {
 				$scope.selectedOrderDetails = response.data;
-				$('#orderDetailModal').modal('show'); // Hiển thị modal chứa danh sách sản phẩm
+				$('#orderDetailModaldanhgia').modal('show'); // Hiển thị modal chứa danh sách sản phẩm
 			})
 			.catch(function(error) {
 				console.error("Error fetching order details:", error);
 			});
 	};
 	$scope.closeModal = function() {
-		$("#orderDetailModal").modal("hide");
+		$("#closeBtn").modal("hide");
 	};
+
+
+
+
+
 	$scope.trangthai = function(id) {
 		var url = `/rest/order/trangthai/${id}`;
 		$http.get(url).then(resp => {
@@ -1222,6 +1307,34 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					// Nếu người dùng chọn "OK," thực hiện thay đổi trạng thái
 					performStatusChange(orderId, newStatusId);
 
+
+				}
+			});
+		} else {
+			// Nếu newStatusId không phải 4, thực hiện ngay thay đổi trạng thái
+			performStatusChange(orderId, newStatusId);
+		}
+	};
+
+
+	$scope.changeStatusHT = function(orderId, newStatusId) {
+		console.log(orderId, newStatusId);
+
+		if (newStatusId === 5) {
+			// Sử dụng Swal.fire để hiển thị thông báo
+			Swal.fire({
+				icon: 'success',
+				title: 'Xác nhận',
+				text: 'Bạn chắc chắn đã nhận được đơn hàng',
+				showCancelButton: true,
+				confirmButtonText: 'OK',
+				cancelButtonText: 'Hủy'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Nếu người dùng chọn "OK," thực hiện thay đổi trạng thái
+					performStatusChange(orderId, newStatusId);
+
+
 				}
 			});
 		} else {
@@ -1244,6 +1357,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				$scope.orderuserfc();
 			}).catch(function(error) {
 				$scope.trangthai(newStatusId);
+				$scope.orderuserstatuss();
 				$scope.orderuserfc();
 				Swal.fire({
 					icon: 'success',
@@ -1260,9 +1374,92 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		var url = `rest/products/findtop10product`;
 		$http.get(url).then(resp => {
 			$scope.top10product = resp.data;
-			console.log($scope.top10product);
 		});
 	}
 	$scope.topproduct();
 	//Kết thúc Hiển thị top sản phẩm bán chạy
+
+
+
+	$scope.formData = {
+		rating: '',
+		comment: ''
+	};
+	
+	
+	$scope.closeModal = function() {
+    
+     $('#modal-container').modal('hide');
+};
+
+	$scope.evaluate = function(id) {
+		$scope.data = {
+			account: {
+				username: $scope.username
+			},
+			product: {
+				id: id
+			},
+			comment: $scope.formData.comment,
+			star: $scope.formData.rating,
+			commentdatenew: new Date().toISOString().slice(0, 10)
+
+		}
+
+		$http.get(`rest/evaluates/checkProductUsername/${id}/${$scope.username}`).then(resp => {
+			if (resp.data == "") {
+				$http.post(`rest/evaluates/`, $scope.data).then(resp => {
+					Swal.fire({
+						icon: 'success',
+						title: 'Thành công',
+						text: 'Đánh giá đơn hàng thành công',
+						confirmButtonText: 'OK'
+					});
+				}).catch(error => {
+					console.log("Error", error);
+				});
+			} else {
+				Swal.fire({
+					icon: 'info',
+					title: 'Thất bại',
+					text: 'Đơn hàng đã được đánh giá',
+					confirmButtonText: 'OK'
+				});
+			}
+
+		}).catch(error => {
+			console.log("Error", error);
+		});
+
+
+
+	
+	}
+
+	$scope.evalute = function(id) {
+		$http.get(`/rest/evaluates/${id}`).then(resp => {
+			$scope.evalutes = resp.data;
+			console.log($scope.evalutes);
+		}).catch(error => {
+			console.log("Error", error);
+		});
+
+		$http.get(`/rest/evaluates/average/${id}`).then(resp => {
+			$scope.averages = resp.data;
+			console.log($scope.average.value);
+		}).catch(error => {
+			console.log("Error", error);
+		});
+
+
+	}
+
+
+
+
+
+
+
 })
+
+

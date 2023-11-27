@@ -95,9 +95,10 @@
 													</a>
 													<div class="button-head">
 														<div class="product-action">
-															<a ng-click="productdetails(item.id)" data-toggle="modal"
-																data-target="#exampleModal" title="Quick View"><i
-																	class=" ti-eye"></i><span>Quick Shop</span></a>
+															<a ng-click="productdetails(item.id);evalute(item.id)"
+																data-toggle="modal" data-target="#exampleModal"
+																title="Quick View"><i class=" ti-eye"></i><span>Quick
+																	Shop</span></a>
 															<a title="Wishlist" ng-click="checkAddOrRemove(item.id)"><i
 																	class=" ti-heart "></i><span>Add to
 																	Wishlist</span></a>
@@ -1995,21 +1996,53 @@
 						</div>
 						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 							<div class="quickview-content">
-								<strong style="font-size: 20px;">{{productdetail.name}}</strong>
+								<strong style="font-size: 20px;">{{productdetail.name}} {{average1.totalRatings}}</strong>
 								<strong style="font-size: 20px;" ng-if="check==true"
 									id="weightvalue">{{weightvalue}}</strong>&emsp13;
 								<strong style="font-size: 20px;" ng-if="check==false"
 									id="weightvalue">{{weightvalue}}</strong>
-								<div class="quickview-ratting-review">
-									<div class="quickview-ratting-wrap">
-										<div class="quickview-ratting">
+								<div class="quickview-ratting-review">									
+									<div ng-repeat="average in averages" class="quickview-ratting-wrap">										
+										<div ng-if="average.averageRating == 1" class="quickview-ratting">
+											<i class="yellow fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+
+										<div ng-if="average.averageRating == 2" class="quickview-ratting">
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+
+										<div ng-if="average.averageRating == 3" class="quickview-ratting">
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+
+										<div ng-if="average.averageRating == 4" class="quickview-ratting">
 											<i class="yellow fa fa-star"></i>
 											<i class="yellow fa fa-star"></i>
 											<i class="yellow fa fa-star"></i>
 											<i class="yellow fa fa-star"></i>
 											<i class="fa fa-star"></i>
 										</div>
-										<a href="#"> (1 customer review)</a>
+
+										<div ng-if="average.averageRating == 5" class="quickview-ratting">
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
+												<i class="yellow fa fa-star"></i>
+										</div>
+										<a href="#"> ({{average.totalRatings}})</a>
 									</div>
 									<div class="quickview-stock">
 										<p ng-if="check==false">Số lượng:</p>
@@ -2068,7 +2101,7 @@
 								</div>
 								<div class="add-to-cart">
 									<a ng-click="addcartdetail(productdetail)" class="btn">Add to cart</a>
-									<a href="#" class="btn min"><i class="ti-heart"></i></a>
+									<a ng-click="checkAddOrRemove(productdetail.id)" class="btn min"><i class="ti-heart"></i></a>
 									<a href="#" class="btn min"><i class="fa fa-compress"></i></a>
 								</div>
 								<div class="default-social">
@@ -2079,110 +2112,71 @@
 										<li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
 										<li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
 									</ul>
-									<!-- KHU VỰC ĐÁNH GIÁ SẢN PHẨMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
-									<div class="share-social" style="padding-left: 20px;">
-										<div class="row">
-											<div class="col-12">
-												<div class="content-tags">
-													<h3 style="color: orange;">4.9 trên 5<br>
-														<img src="../../images/star.gif" width="30px">
-														<img src="../../images/star.gif" width="30px">
-														<img src="../../images/star.gif" width="30px">
-														<img src="../../images/star.gif" width="30px">
-														<img src="../../images/star.gif" width="30px">
-													</h3>
-												</div>
-											</div>
-										</div>
-									</div>
+
+
 								</div>
 							</div>
-
 						</div>
-						<div class="col-lg-12">
-							<div class=" container reply">
-								<div class="reply-head" style="padding-top: 10px;">
-									<h2 class="reply-title">Đánh giá</h2>
-									<!-- Comment Form -->
-									<form class="form" style="padding-top: 10px;padding-left: 10px;">
-										<div class="row">
-
-											<div class="col-12">
-												<div class="form-group">
-													<label>Đánh giá sản phẩm<span>*</span></label> <br>
-													Chọn sao:
-													<img src="../../images/star.gif" width="30px">
-													<img src="../../images/star.gif" width="30px">
-													<img src="../../images/star.gif" width="30px">
-													<img src="../../images/star.gif" width="30px">
-													<img src="../../images/star.gif" width="30px">
-													<textarea name="message" placeholder="Đánh giá của bạn"></textarea>
-												</div>
-											</div>
-											<div class="col-12">
-												<div class="form-group button">
-													<button type="submit" class="btn btn-warning">Đánh giá</button>
-												</div>
-											</div>
-										</div>
-									</form>
-									<!-- End Comment Form -->
-								</div>
-							</div>
+						<div class="row">
 							<div class="col-lg-12">
-
-								<div class="row">
-
-									<div class="col-lg-12 form-group">
-										<div>
-											<img style="height: 70px;
+								<div ng-repeat="evalute in evalutes" class="col-lg-12 form-group">
+									<div>
+										<img style="height: 70px;
 											width: 70px;
 											border-radius: 100%;
 											position: absolute;
-											left: 0; padding: 5px;" src="https://f9-zpcloud.zdn.vn/550627044704545625/b6673faa10cec19098df.jpg">
-										</div>
-										<div style="padding-left: 70px;">
-											<p style="font-weight: bold;font-size: 15px;"> Tiến bờ dừa
-												<br>
-												<img src="images/star_2.png" width="20px" alt="">
-												<img src="images/star_3.png" width="20px" alt="">
-												<img src="images/star_3.png" width="20px" alt="">
-												<img src="images/star_3.png" width="20px" alt="">
-												<img src="images/star_3.png" width="20px" alt="">
-												<br>
-											<p style="font-size: 13px;">10-09-2023 13:29 | Phân loại hàng: 2.0kg</p>
-											</p>
-											<p style="font-size: 20px;">Như cức.</p>
-										</div>
+											left: 0; padding: 5px;" src="../images/avt/{{image}}">
 									</div>
+									<div style="padding-left: 70px;">
+										<p style="font-weight: bold;font-size: 15px;"> {{evalute.account.name}}
 
-									<div class="col-lg-12  form-group">
-										<div>
-
-											<img style="height: 70px;
-								width: 70px;
-								border-radius: 100%;
-								position: absolute;
-								left: 0; padding: 5px;" src="https://f10-zpcloud.zdn.vn/4031460762693235070/855f57242bbef8e0a1af.jpg">
+											<br>
+										<div ng-if="evalute.star == 1">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
 
 										</div>
-										<div style="padding-left: 70px;">
-											<p style="font-weight: bold;font-size: 15px;"> Minh Thiên
-												<br>
-												<img src="images/star_2.png" width="20px" alt="">
-												<img src="images/star_2.png" width="20px" alt="">
-												<img src="images/star_2.png" width="20px" alt="">
-												<img src="images/star_2.png" width="20px" alt="">
-												<img src="images/star_2.png" width="20px" alt="">
-												<br>
-											<p style="font-size: 13px;">11-09-2023 13:29 | Phân loại hàng: 1.5kg</p>
-											</p>
-											<p style="font-size: 20px;">Ngon như cức.</p>
+										<div ng-if="evalute.star == 2">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+
 										</div>
+										<div ng-if="evalute.star == 3">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+
+										</div>
+										<div ng-if="evalute.star == 4">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_3.png" width="20px" alt="">
+
+										</div>
+										<div ng-if="evalute.star == 5">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+											<img src="images/star_2.png" width="20px" alt="">
+
+										</div>
+										<br>
+										<p style="font-size: 13px;">{{evalute.commentdate}}</p>
+										</p>
+										<p style="font-size: 20px;">{{evalute.comment}}</p>
 									</div>
-
 								</div>
-								<!-- KẾT THÚC KHU VỰC ĐÁNH GIÁ SẢN PHẨMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM -->
 							</div>
 						</div>
 					</div>

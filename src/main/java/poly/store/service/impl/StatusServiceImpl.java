@@ -35,6 +35,12 @@ public class StatusServiceImpl implements StatusService {
 		return statudao.getOne(newStatusId);
 	}
 
+	@Override
+	public List<Status> findAll() {
+	
+		return statudao.findAll();
+	}
+
 	
 
 	

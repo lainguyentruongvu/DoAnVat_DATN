@@ -29,7 +29,7 @@ public class Evaluate implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	String comment;
-	String star;
+	Integer star;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Commentdate")
 	Date commentdate = new Date();
@@ -40,7 +40,7 @@ public class Evaluate implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "Productid")
-	Product pruduct;
+	Product product;
 	
 	
 }

@@ -32,5 +32,7 @@ public interface OrderdetailDAO extends JpaRepository<Orderdetail, Integer> {
 
 	@Query("SELECT new CategoryStatistics(c.name, SUM(od.quantity)) FROM Orderdetail od JOIN od.product p JOIN p.category c GROUP BY c.name")
 	List<CategoryStatistics> sumSoldProductsByCategory();
+	
+	
 
 }

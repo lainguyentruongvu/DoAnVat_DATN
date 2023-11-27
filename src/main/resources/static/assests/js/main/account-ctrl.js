@@ -777,15 +777,15 @@ app.controller("home-ctrl", function($scope, $http) {
 		$http.get("/rest/static/demslsp").then(resp => {
 			$scope.slsp = resp.data;
 		});
-		$http.get("/rest/products/demslkh").then(resp => {
-			$scope.slkh = resp.data;
-		});
-		$http.get("/rest/products/demsldh").then(resp => {
-			$scope.sldh = resp.data;
-		});
-		$http.get("/rest/products/demslcd").then(resp => {
-			$scope.slcd = resp.data;
-		});
+//		$http.get("/rest/products/demslkh").then(resp => {
+//			$scope.slkh = resp.data;
+//		});
+//		$http.get("/rest/products/demsldh").then(resp => {
+//			$scope.sldh = resp.data;
+//		});
+//		$http.get("/rest/products/demslcd").then(resp => {
+//			$scope.slcd = resp.data;
+//		});
 		$http.get("/rest/static/ddhanghna").then(resp => {
 			$scope.ddhanghna = resp.data;
 
@@ -795,10 +795,10 @@ app.controller("home-ctrl", function($scope, $http) {
 
 		});
 
-		$http.get("/rest/static/tongdonhanghomnay").then(resp => {
-			$scope.tongdonhanghomnay = resp.data;
-
-		});
+//		$http.get("/rest/static/tongdonhanghomnay").then(resp => {
+//			$scope.tongdonhanghomnay = resp.data;
+//
+//		});
 		$http.get("/rest/static/tongdonhang").then(resp => {
 			$scope.tongdonhang = resp.data;
 		});

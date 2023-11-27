@@ -2,7 +2,9 @@ package poly.store.restcontroller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +31,7 @@ import poly.store.dao.ProductWeightDAO;
 import poly.store.dao.WeightDAO;
 import poly.store.entity.Account;
 import poly.store.entity.Order;
+import poly.store.entity.OrderWithDetailsDTO;
 import poly.store.entity.Orderdetail;
 import poly.store.entity.Product;
 import poly.store.entity.Productweight;
@@ -156,10 +159,45 @@ public class OrderRestController {
 	}
 
 	@GetMapping("{id}")
-	public List<Order> getbillid(@PathVariable("id") String id) {
+	public List<Order> getOrderByUsername(@PathVariable("id") String id) {
 		List<Order> order = orderDao.findOrderByUsername(id);
 		return order;
 
+	}
+
+	@GetMapping("{id}/{status}")
+	public List<OrderWithDetailsDTO> getOrderByUsernameStatus(@PathVariable("id") String id,
+			@PathVariable("status") Status status) {
+		List<OrderWithDetailsDTO> data = orderDao.getOrdersWithDetailsByUserIdStatus(id, status);
+	    
+	    List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
+	    
+	    return groupedData;
+
+	}
+
+	@GetMapping("status/{id}")
+	public List<Long> getOrderByUsernameStatus(@PathVariable("id") String id) {
+		Long status1 = orderDao.countOrdersByStatus(id, 1);
+		Long status2 = orderDao.countOrdersByStatus(id, 2);
+		Long status3 = orderDao.countOrdersByStatus(id, 3);
+		Long status4 = orderDao.countOrdersByStatus(id, 4);
+		Long status5 = orderDao.countOrdersByStatus(id, 5);
+		List<Long> list = new ArrayList<>();
+		list.add(status1);
+		list.add(status2);
+		list.add(status3);
+		list.add(status4);
+		list.add(status5);
+		return list;
+
+	}
+
+	@GetMapping("getOrderAndOrderdetail/{id}")
+	public List<OrderWithDetailsDTO> getOrderAndOrderdetail(@PathVariable("id") String id) {
+		List<OrderWithDetailsDTO> data = orderDao.getOrdersWithDetailsByUserId(id);
+		 List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);		    
+		    return groupedData;		
 	}
 
 }
