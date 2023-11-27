@@ -133,7 +133,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	$scope.quantity = 1;
 
-	$scope.addcart = function(p) {
+	$scope.addcart = function(p) {	
 		if ($scope.username == "") {
 			location.href = "/auth/login/form";
 		} else {
@@ -199,6 +199,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		}
 	}
 	$scope.addcartdetail = function(p) {
+
 		if ($scope.username == "") {
 			location.href = "/auth/login/form";
 		} else {
