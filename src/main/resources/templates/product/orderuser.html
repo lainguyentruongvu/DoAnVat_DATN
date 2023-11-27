@@ -47,24 +47,23 @@
 							<a ng-click="status1(1)" class="nav-item nav-link" id="nav-cxl-tab" data-toggle="tab"
 								href="#nav-cxl" role="tab" aria-controls="nav-cxl" aria-selected="false">Chờ xử
 								lý<label ng-if="orderuserstatus[0] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[0]}})</label> <a />
-
-								<a ng-click="status2(2)" class="nav-item nav-link" id="nav-dgg-tab" data-toggle="tab"
-									href="#nav-dgg" role="tab" aria-controls="nav-dgg" aria-selected="false">Đang
-									giao<label ng-if="orderuserstatus[1] !== 0" for=""
-										style="color: rebeccapurple;">({{orderuserstatus[1]}})</label></a>
-								<a ng-click="status3(3)" class="nav-item nav-link" id="nav-dg-tab" data-toggle="tab"
-									href="#nav-dg" role="tab" aria-controls="nav-dg" aria-selected="false">Đã giao
-									<label ng-if="orderuserstatus[2] !== 0" for=""
-										style="color: rebeccapurple;">({{orderuserstatus[2]}})</label> </a>
-								<a ng-click="status4(4)" class="nav-item nav-link" id="nav-dh-tab" data-toggle="tab"
-									href="#nav-dh" role="tab" aria-controls="nav-dh" aria-selected="false">Đã
-									hủy<label ng-if="orderuserstatus[3] !== 0" for=""
-										style="color: rebeccapurple;">({{orderuserstatus[3]}})</label></a>
-								<a ng-click="status5(5)" class="nav-item nav-link" id="nav-ht-tab" data-toggle="tab"
-									href="#nav-ht" role="tab" aria-controls="nav-ht" aria-selected="false"> Hoàn
-									thành<label ng-if="orderuserstatus[4] !== 0" for=""
-										style="color: rebeccapurple;">({{orderuserstatus[4]}})</label></a>
+									style="color: rebeccapurple;">({{orderuserstatus[0]}})</label> </a>
+							<a ng-click="status2(2)" class="nav-item nav-link" id="nav-dgg-tab" data-toggle="tab"
+								href="#nav-dgg" role="tab" aria-controls="nav-dgg" aria-selected="false">Đang
+								giao<label ng-if="orderuserstatus[1] !== 0" for=""
+									style="color: rebeccapurple;">({{orderuserstatus[1]}})</label></a>
+							<a ng-click="status3(3)" class="nav-item nav-link" id="nav-dg-tab" data-toggle="tab"
+								href="#nav-dg" role="tab" aria-controls="nav-dg" aria-selected="false">Đã giao
+								<label ng-if="orderuserstatus[2] !== 0" for=""
+									style="color: rebeccapurple;">({{orderuserstatus[2]}})</label> </a>
+							<a ng-click="status4(4)" class="nav-item nav-link" id="nav-dh-tab" data-toggle="tab"
+								href="#nav-dh" role="tab" aria-controls="nav-dh" aria-selected="false">Đã
+								hủy<label ng-if="orderuserstatus[3] !== 0" for=""
+									style="color: rebeccapurple;">({{orderuserstatus[3]}})</label></a>
+							<a ng-click="status5(5)" class="nav-item nav-link" id="nav-ht-tab" data-toggle="tab"
+								href="#nav-ht" role="tab" aria-controls="nav-ht" aria-selected="false"> Hoàn
+								thành<label ng-if="orderuserstatus[4] !== 0" for=""
+									style="color: rebeccapurple;">({{orderuserstatus[4]}})</label></a>
 
 						</div>
 					</nav>
@@ -72,67 +71,53 @@
 						<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
 							aria-labelledby="nav-home-tab">
 
-							<div class="row">
-								<div class="col-lg-12 form-group">
-									<div><input type="text" class="form-control"
-											placeholder="Bạn có thể tìm kiếm theo ID hoặc tên sản phẩm tại đây"
-											style="background-color: #EAEAEA;">
-									</div>
-								</div>
-							</div>
-
 							<div ng-if="!orderuser || orderuser.length === 0">
 								<!-- Hình ảnh hoặc thông báo khi orderuser rỗng -->
 								<img src="../images/khongcodonhang.jpg" alt="Empty Order" />
 							</div>
 
+
 							<!--Tất cả-->
 							<!--	BẮT ĐẦU PHẦN NỘI DUNG ĐƠN HÀNGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG-->
-							<div class="row" ng-repeat="order in orderuser ">
+							<div class="row" ng-repeat="item in orderuser ">
 								<div class="col-lg-12 form-group"
 									style="background-color: #eaeaea53;padding: 20px;width: 1210px;border-radius: 10px;">
 									<div class="row">
 
 										<div class="col-lg-6">
-											Mã đơn: {{order.id}}
+											Mã đơn: {{ item.order.id }}
 										</div>
-										<div class="col-lg-6" style="padding-left: 290px;">
-											<i style="color: #26AA99;" class="bi bi-info-circle"></i>
-											<label style="color: #26AA99;"> Trạng thái đơn: </label>
-											<label style="color: #F35022;">{{order.status.name}}</label>
+										<div class="col-lg-6" style="padding-left: 360px;">
+											<i class="bi bi-truck" style="color: #26AA99;"></i> <label
+												style="color: #26AA99;"> Trạng thái</label> <i class="bi bi-question-circle"></i> | <label for=""
+												style="color: #F35022;">{{ item.order.status.name }}</label>
 										</div>
 
 									</div>
 									<hr>
+
 									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
-									<div class="row">
-										<table class="table">
-											<tbody>
-												<thead>
-													<tr>
-														<th scope="col">#</th>
-														<th scope="col">Ngày đặt</th>
-														<th scope="col">Phí ship</th>
-														<th scope="col">Địa chỉ</th>
-														<th scope="col">Số điện thoại</th>
-														<th scope="col">Trạng thái </th>
-														<th scope="col">Thao tác </th>
-													</tr>
-												</thead>
-												<tr>
-													<th scope="row">{{order.account.username}}</th>
-													<td>{{order.createdate | date:'dd/MM/yyyy'}}</td>
-													<td>{{order.ship | number :0}}</td>
-													<td>{{order.address}}</td>
-													<td>{{order.phone}}</td>
-													<td>{{ order.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán' }}
-													</td>
-													<td><a ng-click="showOrderDetail(order.id)">Xem chi tiết đơn
-															hàng</a></td>
-												</tr>
-											</tbody>
-										</table>
+									<div style="padding-top: 10px;" class="row"
+										ng-repeat="orderdetail in item.orderdetail">
+										<div class="col-lg-2">
+											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+												width="150px">
+										</div>
+										<div class="col-lg-8" style="padding: 10px;">
+											<label for="" style="font-size: 20px;"> {{ orderdetail.product.name
+												}}</label><br>
+											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
+												}}
+											</label><br>
+											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+												}}</label>
+										</div>
+										<div class="col-lg-2">
+											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
+												{{ orderdetail.product.price | number:0}} VNĐ</label>
+										</div>
 									</div>
+
 									<hr>
 									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
@@ -145,23 +130,25 @@
 										</div>
 										<div class="col-lg-3">
 											<label for="" style="font-size: 20px;"> Thành tiền: <label
-													style="color: #F35022; font-weight: bold;">{{order.totalamount |
-													number :0}}đ</label></label>
+													style="color: #F35022; font-weight: bold;">{{item.order.totalamount
+													| number:0}} VNĐ</label></label>
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
-
-											<button ng-if="order.status.id === 3" class="btn btn-default btn-lg"
+											<button ng-if="item.order.status.id === 3"
+												ng-click="changeStatusHT(item.order.id, 5)"
+												class="btn btn-default btn-lg"
 												style="color: #757575; border: 1px solid #757575;">Đã nhận được
 												hàng</button>
-											<button ng-if="order.status.id === 1" ng-click="changeStatus(order.id, 4)"
-												class="btn btn-warning btn-lg"
+											<button ng-if="item.order.status.id === 1"
+												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
 												style="color: white; border: 1px solid #757575;">Hủy</button>
 										</div>
 									</div>
+
 								</div>
 							</div>
 						</div>
@@ -176,52 +163,46 @@
 								<!-- Hình ảnh hoặc thông báo khi orderuser rỗng -->
 								<img src="../images/khongcodonhang.jpg" alt="Empty Order" />
 							</div>
-							<div class="row" ng-repeat="order in orderuser1">
+							<div class="row" ng-repeat="item in orderuser1">
 								<div class="col-lg-12 form-group"
 									style="background-color: #eaeaea53;padding: 20px;width: 1210px;border-radius: 10px;">
 									<div class="row">
 
 										<div class="col-lg-6">
-											Mã đơn: {{order.id}}
+											Mã đơn: {{ item.order.id }}
 										</div>
-										<div class="col-lg-6" style="padding-left: 290px;">
-											<i style="color: #26AA99;" class="bi bi-info-circle"></i>
-											<label style="color: #26AA99;"> Trạng thái đơn: </label>
-											<label style="color: #F35022;">{{order.status.name}}</label>
+										<div class="col-lg-6" style="padding-left: 360px;">
+											<i class="bi bi-truck" style="color: #26AA99;"></i> <label
+												style="color: #26AA99;"> Trạng thái</label> <i
+												class="bi bi-question-circle"></i> | <label for=""
+												style="color: #F35022;">{{ item.order.status.name }}</label>
 										</div>
 
 									</div>
 									<hr>
+
 									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
-									<div class="row">
-										<table class="table">
-											<tbody>
-												<thead>
-													<tr>
-														<th scope="col">#</th>
-														<th scope="col">Ngày đặt</th>
-														<th scope="col">Phí ship</th>
-														<th scope="col">Địa chỉ</th>
-														<th scope="col">Số điện thoại</th>
-														<th scope="col">Trạng thái </th>
-														<th scope="col">Thao tác </th>
-													</tr>
-												</thead>
-												<tr>
-													<th scope="row">{{order.account.username}}</th>
-													<td>{{order.createdate | date:'dd/MM/yyyy'}}</td>
-													<td>{{order.ship | number :0}}</td>
-													<td>{{order.address}}</td>
-													<td>{{order.phone}}</td>
-													<td>{{ order.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán'
-														}}
-													</td>
-													<td><a ng-click="showOrderDetail(order.id)">Xem chi tiết đơn
-															hàng</a></td>
-												</tr>
-											</tbody>
-										</table>
+									<div style="padding-top: 10px;" class="row"
+										ng-repeat="orderdetail in item.orderdetail">
+										<div class="col-lg-2">
+											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+												width="150px">
+										</div>
+										<div class="col-lg-8" style="padding: 10px;">
+											<label for="" style="font-size: 20px;"> {{ orderdetail.product.name
+												}}</label><br>
+											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
+												}}
+											</label><br>
+											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+												}}</label>
+										</div>
+										<div class="col-lg-2">
+											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
+												{{ orderdetail.product.price | number:0}} VNĐ</label>
+										</div>
 									</div>
+
 									<hr>
 									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
@@ -234,20 +215,21 @@
 										</div>
 										<div class="col-lg-3">
 											<label for="" style="font-size: 20px;"> Thành tiền: <label
-													style="color: #F35022; font-weight: bold;">{{order.totalamount |
-													number :0}}đ</label></label>
+													style="color: #F35022; font-weight: bold;">{{item.order.totalamount
+													| number:0}} VNĐ</label></label>
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
-
-											<button ng-if="order.status.id === 3" class="btn btn-default btn-lg"
+											<button ng-if="item.order.status.id === 3"
+												ng-click="changeStatusHT(item.order.id, 5)"
+												class="btn btn-default btn-lg"
 												style="color: #757575; border: 1px solid #757575;">Đã nhận được
 												hàng</button>
-											<button ng-if="order.status.id === 1" ng-click="changeStatus(order.id, 4)"
-												class="btn btn-warning btn-lg"
+											<button ng-if="item.order.status.id === 1"
+												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
 												style="color: white; border: 1px solid #757575;">Hủy</button>
 										</div>
 									</div>
@@ -265,53 +247,48 @@
 								<!-- Hình ảnh hoặc thông báo khi orderuser rỗng -->
 								<img src="../images/khongcodonhang.jpg" alt="Empty Order" />
 							</div>
-							<div class="row" ng-repeat="order in orderuser2 ">
+							<div class="row" ng-repeat="item in orderuser2 ">
 								<div class="col-lg-12 form-group"
 									style="background-color: #eaeaea53;padding: 20px;width: 1210px;border-radius: 10px;">
 									<div class="row">
 
 										<div class="col-lg-6">
-											Mã đơn: {{order.id}}
+											Mã đơn: {{ item.order.id }}
 										</div>
-										<div class="col-lg-6" style="padding-left: 290px;">
-											<i style="color: #26AA99;" class="bi bi-info-circle"></i>
-											<label style="color: #26AA99;"> Trạng thái đơn: </label>
-											<label style="color: #F35022;">{{order.status.name}}</label>
+										<div class="col-lg-6" style="padding-left: 360px;">
+											<i class="bi bi-truck" style="color: #26AA99;"></i> <label
+												style="color: #26AA99;"> Trạng thái</label> <i
+												class="bi bi-question-circle"></i> | <label for=""
+												style="color: #F35022;">{{ item.order.status.name }}</label>
 										</div>
 
 									</div>
 									<hr>
-									<div class="row">
-										<table class="table">
-											<tbody>
-												<thead>
-													<tr>
-														<th scope="col">#</th>
-														<th scope="col">Ngày đặt</th>
-														<th scope="col">Phí ship</th>
-														<th scope="col">Địa chỉ</th>
-														<th scope="col">Số điện thoại</th>
-														<th scope="col">Trạng thái </th>
-														<th scope="col">Thao tác </th>
-													</tr>
-												</thead>
-												<tr>
-													<th scope="row">{{order.account.username}}</th>
-													<td>{{order.createdate | date:'dd/MM/yyyy'}}</td>
-													<td>{{order.ship | number :0}}</td>
-													<td>{{order.address}}</td>
-													<td>{{order.phone}}</td>
-													<td>{{ order.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán'
-														}}
-													</td>
-													<td><a ng-click="showOrderDetail(order.id)">Xem chi tiết đơn
-															hàng</a></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<hr>
 
+									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
+									<div style="padding-top: 10px;" class="row"
+										ng-repeat="orderdetail in item.orderdetail">
+										<div class="col-lg-2">
+											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+												width="150px">
+										</div>
+										<div class="col-lg-8" style="padding: 10px;">
+											<label for="" style="font-size: 20px;"> {{ orderdetail.product.name
+												}}</label><br>
+											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
+												}}
+											</label><br>
+											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+												}}</label>
+										</div>
+										<div class="col-lg-2">
+											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
+												{{ orderdetail.product.price | number:0}} VNĐ</label>
+										</div>
+									</div>
+
+									<hr>
+									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
 										<div class="col-lg-9">
 											<label for="" style="color: #757575;font-size: 13px;">Vui lòng chỉ nhấn
@@ -322,20 +299,21 @@
 										</div>
 										<div class="col-lg-3">
 											<label for="" style="font-size: 20px;"> Thành tiền: <label
-													style="color: #F35022; font-weight: bold;">{{order.totalamount |
-													number :0}}đ</label></label>
+													style="color: #F35022; font-weight: bold;">{{item.order.totalamount
+													| number:0}} VNĐ</label></label>
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
-
-											<button ng-if="order.status.id === 3" class="btn btn-default btn-lg"
+											<button ng-if="item.order.status.id === 3"
+												ng-click="changeStatusHT(item.order.id, 5)"
+												class="btn btn-default btn-lg"
 												style="color: #757575; border: 1px solid #757575;">Đã nhận được
 												hàng</button>
-											<button ng-if="order.status.id === 1" ng-click="changeStatus(order.id, 4)"
-												class="btn btn-warning btn-lg"
+											<button ng-if="item.order.status.id === 1"
+												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
 												style="color: white; border: 1px solid #757575;">Hủy</button>
 										</div>
 									</div>
@@ -351,53 +329,48 @@
 								<!-- Hình ảnh hoặc thông báo khi orderuser rỗng -->
 								<img src="../images/khongcodonhang.jpg" alt="Empty Order" />
 							</div>
-							<div class="row" ng-repeat="order in orderuser3 ">
+							<div class="row" ng-repeat="item in orderuser3 ">
 								<div class="col-lg-12 form-group"
 									style="background-color: #eaeaea53;padding: 20px;width: 1210px;border-radius: 10px;">
 									<div class="row">
 
 										<div class="col-lg-6">
-											Mã đơn: {{order.id}}
+											Mã đơn: {{ item.order.id }}
 										</div>
-										<div class="col-lg-6" style="padding-left: 290px;">
-											<i style="color: #26AA99;" class="bi bi-info-circle"></i>
-											<label style="color: #26AA99;"> Trạng thái đơn: </label>
-											<label style="color: #F35022;">{{order.status.name}}</label>
+										<div class="col-lg-6" style="padding-left: 360px;">
+											<i class="bi bi-truck" style="color: #26AA99;"></i> <label
+												style="color: #26AA99;"> Trạng thái</label> <i
+												class="bi bi-question-circle"></i> | <label for=""
+												style="color: #F35022;">{{ item.order.status.name }}</label>
 										</div>
 
 									</div>
 									<hr>
-									<div class="row">
-										<table class="table">
-											<tbody>
-												<thead>
-													<tr>
-														<th scope="col">#</th>
-														<th scope="col">Ngày đặt</th>
-														<th scope="col">Phí ship</th>
-														<th scope="col">Địa chỉ</th>
-														<th scope="col">Số điện thoại</th>
-														<th scope="col">Trạng thái </th>
-														<th scope="col">Thao tác </th>
-													</tr>
-												</thead>
-												<tr>
-													<th scope="row">{{order.account.username}}</th>
-													<td>{{order.createdate | date:'dd/MM/yyyy'}}</td>
-													<td>{{order.ship | number :0}}</td>
-													<td>{{order.address}}</td>
-													<td>{{order.phone}}</td>
-													<td>{{ order.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán'
-														}}
-													</td>
-													<td><a ng-click="showOrderDetail(order.id)">Xem chi tiết đơn
-															hàng</a></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<hr>
 
+									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
+									<div style="padding-top: 10px;" class="row"
+										ng-repeat="orderdetail in item.orderdetail">
+										<div class="col-lg-2">
+											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+												width="150px">
+										</div>
+										<div class="col-lg-8" style="padding: 10px;">
+											<label for="" style="font-size: 20px;"> {{ orderdetail.product.name
+												}}</label><br>
+											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
+												}}
+											</label><br>
+											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+												}}</label>
+										</div>
+										<div class="col-lg-2">
+											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
+												{{ orderdetail.product.price | number:0}} VNĐ</label>
+										</div>
+									</div>
+
+									<hr>
+									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
 										<div class="col-lg-9">
 											<label for="" style="color: #757575;font-size: 13px;">Vui lòng chỉ nhấn
@@ -408,20 +381,21 @@
 										</div>
 										<div class="col-lg-3">
 											<label for="" style="font-size: 20px;"> Thành tiền: <label
-													style="color: #F35022; font-weight: bold;">{{order.totalamount |
-													number :0}}đ</label></label>
+													style="color: #F35022; font-weight: bold;">{{item.order.totalamount
+													| number:0}} VNĐ</label></label>
 										</div>
 									</div>
 
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
-
-											<button ng-if="order.status.id === 3" class="btn btn-default btn-lg"
+											<button ng-if="item.order.status.id === 3"
+												ng-click="changeStatusHT(item.order.id, 5)"
+												class="btn btn-default btn-lg"
 												style="color: #757575; border: 1px solid #757575;">Đã nhận được
 												hàng</button>
-											<button ng-if="order.status.id === 1" ng-click="changeStatus(order.id, 4)"
-												class="btn btn-warning btn-lg"
+											<button ng-if="item.order.status.id === 1"
+												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
 												style="color: white; border: 1px solid #757575;">Hủy</button>
 										</div>
 									</div>
@@ -436,74 +410,129 @@
 								<!-- Hình ảnh hoặc thông báo khi orderuser rỗng -->
 								<img src="../images/khongcodonhang.jpg" alt="Empty Order" />
 							</div>
-							<div class="row" ng-repeat="order in orderuser4">
+							<div class="row" ng-repeat="item in orderuser4">
 								<div class="col-lg-12 form-group"
 									style="background-color: #eaeaea53;padding: 20px;width: 1210px;border-radius: 10px;">
 									<div class="row">
 
 										<div class="col-lg-6">
-											Mã đơn: {{order.id}}
+											Mã đơn: {{ item.order.id }}
 										</div>
-										<div class="col-lg-6" style="padding-left: 290px;">
-											<i style="color: #26AA99;" class="bi bi-info-circle"></i>
-											<label style="color: #26AA99;"> Trạng thái đơn: </label>
-											<label style="color: #F35022;">{{order.status.name}}</label>
+										<div class="col-lg-6" style="padding-left: 360px;">
+											<i class="bi bi-truck" style="color: #26AA99;"></i> <label
+												style="color: #26AA99;"> Trạng thái</label> <i
+												class="bi bi-question-circle"></i> | <label for=""
+												style="color: #F35022;">{{ item.order.status.name }}</label>
 										</div>
 
 									</div>
 									<hr>
-									<div class="row">
-										<table class="table">
-											<tbody>
-												<thead>
-													<tr>
-														<th scope="col">#</th>
-														<th scope="col">Ngày đặt</th>
-														<th scope="col">Phí ship</th>
-														<th scope="col">Địa chỉ</th>
-														<th scope="col">Số điện thoại</th>
-														<th scope="col">Trạng thái </th>
-														<th scope="col">Thao tác </th>
-													</tr>
-												</thead>
-												<tr>
-													<th scope="row">{{order.account.username}}</th>
-													<td>{{order.createdate | date:'dd/MM/yyyy'}}</td>
-													<td>{{order.ship | number :0}}</td>
-													<td>{{order.address}}</td>
-													<td>{{order.phone}}</td>
-													<td>{{ order.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán'
-														}}
-													</td>
-													<td><a ng-click="showOrderDetailDanhgia(order.id)">Xem chi tiết đơn
-															hàng</a></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<hr>
 
+									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
+									<div style="padding-top: 10px;" class="row"
+										ng-repeat="orderdetail in item.orderdetail">
+										<div class="col-lg-2">
+											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+												width="150px">
+										</div>
+										<div class="col-lg-6" style="padding: 10px;">
+											<label for="" style="font-size: 20px;"> {{ orderdetail.product.name
+												}}</label><br>
+											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
+												}}
+											</label><br>
+											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+												}}</label>
+										</div>
+										<div class="col-lg-2">
+											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
+												{{ orderdetail.product.price | number:0}} VNĐ</label>
+										</div>
+										<div class="col-lg-2" style="padding-top: 50px;">
+									
+												<label for="modal-toggler" id="modal-toggler-label">Đánh giá</label>
+
+												<input type="checkbox" id="modal-toggler">
+												<div id="overlay"></div>
+												<div id="modal-container">
+
+													<h2 style="font-family: Arial, Helvetica, sans-serif;">
+														Đánh
+														giá sản phẩm</h2>
+													<label type="button" class="close" 
+														aria-label="Close" for="modal-toggler" id="closeBtn"><span class="ti-close"
+															aria-hidden="true" ></span></label>
+													<p>
+													<div class="container d-flex justify-content-center">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="stars">
+																	<form action="">
+																		<input class="star star-5" id="star-5"
+																			type="radio" name="star" value="5"
+																			ng-model="formData.rating" />
+																		<label class="star star-5" for="star-5"></label>
+																		<input class="star star-4" id="star-4"
+																			type="radio" name="star" value="5"
+																			ng-model="formData.rating" />
+																		<label class="star star-4" for="star-4"></label>
+																		<input class="star star-3" id="star-3"
+																			type="radio" name="star" value="4"
+																			ng-model="formData.rating" />
+																		<label class="star star-3" for="star-3"></label>
+																		<input class="star star-2" id="star-2"
+																			type="radio" name="star" value="2"
+																			ng-model="formData.rating" />
+																		<label class="star star-2" for="star-2"></label>
+																		<input class="star star-1" id="star-1"
+																			type="radio" name="star" value="1"
+																			ng-model="formData.rating" />
+																		<label class="star star-1" for="star-1"></label>
+																		<textarea name="comment"
+																			ng-model="formData.comment" id="comment"
+																			cols="10" rows="3"
+																			placeholder="Chi tiết"></textarea>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+													</p>
+													<label class="btn" for="modal-toggler" id="closeBtn"
+														ng-click="evaluate(orderdetail.product.id)">Đánh
+														giá</label>
+												</div>										
+										</div>
+									</div>
+
+									<hr>
+									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
 										<div class="col-lg-9">
-											<label for="" style="color: #757575;font-size: 13px;">
-												</label>
+											<label for="" style="color: #757575;font-size: 13px;">Vui lòng chỉ nhấn
+												"Đã
+												nhận được hàng" khi đơn hàng đã được giao đến <br> bạn và sản phẩm
+												nhận
+												được không có vấn đề nào.</label>
 										</div>
 										<div class="col-lg-3">
 											<label for="" style="font-size: 20px;"> Thành tiền: <label
-													style="color: #F35022; font-weight: bold;">{{order.totalamount |
-													number :0}}đ</label></label>
+													style="color: #F35022; font-weight: bold;">{{item.order.totalamount
+													| number:0}} VNĐ</label></label>
 										</div>
+										
 									</div>
 
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
-
-											<button ng-if="order.status.id === 3" class="btn btn-default btn-lg"
+											<button ng-if="item.order.status.id === 3"
+												ng-click="changeStatusHT(item.order.id, 5)"
+												class="btn btn-default btn-lg"
 												style="color: #757575; border: 1px solid #757575;">Đã nhận được
 												hàng</button>
-											<button ng-if="order.status.id === 1" ng-click="changeStatus(order.id, 4)"
-												class="btn btn-warning btn-lg"
+											<button ng-if="item.order.status.id === 1"
+												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
 												style="color: white; border: 1px solid #757575;">Hủy</button>
 										</div>
 									</div>
@@ -520,66 +549,133 @@
 								<!-- Hình ảnh hoặc thông báo khi orderuser rỗng -->
 								<img src="../images/khongcodonhang.jpg" alt="Empty Order" />
 							</div>
-							<div class="row" ng-repeat="order in orderuser5">
+							<div class="row" ng-repeat="item in orderuser5">
 								<div class="col-lg-12 form-group"
 									style="background-color: #eaeaea53;padding: 20px;width: 1210px;border-radius: 10px;">
 									<div class="row">
 
 										<div class="col-lg-6">
-											Mã đơn: {{order.id}}
+											Mã đơn: {{ item.order.id }}
 										</div>
-										<div class="col-lg-6" style="padding-left: 290px;">
-											<i style="color: #26AA99;" class="bi bi-info-circle"></i>
-											<label style="color: #26AA99;"> Trạng thái đơn: </label>
-											<label style="color: #F35022;">{{order.status.name}}</label>
+										<div class="col-lg-6" style="padding-left: 360px;">
+											<i class="bi bi-truck" style="color: #26AA99;"></i> <label
+												style="color: #26AA99;"> Trạng thái</label> <i
+												class="bi bi-question-circle"></i> | <label for=""
+												style="color: #F35022;">{{ item.order.status.name }}</label>
 										</div>
 
 									</div>
 									<hr>
 
-									<div class="row">
-										<table class="table">
-											<tbody>
-												<thead>
-													<tr>
-														<th scope="col">#</th>
-														<th scope="col">Ngày đặt</th>
-														<th scope="col">Phí ship</th>
-														<th scope="col">Địa chỉ</th>
-														<th scope="col">Số điện thoại</th>
-														<th scope="col">Trạng thái </th>
-														<th scope="col">Thao tác </th>														
-													</tr>
-												</thead>
-												<tr>
-													<th scope="row">{{order.account.username}}</th>
-													<td>{{order.createdate | date:'dd/MM/yyyy'}}</td>
-													<td>{{order.ship | number :0}}</td>
-													<td>{{order.address}}</td>
-													<td>{{order.phone}}</td>
-													<td>{{ order.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán'
-														}}
-													<td><a ng-click="showOrderDetailDanhgia(order.id)">Xem chi tiết đơn
-															hàng</a></td>											
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<hr>
+									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
+									<div style="padding-top: 10px;" class="row"
+										ng-repeat="orderdetail in item.orderdetail">
+										<div class="col-lg-2">
+											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+												width="150px">
+										</div>
+										<div class="col-lg-6" style="padding: 10px;">
+											<label for="" style="font-size: 20px;"> {{ orderdetail.product.name
+												}}</label><br>
+											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
+												}}
+											</label><br>
+											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+												}}</label>
+										</div>
+										<div class="col-lg-2">
+											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
+												{{ orderdetail.product.price | number:0}} VNĐ</label>
+										</div>
+										<div class="col-lg-2" style="padding-top: 50px;">
+									
+												<label for="modal-toggler" id="modal-toggler-label">Đánh giá</label>
 
+												<input type="checkbox" id="modal-toggler">
+												<div id="overlay"></div>
+												<div id="modal-container">
+
+													<h2 style="font-family: Arial, Helvetica, sans-serif;">
+														Đánh
+														giá sản phẩm</h2>
+													<label type="button" class="close" 
+														aria-label="Close" for="modal-toggler" id="closeBtn"><span class="ti-close"
+															aria-hidden="true" ></span></label>
+													<p>
+													<div class="container d-flex justify-content-center">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="stars">
+																	<form action="">
+																		<input class="star star-5" id="star-5"
+																			type="radio" name="star" value="5"
+																			ng-model="formData.rating" />
+																		<label class="star star-5" for="star-5"></label>
+																		<input class="star star-4" id="star-4"
+																			type="radio" name="star" value="5"
+																			ng-model="formData.rating" />
+																		<label class="star star-4" for="star-4"></label>
+																		<input class="star star-3" id="star-3"
+																			type="radio" name="star" value="4"
+																			ng-model="formData.rating" />
+																		<label class="star star-3" for="star-3"></label>
+																		<input class="star star-2" id="star-2"
+																			type="radio" name="star" value="2"
+																			ng-model="formData.rating" />
+																		<label class="star star-2" for="star-2"></label>
+																		<input class="star star-1" id="star-1"
+																			type="radio" name="star" value="1"
+																			ng-model="formData.rating" />
+																		<label class="star star-1" for="star-1"></label>
+																		<textarea name="comment"
+																			ng-model="formData.comment" id="comment"
+																			cols="10" rows="3"
+																			placeholder="Chi tiết"></textarea>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+													</p>
+													<label class="btn" for="modal-toggler" id="closeBtn"
+														ng-click="evaluate(orderdetail.product.id)">Đánh
+														giá</label>
+												</div>										
+										</div>
+
+
+
+									</div>
+
+									<hr>
+									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
 										<div class="col-lg-9">
-
+											<label for="" style="color: #757575;font-size: 13px;">Vui lòng chỉ nhấn
+												"Đã
+												nhận được hàng" khi đơn hàng đã được giao đến <br> bạn và sản phẩm
+												nhận
+												được không có vấn đề nào.</label>
 										</div>
 										<div class="col-lg-3">
 											<label for="" style="font-size: 20px;"> Thành tiền: <label
-													style="color: #F35022; font-weight: bold;">{{order.totalamount |
-													number :0}}đ</label></label>
+													style="color: #F35022; font-weight: bold;">{{item.order.totalamount
+													| number:0}} VNĐ</label></label>
 										</div>
 									</div>
+
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
+											<button ng-if="item.order.status.id === 3"
+												ng-click="changeStatusHT(item.order.id, 5)"
+												class="btn btn-default btn-lg"
+												style="color: #757575; border: 1px solid #757575;">Đã nhận được
+												hàng</button>
+											<button ng-if="item.order.status.id === 1"
+												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
+												style="color: white; border: 1px solid #757575;">Hủy</button>
+
 										</div>
 									</div>
 								</div>
@@ -588,138 +684,106 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog"
-				aria-labelledby="orderDetailModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="orderDetailModalLabel">
-								Trang chi tiết</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<table class="data-tables table table-striped table-bordered" style="width: 100%">
-								<thead>
-									<tr>
-										<th style="width: 20%">Hình ảnh</th>
-										<th style="width: 40%">Tên sản phẩm</th>
-										<th style="width: 20%">Giá</th>
-										<th style="width: 20%">Số lượng</th>
-										<th style="width: 20%">Khối lượng</th>
-										<th style="width: 20%">Tổng</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="orderDetail in selectedOrderDetails">
-										<td><img src="/images/product/{{orderDetail.product.image}}" alt=""
-												style="width: 100px"></td>
-										<td>{{ orderDetail.product.name }}</td>
-										<td>{{ orderDetail.price |number :0}}</td>
-										<td>{{ orderDetail.quantity }}</td>
-										<td>{{ orderDetail.weight}}</td>
-										<td>{{ orderDetail.quantity*orderDetail.price |number :0 }}</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" ng-click="closeModal()">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<!--			<div class="modal fade" id="orderDetailModaldanhgia" tabindex="-1" role="dialog"-->
+			<!--				aria-labelledby="orderDetailModalLabel" aria-hidden="true">-->
+			<!--				<div class="modal-dialog modal-lg" role="document">-->
+			<!--					<div class="modal-content">-->
+			<!--						<div class="modal-header">-->
+			<!--							<h5 class="modal-title" id="orderDetailModalLabel">-->
+			<!--								Trang chi tiết</h5>-->
+			<!--							<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+			<!--								<span aria-hidden="true">&times;</span>-->
+			<!--							</button>-->
+			<!--						</div>-->
+			<!--						<div class="modal-body">-->
+			<!--							<table class="data-tables table table-striped table-bordered" style="width: 100%">-->
+			<!--								<thead>-->
+			<!--									<tr>-->
+			<!--										<th style="width: 20%">Hình ảnh</th>-->
+			<!--										<th style="width: 40%">Tên sản phẩm</th>-->
+			<!--										<th style="width: 20%">Giá</th>-->
+			<!--										<th style="width: 20%">Số lượng</th>-->
+			<!--										<th style="width: 20%">Khối lượng</th>-->
+			<!--										<th style="width: 20%">Tổng</th>-->
+			<!--									</tr>-->
+			<!--								</thead>-->
+			<!--								<tbody>-->
+			<!--									<tr ng-repeat="orderDetail in selectedOrderDetails">-->
+			<!--										<td><img src="/images/product/{{orderDetail.product.image}}" alt=""-->
+			<!--												style="width: 100px"></td>-->
+			<!--										<td>{{ orderDetail.product.name }}</td>-->
+			<!--										<td>{{ orderDetail.price |number :0}}</td>-->
+			<!--										<td>{{ orderDetail.quantity }}</td>-->
+			<!--										<td>{{ orderDetail.weight}}</td>-->
+			<!--										<td>{{ orderDetail.quantity*orderDetail.price |number :0 }}</td>-->
+			<!--										<td-->
+			<!--											ng-if="orderDetail.order.status.id === 4 || orderDetail.order.status.id == 5">-->
+			<!--											<label for="modal-toggler" id="modal-toggler-label">Đánh giá</label>-->
+
+			<!--											<input type="checkbox" id="modal-toggler">-->
+			<!--											<div id="overlay"></div>-->
+			<!--											<div id="modal-container">-->
+
+			<!--												<h2 style="font-family: Arial, Helvetica, sans-serif;">-->
+			<!--													Đánh-->
+			<!--													giá sản phẩm</h2>-->
+			<!--												<button type="button" class="close" data-dismiss="modal"-->
+			<!--													aria-label="Close"><span class="ti-close"-->
+			<!--														aria-hidden="true"></span></button>-->
+			<!--												<p>-->
+			<!--												<div class="container d-flex justify-content-center">-->
+			<!--													<div class="row">-->
+			<!--														<div class="col-md-12">-->
+			<!--															<div class="stars">-->
+			<!--																<form action="">-->
+			<!--																	<input class="star star-5" id="star-5" type="radio"-->
+			<!--																		name="star" value="5"-->
+			<!--																		ng-model="formData.rating" />-->
+			<!--																	<label class="star star-5" for="star-5"></label>-->
+			<!--																	<input class="star star-4" id="star-4" type="radio"-->
+			<!--																		name="star" value="5"-->
+			<!--																		ng-model="formData.rating" />-->
+			<!--																	<label class="star star-4" for="star-4"></label>-->
+			<!--																	<input class="star star-3" id="star-3" type="radio"-->
+			<!--																		name="star" value="4"-->
+			<!--																		ng-model="formData.rating" />-->
+			<!--																	<label class="star star-3" for="star-3"></label>-->
+			<!--																	<input class="star star-2" id="star-2" type="radio"-->
+			<!--																		name="star" value="2"-->
+			<!--																		ng-model="formData.rating" />-->
+			<!--																	<label class="star star-2" for="star-2"></label>-->
+			<!--																	<input class="star star-1" id="star-1" type="radio"-->
+			<!--																		name="star" value="1"-->
+			<!--																		ng-model="formData.rating" />-->
+			<!--																	<label class="star star-1" for="star-1"></label>-->
+			<!--																	<textarea name="comment" ng-model="formData.comment"-->
+			<!--																		id="comment" cols="10" rows="3"-->
+			<!--																		placeholder="Chi tiết"></textarea>-->
+			<!--																</form>-->
+			<!--															</div>-->
+			<!--														</div>-->
+			<!--													</div>-->
+			<!--												</div>-->
+			<!--												</p>-->
+			<!--												<label class="btn" for="modal-toggler" id="closeBtn"-->
+			<!--													ng-click="evaluate(item.orderDetail.product.id)">Đánh-->
+			<!--													giá</label>-->
+			<!--											</div>-->
+
+			<!--										</td>-->
+
+			<!--									</tr>-->
+			<!--								</tbody>-->
+			<!--							</table>-->
+			<!--						</div>-->
+			<!--						<div class="modal-footer">-->
+			<!--							<button class="btn btn-secondary" ng-click="closeModal()">Close</button>-->
+			<!--						</div>-->
+			<!--					</div>-->
+			<!--				</div>-->
+			<!--			</div>-->
 
 
-
-
-			<div class="modal fade" id="orderDetailModaldanhgia" tabindex="-1" role="dialog"
-				aria-labelledby="orderDetailModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="orderDetailModalLabel">
-								Trang chi tiết</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<table class="data-tables table table-striped table-bordered" style="width: 100%">
-								<thead>
-									<tr>
-										<th style="width: 20%">Hình ảnh</th>
-										<th style="width: 40%">Tên sản phẩm</th>
-										<th style="width: 20%">Giá</th>
-										<th style="width: 20%">Số lượng</th>
-										<th style="width: 20%">Khối lượng</th>
-										<th style="width: 20%">Tổng</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr ng-repeat="orderDetail in selectedOrderDetails">
-										<td><img src="/images/product/{{orderDetail.product.image}}" alt=""
-												style="width: 100px"></td>
-										<td>{{ orderDetail.product.name }}</td>
-										<td>{{ orderDetail.price |number :0}}</td>
-										<td>{{ orderDetail.quantity }}</td>
-										<td>{{ orderDetail.weight}}</td>
-										<td>{{ orderDetail.quantity*orderDetail.price |number :0 }}</td>
-										<td><label  for="modal-toggler" id="modal-toggler-label">Đánh
-												giá</label>
-											<input type="checkbox" id="modal-toggler">
-											<div id="overlay"></div>
-											<div id="modal-container">
-
-												<h2 style="font-family: Arial, Helvetica, sans-serif;">
-													Đánh
-													giá sản phẩm</h2>
-												<p>
-												<div class="container d-flex justify-content-center">
-													<div class="row">
-														<div class="col-md-12">
-															<div class="stars">
-																<form action="">
-																	<input class="star star-5" id="star-5" type="radio"
-																		name="star" value="5" ng-model="formData.rating" />
-																	<label class="star star-5" for="star-5"></label>
-																	<input class="star star-4" id="star-4" type="radio"
-																		name="star" value="5" ng-model="formData.rating" />
-																	<label class="star star-4" for="star-4"></label>
-																	<input class="star star-3" id="star-3" type="radio"
-																		name="star" value="4" ng-model="formData.rating" />
-																	<label class="star star-3" for="star-3"></label>
-																	<input class="star star-2" id="star-2" type="radio"
-																		name="star" value="2" ng-model="formData.rating" />
-																	<label class="star star-2" for="star-2"></label>
-																	<input class="star star-1" id="star-1" type="radio"
-																		name="star" value="1" ng-model="formData.rating" />
-																	<label class="star star-1" for="star-1"></label>
-																	<textarea name="comment" ng-model="formData.comment" id="comment" cols="10" rows="3"
-																		placeholder="Chi tiết"></textarea>
-																</form>
-															</div>
-														</div>
-													</div>
-												</div>
-												</p>
-												<label class="btn " ng-click="evaluate(orderDetail.product.id)">Đánh
-													giá</label>
-											</div>
-
-										</td>
-
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-secondary" ng-click="closeModal()">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
 	</section>
 	<!-- ./Tabs -->
 

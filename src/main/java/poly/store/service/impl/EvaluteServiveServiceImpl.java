@@ -1,5 +1,7 @@
 package poly.store.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class EvaluteServiveServiceImpl implements EvaluteServive {
 	}
 
 	@Override
-	public Evaluate findByProduct(Product product) {
+	public List<Evaluate> findByProduct(Product product) {
 		return dao.findByProduct(product);
 	}
 

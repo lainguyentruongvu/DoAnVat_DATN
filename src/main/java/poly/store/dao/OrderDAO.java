@@ -2,6 +2,7 @@ package poly.store.dao;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import poly.store.entity.Account;
 import poly.store.entity.Order;
 import poly.store.entity.OrderStatistics;
+import poly.store.entity.OrderWithDetailsDTO;
+import poly.store.entity.Orderdetail;
 import poly.store.entity.Revenuestatistics;
 import poly.store.entity.Status;
 
@@ -63,4 +66,13 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 
 	@Query("SELECT  COUNT(o) FROM Order o WHERE username = :username AND o.status.id = :status")
 	Long countOrdersByStatus(String username,Integer status);
+	
+
+	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE username = :userId")
+	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserId( String userId);
+	
+	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE username = :userId AND o.status = :orderStatus ")
+	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserIdStatus( String userId ,Status orderStatus);
+
+	
 }
