@@ -40,4 +40,8 @@ public class Admincontroller {
 	public String category() {
 		return "admin/category/index";
 	}
+	@RequestMapping("/admin/weightvalue")
+	public String weightvalue() {
+		return "admin/weightvalue/index";
+	}
 }
