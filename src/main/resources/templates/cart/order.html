@@ -5,35 +5,26 @@
 	<title>Đơn hàng </title>
 </head>
 
-<body th:object="${order}" class="vertical light" ng-app="app" ng-controller="ctrl">
+<body th:object="${order}" class="vertical light" ng-app="app" ng-controller="ctrl"
+	style="font-family: Arial, Helvetica, sans-serif;">
 
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<!-- Small table -->
 	<div class="col-md-12 my-4">
-		<h2 class="h4 mb-1">ĐƠN HÀNG ĐÃ ĐẶT</h2>
-		<p class="mb-3">Thông tin các sản phẩm và địa chỉ đơn hàng của bạn</p>
+		<div class="col-12">
+			<h5 class="divider line razor">THÔNG TIN ĐƠN HÀNG ĐÃ ĐẶT</h5>
+		</div>
+
+		<label style="font-weight: bold;" for="">Mã đơn:</label>
+		<span th:text="*{id}" class="form-group"></span><br>
+		<label style="font-weight: bold;">Ngày đặt hàng:</label>
+		<span th:text="*{createdate}" class="form-group"></span>
+
+		<h5 class="divider line double-razor">CÁC SẢN PHẨM TRONG ĐƠN</h5>
 		<div class="card shadow">
 			<div class="card-body">
 				<div class="toolbar">
-					<form class="form">
-						<div class="form-row">
-							<div class="form-group col-auto mr-auto">
-								<b> Thông tin </b>
-							</div>
-							<div class="form-group col-auto">
-								<label for="">Mã hóa đơn:</label>
-								<input type="text" th:field="*{id}" class="form-group"> &nbsp;
-								<label for="">Họ và tên :</label>
-								<input type="text" th:field="*{account.name}" class="form-group"> &nbsp;
-								<label for="">Ngày đặt hàng:</label>
-								<input type="text" th:field="*{createdate}" class="form-group"> &nbsp;
-								<label for="">Địa chỉ giao hàng:</label>
-								<input type="text" th:field="*{address}" class=""> &nbsp;
-							</div>
 
-
-						</div>
-					</form>
 				</div>
 				<!-- table -->
 				<table class="table table-borderless table-hover">
@@ -83,6 +74,7 @@
 				</table>
 
 			</div>
+			<a href="/orderuser"><button  class="btn btn-primary" >Đến đơn hàng của bạn</button></a>
 		</div>
 	</div> <!-- customized table -->
 

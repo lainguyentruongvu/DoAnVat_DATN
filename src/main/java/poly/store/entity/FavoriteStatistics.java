@@ -1,0 +1,14 @@
+package poly.store.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class FavoriteStatistics {
+
+	private Product product;
+	private Long favoriteCount;
+}

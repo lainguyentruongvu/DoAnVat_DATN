@@ -25,15 +25,18 @@
               
             </li>
           </ul>
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>Quản lý tài khoản</span>
-          </p>
+<!--          <p class="text-muted nav-heading mt-4 mb-1">-->
+<!--            <span>Quản lý </span>-->
+<!--          </p>-->
+          
+          
         
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
               <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <span class="ml-3 item-text">Tài khoản</span>
+                <i class="fas fa-list"></i>
+                <span class="ml-3 item-text">Quản lý</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                 <li class="nav-item">
@@ -76,17 +79,23 @@
             <li class="nav-item dropdown">
               <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                 <i class="fe fe-grid fe-16"></i>
-                <span class="ml-3 item-text">Tables</span>
+                <span class="ml-3 item-text">Thông kê</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="tables">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./table_basic.html"><span class="ml-1 item-text">Basic Tables</span></a>
+                <li class="nav-item">	
+                  <a class="nav-link pl-3" th:href="@{/admin/static/evaluate}" ng-click="staticevaluate()"><span class="ml-1 item-text">Thông kê đánh giá</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./table_advanced.html"><span class="ml-1 item-text">Advanced Tables</span></a>
+                  <a class="nav-link pl-3"  th:href="@{/admin/static/favorite}"><span class="ml-1 item-text">Thông kê yêu thích </span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./table_datatables.html"><span class="ml-1 item-text">Data Tables</span></a>
+                  <a class="nav-link pl-3"  th:href="@{/admin/static/product}"><span class="ml-1 item-text">Thông kê sản phẩm</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3"  th:href="@{/admin/static/category}"><span class="ml-1 item-text">Thông kê theo loại</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3"  th:href="@{/admin/static/order}"><span class="ml-1 item-text">Thông kê đơn hàng</span></a>
                 </li>
               </ul>
             </li>

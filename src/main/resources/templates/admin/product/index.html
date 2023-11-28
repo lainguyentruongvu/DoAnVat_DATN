@@ -204,7 +204,7 @@
                         <th>Tên sản phẩm</th>
                         <th>Loại sản phẩm</th>
                         <th>Giá tiền</th>
-                        <th>Trọng lượng</th>
+                        <th>Trạng thái</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -226,7 +226,7 @@
                           <p class="mb-0 text-muted">{{item.price}}</p>
                         </td>
                         <td>
-                          <p class="mb-0 text-muted">{{w.weightvalue}}</p>
+                          <p class="mb-0 text-muted">{{item.activeted ? 'Hiển thị' : 'Không hiển thị'}}</p>
 
                         </td>
 

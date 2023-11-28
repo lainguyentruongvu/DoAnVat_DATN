@@ -133,7 +133,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	$scope.quantity = 1;
 
-	$scope.addcart = function(p) {	
+	$scope.addcart = function(p) {
 		if ($scope.username == "") {
 			location.href = "/auth/login/form";
 		} else {
@@ -199,7 +199,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		}
 	}
 	$scope.addcartdetail = function(p) {
-
 		if ($scope.username == "") {
 			location.href = "/auth/login/form";
 		} else {
@@ -207,13 +206,12 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				$http.get(`/rest/cart/checkproductweight/${p.id}/${p.price}`).then(resp => {
 					$scope.checkproweight = resp.data;
 					$scope.weightvalue = $scope.checkproweight.weight.weightvalue;
-
 					$http.get(`/rest/cart/checkweight/${p.id}/${$scope.cartid}/${$scope.weightvalue}`).then(resp => {
 						$scope.checkweight = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
-						console.log($scope.checkweight.length)
+
 						if ($scope.checkweight.length == 0) {
 							$scope.data = {
-								price: $("#price").text(),
+								price: $("#price").text().replace(/,/g, ''),
 								quantity: $scope.quantity,
 								weightvalue: $scope.weightvalue,
 								product: {
@@ -234,7 +232,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 							})
 						} else {
 							$scope.data = {
-								price: $("#price").text(),
+								price: $("#price").text().replace(/,/g, ''),
 								quantity: $scope.quantity,
 								weightvalue: $scope.weightvalue,
 								product: {
@@ -267,7 +265,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					$scope.checkweight = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
 					if ($scope.checkweight.length == 0) {
 						$scope.data = {
-							price: $("#price").text(),
+							price: $("#price").text().replace(/,/g, ''),
 							quantity: $scope.quantity,
 							weightvalue: $scope.weightvalue,
 							product: {
@@ -288,7 +286,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 						})
 					} else {
 						$scope.data = {
-							price: $("#price").text(),
+							price: $("#price").text().replace(/,/g, ''),
 							quantity: $scope.quantity,
 							weightvalue: $scope.weightvalue,
 							product: {
@@ -664,41 +662,48 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				var order = angular.copy(this);
 				$scope.weightquantt = [];
 				$http.post("/rest/order", order).then(resp => {
+
 					for (var i = 0; i < $scope.selectedItems.length; i++) {
 						$scope.deleteida($scope.selectedItems[i].id)
 					}
 
 					Swal.fire("Success", "Đặt hàng thành công!", "success");
-
-
 					var count = 0;
 					var totalItems = $scope.selectedItems.length;
 
 					function checkComplete() {
-						count++;
-						if (count === totalItems) {
-							localStorage.clear();
-							console.log(count)
-							$window.location.href = "/orderuser";
+
+						var check = $('input[name="payment"]:checked').val();
+						console.log(check);
+						if (check == 1) {
+							count++;
+							if (count === totalItems) {
+								localStorage.clear();
+								$window.location.href = "/order/detail/" + resp.data.id;
+							}
+						} else if (check == 0) {
+							count++;
+							if (count === totalItems) {
+								sessionStorage.setItem('idorder', resp.data.id);
+								var encodedTotalPrice = btoa($scope.tongtienthanhtoan);
+								console.log(encodedTotalPrice);
+								var url = '/vnpay/test/' + encodedTotalPrice;
+								window.location.href = url;
+								localStorage.clear();
+							}
 						}
+
 					}
 
 					for (var i = 0; i < $scope.selectedItems.length; i++) {
 						processProduct($scope.selectedItems[i], checkComplete);
 					}
-
-
-
 					localStorage.clear();
-
 					console.log(resp);
-
 				}).catch(error => {
 					Swal.fire("Error", "Đặt hàng thất bại!", "error");
 					console.log(error)
 				})
-
-
 
 				function processProduct(item, callback) {
 					$http.get(`/rest/order/weight/${item.weightvalue}`).then(resp => {
@@ -728,7 +733,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	$scope.cbthanhtoan = function() {
 		var check = $('input[name="payment"]:checked').val();
-
+		console.log(check);
 		if ($scope.address == null || $scope.ship == null) {
 			if ($scope.address == null) {
 				Swal.fire("Error", "Vui lòng chọn địa chỉ", "error");
@@ -737,15 +742,13 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			}
 
 		} else {
-			if (check >= 1) {
+			if (check == 1) {
 				$scope.statusorder = false;
 				$scope.thanhtoan();
-			} else {
+			} else if (check == 0) {
 				$scope.statusorder = true;
 				$scope.thanhtoan();
-				var encodedTotalPrice = btoa($scope.tongtienthanhtoan);
-				var url = '/vnpay/test/' + encodedTotalPrice;
-				window.location.href = url;
+
 			}
 		}
 	}
@@ -760,10 +763,11 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		// Chuyển đổi chuỗi thành kiểu số
 		var tongtienthanhtoan = parseFloat(tongtienthanhtoanText.replace('.', ''));
 
-
+	
 		var params = {
 			bankCode: $scope.bankCode,
-			amount: tongtienthanhtoan
+			amount: tongtienthanhtoan,
+			idorder : sessionStorage.getItem('idorder')
 		};
 		console.log('Request Params:', params)
 		$http.get(`/api/vnpay/createpayment`, { params: params })
@@ -1386,12 +1390,12 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		rating: '',
 		comment: ''
 	};
-	
-	
+
+
 	$scope.closeModal = function() {
-    
-     $('#modal-container').modal('hide');
-};
+
+		$('#modal-container').modal('hide');
+	};
 
 	$scope.evaluate = function(id) {
 		$scope.data = {
@@ -1434,20 +1438,18 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 
 
-	
+
 	}
 
 	$scope.evalute = function(id) {
 		$http.get(`/rest/evaluates/${id}`).then(resp => {
 			$scope.evalutes = resp.data;
-			console.log($scope.evalutes);
 		}).catch(error => {
 			console.log("Error", error);
 		});
 
 		$http.get(`/rest/evaluates/average/${id}`).then(resp => {
 			$scope.averages = resp.data;
-			console.log($scope.average.value);
 		}).catch(error => {
 			console.log("Error", error);
 		});

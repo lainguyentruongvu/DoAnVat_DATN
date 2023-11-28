@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class configVNPay {
 
 	public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-	public static String vnp_ReturnUrl = "http://localhost:8080/vnpay/return";
+	public static String vnp_ReturnUrl = "http://localhost:8080/order/detail/";
 	public static String vnp_TmnCode = "7NSPMC3D";
 	public static String secretKey = "NYPQUJGQOOHUZXNQNGPFYIGMQSUTKXWX";
 	public static String vnp_Version = "2.0";
@@ -36,7 +36,7 @@ public class configVNPay {
 			}
 			return sb.toString();
 		} catch (java.security.NoSuchAlgorithmException e) {
-			System.out.println("2");
+			
 			return "";
 		}
 	}
@@ -56,10 +56,10 @@ public class configVNPay {
 			for (byte b : result) {
 				sb.append(String.format("%02x", b & 0xff));
 			}
-			System.out.println("3");
+			
 			return sb.toString();
 		} catch (Exception ex) {
-			System.out.println("4");
+			
 			return "";
 		}
 	}
@@ -70,11 +70,11 @@ public class configVNPay {
 			ipAdress = request.getHeader("X-FORWARDED-FOR");
 			if (ipAdress == null) {
 				ipAdress = request.getRemoteAddr();
-				System.out.println("5");
+				
 			}
 		} catch (Exception e) {
 			ipAdress = "Invalid IP:" + e.getMessage();
-			System.out.println("6");
+			
 		}
 		return ipAdress;
 	}
@@ -86,7 +86,7 @@ public class configVNPay {
 		for (int i = 0; i < len; i++) {
 			sb.append(chars.charAt(rnd.nextInt(chars.length())));
 		}
-		System.out.println("7");
+		
 		return sb.toString();
 	}
 
@@ -107,7 +107,7 @@ public class configVNPay {
 				}
 			}
 		}
-		System.out.println("8");
+		
 		return hmacSHA512(secretKey, sb.toString());
 	}
 }

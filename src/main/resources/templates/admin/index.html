@@ -163,84 +163,11 @@
 								</div>
 							</div>
 
-							<div class="col-md-6 form-group">
-								<div class="card">
-									<div class="card-header">
-										<div class="card-title">Doughnut Chart</div>
-									</div>
-									<div class="card-body">
-										<div class="chart-container">
-											<canvas id="doughnutChart" style="width: 50%; height: 50%"></canvas>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 form-group">
-								<div class="card">
-									<div class="card-header">
-										<div class="card-title">Radar Chart</div>
-									</div>
-									<div class="card-body">
-										<div class="chart-container">
-											<canvas id="radarChart"></canvas>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 form-group">
-								<div class="card">
-									<div class="card-header">
-										<div class="card-title">Bubble Chart</div>
-									</div>
-									<div class="card-body">
-										<div class="chart-container">
-											<canvas id="bubbleChart"></canvas>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 form-group">
-								<div class="card">
-									<div class="card-header">
-										<div class="card-title">Multiple Line Chart</div>
-									</div>
-									<div class="card-body">
-										<div class="chart-container">
-											<canvas id="multipleLineChart"></canvas>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 form-group">
-								<div class="card">
-									<div class="card-header">
-										<div class="card-title">Multiple Bar Chart</div>
-									</div>
-									<div class="card-body">
-										<div class="chart-container">
-											<canvas id="multipleBarChart"></canvas>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-12 form-group">
-								<div class="card">
-									<div class="card-header">
-										<div class="card-title">Chart with HTML Legends</div>
-									</div>
-									<div class="card-body">
-										<div class="card-sub">
-											Sometimes you need a very complex legend. In these cases, it makes sense to
-											generate an HTML legend. Charts provide a generateLegend() method on their
-											prototype that returns an HTML string for the legend.
-										</div>
-										<div class="chart-container">
-											<canvas id="htmlLegendsChart"></canvas>
-										</div>
-										<div id="myChartLegend"></div>
-									</div>
-								</div>
-							</div>
+
+
+
+
+
 							<div class="col-md-12 form-group">
 								<div class="card">
 									<div class="card-header">
@@ -259,34 +186,22 @@
 													<th>Trạng thái thanh toán</th>
 													<th>Trạng thái đơn hàng</th>
 													<th>Giảm giá</th>
-													<th>Action</th>
+
 												</tr>
 											</thead>
 											<tbody>
 												<tr ng-repeat="item in ddhanghna">
-													<th >{{item.id}}</th>
+													<th>{{item.id}}</th>
 													<td>{{item.createdate}}</td>
 													<td>{{item.account.name}}</td>
 													<td>{{item.phone}}</td>
 													<td>{{item.address}}</td>
 													<td>{{item.totalamount | number :0}}</td>
-													<td> {{item.statusorder}}</td>
+													<td>
+														{{ item.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán' }}
+													</td>
 													<td>{{item.status.name}}</td>
 													<td> {{item.voucher.name}}</td>
-													<td>
-														<div class="dropdown">
-															<button class="btn btn-sm dropdown-toggle more-vertical"
-																type="button" data-toggle="dropdown"
-																aria-haspopup="true" aria-expanded="false">
-																<span class="text-muted sr-only">Action</span>
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="#">Edit</a>
-																<a class="dropdown-item" href="#">Remove</a>
-																<a class="dropdown-item" href="#">Assign</a>
-															</div>
-														</div>
-													</td>
 												</tr>
 											</tbody>
 										</table>
@@ -294,15 +209,6 @@
 								</div>
 							</div>
 						</div>
-
-
-
-
-
-
-
-
-
 					</div>
 				</div> <!-- .row -->
 			</div> <!-- .container-fluid -->

@@ -1,17 +1,21 @@
 package poly.store.dao;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+
 
 import poly.store.entity.Account;
 import poly.store.entity.Order;
 import poly.store.entity.OrderStatistics;
 import poly.store.entity.OrderWithDetailsDTO;
-import poly.store.entity.Orderdetail;
+
+import poly.store.entity.Report;
 import poly.store.entity.Revenuestatistics;
 import poly.store.entity.Status;
 
@@ -73,6 +77,10 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	
 	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE username = :userId AND o.status = :orderStatus ")
 	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserIdStatus( String userId ,Status orderStatus);
-
+	
+	@Query("SELECT NEW poly.store.entity.Report(b.createdate, a.name, COUNT(*), SUM(b.totalamount)) " + "FROM Order b "
+			+ "JOIN Account a ON b.account.username = a.username " + "WHERE b.createdate >= ?1 AND b.createdate <= ?2 "
+			+ "GROUP BY b.createdate, a.name " + "ORDER BY SUM(b.totalamount) DESC")
+	List<Report> getReportData(Date startDate, Date endDate);
 	
 }

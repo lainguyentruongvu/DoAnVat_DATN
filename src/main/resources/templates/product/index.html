@@ -1988,7 +1988,7 @@
 							<div class="product-gallery">
 								<div class="quickview-slider">
 									<div class="single-slider">
-										<img src="../../images/products/{{productdetail.image}}" alt="">
+										<img src="../../images/product/{{productdetail.image}}" alt="">
 									</div>
 								</div>
 							</div>
@@ -1996,13 +1996,14 @@
 						</div>
 						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 							<div class="quickview-content">
-								<strong style="font-size: 20px;">{{productdetail.name}} {{average1.totalRatings}}</strong>
+								<strong style="font-size: 20px;">{{productdetail.name}}
+									{{average1.totalRatings}}</strong>
 								<strong style="font-size: 20px;" ng-if="check==true"
 									id="weightvalue">{{weightvalue}}</strong>&emsp13;
 								<strong style="font-size: 20px;" ng-if="check==false"
 									id="weightvalue">{{weightvalue}}</strong>
-								<div class="quickview-ratting-review">									
-									<div ng-repeat="average in averages" class="quickview-ratting-wrap">										
+								<div class="quickview-ratting-review">
+									<div ng-repeat="average in averages" class="quickview-ratting-wrap">
 										<div ng-if="average.averageRating == 1" class="quickview-ratting">
 											<i class="yellow fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -2040,7 +2041,7 @@
 											<i class="yellow fa fa-star"></i>
 											<i class="yellow fa fa-star"></i>
 											<i class="yellow fa fa-star"></i>
-												<i class="yellow fa fa-star"></i>
+											<i class="yellow fa fa-star"></i>
 										</div>
 										<a href="#"> ({{average.totalRatings}})</a>
 									</div>
@@ -2053,8 +2054,8 @@
 									</div>
 								</div>
 
-								<h3 id="price" ng-if="check==true">{{productdetail.price }}</h3>
-								<h3 id="price" ng-if="check==false">{{quantityandprice.price  }}</h3>
+								<h3 id="price" ng-if="check==true">{{productdetail.price |number :0 }}</h3>
+								<h3 id="price" ng-if="check==false">{{quantityandprice.price |number :0 }}</h3>
 
 								<div class="quickview-peragraph">
 									<p>{{productdetail.discription}}</p>
@@ -2101,7 +2102,8 @@
 								</div>
 								<div class="add-to-cart">
 									<a ng-click="addcartdetail(productdetail)" class="btn">Add to cart</a>
-									<a ng-click="checkAddOrRemove(productdetail.id)" class="btn min"><i class="ti-heart"></i></a>
+									<a ng-click="checkAddOrRemove(productdetail.id)" class="btn min"><i
+											class="ti-heart"></i></a>
 									<a href="#" class="btn min"><i class="fa fa-compress"></i></a>
 								</div>
 								<div class="default-social">

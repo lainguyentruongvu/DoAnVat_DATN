@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import poly.store.configVNPay;
 import poly.store.entity.Payment;
 
-
-
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/vnpay")
@@ -33,14 +30,15 @@ public class VNPayRestController {
 	@Autowired
 	HttpServletRequest req;
 
-	
 	@GetMapping("createpayment")
-	public ResponseEntity<Payment> createPayment(@RequestParam String bankCode, @RequestParam long amount)
-			throws UnsupportedEncodingException {
+	public ResponseEntity<Payment> createPayment(@RequestParam String bankCode, @RequestParam long amount,
+			@RequestParam Integer idorder) throws UnsupportedEncodingException {
+
+		System.out.println(idorder);
 		String vnp_Version = "2.1.0";
 		String vnp_Command = "pay";
 		String orderType = "other";
-		//long amount = Integer.parseInt(req.getParameter("amount"))*100;
+		// long amount = Integer.parseInt(req.getParameter("amount"))*100;
 		System.out.println(amount);
 		String vnp_TxnRef = configVNPay.getRandomNumber(8);
 		String vnp_IpAddr = configVNPay.getIpAddress(req);
@@ -51,7 +49,7 @@ public class VNPayRestController {
 		vnp_Params.put("vnp_Version", vnp_Version);
 		vnp_Params.put("vnp_Command", vnp_Command);
 		vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-		vnp_Params.put("vnp_Amount", String.valueOf(amount*100));
+		vnp_Params.put("vnp_Amount", String.valueOf(amount * 100));
 		vnp_Params.put("vnp_CurrCode", "VND");
 
 		if (bankCode != null && !bankCode.isEmpty()) {
@@ -67,7 +65,7 @@ public class VNPayRestController {
 		} else {
 			vnp_Params.put("vnp_Locale", "vn");
 		}
-		vnp_Params.put("vnp_ReturnUrl", configVNPay.vnp_ReturnUrl);
+		vnp_Params.put("vnp_ReturnUrl", configVNPay.vnp_ReturnUrl + idorder);
 		vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
 		Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
