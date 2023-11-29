@@ -44,4 +44,8 @@ public class Admincontroller {
 	public String weightvalue() {
 		return "admin/weightvalue/index";
 	}
+	@RequestMapping("/admin/statusor")
+	public String status() {
+		return "admin/status/index";
+	}
 }
