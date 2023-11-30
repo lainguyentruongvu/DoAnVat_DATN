@@ -53,13 +53,13 @@ public class CategoryRestController {
 	}
 
 	@PutMapping("{categoryid}")
-	public Category update(@PathVariable("categoryid") Integer categoryid, @RequestBody Category Discount) {
+	public Category update(@PathVariable("statusid") Integer statusid, @RequestBody Category Discount) {
 		return categoryservice.update(Discount);
 	}
 
-	@DeleteMapping("{categoryid}")
-	public void delete(@PathVariable("categoryid") Integer categoryid) {
-		categoryservice.delete(categoryid);
+	@DeleteMapping("{statusid}")
+	public void delete(@PathVariable("statusid") Integer statusid) {
+		categoryservice.delete(statusid);
 	}
 	
 	

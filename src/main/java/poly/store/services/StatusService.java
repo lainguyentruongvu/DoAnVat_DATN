@@ -10,4 +10,8 @@ public interface StatusService {
 
 	List<Status> findAll();
 
+	Status findById(Integer statusid);
+	Status create(Status status);
+	Status update(Status status);
+	void delete(Integer statusid);
 }
