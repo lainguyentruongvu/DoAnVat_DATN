@@ -19,6 +19,9 @@ public interface OrderdetailDAO extends JpaRepository<Orderdetail, Integer> {
 
 	@Query("SELECT od FROM Orderdetail od JOIN FETCH od.product p WHERE od.order.id = :orderId")
 	List<Orderdetail> findByOrderIdWithProducts(Integer orderId);
+	
+	@Query("SELECT od FROM Orderdetail od JOIN FETCH od.product p WHERE od.order.id = :orderId AND od.product=:product")
+	List<Orderdetail> findByOrderIdWithProducts1(Integer orderId,Product product);
 
 //	@Query("SELECT od.product " + "FROM OrderDetail od " + "GROUP BY od.product " + "ORDER BY SUM(od.quantity) DESC")
 //	List<Product> findTopSellingProducts();
@@ -32,6 +35,8 @@ public interface OrderdetailDAO extends JpaRepository<Orderdetail, Integer> {
 
 	@Query("SELECT new CategoryStatistics(c.name, SUM(od.quantity)) FROM Orderdetail od JOIN od.product p JOIN p.category c GROUP BY c.name")
 	List<CategoryStatistics> sumSoldProductsByCategory();
+
+	List<Orderdetail> findByOrder(Order order);
 	
 	
 

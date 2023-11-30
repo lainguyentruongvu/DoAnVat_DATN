@@ -75,6 +75,9 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE username = :userId")
 	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserId( String userId);
 	
+	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE o.id = :orderid")
+	List<OrderWithDetailsDTO> getOrdersWithDetailsById( Integer orderid);
+	
 	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE username = :userId AND o.status = :orderStatus ")
 	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserIdStatus( String userId ,Status orderStatus);
 	

@@ -617,7 +617,83 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	}
 
 
+	$scope.thanhtoanvnpay = function() {
 
+		//Lấy dữ liệu từ localStore
+		$scope.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
+
+		//Gọi hàm kiểm tra mã giãm giá		
+		$scope.kiemtragiamgia();
+
+		$scope.bill = {
+			createdate: new Date(),
+			address: $scope.address,
+			totalamount: $scope.tongtienthanhtoan,
+			ship: $scope.ship,
+			account: {
+				username: $scope.username
+			},
+			phone: $("#phone").val(),
+			voucher: {
+				id: $scope.coupon
+			},
+			status: {
+				id: 1
+			},
+			statusorder: $scope.statusorder,
+			message: $("#message").text(),
+			get orderdetail() {
+				return $scope.selectedItems.map(item => {
+					return {
+						product: {
+							id: item.product.id
+						},
+						price: item.price,
+						quantity: item.quantity,
+						weight: item.weightvalue
+					}
+				});
+			},
+			purchase() {
+				var order = angular.copy(this);
+				$scope.weightquantt = [];
+				$http.post("/rest/order/createvnpay", order).then(resp => {
+//					for (var i = 0; i < $scope.selectedItems.length; i++) {
+//						$scope.deleteida($scope.selectedItems[i].id)
+//					}
+					//
+					//					for (var i = 0; i < $scope.selectedItems.length; i++) {
+					//						processProduct($scope.selectedItems[i]);
+					//					}
+					//					function processProduct(item) {
+					//						$http.get(`/rest/order/weight/${item.weightvalue}`).then(resp => {
+					//							$scope.weightquantt = resp.data;
+					//							$http.get(`/rest/order/productweight/${item.product.id}/${$scope.weightquantt.id}`).then(resp => {
+					//								console.log(resp.data.id);
+					//								$http.put(`/rest/order/putquantity/${resp.data.id}/${item.quantity}`).then(resp => {
+					//								}).catch(error => {
+					//									console.log(error)
+					//								});
+					//
+					//							}).catch(error => {
+					//								console.log(error)
+					//							});
+					//						}).catch(error => {
+					//							console.log(error);
+					//						});
+					//					}
+
+//					localStorage.clear();
+					console.log(resp);
+
+				}).catch(error => {
+					Swal.fire("Error", "Đặt hàng thất bại!", "error");
+					console.log(error)
+				})
+			}
+		}
+		$scope.bill.purchase();
+	}
 
 
 
@@ -673,25 +749,12 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 					function checkComplete() {
 
-						var check = $('input[name="payment"]:checked').val();
-						console.log(check);
-						if (check == 1) {
-							count++;
-							if (count === totalItems) {
-								localStorage.clear();
-								$window.location.href = "/order/detail/" + resp.data.id;
-							}
-						} else if (check == 0) {
-							count++;
-							if (count === totalItems) {
-								sessionStorage.setItem('idorder', resp.data.id);
-								var encodedTotalPrice = btoa($scope.tongtienthanhtoan);
-								console.log(encodedTotalPrice);
-								var url = '/vnpay/test/' + encodedTotalPrice;
-								window.location.href = url;
-								localStorage.clear();
-							}
+						count++;
+						if (count === totalItems) {
+							localStorage.clear();
+							$window.location.href = "/order/detail/" + resp.data.id;
 						}
+
 
 					}
 
@@ -747,7 +810,8 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				$scope.thanhtoan();
 			} else if (check == 0) {
 				$scope.statusorder = true;
-				$scope.thanhtoan();
+				$scope.generatePayment();
+				$scope.thanhtoanvnpay();
 
 			}
 		}
@@ -761,19 +825,19 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		var tongtienthanhtoanText = tongtienthanhtoanElement.innerHTML;
 
 		// Chuyển đổi chuỗi thành kiểu số
-		var tongtienthanhtoan = parseFloat(tongtienthanhtoanText.replace('.', ''));
+		var tongtienthanhtoan = parseFloat(tongtienthanhtoanText.replace(',', ''));
 
-	
+		console.log(tongtienthanhtoan);
 		var params = {
-			bankCode: $scope.bankCode,
+			bankCode: "NCB",
 			amount: tongtienthanhtoan,
-			idorder : sessionStorage.getItem('idorder')
 		};
 		console.log('Request Params:', params)
 		$http.get(`/api/vnpay/createpayment`, { params: params })
 			.then(function(response) {
 				console.log('Response:', response);
 				$scope.payment = response.data;
+				window.location.href = $scope.payment;
 			})
 			.catch(function(error) {
 				console.error('Error:', error);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import poly.store.dao.OrderDAO;
 import poly.store.dao.OrderdetailDAO;
+import poly.store.entity.Order;
 import poly.store.entity.Orderdetail;
 import poly.store.services.OrderdetailService;
 
@@ -22,6 +23,12 @@ public class OrderdetailServiceImpl implements OrderdetailService {
 	public List<Orderdetail> findByOrderId(Integer orderId) {
 		// TODO Auto-generated method stub
 		return orderdetaildao.findByOrderId(orderId);
+	}
+
+	@Override
+	public List<Orderdetail> findByOrder(Order order) {
+		
+		return orderdetaildao.findByOrder(order);
 	}
 
 }

@@ -74,14 +74,15 @@ public class AuthController {
 			cartDAO.save(cart);
 			session.set("cart", cart);
 		}
+		session.set("cart", checkcart);
 		return "redirect:/";
 	}
 
 	@RequestMapping("/auth/login/error")
 	public String logInError(Model model, @Validated @ModelAttribute("account") Account account, Errors errors) {
-		
-			model.addAttribute("message", "Sai thông đăng nhập");
-			
+
+		model.addAttribute("message", "Sai thông đăng nhập");
+
 		return "auth/dangNhap";
 	}
 
@@ -90,7 +91,7 @@ public class AuthController {
 		model.addAttribute("message", "Bạn không có quyền truy cập");
 		return "auth/dangNhap";
 	}
-	
+
 	@RequestMapping("/auth/logout/success")
 	public String logOutSuccess(Model model, @ModelAttribute("account") Account account) {
 		model.addAttribute("message", "Đăng xuất thành công");
@@ -129,7 +130,7 @@ public class AuthController {
 	public String forgotPasswordForm(Model model) {
 		return "auth/quenMatkhau";
 	}
-	
+
 	@GetMapping("/auth/profile")
 	public String Profile(Model model) {
 		return "auth/profile";

@@ -10,6 +10,8 @@ import poly.store.entity.Order;
 public interface OrderService {
 
 	Order create(JsonNode orderData);
+	
+	Order createvnpay(JsonNode orderData);
 
 	Order findById(Integer id);
 

@@ -5,8 +5,7 @@
 	<title>Đơn hàng </title>
 </head>
 
-<body th:object="${order}" class="vertical light" ng-app="app" ng-controller="ctrl"
-	style="font-family: Arial, Helvetica, sans-serif;">
+<body class="vertical light" ng-app="app" ng-controller="ctrl" style="font-family: Arial, Helvetica, sans-serif;">
 
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<!-- Small table -->
@@ -14,12 +13,12 @@
 		<div class="col-12">
 			<h5 class="divider line razor">THÔNG TIN ĐƠN HÀNG ĐÃ ĐẶT</h5>
 		</div>
-
-		<label style="font-weight: bold;" for="">Mã đơn:</label>
-		<span th:text="*{id}" class="form-group"></span><br>
-		<label style="font-weight: bold;">Ngày đặt hàng:</label>
-		<span th:text="*{createdate}" class="form-group"></span>
-
+		<div th:each="item :${order}">
+			<label style="font-weight: bold;" for="">Mã đơn:</label>
+			<span th:text="${item.id}" class="form-group"></span><br>
+			<label style="font-weight: bold;">Ngày đặt hàng:</label>
+			<span th:text="${item.createdate}" class="form-group"></span>
+		</div>
 		<h5 class="divider line double-razor">CÁC SẢN PHẨM TRONG ĐƠN</h5>
 		<div class="card shadow">
 			<div class="card-body">
@@ -40,33 +39,35 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="detail:*{orderdetail}" th:object="${detail}">
+						<tr th:each="orderDetail : ${orderdetail}">
 							<td>
 								<div class="avatar avatar-md">
-									<img th:src="@{|/images/products/*{product.image}|}" style="width: 70px;"
+									<img th:src="@{|/images/product/*{orderDetail.product.image}|}" style="width: 70px;"
 										class="avatar-img ">
 								</div>
 							</td>
 							<td>
-								<p class="mb-0 text-muted"><strong>[[*{product.name}]]</strong></p>
+								<p class="mb-0 text-muted"><strong th:text="${orderDetail.product.name}"></strong></p>
 
 							</td>
 							<td>
-								<p class="mb-0 text-muted">[[*{#numbers.formatDecimal(price,0,'COMMA',0,'POINT')}]]</p>
+								<p class="mb-0 text-muted" th:text="${orderDetail.price}">
+								</p>
 
 							</td>
 							<td>
-								<p class="mb-0 text-muted">[[*{quantity}]]</p>
+								<p class="mb-0 text-muted" th:text="${orderDetail.quantity}"></p>
 
 							</td>
 							<td>
-								<p class="mb-0 text-muted">[[*{weight}]]</p>
+								<p class="mb-0 text-muted" th:text="${orderDetail.weight}"></p>
 
 							</td>
 
 							<td>
-								<p class="mb-0 text-muted">
-									[[*{#numbers.formatDecimal(price*quantity,0,'COMMA',0,'POINT')}]]</p>
+								<p class="mb-0 text-muted" th:text="${orderDetail.price*orderDetail.quantity}">
+
+								</p>
 							</td>
 						</tr>
 					</tbody>
@@ -74,7 +75,7 @@
 				</table>
 
 			</div>
-			<button th:onclick="window.location.href='/orderuser'" class="btn btn-primary">Đến đơn hàng của bạn</button>
+			<a href="/orderuser"><button class="btn btn-primary">Đến đơn hàng của bạn</button></a>
 		</div>
 	</div> <!-- customized table -->
 

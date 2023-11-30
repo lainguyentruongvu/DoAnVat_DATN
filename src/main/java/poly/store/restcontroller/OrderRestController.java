@@ -81,6 +81,11 @@ public class OrderRestController {
 		return orderservice.create(orderData);
 	}
 
+	@PostMapping("/createvnpay")
+	public Order createvnpay(@RequestBody JsonNode orderData) {
+		return orderservice.createvnpay(orderData);
+	}
+
 	@GetMapping()
 	public List<Order> orderliststatus(Model model) {
 		return orderDao.getProductsSortedByDate();
@@ -169,10 +174,10 @@ public class OrderRestController {
 	public List<OrderWithDetailsDTO> getOrderByUsernameStatus(@PathVariable("id") String id,
 			@PathVariable("status") Status status) {
 		List<OrderWithDetailsDTO> data = orderDao.getOrdersWithDetailsByUserIdStatus(id, status);
-	    
-	    List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
-	    
-	    return groupedData;
+
+		List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
+
+		return groupedData;
 
 	}
 
@@ -196,8 +201,8 @@ public class OrderRestController {
 	@GetMapping("getOrderAndOrderdetail/{id}")
 	public List<OrderWithDetailsDTO> getOrderAndOrderdetail(@PathVariable("id") String id) {
 		List<OrderWithDetailsDTO> data = orderDao.getOrdersWithDetailsByUserId(id);
-		 List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);		    
-		    return groupedData;		
+		List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
+		return groupedData;
 	}
 
 }

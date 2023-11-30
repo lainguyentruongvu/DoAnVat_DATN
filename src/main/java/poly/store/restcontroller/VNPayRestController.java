@@ -2,6 +2,7 @@ package poly.store.restcontroller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +34,10 @@ public class VNPayRestController {
 	HttpServletRequest req;
 
 	@GetMapping("createpayment")
-	public ResponseEntity<Payment> createPayment(@RequestParam String bankCode, @RequestParam long amount,
-			@RequestParam Integer idorder) throws UnsupportedEncodingException {
+	public ResponseEntity<?> createPayment(@RequestParam String bankCode, @RequestParam long amount
+			) throws UnsupportedEncodingException {
 
-		System.out.println(idorder);
+
 		String vnp_Version = "2.1.0";
 		String vnp_Command = "pay";
 		String orderType = "other";
@@ -65,7 +68,7 @@ public class VNPayRestController {
 		} else {
 			vnp_Params.put("vnp_Locale", "vn");
 		}
-		vnp_Params.put("vnp_ReturnUrl", configVNPay.vnp_ReturnUrl + idorder);
+		vnp_Params.put("vnp_ReturnUrl", configVNPay.vnp_ReturnUrl);
 		vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
 		Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -105,10 +108,11 @@ public class VNPayRestController {
 		queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
 		String paymentUrl = configVNPay.vnp_PayUrl + "?" + queryUrl;
 
-		Payment pm = new Payment();
-		pm.setStatus("OK");
-		pm.setMessage("successfully");
-		pm.setUrl(paymentUrl);
-		return ResponseEntity.status(HttpStatus.OK).body(pm);
+		String htmlResponse = paymentUrl;
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.TEXT_HTML);
+
+		return new ResponseEntity<>(htmlResponse, headers, HttpStatus.OK);
 	}
 }

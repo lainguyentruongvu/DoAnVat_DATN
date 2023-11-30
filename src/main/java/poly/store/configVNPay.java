@@ -19,9 +19,9 @@ import org.springframework.stereotype.Component;
 public class configVNPay {
 
 	public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-	public static String vnp_ReturnUrl = "http://localhost:8080/order/detail/";
-	public static String vnp_TmnCode = "7NSPMC3D";
-	public static String secretKey = "NYPQUJGQOOHUZXNQNGPFYIGMQSUTKXWX";
+	public static String vnp_ReturnUrl = "http://localhost:8080/order/detail/vnpay";
+	public static String vnp_TmnCode = "EI78HZOZ";
+	public static String secretKey = "EFTJODQSJSNPJDZYLNQZMEFYSIVRHYWT";
 	public static String vnp_Version = "2.0";
 	public static String vnp_Command = "pay";
 	public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";

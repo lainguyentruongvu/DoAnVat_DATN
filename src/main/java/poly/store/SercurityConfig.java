@@ -20,7 +20,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
+import poly.store.dao.CartDAO;
 import poly.store.entity.Account;
+import poly.store.entity.Cart;
 import poly.store.services.AccountService;
 import poly.store.services.SessionService;
 
@@ -35,6 +37,9 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	SessionService session;
+	
+	@Autowired
+	CartDAO cartdao;
 
 	/* Cơ chế mã hóa mật khẩu */
 	@Bean
@@ -53,8 +58,7 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(username -> {
 			try {
-				Account user = accountService.findById(username);
-
+				Account user = accountService.findById(username);				
 				session.set("user", user);
 				session.set("username", user.getUsername());
 

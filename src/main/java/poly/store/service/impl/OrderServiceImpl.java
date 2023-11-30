@@ -26,6 +26,7 @@ import poly.store.entity.Order;
 import poly.store.entity.Orderdetail;
 import poly.store.services.AccountService;
 import poly.store.services.OrderService;
+import poly.store.services.SessionService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -34,6 +35,8 @@ public class OrderServiceImpl implements OrderService {
 	OrderDAO orderdao;
 	@Autowired
 	OrderdetailDAO orderdetaildao;
+	@Autowired
+	SessionService sessionservice;
 
 	public Order create(JsonNode orderData) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -47,7 +50,21 @@ public class OrderServiceImpl implements OrderService {
 		List<Orderdetail> details = mapper.convertValue(orderData.get("orderdetail"), type).stream()
 				.peek(d -> d.setOrder(order)).collect(Collectors.toList());
 		orderdetaildao.saveAll(details);
+		return order;
+	}
 
+	public Order createvnpay(JsonNode orderData) {
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		Order order = mapper.convertValue(orderData, Order.class);
+
+		TypeReference<List<Orderdetail>> type = new TypeReference<List<Orderdetail>>() {
+		};
+		List<Orderdetail> details = mapper.convertValue(orderData.get("orderdetail"), type).stream()
+				.peek(d -> d.setOrder(order)).collect(Collectors.toList());
+		sessionservice.set("order", order);
+		sessionservice.set("details", details);
 		return order;
 	}
 
@@ -57,20 +74,19 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Order getOne(Integer orderId) {		
+	public Order getOne(Integer orderId) {
 		return orderdao.getOne(orderId);
 	}
 
 	@Override
 	public void save(Order order) {
 		orderdao.save(order);
-		
+
 	}
 
 	@Override
 	public List<Order> findByAccount(Account account) {
 		return orderdao.findByAccount(account);
 	}
-
 
 }
