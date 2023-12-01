@@ -36,24 +36,47 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		try {
-			Account user = accountService.findById(username);
-			session.set("user", user);
-			session.set("username", user.getUsername());
+	    try {
+	        Account user = accountService.findById(username);
+	        session.set("user", user);
+	        session.set("username", user.getUsername());
 
-			String password = pe.encode(user.getPassword()); // Mã hóa mật khấu
-			String[] roles = user.getAuthorities().stream().map(er -> er.getRole().getId()).collect(Collectors.toList())
-					.toArray(new String[0]);
-			Map<String, Object> authentication = new HashMap<>();
-			authentication.put("user", user);
-			byte[] token = (username + ":" + user.getPassword()).getBytes();
-			authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
-			session.set("authentication", authentication);
-			return User.withUsername(username).password(password).roles(roles).build();
-		} catch (NoSuchElementException e) {
-			throw new UsernameNotFoundException(username + " not found!");
-		}
+	        if (!user.activeted()) {
+	            throw new RuntimeException("Tài khoản bạn đã bị khoá");
+	        }
+
+	        String password = pe.encode(user.getPassword()); // Mã hóa mật khẩu
+	        String[] roles = user.getAuthorities().stream().map(er -> er.getRole().getId()).collect(Collectors.toList())
+	                .toArray(new String[0]);
+	        Map<String, Object> authentication = new HashMap<>();
+	        authentication.put("user", user);
+	        byte[] token = (username + ":" + user.getPassword()).getBytes();
+	        authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
+	        session.set("authentication", authentication);
+	        return User.withUsername(username).password(password).roles(roles).build();
+	    } catch (NoSuchElementException e) {
+	        throw new UsernameNotFoundException(username + " not found!");
+	    }
 	}
+
+	/*
+	 * public UserDetails loadUserByUsername(String username) throws
+	 * UsernameNotFoundException { try { Account user =
+	 * accountService.findById(username); session.set("user", user);
+	 * session.set("username", user.getUsername()); if (!user.isActive()) { throw
+	 * new RuntimeException("Account is not active"); } String password =
+	 * pe.encode(user.getPassword()); // Mã hóa mật khấu String[] roles =
+	 * user.getAuthorities().stream().map(er ->
+	 * er.getRole().getId()).collect(Collectors.toList()) .toArray(new String[0]);
+	 * Map<String, Object> authentication = new HashMap<>();
+	 * authentication.put("user", user); byte[] token = (username + ":" +
+	 * user.getPassword()).getBytes(); authentication.put("token", "Basic " +
+	 * Base64.getEncoder().encodeToString(token)); session.set("authentication",
+	 * authentication); return
+	 * User.withUsername(username).password(password).roles(roles).build(); } catch
+	 * (NoSuchElementException e) { throw new UsernameNotFoundException(username +
+	 * " not found!"); } }
+	 */
 
 	public void loginFromOAuth2(OAuth2AuthenticationToken oauth2) {
 		String email = oauth2.getPrincipal().getAttribute("email");

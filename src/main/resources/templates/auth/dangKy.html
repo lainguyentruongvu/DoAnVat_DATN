@@ -34,8 +34,9 @@
 				<label>Nhập lại mật khẩu</label>
 				<input type="password" name="confirm" placeholder="" required oninput="checkPassword(this);">
 				<input type="submit" name="submit" value="Đăng ký">
+				
 				<div class="remember">
-					<div class="signup"> Bạn đã có tài khoản? <a href="/auth/login">Đăng nhập ngay!</a> </div>
+					<div class="signup"> Bạn đã có tài khoản? <a th:href="@{/auth/login/form}">Đăng nhập ngay!</a> </div>
 				</div>
 			</form>
 		</div>
