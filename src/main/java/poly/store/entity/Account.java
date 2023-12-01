@@ -41,6 +41,12 @@ public class Account implements Serializable {
 	@OneToMany(mappedBy = "account")
 	List<Cart> cart;
 	
-	
+	public boolean activeted() {
+        return activeted;
+    }
+
+    public void setactiveted(boolean active) {
+    	activeted = active;
+    }
 	
 }

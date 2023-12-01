@@ -68,7 +68,7 @@ public class SignupController {
 				model.addAttribute("message", "Tên đăng nhập đã được sử dụng ");
 				return "auth/dangKy";
 			}
-			if (account2.getEmail().equals(email)) {
+			else if (account2.getEmail().equals(email)) {
 				model.addAttribute("account", account);
 				model.addAttribute("message", "Email đã được sử dụng ");
 				return "auth/dangKy";
@@ -90,7 +90,6 @@ public class SignupController {
 
 		if (confirm.equals(password)) {
 			mailer.send(email, "YÊU CẦU MÃ XÁC NHẬN TỪ NGƯỜI DÙNG!", thongBao);
-
 			session.set("mxn", mxn);
 			session.set("account", account);
 

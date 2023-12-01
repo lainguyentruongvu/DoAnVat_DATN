@@ -84,9 +84,14 @@ public class AuthController {
 
 	@RequestMapping("/auth/login/error")
 	public String logInError(Model model, @Validated @ModelAttribute("account") Account account, Errors errors) {
-
-		model.addAttribute("message", "Sai thông đăng nhập");
-
+		
+		Account user = accountService.findById(session.get("username"));
+		if (!user.activeted()) {
+			model.addAttribute("message", "Tài khoản đã bị khoá");
+        }
+		else{
+			model.addAttribute("message", "Đăng nhập thất bại");
+		}
 		return "auth/dangNhap";
 	}
 
