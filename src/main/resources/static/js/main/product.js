@@ -1,7 +1,32 @@
 const app = angular.module("app", []);
 app.controller("ctrl", function($scope, $http, $location, $window, $interval, $filter) {
 
+	$scope.banner_1900x700 = [];
+	$scope.anhphu1_600x370 = [];
+	$scope.anhphu2_600x370 = [];
+	$scope.anhphu3_600x370 = [];
+	$scope.banner1_600x370 = [];
+	$scope.banner2_600x370 = [];
+	$scope.bannerthongtin1_370x300 = [];
+	$scope.bannerthongtin2_370x300 = [];
+	$scope.bannerthongtin3_370x300 = [];
 
+	$scope.banner = function () {
+		$http.get('/rest/banner').then(function (resp) {
+			for (var i = 0; i < resp.data.length; i++) {
+				$scope.banner_1900x700 = resp.data[0];
+				$scope.anhphu1_600x370 = resp.data[1];
+				$scope.anhphu2_600x370 = resp.data[2];
+				$scope.anhphu3_600x370 = resp.data[3];
+				$scope.banner1_600x370 = resp.data[4];
+				$scope.banner2_600x370 = resp.data[5];
+				$scope.bannerthongtin1_370x300 = resp.data[6];
+				$scope.bannerthongtin2_370x300 = resp.data[7];
+				$scope.bannerthongtin3_370x300 = resp.data[8];
+			}
+		});
+	}
+	$scope.banner();
 
 	$scope.products = [];
 

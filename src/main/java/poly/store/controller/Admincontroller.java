@@ -48,4 +48,8 @@ public class Admincontroller {
 	public String status() {
 		return "admin/status/index";
 	}
+	@RequestMapping("/admin/banner")
+	public String banner() {
+		return "admin/banner/index";
+	}
 }
