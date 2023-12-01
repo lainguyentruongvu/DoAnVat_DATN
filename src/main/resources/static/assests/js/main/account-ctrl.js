@@ -1285,10 +1285,15 @@ app.controller("discount-ctrl", function ($scope, $http) {
 
 
 
-	$scope.edit = function (item) {
+	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
+		$scope.prductww = $scope.form.product.id;
 		$scope.index = -1;
 		$(".nav-tabs a:eq(0)").tab('show')
+		$http.get(`/rest/weightvalue2/getProductweigth/${$scope.prductww}`).then(function(response) {
+			$scope.productweight = response.data;
+		});
+
 	}
 
 	$scope.reset = function () {
