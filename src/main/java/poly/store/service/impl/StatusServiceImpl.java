@@ -30,10 +30,10 @@ public class StatusServiceImpl implements StatusService {
 		return statudao.findAll();
 	}
 
-	@Override
-	public Status findById(Integer statusid) {
-		return statudao.findById(statusid).get();
-	}
+//	@Override
+//	public Status findById(Integer statusid) {
+//		return statudao.findById(statusid).get();
+//	}
 
 	@Override
 	public Status create(Status status) {

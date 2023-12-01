@@ -9,8 +9,6 @@ public interface StatusService {
 	Status getOne(Integer newStatusId);
 
 	List<Status> findAll();
-
-	Status findById(Integer statusid);
 	Status create(Status status);
 	Status update(Status status);
 	void delete(Integer statusid);

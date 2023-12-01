@@ -2,6 +2,11 @@ package poly.store.services;
 
 import java.util.List;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
 import poly.store.entity.Account;
@@ -19,7 +24,8 @@ public interface AccountService {
 
 	void delete(String username);
 
-	void loginFromOAuth2(OAuth2AuthenticationToken oauth2);
+	
+
 
 	void updateToken(String token, String email) throws Exception;
 

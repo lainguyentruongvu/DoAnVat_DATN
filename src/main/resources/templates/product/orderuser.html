@@ -79,8 +79,8 @@
 
 							<!--Tất cả-->
 							<!--	BẮT ĐẦU PHẦN NỘI DUNG ĐƠN HÀNGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG-->
-							<div class="row" ng-repeat="item in orderuser ">
-								<div class="col-lg-12 form-group"
+							<div class="row" ng-repeat="item in orderuser">
+								<div ng-click="orderdetail(item.id)" class="col-lg-12 form-group"
 									style="background-color: #eaeaea53;padding: 20px;width: 1210px;border-radius: 10px;">
 									<div class="row">
 
@@ -100,7 +100,7 @@
 									<div style="padding-top: 10px;" class="row"
 										ng-repeat="orderdetail in item.orderdetail">
 										<div class="col-lg-2">
-											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
 										</div>
 										<div class="col-lg-8" style="padding: 10px;">
@@ -185,7 +185,7 @@
 									<div style="padding-top: 10px;" class="row"
 										ng-repeat="orderdetail in item.orderdetail">
 										<div class="col-lg-2">
-											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
 										</div>
 										<div class="col-lg-8" style="padding: 10px;">
@@ -269,7 +269,7 @@
 									<div style="padding-top: 10px;" class="row"
 										ng-repeat="orderdetail in item.orderdetail">
 										<div class="col-lg-2">
-											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
 										</div>
 										<div class="col-lg-8" style="padding: 10px;">
@@ -351,7 +351,7 @@
 									<div style="padding-top: 10px;" class="row"
 										ng-repeat="orderdetail in item.orderdetail">
 										<div class="col-lg-2">
-											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
 										</div>
 										<div class="col-lg-8" style="padding: 10px;">
@@ -432,7 +432,7 @@
 									<div style="padding-top: 10px;" class="row"
 										ng-repeat="orderdetail in item.orderdetail">
 										<div class="col-lg-2">
-											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
 										</div>
 										<div class="col-lg-6" style="padding: 10px;">
@@ -571,7 +571,7 @@
 									<div style="padding-top: 10px;" class="row"
 										ng-repeat="orderdetail in item.orderdetail">
 										<div class="col-lg-2">
-											<img class="" src="../images/products/{{orderdetail.product.image}}" alt=""
+											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
 										</div>
 										<div class="col-lg-6" style="padding: 10px;">

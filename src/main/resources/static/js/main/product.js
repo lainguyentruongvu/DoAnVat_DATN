@@ -23,7 +23,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	//Load product
 	$scope.product = function() {
-		$http.get("/rest/products").then(resp => {
+		$http.get("/rest/products/findByActiveted").then(resp => {
 			$scope.products = resp.data;
 		});
 	}
@@ -320,7 +320,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			Swal.fire("Error", "Sản phẩm đã hết thời gian giảm giá!", "error");
 
 		} else {
-
+			
 			$scope.data = {
 				price: discount,
 				quantity: 1,
@@ -658,9 +658,9 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				var order = angular.copy(this);
 				$scope.weightquantt = [];
 				$http.post("/rest/order/createvnpay", order).then(resp => {
-//					for (var i = 0; i < $scope.selectedItems.length; i++) {
-//						$scope.deleteida($scope.selectedItems[i].id)
-//					}
+					for (var i = 0; i < $scope.selectedItems.length; i++) {
+						$scope.deleteida($scope.selectedItems[i].id)
+					}
 					//
 					//					for (var i = 0; i < $scope.selectedItems.length; i++) {
 					//						processProduct($scope.selectedItems[i]);
@@ -683,7 +683,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					//						});
 					//					}
 
-//					localStorage.clear();
+					localStorage.clear();
 					console.log(resp);
 
 				}).catch(error => {
@@ -1112,6 +1112,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	$scope.getbestsl = function() {
 		$http.get("/rest/bestseller/").then(resp => {
 			$scope.bestseller = resp.data;
+			console.log($scope.bestseller)
 		}).catch(error => {
 			console.log("Error", error)
 		})

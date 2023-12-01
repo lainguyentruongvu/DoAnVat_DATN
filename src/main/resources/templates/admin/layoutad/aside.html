@@ -14,7 +14,7 @@
         <nav class="vertnav navbar navbar-light">
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
-            <img src="../../images/logo_noback.png" width="200px">
+            <img src="../../images/logo_noback.png" width="150px">
           </div>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item">
@@ -25,242 +25,143 @@
               
             </li>
           </ul>
-<!--          <p class="text-muted nav-heading mt-4 mb-1">-->
-<!--            <span>Quản lý </span>-->
-<!--          </p>-->
-          
-          
-        
+
+
+         <p class="text-muted nav-heading mt-4 mb-1">
+            <span>Quản lý tài khoản</span>
+        </p>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
               <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <i class="fas fa-list"></i>
-                <span class="ml-3 item-text">Quản lý</span>
+                <i class="fe fe-user fe-16"></i>
+                <span class="ml-3 item-text">Tài khoản</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="forms">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/admin/account}"><span class="ml-1 item-text">Công cụ</span></a>
+                  <a class="nav-link pl-3" th:href="@{/admin/account}"><i class="bi bi-person-gear"></i> Công cụ</span></a>
                 </li>
-                
+
+                <li class="nav-item">
+                  <a class="nav-link pl-3" th:href="@{/admin/authority}"><i class="bi bi-person-lock"></i> Phân quyền tài khoản</span></a>
+                </li>
+
+              
               </ul>
+              
             </li>
+
+          
             
-            <li class="nav-item w-100">
-              <a class="nav-link" th:href="@{/admin/authority}">
-                <i class="fe fe-calendar fe-16"></i>
-                <span class="ml-3 item-text">Phân quyền tài khoản</span>
-              </a>
-            </li>
-             <li class="nav-item w-100">
-              <a class="nav-link" th:href="@{/admin/order}">
-                <i class="fe fe-calendar fe-16"></i>
-                <span class="ml-3 item-text">Đơn hàng</span>
-              </a>
-            </li>
+            <p class="text-muted nav-heading mt-4 mb-1">
+              <span>Quản lý sản phẩm</span>
+          </p>
+           
             <li class="nav-item w-100">
               <a class="nav-link" th:href="@{/admin/voucher}">
-                <i class="fe fe-calendar fe-16"></i>
-                <span class="ml-3 item-text">Voucher</span>
+                <i class="bi bi-currency-dollar"></i>
+                <span class="ml-3 item-text"> Mã giảm giá</span>
               </a>
             </li>
             <li class="nav-item w-100">
               <a class="nav-link" th:href="@{/admin/discount}">
-                <i class="fe fe-calendar fe-16"></i>
-                <span class="ml-3 item-text">Discount</span>
+                <i class="bi bi-bag-fill"></i>
+                <span class="ml-3 item-text">Giảm giá sản phẩm</span>
               </a>
             </li>
             <li class="nav-item w-100">
               <a class="nav-link" th:href="@{/admin/category}">
-                <i class="fe fe-calendar fe-16"></i>
-                <span class="ml-3 item-text">Category</span>
+                <i class="bi bi-basket2"></i>
+                <span class="ml-3 item-text">Loại sản phẩm</span>
               </a>
             </li>
+
+            <p class="text-muted nav-heading mt-4 mb-1">
+              <span>Vận chuyển, xử lý đơn</span>
+          </p>
+
             <li class="nav-item w-100">
-              <a class="nav-link" th:href="@{/admin/weightvalue}">
-                <i class="fe fe-calendar fe-16"></i>
-                <span class="ml-3 item-text">weightvalue</span>
+              <a class="nav-link" th:href="@{/admin/order}">
+                <i class="bi bi-box-seam"></i>
+                <span class="ml-3 item-text">Đơn hàng</span>
               </a>
             </li>
-            <li class="nav-item w-100">
+              <li class="nav-item w-100">
               <a class="nav-link" th:href="@{/admin/statusor}">
-                <i class="fe fe-calendar fe-16"></i>
-                <span class="ml-3 item-text">Status Order</span>
+                <i class="bi bi-box-seam"></i>
+                <span class="ml-3 item-text">Trạng thái</span>
               </a>
-            </li>
+            
+
+            <p class="text-muted nav-heading mt-4 mb-1">
+              <span>Thống kê</span>
+          </p>
             <li class="nav-item dropdown">
               <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-grid fe-16"></i>
-                <span class="ml-3 item-text">Thông kê</span>
+                <i class="bi bi-card-heading"></i>
+                <span class="ml-3 item-text">Thống kê sản phẩm</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="tables">
                 <li class="nav-item">	
-                  <a class="nav-link pl-3" th:href="@{/admin/static/evaluate}" ng-click="staticevaluate()"><span class="ml-1 item-text">Thông kê đánh giá</span></a>
+                  <a class="nav-link pl-3" th:href="@{/admin/static/evaluate}" ng-click="staticevaluate()"><span class="ml-1 item-text"><i class="bi bi-star"></i> Đánh giá sản phẩm</span></a>
+                </li>
+               
+                <li class="nav-item">
+                  <a class="nav-link pl-3"  th:href="@{/admin/static/product}"><span class="ml-1 item-text"><i class="bi bi-minecart-loaded"></i> Sản phẩm</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3"  th:href="@{/admin/static/favorite}"><span class="ml-1 item-text">Thông kê yêu thích </span></a>
+                  <a class="nav-link pl-3"  th:href="@{/admin/static/category}"><span class="ml-1 item-text"><i class="bi bi-cart-dash"></i> Theo loại</span></a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3"  th:href="@{/admin/static/product}"><span class="ml-1 item-text">Thông kê sản phẩm</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3"  th:href="@{/admin/static/category}"><span class="ml-1 item-text">Thông kê theo loại</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3"  th:href="@{/admin/static/order}"><span class="ml-1 item-text">Thông kê đơn hàng</span></a>
-                </li>
+                
               </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-pie-chart fe-16"></i>
-                <span class="ml-3 item-text">Charts</span>
+              <a href="#ds" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-grid fe-16"></i>
+                <span class="ml-3 item-text">Thống kê đơn, yêu thích</span>
               </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="charts">
+              <ul class="collapse list-unstyled pl-4 w-100" id="ds">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./chart-inline.html"><span class="ml-1 item-text">Inline Chart</span></a>
+                  <a class="nav-link pl-3"  th:href="@{/admin/static/favorite}"><span class="ml-1 item-text"><i class="bi bi-box2-heart"></i> Thông kê yêu thích </span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./chart-chartjs.html"><span class="ml-1 item-text">Chartjs</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./chart-apexcharts.html"><span class="ml-1 item-text">ApexCharts</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./datamaps.html"><span class="ml-1 item-text">Datamaps</span></a>
+                  <a class="nav-link pl-3"  th:href="@{/admin/static/order}"><span class="ml-1 item-text"><i class="bi bi-cart-plus"></i> Thông kê đơn hàng</span></a>
                 </li>
               </ul>
+
             </li>
+
+
           </ul>
-    
+
+         
+         
           <p class="text-muted nav-heading mt-4 mb-1">
             <span>Quản lý sản phẩm</span>
           </p>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
               <a href="#product" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-book fe-16"></i>
+                <i class="bi bi-box-seam-fill"></i>
                 <span class="ml-3 item-text">Sản phẩm</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="product">
-                <a class="nav-link pl-3" href="/admin/product"><span class="ml-1">Danh sách sản phẩm</span></a>
-                <a class="nav-link pl-3" href="/admin/weight"><span class="ml-1">Danh sách trọng lượng</span></a>
-                <a class="nav-link pl-3" href="./contacts-new.html"><span class="ml-1">New Contact</span></a>
+                <a class="nav-link pl-3" href="/admin/product"><span class="ml-1"><i class="bi bi-list-check"></i> Danh sách sản phẩm</span></a>
+                <a class="nav-link pl-3" href="/admin/weight"><span class="ml-1"><i class="bi bi-card-list"></i> Danh sách trọng lượng sản phẩm</span></a>
+                 <a class="nav-link pl-3" th:href="@{/admin/weightvalue}"><span class="ml-1"><i class="bi bi-card-list"></i> Danh sách trọng lượng</span></a>
+                
               </ul>
             </li>
-            <li class="nav-item dropdown">
-              <a href="#profile" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-user fe-16"></i>
-                <span class="ml-3 item-text">Profile</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="profile">
-                <a class="nav-link pl-3" href="./profile.html"><span class="ml-1">Overview</span></a>
-                <a class="nav-link pl-3" href="./profile-settings.html"><span class="ml-1">Settings</span></a>
-                <a class="nav-link pl-3" href="./profile-security.html"><span class="ml-1">Security</span></a>
-                <a class="nav-link pl-3" href="./profile-notification.html"><span class="ml-1">Notifications</span></a>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#fileman" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-folder fe-16"></i>
-                <span class="ml-3 item-text">File Manager</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="fileman">
-                <a class="nav-link pl-3" href="./files-list.html"><span class="ml-1">Files List</span></a>
-                <a class="nav-link pl-3" href="./files-grid.html"><span class="ml-1">Files Grid</span></a>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#support" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-compass fe-16"></i>
-                <span class="ml-3 item-text">Help Desk</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="support">
-                <a class="nav-link pl-3" href="./support-center.html"><span class="ml-1">Home</span></a>
-                <a class="nav-link pl-3" href="./support-tickets.html"><span class="ml-1">Tickets</span></a>
-                <a class="nav-link pl-3" href="./support-ticket-detail.html"><span class="ml-1">Ticket Detail</span></a>
-                <a class="nav-link pl-3" href="./support-faqs.html"><span class="ml-1">FAQs</span></a>
-              </ul>
-            </li>
+           
+           
+            
           </ul>
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>Extra</span>
-          </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
-              <a href="#pages" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-file fe-16"></i>
-                <span class="ml-3 item-text">Pages</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100 w-100" id="pages">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-orders.html">
-                    <span class="ml-1 item-text">Orders</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-timeline.html">
-                    <span class="ml-1 item-text">Timeline</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-invoice.html">
-                    <span class="ml-1 item-text">Invoice</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-404.html">
-                    <span class="ml-1 item-text">Page 404</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-500.html">
-                    <span class="ml-1 item-text">Page 500</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./page-blank.html">
-                    <span class="ml-1 item-text">Blank</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#auth" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-shield fe-16"></i>
-                <span class="ml-3 item-text">Authentication</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="auth">
-                <a class="nav-link pl-3" href="./auth-login.html"><span class="ml-1">Login 1</span></a>
-                <a class="nav-link pl-3" href="./auth-login-half.html"><span class="ml-1">Login 2</span></a>
-                <a class="nav-link pl-3" href="./auth-register.html"><span class="ml-1">Register</span></a>
-                <a class="nav-link pl-3" href="./auth-resetpw.html"><span class="ml-1">Reset Password</span></a>
-                <a class="nav-link pl-3" href="./auth-confirm.html"><span class="ml-1">Confirm Password</span></a>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a href="#layouts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-layout fe-16"></i>
-                <span class="ml-3 item-text">Layout</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="layouts">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./index.html"><span class="ml-1 item-text">Default</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./index-horizontal.html"><span class="ml-1 item-text">Top Navigation</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="./index-boxed.html"><span class="ml-1 item-text">Boxed</span></a>
-                </li>
-              </ul>
-            </li>
-          </ul>
+         
+         
+       
           
          
           <div class="btn-box w-100 mt-4 mb-1">
-            <a href="#" class="btn mb-2 btn-primary btn-lg btn-block">
-              <i class="fa fa-sign-out fe-12 mx-2"></i><span class="small">Đăng xuất</span>
+            <a th:href="@{/auth/logout}" class="btn mb-2 btn-primary btn-lg btn-block">
+              <i class="bi bi-box-arrow-left" ></i> Đăng xuất
             </a>
           </div>
         </nav>

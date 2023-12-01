@@ -18,7 +18,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group img-thumbnail" style="padding-left: 50px;">
-                                        <img src="../../images/products/{{productweight.product.image}}"
+                                        <img src="../../images/product/{{productweight.product.image}}"
                                             style="border-radius: 10px;" width="250px" height="250px">
                                     </div>
                                 </div>
@@ -79,9 +79,9 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <a ng-show="showbtn_addweight == true" ng-click="addweight(productweight)" class="btn btn-danger">Thêm dzô</a>
-                                        <a ng-show="showbtn_del_upd == true" ng-click="updateweight()" class="btn btn-danger">Sửa đê</a>
-                                        <a ng-show="showbtn_del_upd == true" class="btn btn-danger" ng-click="deleteweight(productweight.product.id)">Xó đê</a>
+                                        <a ng-show="showbtn_addweight == true" ng-click="addweight(productweight)" class="btn btn-danger">Thêm</a>
+                                        <a ng-show="showbtn_del_upd == true" ng-click="updateweight()" class="btn btn-danger">Sửa </a>
+                                        <a ng-show="showbtn_del_upd == true" class="btn btn-danger" ng-click="deleteweight(productweight.product.id)">Xóa</a>
                                     </div>
                                 </div>
                                 <!-- Small table -->
@@ -93,14 +93,7 @@
                                                 <form class="form">
                                                     <div class="form-row">
                                                         <div class="form-group col-auto mr-auto">
-                                                            <select class="custom-select mr-sm-2"
-                                                                id="inlineFormCustomSelectPref1" hidden="hidden">
-                                                                <option value="">...</option>
-                                                                <option value="1">12</option>
-                                                                <option value="2" selected>32</option>
-                                                                <option value="3">64</option>
-                                                                <option value="3">128</option>
-                                                            </select>
+                                                       
                                                         </div>
                                                         <div class="form-group col-auto">
                                                             <label for="search" class="sr-only">Search</label>
@@ -129,7 +122,7 @@
                                                         <td><strong>{{item.id}}</strong></td>
                                                         <td>
                                                             <div class="avatar avatar-md">
-                                                                <img src="../../images/products/{{item.image}}"
+                                                                <img src="../../images/product/{{item.image}}"
                                                                     width="80px" height="50px"
                                                                     style="border-radius: 10px;">
                                                             </div>

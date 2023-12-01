@@ -19,6 +19,8 @@ import poly.store.entity.ReportCate;
 public interface ProductDAO extends JpaRepository<Product, Integer> {
 
 	List<Product> findByCategory(Category cate);
+	
+	  List<Product> findByActiveted(Boolean activeted);
 
 	@Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword%")
 	List<Product> searchProductsByKeyword(@Param("keyword") String keyword);

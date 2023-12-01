@@ -16,25 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 import poly.store.entity.Status;
 import poly.store.services.StatusService;
 
-
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/rest/StatusOR")
 public class StatusRestController {
 	@Autowired
 	StatusService statusService;
-	
 
-	
-	
 	@GetMapping()
-	public List<Status> findAll(){
+	public List<Status> findAll() {
 		return statusService.findAll();
 	}
-	
+
 	@GetMapping("{statusid}")
 	public Status getOne(@PathVariable("statusid") Integer statusid) {
-		return statusService.findById(statusid);
+		return statusService.getOne(statusid);
 	}
 
 	@PostMapping

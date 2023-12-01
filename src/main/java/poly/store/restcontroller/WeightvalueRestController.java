@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import poly.store.dao.ProductWeightDAO;
+import poly.store.entity.Product;
+import poly.store.entity.Productweight;
 import poly.store.entity.Weight;
 import poly.store.services.WeightService;
 @CrossOrigin("*")
@@ -22,7 +25,8 @@ public class WeightvalueRestController {
 	
 	@Autowired
 	WeightService weightservice;
-	
+	@Autowired
+	ProductWeightDAO productWeightDAO ;
 	
 	
 	@GetMapping()
@@ -33,6 +37,11 @@ public class WeightvalueRestController {
 	@GetMapping("{weightid}")
 	public Weight getOne(@PathVariable("weightid") Integer weightid) {
 		return weightservice.findById(weightid);
+	}
+	
+	@GetMapping("getProductweigth/{idproduct}")
+	public List<Productweight> getProductweigth(@PathVariable("idproduct") Product idproduct) {
+		return productWeightDAO.findByProduct(idproduct);
 	}
 
 	@PostMapping

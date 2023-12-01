@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface WeightDAO extends JpaRepository<Weight, Integer> {
 	Weight findByWeightvalue(String weightvalue);
+
+	
 }

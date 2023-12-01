@@ -19,6 +19,8 @@ import poly.store.dao.CartDAO;
 import poly.store.dao.CartdetailDAO;
 import poly.store.dao.OrderDAO;
 import poly.store.dao.OrderdetailDAO;
+import poly.store.dao.ProductWeightDAO;
+import poly.store.dao.WeightDAO;
 import poly.store.entity.Account;
 import poly.store.entity.Cart;
 import poly.store.entity.Cartdetail;
@@ -26,15 +28,20 @@ import poly.store.entity.Order;
 import poly.store.entity.OrderWithDetailsDTO;
 import poly.store.entity.Orderdetail;
 import poly.store.entity.Product;
+import poly.store.entity.Productweight;
+import poly.store.entity.Weight;
 import poly.store.services.OrderService;
 import poly.store.services.OrderdetailService;
 import poly.store.services.ProductService;
+import poly.store.services.ProductweightService;
 import poly.store.services.SessionService;
 
 @Controller
 public class OrderController {
 	@Autowired
 	OrderService orderservice;
+	@Autowired
+	ProductWeightDAO productweightdao;
 	@Autowired
 	OrderdetailService orderdetailservice;
 	@Autowired
@@ -53,6 +60,8 @@ public class OrderController {
 	AccountDAO accountDAO;
 	@Autowired
 	CartDAO cartDAO;
+	@Autowired
+	WeightDAO weightDAO;
 
 	@RequestMapping("/order/detail/vnpay")
 	public String orderdetail(Model model, Integer oderd1) {
@@ -63,6 +72,16 @@ public class OrderController {
 			oderd1 = order.getId();
 			orderdao.save(order);
 			orderdetaildao.saveAll(details);
+
+			for (Orderdetail orderdetail : details) {
+				Weight weight = weightDAO.findByWeightvalue(orderdetail.getWeight());
+				Productweight productweight = productweightdao
+						.findByProductAndWeight(orderdetail.getProduct(), weight);
+
+				productweight.setQuantity(productweight.getQuantity()-orderdetail.getQuantity());
+				productweightdao.save(productweight);
+			}
+
 			return "redirect:/order/detail/" + order.getId();
 
 		} else {
@@ -71,7 +90,7 @@ public class OrderController {
 			model.addAttribute("message", message);
 		}
 
-		return "redirect:/order/detail/";
+		return "/404";
 	}
 
 	@RequestMapping("/order/detail/{id}")
@@ -79,5 +98,10 @@ public class OrderController {
 
 		model.addAttribute("order", orderservice.findById(id));
 		return "cart/order";
+	}
+	
+	@RequestMapping("/order/detail")
+	public String orderdetailindex( Model model) {		
+		return "product/detail_order";
 	}
 }

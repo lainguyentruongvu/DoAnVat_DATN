@@ -10,21 +10,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
+
+import poly.store.dao.AccountDAO;
 import poly.store.dao.CartDAO;
 import poly.store.entity.Account;
 import poly.store.entity.Cart;
 import poly.store.services.AccountService;
 import poly.store.services.SessionService;
+import poly.store.services.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -33,13 +41,19 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 	AccountService accountService;
 
 	@Autowired
+	UserService userService;
+
+	@Autowired
 	BCryptPasswordEncoder pe;
 
 	@Autowired
 	SessionService session;
-	
+
 	@Autowired
 	CartDAO cartdao;
+
+	@Autowired
+	AccountDAO accountdao;
 
 	/* Cơ chế mã hóa mật khẩu */
 	@Bean
@@ -56,25 +70,7 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 	/* Quản lý dữ liệu người sử dụng */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(username -> {
-			try {
-				Account user = accountService.findById(username);				
-				session.set("user", user);
-				session.set("username", user.getUsername());
-
-				String password = pe.encode(user.getPassword()); // Mã hóa mật khấu
-				String[] roles = user.getAuthorities().stream().map(er -> er.getRole().getId())
-						.collect(Collectors.toList()).toArray(new String[0]);
-				Map<String, Object> authentication = new HashMap<>();
-				authentication.put("user", user);
-				byte[] token = (username + ":" + user.getPassword()).getBytes();
-				authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
-				session.set("authentication", authentication);
-				return User.withUsername(username).password(password).roles(roles).build();
-			} catch (NoSuchElementException e) {
-				throw new UsernameNotFoundException(username + " not found!");
-			}
-		});
+		auth.userDetailsService(userService);
 	}
 
 	/* Phân quyền sử dụng */
@@ -82,9 +78,10 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 		// Tắt thuật tấn công giả mạo
 		http.csrf().disable();
 		// Quyền yêu cầu truy cập
-		http.authorizeRequests().antMatchers("/favorites").authenticated().antMatchers("/favorite/error").authenticated()
-				.antMatchers("/order/**", "/auth/change-password").authenticated().antMatchers("/admin/**")
-				.hasAnyRole("STAF", "DIRE").antMatchers("/rest/authorities").hasRole("DIRE").anyRequest().permitAll();
+		http.authorizeRequests().antMatchers("/favorites").authenticated().antMatchers("/favorite/error")
+				.authenticated().antMatchers("/order/**", "/auth/change-password").authenticated()
+				.antMatchers("/admin/**").hasAnyRole("STAF", "DIRE").antMatchers("/rest/authorities").hasRole("DIRE")
+				.anyRequest().permitAll();
 		// Đăng nhập
 		http.formLogin().loginPage("/auth/login/form").loginProcessingUrl("/auth/login")
 				.defaultSuccessUrl("/auth/login/success", false).failureUrl("/auth/login/error");

@@ -47,11 +47,15 @@ public class IndexRestController {
 	@Autowired
 	WeightDAO weightdao;
 
+	@GetMapping("findByActiveted")
+	public List<Product> findByActiveted() {
+		return productdao.findByActiveted(true);
+	}
+
 	@GetMapping()
 	public List<Product> findAll() {
 		return productservice.findAll();
 	}
-
 	@GetMapping("search")
 	public List<Product> search(@RequestParam(name = "keyword") String keyword) {
 		List<Product> searchbooks = productdao.searchProductsByKeyword(keyword);

@@ -57,16 +57,7 @@ public class AccountServiceImpl implements AccountService {
 		adao.deleteById(username);
 	}
 
-	@Override
-	public void loginFromOAuth2(OAuth2AuthenticationToken oauth2) {
-		// String fullname = oauth2.getPrincipal().getAttribute("name");
-		String email = oauth2.getPrincipal().getAttribute("email");
-		String password = Long.toHexString(System.currentTimeMillis());
 
-		UserDetails user = User.withUsername(email).password(pe.encode(password)).roles("CUST").build();
-		Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-		SecurityContextHolder.getContext().setAuthentication(auth);
-	}
 
 	@Override
 	public void updateToken(String token, String email) throws Exception {

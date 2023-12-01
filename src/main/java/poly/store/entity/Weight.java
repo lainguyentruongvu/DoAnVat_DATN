@@ -31,5 +31,8 @@ public class Weight implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "weight")
 	List<Productweight> productweight;
+
+
+	
 	
 }

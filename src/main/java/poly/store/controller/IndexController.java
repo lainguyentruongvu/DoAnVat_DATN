@@ -73,6 +73,11 @@ public class IndexController {
 		return "bill/index";
 
 	}
+	@RequestMapping("404")
+	public String loi(Model model) {
+		return "product/404";
+
+	}
 
 	@RequestMapping("detail/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id) {

@@ -30,12 +30,16 @@ import poly.store.entity.Cart;
 import poly.store.services.AccountService;
 import poly.store.services.MailerService;
 import poly.store.services.SessionService;
+import poly.store.services.UserService;
 
 @Controller
 public class AuthController {
 
 	@Autowired
 	SessionService session;
+
+	@Autowired
+	UserService userservice;
 
 	@Autowired
 	AccountDAO accountDAO;
@@ -101,7 +105,7 @@ public class AuthController {
 	// OAuth2
 	@RequestMapping("/oauth2/login/success")
 	public String oauth2(OAuth2AuthenticationToken oauth2) {
-		accountService.loginFromOAuth2(oauth2);
+		userservice.loginFromOAuth2(oauth2);
 		return "forward:/auth/login/success";
 	}
 

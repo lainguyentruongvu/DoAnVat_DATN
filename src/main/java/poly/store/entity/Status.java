@@ -22,6 +22,7 @@ import lombok.Data;
 @Table(name = "Statuss")
 public class Status implements Serializable {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 	String name;
 
