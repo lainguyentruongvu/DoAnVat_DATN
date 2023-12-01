@@ -320,7 +320,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			Swal.fire("Error", "Sản phẩm đã hết thời gian giảm giá!", "error");
 
 		} else {
-			
+
 			$scope.data = {
 				price: discount,
 				quantity: 1,
@@ -1112,7 +1112,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	$scope.getbestsl = function() {
 		$http.get("/rest/bestseller/").then(resp => {
 			$scope.bestseller = resp.data;
-			console.log($scope.bestseller)
 		}).catch(error => {
 			console.log("Error", error)
 		})
@@ -1128,8 +1127,16 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 		const remainingMilliseconds = endTime - currentTime;
 		const remainingSeconds = Math.floor(remainingMilliseconds / 1000);
-		const hours = Math.floor(remainingSeconds / 3600);
-		const minutes = Math.floor((remainingSeconds % 3600) / 60);
+		const remainingMinutes = Math.floor(remainingSeconds / 60);
+		const remainingHours = Math.floor(remainingMinutes / 60);
+
+		if (remainingHours >= 24) {
+			const remainingDays = Math.floor(remainingHours / 24);
+			return `${remainingDays} ngày`;
+		}
+
+		const hours = remainingHours % 24;
+		const minutes = remainingMinutes % 60;
 		const seconds = remainingSeconds % 60;
 
 		return `${hours} giờ ${minutes} phút ${seconds} giây`;
@@ -1405,6 +1412,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					performStatusChange(orderId, newStatusId);
 
 
+
 				}
 			});
 		} else {
@@ -1429,6 +1437,11 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				$scope.trangthai(newStatusId);
 				$scope.orderuserstatuss();
 				$scope.orderuserfc();
+				$scope.status1();
+				$scope.status2();
+				$scope.status3();
+				$scope.status4();
+				$scope.status5();
 				Swal.fire({
 					icon: 'success',
 					title: 'Thành công',
@@ -1441,9 +1454,12 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	//Hiển thị top sản phẩm bán chạy
 	$scope.topproduct = function() {
-		var url = `rest/products/findtop10product`;
+		var url = `rest/products/findtop4product`;
 		$http.get(url).then(resp => {
 			$scope.top10product = resp.data;
+		});
+		$http.get(`rest/products/findtop3product`).then(resp => {
+			$scope.top3product = resp.data;
 		});
 	}
 	$scope.topproduct();

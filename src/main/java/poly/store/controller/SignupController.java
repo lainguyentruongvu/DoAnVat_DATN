@@ -63,20 +63,21 @@ public class SignupController {
 
 		List<Account> all = dao.findAll();
 		for (Account account2 : all) {
-			if (account2.getUsername().equals(username)) {
-				model.addAttribute("account", account);
+			if (username != null && username.equals(account2.getUsername())) {
+				model.addAttribute("account", account2); // Assuming you meant to use account2 here
 				model.addAttribute("message", "Tên đăng nhập đã được sử dụng ");
 				return "auth/dangKy";
 			}
-			if (account2.getEmail().equals(email)) {
-				model.addAttribute("account", account);
+
+			// Adding null check for getEmail()
+			if (email != null && account2.getEmail() != null && account2.getEmail().equals(email)) {
+				model.addAttribute("tài khoản", account2); // Assuming you meant to use account2 here
 				model.addAttribute("message", "Email đã được sử dụng ");
 				return "auth/dangKy";
 			}
-
 		}
 		String tokencode = getRandomString(6);
-		 Integer mxn = Integer.parseInt(tokencode);
+		Integer mxn = Integer.parseInt(tokencode);
 
 		String thongBao = "Thông báo: Mã xác nhận mã \r\n" + "\r\n" + "Kính gửi quý khách hàng,\r\n" + "\r\n <br>	"
 				+ "Chúng tôi gửi đến quý khách mã xác nhận mới để đảm bảo tính bảo mật cho tài khoản của quý khách. Mã xác nhận này được sử dụng để xác thực và bảo vệ quyền riêng tư của quý khách trong quá trình sử dụng dịch vụ của chúng tôi.\r\n <br>	"
@@ -106,7 +107,7 @@ public class SignupController {
 
 	@RequestMapping("confirm")
 	public String Confirm(Model model, @RequestParam("confirm") Integer confirm) {
-		
+
 		Integer token = session.get("mxn");
 		System.out.println(confirm);
 		System.out.println(token);

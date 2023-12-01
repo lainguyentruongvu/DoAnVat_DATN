@@ -56,6 +56,7 @@ public class IndexRestController {
 	public List<Product> findAll() {
 		return productservice.findAll();
 	}
+
 	@GetMapping("search")
 	public List<Product> search(@RequestParam(name = "keyword") String keyword) {
 		List<Product> searchbooks = productdao.searchProductsByKeyword(keyword);
@@ -121,9 +122,22 @@ public class IndexRestController {
 		productweightdao.deleteById(id);
 	}
 
-	@GetMapping("/findtop10product")
-	public List<Product> Top10Product() {
+	@GetMapping("/findtop4product")
+	public List<Product> Top4Product() {
 		Pageable pageable = PageRequest.of(0, 4);
+		List<Object[]> orderproduct = orderdetaildao.findTop10BestSellingProducts(pageable);
+		List<Product> productIds = new ArrayList<>();
+		for (Object[] orderProduct : orderproduct) {
+			Integer productId = (Integer) orderProduct[0];
+			Product listproduct = productservice.findById(productId);
+			productIds.add(listproduct);
+		}
+		return productIds;
+	}
+
+	@GetMapping("/findtop3product")
+	public List<Product> Top3Product() {
+		Pageable pageable = PageRequest.of(0, 3);
 		List<Object[]> orderproduct = orderdetaildao.findTop10BestSellingProducts(pageable);
 		List<Product> productIds = new ArrayList<>();
 		for (Object[] orderProduct : orderproduct) {

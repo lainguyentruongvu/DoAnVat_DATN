@@ -1675,9 +1675,9 @@
 										item.product.price - (item.product.price * (item.discount / 100)) |
 										number:0 }} VNĐ ✓</p>
 									<h4 class="title"><a>{{
-											calculateRemainingTime(item.enddate) }}</a></h4>
+											calculateRemainingTime(item.enddate) }} Giảm Giá</a></h4>
 
-									
+
 								</div>
 							</div>
 						</div>
@@ -1695,55 +1695,18 @@
 						</div>
 					</div>
 					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
+					<div ng-repeat="item in top3product" class="single-list">
+						<div  class="row">
+							<div  class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
-									<img src="images/sp_5.jpg" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
+									<img src="../../images/product/{{item.image}}" alt="#">
+									<a ng-click="addcart(item)" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h5 class="title"><a href="#">Snack Cheetos que</a></h5>
-									<p><del> 35.000 VNĐ </del></p>
-									<p class="price with-discount">25.000 VNĐ ✓</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$33</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$77</p>
+									<h5 class="title"><a href="#">{{item.name}}</a></h5>
+									<p class="price with-discount">{{item.price | number :0}} VNĐ</p>
 								</div>
 							</div>
 						</div>
