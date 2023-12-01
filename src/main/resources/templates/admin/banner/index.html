@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/layoutad/layout::dynamic(~{::title},~{::body})}">
 
 <head>
-	<title>Voucher</title>
+	<title>Cập nhật banner</title>
 
 </head>
 
-<body class="vertical light" ng-app="app" ng-controller="product-ctrl">
+<body class="vertical light" ng-app="app" ng-controller="banner-ctrl">
 
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<div class="">
@@ -15,411 +15,273 @@
 			<!-- BẮT ĐẦU PHẦN NỘI DUNG CỦA CRUD VOUCHER -->
 			<main role="main" class="main-content">
 				<div class="container-fluid">
+					<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+						<h3 style="padding-top: 20px;">THÊM XÓA HÌNH ẢNH BANNER</h3>
+						<form>
+							<div class="form-row justify-content-center">
+								<div class="form-group col-md-8">
+									<label class="text-center">Ảnh banner (1900x700)</label>
 
-					<nav>
-						<div class="nav nav-tabs" id="nav-tab" role="tablist">
-							<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
-								role="tab" aria-controls="nav-home" aria-selected="true">Chỉnh sửa</a>
-							<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-								role="tab" aria-controls="nav-profile" aria-selected="false">Danh sách</a>
-
-						</div>
-					</nav>
-
-					<div class="tab-content" id="nav-tabContent">
-
-
-						<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-							aria-labelledby="nav-home-tab">
-
-							<h3 style="padding-top: 20px;"> Thêm sửa xóa hình ảnh banner</h3>
-
-							<form>
-								<div class="form-row justify-content-center">
-									<div class="form-group col-md-8">
-										<label class="text-center">Ảnh banner (1900x700)</label>
-
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-											</div>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="inputGroupFile01"
-													aria-describedby="inputGroupFileAddon01">
-												<label class="custom-file-label" for="inputGroupFile01">Chọn
-													hình</label>
-											</div>
+									<div class="input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
 										</div>
+										<div class="custom-file">
+											<input type="file" class="custom-file-input"
+												aria-describedby="inputGroupFileAddon01" id="image"
+												ng-model="banner_1900x700.image"
+												onchange="angular.element(this).scope().imageChangedbanner1900x700(this.files)"
+												accept="image/png, image/jpeg">
+											<label class="custom-file-label" for="inputGroupFile01">Chọn hình</label>
+										</div>
+									</div>
 
+									<div style="position: relative; height: 150px; overflow: hidden;">
+										<img src="../../images/banner/{{banner_1900x700.image}}" alt=""
+											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
+										<!-- Nút "X" để xóa ảnh -->
+										<button class="btn btn-danger btn-sm" ng-click="deleteimageChangedbanner1900x700()"
+											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
 
 								</div>
-								<hr>
-								
-								<div class="form-row">
-									<div class="form-group col-md-4">
-										<label for="">Hình phụ 1 (600x370)</label>
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-											</div>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="inputGroupFile01"
-													aria-describedby="inputGroupFileAddon01">
-												<label class="custom-file-label" for="inputGroupFile01">6.jpg</label>
-											</div>
-											
+							</div>
+							<hr>
+							<div class="form-row">
+								<div class="form-group col-md-4 " style="height: 280px;">
+									<label for="">Hình phụ 1 (600x370)</label>
+									<div class="input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
 										</div>
-										
-										
-
-									</div>
-									<div class="form-group col-md-4">
-										<label for="">Hình phụ 2 (600x370)</label>
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-											</div>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="inputGroupFile01"
-													aria-describedby="inputGroupFileAddon01">
-												<label class="custom-file-label" for="inputGroupFile01">Chọn
-													hình</label>
-											</div>
-										</div>
-
-									</div>
-									<div class="form-group col-md-4">
-										<label for="">Hình phụ 3 (600x370)</label>
-
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-											</div>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="inputGroupFile01"
-													aria-describedby="inputGroupFileAddon01">
-												<label class="custom-file-label" for="inputGroupFile01">Chọn
-													hình</label>
-											</div>
-										</div>
-
-									</div>
-								</div>
-								<hr>
-								<div class="form-row">
-
-									<div class="form-group col-md-6">
-										<label for="">Banner 1 (600x370)</label>
-
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-											</div>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="inputGroupFile01"
-													aria-describedby="inputGroupFileAddon01">
-												<label class="custom-file-label" for="inputGroupFile01">Chọn
-													hình</label>
-											</div>
+										<div class="custom-file ">
+											<input type="file" class="custom-file-input"
+												aria-describedby="inputGroupFileAddon01" id="image"
+												ng-model="anhphu1_600x370.image"
+												onchange="angular.element(this).scope().imageChanged_anhphu1_600x370(this.files)"
+												accept="image/png, image/jpeg">
+											<label class="custom-file-label" for="inputGroupFile01">Chọn hình</label>
 										</div>
 
 									</div>
 
-									<div class="form-group col-md-6">
-										<label for="">Banner 2 (600x370)</label>
+									<div class="" style="position: relative; height: 200px; overflow: hidden;">
+										<img src="../../images/banner/{{anhphu1_600x370.image}}" alt=""
+											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-											</div>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="inputGroupFile01"
-													aria-describedby="inputGroupFileAddon01">
-												<label class="custom-file-label" for="inputGroupFile01">Chọn
-													hình</label>
-											</div>
-										</div>
-
-									</div>
-
-								</div>
-								<hr>
-								<div class="form-row">
-
-									<div class="form-group col-md-4">
-										<label for="">Banner thông tin 1 (300x370)</label>
-
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-											</div>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="inputGroupFile01"
-													aria-describedby="inputGroupFileAddon01">
-												<label class="custom-file-label" for="inputGroupFile01">Chọn
-													hình</label>
-											</div>
-										</div>
-									</div>
-
-									<div class="form-group col-md-4">
-										<label for="">Banner thông tin 2 (300x370)</label>
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-											</div>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="inputGroupFile01"
-													aria-describedby="inputGroupFileAddon01">
-												<label class="custom-file-label" for="inputGroupFile01">Chọn
-													hình</label>
-											</div>
-										</div>
-									</div>
-
-									<div class="form-group col-md-4">
-										<label for="">Banner thông tin 2 (300x370)</label>
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-											</div>
-											<div class="custom-file">
-												<input type="file" class="custom-file-input" id="inputGroupFile01"
-													aria-describedby="inputGroupFileAddon01">
-												<label class="custom-file-label" for="inputGroupFile01">Chọn
-													hình</label>
-											</div>
-										</div>
+										<!-- Nút "X" để xóa ảnh -->
+										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_anhphu1_600x370()"
+											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
 								</div>
 
-								<hr>
-								<button style="color: white; font-weight: bold;" type="submit"
-									class="btn btn-success"><i class="bi bi-folder-plus"></i> Thêm</button>
-								<button style="color: white; font-weight: bold;" type="submit"
-									class="btn btn-warning"><i class="bi bi-pencil-square"></i> Cập nhật</button>
 
-							</form>
+								<div class="form-group col-md-4 " style="height: 280px;">
+									<label for="">Hình phụ 2 (600x370)</label>
+									<div class="input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+										</div>
+										<div class="custom-file ">
+											<input type="file" class="custom-file-input"
+												aria-describedby="inputGroupFileAddon01" id="image"
+												ng-model="anhphu2_600x370.image"
+												onchange="angular.element(this).scope().imageChanged_anhphu2_600x370(this.files)"
+												accept="image/png, image/jpeg">
+											<label class="custom-file-label" for="inputGroupFile01">Chọn hình</label>
+										</div>
 
-						</div>
+									</div>
 
-						<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-							
-							
-							<div class="row">
+									<div class="" style="position: relative; height: 200px; overflow: hidden;">
+										<img src="../../images/banner/{{anhphu2_600x370.image}}" alt=""
+											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
-								<div class="col-12" style="padding-top: 20px;">
-									<h2 class="mb-2 page-title">DANH SÁCH VOUCHER</h2>
-									
-									<div class="row my-4">
-										<!-- Small table -->
-										<div class="col-md-12">
-											<div class="card shadow">
-												<div class="card-body">
-													<!-- table -->
-													<table class="table datatables table-hover">
-								
-								<thead>
-									<tr>
-										<th scope="col">Thông tin ảnh</th>
-										<th scope="col">Tên ảnh</th>
-										<th scope="col">Ngày tải lên</th>
-										<th scope="col">Thao tác</th>
-									</tr>
-								</thead>
-								
-								<tbody>
-									<tr>
-										<th scope="row">Banner 1 1900x750</th>
-										<td>bannershop.jpg</td>
-										<td>26/11/2023</td>
-										<td><button class="btn btn-danger"><i class="bi bi-trash"></i> Xóa</button></td>
-									</tr>
+										<!-- Nút "X" để xóa ảnh -->
+										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_anhphu2_600x370()"
+											style="position: absolute; top: 5px; right: 5px;">X</button>
+									</div>
+								</div>
+								<div class="form-group col-md-4 " style="height: 280px;">
+									<label for="">Hình phụ 3 (600x370)</label>
+									<div class="input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+										</div>
+										<div class="custom-file ">
+											<input type="file" class="custom-file-input"
+												aria-describedby="inputGroupFileAddon01" id="image"
+												ng-model="anhphu3_600x370.image"
+												onchange="angular.element(this).scope().imageChanged_anhphu3_600x370(this.files)"
+												accept="image/png, image/jpeg">
+											<label class="custom-file-label" for="inputGroupFile01">Chọn hình</label>
+										</div>
 
-									<tr>
-										<th scope="row">Banner thông tin 750x320</th>
-										<td>bannertt.jpg</td>
-										<td>26/11/2023</td>
-										<td><button class="btn btn-danger"><i class="bi bi-trash"></i> Xóa</button></td>
-									</tr>
+									</div>
 
-									<tr>
-										<th scope="row">Banner mini 750x320</th>
-										<td>bannermini.jpg</td>
-										<td>26/11/2023</td>
-										<td><button class="btn btn-danger"><i class="bi bi-trash"></i> Xóa</button></td>
-									</tr>
-								</tbody>
-								
-							</table>
-												</div>
-											</div>
-										</div> <!-- simple table -->
-									</div> <!-- end section -->
-								</div> <!-- .col-12 -->
+									<div class="" style="position: relative; height: 200px; overflow: hidden;">
+										<img src="../../images/banner/{{anhphu3_600x370.image}}" alt=""
+											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
+										<!-- Nút "X" để xóa ảnh -->
+										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_anhphu3_600x370()"
+											style="position: absolute; top: 5px; right: 5px;">X</button>
+									</div>
+								</div>
+							</div>
+							<hr>
 
-							</div> <!-- .row -->
-							
-							
-							
-							
-							
-							
-							
-							
-						</div>
+							<div class="form-row">
 
+								<div class="form-group col-md-6">
+									<label for="">Banner 1 (600x370)</label>
+									<div class="input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+										</div>
+										<div class="custom-file">
+											<input type="file" class="custom-file-input"
+												aria-describedby="inputGroupFileAddon01" id="image"
+												ng-model="banner1_600x370.image"
+												onchange="angular.element(this).scope().imageChanged_banner1_600x370(this.files)"
+												accept="image/png, image/jpeg">
+											<label class="custom-file-label" for="inputGroupFile01">Chọn
+												hình</label>
+										</div>
+									</div>
+									<div class="" style="position: relative; height: 200px; overflow: hidden;">
+										<img src="../../images/banner/{{banner1_600x370.image}}" alt=""
+											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+
+										<!-- Nút "X" để xóa ảnh -->
+										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_banner1_600x370()"
+											style="position: absolute; top: 5px; right: 5px;">X</button>
+									</div>
+								</div>
+
+								<div class="form-group col-md-6">
+									<label for="">Banner 2 (600x370)</label>
+									<div class="input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+										</div>
+										<div class="custom-file">
+											<input type="file" class="custom-file-input"
+												aria-describedby="inputGroupFileAddon01" id="image"
+												ng-model="banner2_600x370.image"
+												onchange="angular.element(this).scope().imageChanged_banner2_600x370(this.files)"
+												accept="image/png, image/jpeg">
+											<label class="custom-file-label" for="inputGroupFile01">Chọn
+												hình</label>
+										</div>
+									</div>
+									<div class="" style="position: relative; height: 200px; overflow: hidden;">
+										<img src="../../images/banner/{{banner2_600x370.image}}" alt=""
+											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+
+										<!-- Nút "X" để xóa ảnh -->
+										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_banner2_600x370()"
+											style="position: absolute; top: 5px; right: 5px;">X</button>
+									</div>
+								</div>
+
+							</div>
+							<hr>
+
+							<div class="form-row">
+								<div class="form-group col-md-4">
+									<label for="">Banner thông tin 1 (370x300)</label>
+									<div class="input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+										</div>
+										<div class="custom-file">
+											<input type="file" class="custom-file-input"
+												aria-describedby="inputGroupFileAddon01" id="image"
+												ng-model="bannerthongtin1_370x300.image"
+												onchange="angular.element(this).scope().imageChanged_bannerthongtin1_370x300(this.files)"
+												accept="image/png, image/jpeg">
+											<label class="custom-file-label" for="inputGroupFile01">Chọn
+												hình</label>
+										</div>
+									</div>
+
+									<div class="" style="position: relative; height: 200px; overflow: hidden;">
+										<img src="../../images/banner/{{bannerthongtin1_370x300.image}}" alt=""
+											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+
+										<!-- Nút "X" để xóa ảnh -->
+										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_bannerthongtin1_370x300()"
+											style="position: absolute; top: 5px; right: 5px;">X</button>
+									</div>
+
+								</div>
+
+								<div class="form-group col-md-4">
+									<label for="">Banner thông tin 2 (370x300)</label>
+									<div class="input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+										</div>
+										<div class="custom-file">
+											<input type="file" class="custom-file-input"
+												aria-describedby="inputGroupFileAddon01" id="image"
+												ng-model="bannerthongtin2_370x300.image"
+												onchange="angular.element(this).scope().imageChanged_bannerthongtin2_370x300(this.files)"
+												accept="image/png, image/jpeg">
+											<label class="custom-file-label" for="inputGroupFile01">Chọn
+												hình</label>
+										</div>
+									</div>
+
+									<div class="" style="position: relative; height: 200px; overflow: hidden;">
+										<img src="../../images/banner/{{bannerthongtin2_370x300.image}}" alt=""
+											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+
+										<!-- Nút "X" để xóa ảnh -->
+										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_bannerthongtin2_370x300()"
+											style="position: absolute; top: 5px; right: 5px;">X</button>
+									</div>
+
+								</div>
+
+								<div class="form-group col-md-4">
+									<label for="">Banner thông tin 3 (370x300)</label>
+									<div class="input-group form-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+										</div>
+										<div class="custom-file">
+											<input type="file" class="custom-file-input"
+												aria-describedby="inputGroupFileAddon01" id="image"
+												ng-model="bannerthongtin3_370x300.image"
+												onchange="angular.element(this).scope().imageChanged_bannerthongtin3_370x300(this.files)"
+												accept="image/png, image/jpeg">
+											<label class="custom-file-label" for="inputGroupFile01">Chọn
+												hình</label>
+										</div>
+									</div>
+
+									<div class="" style="position: relative; height: 200px; overflow: hidden;">
+										<img src="../../images/banner/{{bannerthongtin3_370x300.image}}" alt=""
+											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+
+										<!-- Nút "X" để xóa ảnh -->
+										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_bannerthongtin3_370x300()"
+											style="position: absolute; top: 5px; right: 5px;">X</button>
+									</div>
+
+								</div>
+							</div>
+							<hr>
+						</form>
 
 					</div>
-
-
 				</div>
 			</main> <!-- main -->
 		</div> <!-- .container-fluid -->
-
-
-		<div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog modal-sm" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="list-group list-group-flush my-n3">
-							<div class="list-group-item bg-transparent">
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<span class="fe fe-box fe-24"></span>
-									</div>
-									<div class="col">
-										<small><strong>Package has uploaded successfull</strong></small>
-										<div class="my-0 text-muted small">Package is zipped and uploaded</div>
-										<small class="badge badge-pill badge-light text-muted">1m ago</small>
-									</div>
-								</div>
-							</div>
-							<div class="list-group-item bg-transparent">
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<span class="fe fe-download fe-24"></span>
-									</div>
-									<div class="col">
-										<small><strong>Widgets are updated successfull</strong></small>
-										<div class="my-0 text-muted small">Just create new layout Index, form, table
-										</div>
-										<small class="badge badge-pill badge-light text-muted">2m ago</small>
-									</div>
-								</div>
-							</div>
-							<div class="list-group-item bg-transparent">
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<span class="fe fe-inbox fe-24"></span>
-									</div>
-									<div class="col">
-										<small><strong>Notifications have been sent</strong></small>
-										<div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
-										<small class="badge badge-pill badge-light text-muted">30m ago</small>
-									</div>
-								</div> <!-- / .row -->
-							</div>
-							<div class="list-group-item bg-transparent">
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<span class="fe fe-link fe-24"></span>
-									</div>
-									<div class="col">
-										<small><strong>Link was attached to menu</strong></small>
-										<div class="my-0 text-muted small">New layout has been attached to the menu
-										</div>
-										<small class="badge badge-pill badge-light text-muted">1h ago</small>
-									</div>
-								</div>
-							</div> <!-- / .row -->
-						</div> <!-- / .list-group -->
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear
-							All</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
-			aria-labelledby="defaultModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body px-5">
-						<div class="row align-items-center">
-							<div class="col-6 text-center">
-								<div class="squircle bg-success justify-content-center">
-									<i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Control area</p>
-							</div>
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-activity fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Activity</p>
-							</div>
-						</div>
-						<div class="row align-items-center">
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Droplet</p>
-							</div>
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Upload</p>
-							</div>
-						</div>
-						<div class="row align-items-center">
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-users fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Users</p>
-							</div>
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-settings fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Settings</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-
-
-		</div>
 	</div>
-
-
-
-
-
 
 
 </body>
