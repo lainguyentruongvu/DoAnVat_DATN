@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Transparent login form using html and css" />
+<meta name="keywords" content="Transparent login form, login form, HTML, css, Background Blur, login form using html and css, Avatar Icon, Login With Facebook, Login with Google" />
+<meta name="author" content="HTMLCSS3TUTORIALS" />
+<link rel="stylesheet" type="text/css" href="../../css/quenMatkhau.css" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+
+	<div class="formContent blur">
+	
+		<div>
+			<h2><img src="../../images/logo_noback.png" alt="" style="width: 250px;"><br>QUÊN MẬT KHẨU</h2>
+			<form th:action="@{/auth/forgot-password}" method="post">			
+					
+					<label>Gmail</label>
+					<input type="email" name="email" required>
+					
+					<input type="submit" name="submit" value="Gửi mã">
+					<div class="remember">
+							<div class="login"><div class="Oroption">Hoặc</div></div>
+							<div class="links">
+								<button class="btn btn-danger google"><i class="bi bi-google"></i> Google</button> &nbsp;
+									<button class="btn btn-primary facebook"><i class="bi bi-facebook"></i> Facebook</button>
+							</div>
+							<div class="signup"> Bạn đã nhớ tài khoản? <a href="#">Đăng nhập ngay!</a> </div>
+					</div>
+			</form>
+		</div>
+	</div>
+
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
+

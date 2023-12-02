@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/layoutad/layout::dynamic(~{::title},~{::body})}">
+
+<head>
+<title>Quản lý tài khoản</title>
+</head>
+
+<body class="vertical light" ng-app="app" ng-controller="authority-ctrl">
+
+	<main role="main" class="main-content">
+
+		<div class="row">
+			<!-- Small table -->
+			<div class="col-md-12 my-4">
+				<h2 class="h4 mb-1">QUẢN LÝ PHÂN QUYỀN</h2>
+				<p class="mb-3">Công cụ cung cấp và thu hồi quyền tài khoản</p>
+				<div class="card shadow">
+					<div class="card-body">
+						
+						<!-- table -->
+						<table class="table table-borderless table-hover">
+							<thead>
+								<tr>
+
+
+									<th>Họ và tên</th>
+									<th ng-repeat="role in roles">{{role.name}}</th>
+
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr ng-repeat="acc in admins">
+									<td>{{acc.name}}</td>
+									<th ng-repeat="role in roles" class="align-center text-center">
+										<input type="checkbox" ng-checked="authority_of(acc,role)"
+										ng-click="authority_changed(acc,role)">
+									</th>
+
+								</tr>
+
+
+							</tbody>
+						</table>
+						<nav aria-label="Table Paging" class="mb-0 text-muted">
+							<ul class="pagination justify-content-center mb-0">
+								<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item active"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item"><a class="page-link" href="#">Next</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+			<!-- customized table -->
+		</div>
+		<!-- end section -->
+	</main>
+	<!-- main -->
+
+
+
+
+</body>
+
+</html>

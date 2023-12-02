@@ -174,7 +174,7 @@
 										<div class="card-title">Đơn hàng hôm nay </div>
 									</div>
 									<div class="card-body">
-										<table class="table table-borderless table-striped">
+										<table class="table table-borderless table-striped table-hover" style="font-size: 13px;">
 											<thead>
 												<tr role="row">
 													<th>Mã hóa đơn</th>
@@ -192,7 +192,7 @@
 											<tbody>
 												<tr ng-repeat="item in ddhanghna">
 													<th>{{item.id}}</th>
-													<td>{{item.createdate}}</td>
+													<td >{{item.createdate}}</td>
 													<td>{{item.account.name}}</td>
 													<td>{{item.phone}}</td>
 													<td>{{item.address}}</td>
@@ -343,6 +343,7 @@
 			</div>
 		</main> <!-- main -->
 	</div> <!-- .wrapper -->
+	
 </body>
 
 </html>

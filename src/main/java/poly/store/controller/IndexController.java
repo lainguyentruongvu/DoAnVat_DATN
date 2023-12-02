@@ -78,6 +78,11 @@ public class IndexController {
 		return "product/404";
 
 	}
+	@RequestMapping("about")
+	public String about(Model model) {
+		return "about/aboutUs";
+
+	}
 
 	@RequestMapping("detail/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id) {

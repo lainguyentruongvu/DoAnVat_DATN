@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/layoutad/layout::dynamic(~{::title},~{::body})}">
+
+<head>
+	<title>Quản lý tài khoản</title>
+</head>
+
+<body class="vertical light" ng-app="app" ng-controller="account-ctrl">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<div class="container">
+		<div class="row flex-lg-nowrap">
+
+
+			<div class="col">
+
+				<!-- FORM NHẬP THÔNG TIN -->
+				<div class="modal fade" role="dialog" tabindex="-1" id="user-form-modal">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Thêm sửa tài khoản</h5>
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="py-1">
+									<form class="form" method="post" enctype="multipart/form-data">
+
+										<div class="row">
+											<div class="col">
+												<div class="row">
+													<div class="col-lg-6">
+														<div class="form-group img-thumbnail"
+															style="padding-left: 50px;">
+															<img src="../../images/avt/{{form.image}}"
+																style="border-radius: 10px;" width="250px"
+																height="250px">
+															<hr>
+															<div class="input-group">
+																<div class="input-group-prepend">
+																	<span class="input-group-text"
+																		id="inputGroupFileAddon01">Tải lên</span>
+																</div>
+																<div class="custom-file">
+
+																	<input type="file" class="custom-file-input"
+																		aria-describedby="inputGroupFileAddon01"
+																		id="image" ng-model="form.image"
+																		onchange="angular.element(this).scope().imageChanged(this.files)"
+																		accept="image/png, image/jpeg">
+
+																	<label class="custom-file-label"
+																		for="inputGroupFile01">Chọn ảnh</label>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-6">
+														<div class="form-group">
+															<label>Tên đăng nhập</label>
+															<input class="form-control" ng-model="form.username"
+																type="text" name="name"
+																placeholder="Nhập tên đăng nhập">
+														</div>
+
+														<div class="form-group">
+															<label>Họ và tên</label>
+															<input class="form-control" ng-model="form.name" type="text"
+																name="username" placeholder="Nhập họ và tên">
+														</div>
+														<div class="form-group">
+															<label>Trạng thái hoạt động:</label> <br>
+															<label>
+																<input type="radio" name="activeted"
+																	ng-model="form.activeted" value="false"
+																	ng-checked="form.activeted === false">
+																Không
+															</label>
+															<label>
+																<input type="radio" name="activeted"
+																	ng-model="form.activeted" value="true"
+																	ng-checked="form.activeted === true">
+																Có
+															</label>
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col">
+														<div class="form-group">
+															<label>Email</label>
+															<input class="form-control" ng-model="form.email"
+																type="email" placeholder="Nhập email">
+														</div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+															<label>Số điện thoại</label>
+															<input class="form-control" ng-model="form.phone"
+																type="text" name="username"
+																placeholder="Nhập số điện thoại">
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col mb-3">
+														<div class="form-group">
+															<label>Thông tin tài khoản</label>
+															<textarea class="form-control" ng-model="form.address"
+																rows="5" placeholder="Thông tin tài khoản"></textarea>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+										<div class="row">
+											<div class="col-12 col-sm-6 mb-3">
+												<div class="mb-2"><b>Thiết lập mật khẩu lần đầu</b></div>
+												<div class="row">
+													<div class="col">
+
+													</div>
+												</div>
+												<div class="row">
+													<div class="col">
+														<div class="form-group">
+															<label>Mật khẩu</label>
+															<input class="form-control" ng-model="form.password"
+																type="password" placeholder="Nhập mật khẩu">
+														</div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+															<label>Nhập lại mật khẩu</label>
+															<input class="form-control" type="password" ng-model="form.repassword"
+																placeholder="Nhập lại mật khẩu">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-12 col-sm-5 offset-sm-1 mb-3">
+												<div class="mb-2"><b>Thông báo!</b></div>
+												<div class="row">
+													<div class="col">
+														<label><i>Mọi tài khoản tạo ở đây đều là quyền nhân
+																viên</i></label>
+
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col d-flex justify-content-end">
+												<button ng-click="create()" class="btn btn-primary"
+													ng-hide="index == -1" ><i
+														class="bi bi-person-plus"></i> Thêm</button> &nbsp;
+												<button ng-click="update()" class="btn btn-primary"
+													ng-show="index == -1" ><i
+														class="bi bi-person-add"></i> Cập nhật</button> &nbsp;
+												<button ng-click="delete(form)" class="btn btn-danger"
+													ng-show="index == -1" data-dismiss="modal"><i
+														class="bi bi-trash3"></i> Xóa</button> &nbsp;
+												<button ng-click="reset()" class="btn btn-info"><i
+														class="bi bi-arrow-clockwise"></i> Làm mới</button> &nbsp;
+											</div>
+										</div>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<main role="main" class="main-content">
+		<div class="container-fluid">
+			<div class="row justify-content-center">
+				<div class="col-12">
+					<div class="row">
+						<!-- Small table -->
+						<div class="col-md-12 my-4">
+							<h2 class="h4 mb-1">QUẢN LÝ TÀI KHOẢN</h2>
+							<p class="mb-3">Công cụ thêm sửa xóa tài khoản nhân viên</p>
+							<div class="card shadow">
+								<div class="card-body">
+									<div class="toolbar">
+										<form class="form">
+											<div class="form-row">
+												<div class="form-group col-auto mr-auto">
+
+
+												</div>
+												<div class="form-group col-auto">
+													<button style="color: white;" class="btn btn-success btn-block"
+														type="button" data-toggle="modal" data-target="#user-form-modal"
+														ng-click="reset()"><i class="bi bi-person-plus"></i> Thêm tài
+														khoản</button>
+													<label class="sr-only">Tìm kiếm</label>
+
+												</div>
+												<div class="form-group col-auto"> <input type="text"
+														class="form-control" id="search1" value=""
+														placeholder="Tìm kiếm"></div>
+											</div>
+										</form>
+									</div>
+									<!-- table -->
+									<table class="table table-borderless table-hover">
+										<thead>
+											<tr>
+
+
+												<th>Đại diện</th>
+												<th>Tên đăng nhập</th>
+												<th>Họ và tên</th>
+												<th>Email</th>
+												<th>SĐT</th>
+												<th>Địa chỉ</th>
+												<th>Trạng thái</th>
+												<th>Công cụ</th>
+
+											</tr>
+										</thead>
+										<tbody>
+
+											<tr ng-repeat="item in pager.items">
+
+												<td>
+													<div class="avatar avatar-md">
+														<img src="../../images/avt/{{item.image}}" width="80px"
+															height="50px" style="border-radius: 10px;">
+													</div>
+												</td>
+												<td><strong>{{item.username}}</strong></td>
+												<td>
+													<p class="mb-0 text-muted"><strong>{{item.name}}</strong></p>
+												</td>
+												<td>
+													<p class="mb-0 text-muted">{{item.email}}</p>
+												</td>
+												<td>
+													<p class="mb-0 text-muted"><a href="#"
+															class="text-muted">{{item.phone}}</a></p>
+
+												</td>
+												<td class="w-25"><small class="text-muted">{{item.address}}</small></td>
+												
+												<td>
+													<p class="mb-0 text-muted"><a href="#"
+															class="text-muted">{{item.activeted ? 'Cho phép' : 'Không
+															cho phép' }}</a></p>
+
+												</td>
+												<td style="color: white;">
+													<a class="btn btn-warning" data-toggle="modal"
+														data-target="#user-form-modal" ng-click="edit(item)"><i
+															class="bi bi-pencil-square"></i> Sửa</a>
+													<a class="btn btn-danger" ng-click="delete(item)"><i
+															class="bi bi-trash"></i> Xóa</a>
+												</td>
+											</tr>
+
+
+										</tbody>
+									</table>
+									<nav aria-label="Table Paging" class="mb-0 text-muted">
+										<ul class="pagination justify-content-center mb-0">
+											<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+											<li class="page-item"><a class="page-link" href="#">1</a></li>
+											<li class="page-item active"><a class="page-link" href="#">2</a></li>
+											<li class="page-item"><a class="page-link" href="#">3</a></li>
+											<li class="page-item"><a class="page-link" href="#">Next</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</div> <!-- customized table -->
+					</div> <!-- end section -->
+					<div class="row">
+						<!-- Striped rows -->
+
+	</main> <!-- main -->
+	</div> <!-- .wrapper -->
+
+
+
+</body>
+
+</html>

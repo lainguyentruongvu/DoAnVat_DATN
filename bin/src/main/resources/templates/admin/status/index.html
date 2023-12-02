@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/layoutad/layout::dynamic(~{::title},~{::body})}">
+
+<head>
+	<title>Quản lý trạng thái đơn hàng</title>
+</head>
+
+<body class="vertical light" ng-app="app" ng-controller="statusOR-ctrl">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<div class="container">
+		<div class="row flex-lg-nowrap">
+			<div class="col">
+				<!-- FORM NHẬP THÔNG TIN -->
+				<div class="modal fade" role="dialog" tabindex="-1" id="user-form-modal">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Thêm sửa xóa trạng thái đơn hàng</h5>
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="py-1">
+									<form class="form" method="post" enctype="multipart/form-data">
+										<div class="row">
+											<div class="col">
+												<div class="row">
+													<div class="col">
+														<div class="form-group">
+															<label>Trạng thái đơn hàng</label>
+															<input class="form-control" ng-model="form.name" type="text"
+																name="" placeholder="Nhập tên trạng thái đơn hàng">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row">
+											<div class="col d-flex justify-content-end">
+												<button ng-click="create()" class="btn btn-primary"
+													ng-hide="index == -1" data-dismiss="modal"><i
+														class="bi bi-plus-circle"></i> Thêm</button> &nbsp;
+												<button ng-click="update()" class="btn btn-primary"
+													ng-show="index == -1" data-dismiss="modal"><i
+														class="bi bi-person-add"></i> Cập nhật</button> &nbsp;
+												<button ng-click="delete(form)" class="btn btn-danger"
+													ng-show="index == -1" data-dismiss="modal"><i
+														class="bi bi-trash3"></i> Xóa</button> &nbsp;
+												<button ng-click="reset()" class="btn btn-info"><i
+														class="bi bi-arrow-clockwise"></i> Làm mới</button> &nbsp;
+											</div>
+										</div>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<main role="main" class="main-content">
+		<div class="container-fluid">
+			<div class="row justify-content-center">
+				<div class="col-12">
+					<div class="row">
+						<!-- Small table -->
+						<div class="col-md-12 my-4">
+							<h2 class="h4 mb-1">Quản lý trạng thái đơn hàng</h2>
+							<p class="mb-3">Công cụ thêm sửa xóa trạng thái đơn hàng</p>
+							<div class="card shadow">
+								<div class="card-body">
+									<div class="toolbar">
+										<form class="form">
+											<div class="form-row">
+												<div class="form-group col-auto mr-auto">
+													<label class="my-1 mr-2 sr-only"
+														for="inlineFormCustomSelectPref1">Show</label>
+
+												</div>
+												<div class="form-group col-auto">
+													<button style="color: white;" class="btn btn-success btn-block"
+														type="button" data-toggle="modal" data-target="#user-form-modal"
+														ng-click="reset()"><i class="bi bi-folder-plus"></i>
+														Thêm</button>
+													<label class="sr-only">Tìm kiếm</label>
+
+												</div>
+												<div class="form-group col-auto"> <input type="text"
+														class="form-control" id="search1" value=""
+														placeholder="Tìm kiếm"></div>
+											</div>
+										</form>
+									</div>
+									<!-- table -->
+									<table class="table table-borderless table-hover">
+										<thead>
+											<tr>
+
+
+												<th>ID</th>
+												<th>Tráng thái đơn hàng</th>
+												<th>Thao tác</th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<tr ng-repeat="item in pager.items">
+
+												<td>
+													{{item.id}}
+												</td>
+												<td><strong>{{item.name}}</strong></td>
+												<td style="color: white;">
+													<a class="btn btn-warning" data-toggle="modal"
+														data-target="#user-form-modal" ng-click="edit(item)"><i
+															class="bi bi-pencil-square"></i> Sửa</a>
+													<a class="btn btn-danger" ng-click="delete(item)"><i
+															class="bi bi-trash"></i> Xóa</a>
+												</td>
+											</tr>
+
+
+
+
+										</tbody>
+									</table>
+									<nav aria-label="Table Paging" class="mb-0 text-muted">
+										<ul class="pagination justify-content-center mb-0">
+											<li class="page-item"><a class="page-link" href="#"
+													ng-click="pager.prev()">Previous</a></li>
+											<li class="page-item"><a class="page-link" href="#">{{pager.page}}</a></li>
+											<li class="page-item active"><a class="page-link" href="#">{{pager.page + 1
+													}}</a></li>
+											<li class="page-item"><a class="page-link" href="#">{{pager.page + 2}}</a>
+											</li>
+											<li class="page-item"><a class="page-link" href="#"
+													ng-click="pager.next()">Next</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</div> <!-- customized table -->
+					</div> <!-- end section -->
+					<!-- Striped rows -->
+
+	</main> <!-- main -->
+
+
+
+</body>
+
+</html>
