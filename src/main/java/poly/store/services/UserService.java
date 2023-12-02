@@ -94,6 +94,7 @@ public class UserService implements UserDetailsService {
 		acc.setUsername(email);
 		acc.setName(fullname);
 		acc.setPhone(phoneNumber);
+		acc.setactiveted(true);
 		accountdao.save(acc);
 	}
 }

@@ -147,5 +147,18 @@ public class IndexRestController {
 		}
 		return productIds;
 	}
+	
+	@GetMapping("/findTop3MostLikedProducts")
+	public List<Product> findTop3MostLikedProducts() {
+		Pageable pageable = PageRequest.of(0, 3);
+		List<Object[]> product = productdao.findTop3MostLikedProducts(pageable);
+		List<Product> productIds = new ArrayList<>();
+		for (Object[] orderProduct : product) {
+			Integer productId = (Integer) orderProduct[0];
+			Product listproduct = productservice.findById(productId);
+			productIds.add(listproduct);
+		}
+		return productIds;
+	}
 
 }

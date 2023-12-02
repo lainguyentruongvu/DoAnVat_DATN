@@ -84,14 +84,26 @@ public class AuthController {
 
 	@RequestMapping("/auth/login/error")
 	public String logInError(Model model, @Validated @ModelAttribute("account") Account account, Errors errors) {
-		
-		Account user = accountService.findById(session.get("username"));
-		if (!user.activeted()) {
-			model.addAttribute("message", "Tài khoản đã bị khoá");
-        }
-		else{
+		String username = session.get("username");
+
+		if (username != null) {
+			Account user = accountService.findById(username);
+
+			if (user != null) {
+				if (!user.activeted()) {
+					model.addAttribute("message", "Tài khoản đã bị khoá");
+				} else {
+					model.addAttribute("message", "Đăng nhập thất bại");
+				}
+			} else {
+				// Handle the case where the user is null (optional)
+				model.addAttribute("message", "Người dùng không tồn tại");
+			}
+		} else {
+			// Handle the case where the username is null (optional)
 			model.addAttribute("message", "Đăng nhập thất bại");
 		}
+
 		return "auth/dangNhap";
 	}
 

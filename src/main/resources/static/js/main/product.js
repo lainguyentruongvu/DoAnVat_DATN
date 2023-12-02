@@ -911,6 +911,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		sessionStorage.setItem("item", JSON.stringify(id));
 		$http.get(`/rest/products/${id}`).then(resp => {
 			$scope.productdetail = resp.data;
+			console.log($scope.productdetail);
 			$scope.priceww = $scope.productdetail.price
 			$scope.check = true;
 			$scope.weightvalue = null;
@@ -1493,6 +1494,9 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		});
 		$http.get(`rest/products/findtop3product`).then(resp => {
 			$scope.top3product = resp.data;
+		});
+		$http.get(`rest/products/findTop3MostLikedProducts`).then(resp => {
+			$scope.findTop3MostLikedProducts = resp.data;
 		});
 	}
 	$scope.topproduct();
