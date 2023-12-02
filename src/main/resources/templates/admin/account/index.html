@@ -86,7 +86,7 @@
 																Có
 															</label>
 
-															
+
 														</div>
 													</div>
 												</div>
@@ -141,7 +141,8 @@
 													<div class="col">
 														<div class="form-group">
 															<label>Nhập lại mật khẩu</label>
-															<input class="form-control" type="password" ng-model="form.repassword"
+															<input class="form-control" type="password"
+																ng-model="form.repassword"
 																placeholder="Nhập lại mật khẩu">
 														</div>
 													</div>
@@ -161,11 +162,11 @@
 										<div class="row">
 											<div class="col d-flex justify-content-end">
 												<button ng-click="create()" class="btn btn-primary"
-													ng-hide="index == -1" ><i
-														class="bi bi-person-plus"></i> Thêm</button> &nbsp;
+													ng-hide="index == -1"><i class="bi bi-person-plus"></i>
+													Thêm</button> &nbsp;
 												<button ng-click="update()" class="btn btn-primary"
-													ng-show="index == -1" ><i
-														class="bi bi-person-add"></i> Cập nhật</button> &nbsp;
+													ng-show="index == -1"><i class="bi bi-person-add"></i> Cập
+													nhật</button> &nbsp;
 												<button ng-click="delete(form)" class="btn btn-danger"
 													ng-show="index == -1" data-dismiss="modal"><i
 														class="bi bi-trash3"></i> Xóa</button> &nbsp;
@@ -253,29 +254,30 @@
 												</td>
 
 												<td>
-												
-															{{item.phone}}
+
+													{{item.phone}}
 
 												</td>
 												<td>{{item.address}}
-												
+
 												</td>
-												
+
 												<td>
-													
-														
-															{{item.activeted ? 'Cho phép' : 'Không
-															cho phép' }}
+
+
+													{{item.activeted ? 'Cho phép' : 'Không
+													cho phép' }}
 
 												</td>
 
-												<td >
-													<a style="color: white;font-weight: bold;" class="btn btn-warning form-group" data-toggle="modal"
+												<td>
+													<a style="color: white;font-weight: bold;"
+														class="btn btn-warning form-group" data-toggle="modal"
 														data-target="#user-form-modal" ng-click="edit(item)">
 														<i class="bi bi-pencil-square"></i> Sửa</a>
 
-													<a style="color: white;font-weight: bold;" class="btn btn-danger" ng-click="delete(item)"><i
-															class="bi bi-trash"></i> Xóa</a>
+													<a style="color: white;font-weight: bold;" class="btn btn-danger"
+														ng-click="delete(item)"><i class="bi bi-trash"></i> Xóa</a>
 												</td>
 											</tr>
 
@@ -284,11 +286,14 @@
 									</table>
 									<nav aria-label="Table Paging" class="mb-0 text-muted">
 										<ul class="pagination justify-content-center mb-0">
-											<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-											<li class="page-item"><a class="page-link" href="#">1</a></li>
-											<li class="page-item active"><a class="page-link" href="#">2</a></li>
-											<li class="page-item"><a class="page-link" href="#">3</a></li>
-											<li class="page-item"><a class="page-link" href="#">Next</a></li>
+											<li class="page-item"><a class="page-link"
+													ng-click="pager.prev()">Previous</a></li>
+											<li class="page-item"><a class="page-link">{{pager.page}}</a></li>
+											<li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a>
+											</li>
+											<li class="page-item"><a class="page-link">{{pager.page + 2}}</a></li>
+											<li class="page-item"><a class="page-link" ng-click="pager.next()">Next</a>
+											</li>
 										</ul>
 									</nav>
 								</div>

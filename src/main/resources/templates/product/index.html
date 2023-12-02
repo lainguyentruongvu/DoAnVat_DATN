@@ -98,10 +98,11 @@
 														<div class="product-action">
 															<a ng-click="productdetails(item.id);evalute(item.id)"
 																data-toggle="modal" data-target="#exampleModal"
-																title="Quick View"><i class=" ti-eye"></i><span>Xem</span></a>
+																title="Quick View"><i
+																	class=" ti-eye"></i><span>Xem</span></a>
 															<a title="Wishlist" ng-click="checkAddOrRemove(item.id)"><i
 																	class=" ti-heart "></i><span>Yêu thích
-																	</span></a>
+																</span></a>
 
 														</div>
 														<div class="product-action-2 ">
@@ -132,21 +133,21 @@
 								</div>
 							</div>
 							<!--/ End Single Tab -->
-						
-										
-										
-										
-										
-									
-									</div>
-								</div>
-							</div>
-							<!--/ End Single Tab -->
+
+
+
+
+
+
 						</div>
 					</div>
 				</div>
+				<!--/ End Single Tab -->
 			</div>
 		</div>
+	</div>
+	</div>
+	</div>
 	</div>
 	<!-- End Product Area -->
 
@@ -210,7 +211,7 @@
 													class=" ti-eye"></i><span>Xem</span></a>
 											<a title="Wishlist" ng-click="checkAddOrRemove(item.id)"><i
 													class=" ti-heart "></i><span>Yêu thích
-													</span></a>
+												</span></a>
 
 										</div>
 										<div class="product-action-2 ">
@@ -286,8 +287,8 @@
 					</div>
 					<!-- Start Single List  -->
 					<div ng-repeat="item in top3product" class="single-list">
-						<div  class="row">
-							<div  class="col-lg-6 col-md-6 col-12">
+						<div class="row">
+							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
 									<img src="../../images/product/{{item.image}}" alt="#">
 									<a ng-click="addcart(item)" class="buy"><i class="fa fa-shopping-bag"></i></a>
@@ -312,54 +313,18 @@
 						</div>
 					</div>
 					<!-- Start Single List  -->
-					<div class="single-list">
+					<div ng-repeat="item in findTop3MostLikedProducts" class="single-list">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
-									<img src="images/sp_6.png" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
+									<img src="../../images/product/{{item.image}}" alt="#">
+									<a ng-click="addcart(item)" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h5 class="title"><a href="#">Snack đậu xanh nước dừa</a></h5>
-									<p class="price with-discount">4.700 VNĐ ✓</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$35</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$99</p>
+									<h5 class="title"><a href="#">{{item.name}}</a></h5>
+									<p class="price with-discount">{{item.price | number :0}} VNĐ</p>
 								</div>
 							</div>
 						</div>

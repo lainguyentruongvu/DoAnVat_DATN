@@ -13,7 +13,7 @@
 			<div class="row justify-content-center">
 				<div class="col-12">
 					<div class="row">
-						<div class="col-md-6 col-xl-3 mb-4">
+						<div class="col mb-4">
 							<div class="card shadow bg-primary text-white border-0">
 								<div class="card-body">
 
@@ -38,8 +38,8 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 col-xl-3 mb-4">
-							<div class="card shadow bg-success border-0">
+						<div class="col mb-4">
+							<div class="card shadow bg-warning border-0">
 								<div class="card-body">
 									<div class="row align-items-center">
 										<div class="col-3 text-center ">
@@ -61,7 +61,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 col-xl-3 mb-4">
+						<div class="col mb-4">
 							<div class="card shadow bg-info border-0">
 								<div class="card-body">
 									<div class="row align-items-center">
@@ -84,7 +84,7 @@
 							</div>
 						</div>
 
-						<div class="col-md-6 col-xl-3 mb-4">
+						<div class="col mb-4">
 							<div class="card shadow bg-danger border-0">
 								<div class="card-body">
 									<div class="row align-items-center">
@@ -100,6 +100,28 @@
 													<span class="h3 mr-2 mb-0 text-white"> {{list[3]}} </span>
 												</div>
 												<a ng-click="trangthai(4)" class="text-white">Xem chi tiết</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col mb-4">
+							<div class="card shadow bg-success border-0">
+								<div class="card-body">
+									<div class="row align-items-center">
+										<div class="col-3 text-center">
+											<span class="circle circle-sm bg-primary">
+												<i class="fe fe-16 bi text-white bi-x-lg"></i>
+											</span>
+										</div>
+										<div class="col">
+											<p class="small text-white mb-0">Đơn hủy</p>
+											<div class="row align-items-center no-gutters">
+												<div class="col-auto">
+													<span class="h3 mr-2 mb-0 text-white"> {{list[4]}} </span>
+												</div>
+												<a ng-click="trangthai(5)" class="text-white">Xem chi tiết</a>
 											</div>
 										</div>
 									</div>
@@ -177,13 +199,16 @@
 														class="badge badge-primary">{{item.status.name}}</span>
 													<span style="color: white;font-weight: bold;"
 														ng-if="item.status.id === 2"
-														class="badge badge-success">{{item.status.name}}</span>
+														class="badge badge-warning">{{item.status.name}}</span>
 													<span style="color: white;font-weight: bold;"
 														ng-if="item.status.id === 3"
 														class="badge badge-info">{{item.status.name}}</span>
 													<span style="color: white;font-weight: bold;"
 														ng-if="item.status.id === 4"
 														class="badge badge-danger">{{item.status.name}}</span>
+													<span style="color: white;font-weight: bold;"
+														ng-if="item.status.id === 5"
+														class="badge badge-success">{{item.status.name}}</span>
 												</td>
 												<td>
 													{{ item.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán' }}

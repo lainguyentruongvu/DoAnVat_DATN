@@ -824,16 +824,19 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	//Kiểm tra thanh toán
 
 	$scope.cbthanhtoan = function() {
+		//		$scope.name = document.getElementById('name').value;
+		//
+		//		$scope.phone = document.getElementById('phone').value;
+
 		var check = $('input[name="payment"]:checked').val();
-		console.log(check);
 		if ($scope.address == null || $scope.ship == null) {
 			if ($scope.address == null) {
 				Swal.fire("Error", "Vui lòng chọn địa chỉ", "error");
 			} else {
 				Swal.fire("Error", "Vui lòng chọn phương thức vận chuyển", "error");
 			}
-
 		} else {
+
 			if (check == 1) {
 				$scope.statusorder = false;
 				$scope.thanhtoan();
@@ -841,7 +844,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				$scope.statusorder = true;
 				$scope.generatePayment();
 				$scope.thanhtoanvnpay();
-
 			}
 		}
 	}
@@ -1057,6 +1059,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	}
 
 	$scope.checkAddOrRemove = function(id) {
+		console.log(id)
 		$http.get(`/rest/favorites/check/${id}`).then(resp => {
 			$scope.favorite = resp.data.length;
 			if ($scope.favorite == 0) {
@@ -1200,6 +1203,8 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	//Profile
 	$scope.account = {};
 	$scope.updateAccount = function() {
+
+		console.log($scope.account)
 		$http.put(`/rest/accounts/${$scope.account.username}`, $scope.account).then(function(response) {
 			// Xử lý phản hồi sau khi cập nhật thành công
 			Swal.fire({
@@ -1210,6 +1215,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				showConfirmButton: false,
 				timer: 2000
 			})
+
 		}).catch(function(error) {
 			// Xử lý lỗi nếu cập nhật không thành công
 			Swal.fire({
@@ -1277,6 +1283,9 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 						showConfirmButton: false,
 						timer: 2000
 					})
+					document.getElementById("pwold").value = "";
+					document.getElementById("pawword").value = "";
+					document.getElementById("cfpw").value = "";
 				}).catch(function(error) {
 					// Xử lý lỗi nếu cập nhật không thành công
 					Swal.fire({
@@ -1377,12 +1386,12 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		var url = `/rest/order/getOrderAndOrderdetailOrderId/${orderId}`;
 		$http.get(url).then(resp => {
 			$scope.orderdetail = resp.data;
-			
-			window.location.href = "/order_detail/"+orderId;
+
+			window.location.href = "/order_detail/" + orderId;
 		});
 	};
-	
-	
+
+
 
 
 
@@ -1513,15 +1522,22 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	$scope.closeModal = function() {
 
 		$('#modal-container').modal('hide');
+
 	};
 
-	$scope.evaluate = function(id) {
+
+	$scope.evaluategetproduct = function(id) {
+		$scope.getidproduct = id;
+
+	}
+	$scope.evaluate = function() {
+		console.log($scope.formData.rating);
 		$scope.data = {
 			account: {
 				username: $scope.username
 			},
 			product: {
-				id: id
+				id: $scope.getidproduct
 			},
 			comment: $scope.formData.comment,
 			star: $scope.formData.rating,
@@ -1529,7 +1545,8 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 		}
 
-		$http.get(`rest/evaluates/checkProductUsername/${id}/${$scope.username}`).then(resp => {
+
+		$http.get(`rest/evaluates/checkProductUsername/${$scope.getidproduct}/${$scope.username}`).then(resp => {
 			if (resp.data == "") {
 				$http.post(`rest/evaluates/`, $scope.data).then(resp => {
 					Swal.fire({
@@ -1538,6 +1555,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 						text: 'Đánh giá đơn hàng thành công',
 						confirmButtonText: 'OK'
 					});
+
 				}).catch(error => {
 					console.log("Error", error);
 				});

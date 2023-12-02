@@ -665,13 +665,11 @@ app.controller("order-ctrl", function($scope, $http) {
 	$scope.initialize = function() {
 
 		$http.get("/rest/order/hienthitrangthai").then(resp => {
-			$scope.list = resp.data;
+			$scope.list = resp.data;			
 		});
 		$http.get("/rest/order").then(resp => {
 			$scope.orderlist = resp.data;
 		});
-
-
 	}
 
 	$scope.trangthai = function(id) {
@@ -804,18 +802,7 @@ app.controller("order-ctrl", function($scope, $http) {
 // End  end end  Order Order Order Order Order Order Order Order Order Order Order Order Order 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+//Home
 app.controller("home-ctrl", function($scope, $http) {
 	angular.element(document.getElementById('getMonthRevenue')).on('click', function() {
 		$scope.getMonthRevenue();

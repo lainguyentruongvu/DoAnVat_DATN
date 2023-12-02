@@ -96,14 +96,15 @@ public class OrderRestController {
 	public List<Long> index(Model model) {
 		long choXacNhan = orderDao.countOrdersWithStatus(1);
 		long dangGiaoHang = orderDao.countOrdersWithStatus(2);
+		long daGiao = orderDao.countOrdersWithStatus(3);
 		long huyDonHang = orderDao.countOrdersWithStatus(4);
-		long daNhanHang = orderDao.countOrdersWithStatus(3);
-
+		long daNhanHang = orderDao.countOrdersWithStatus(5);
 		List<Long> list = new ArrayList<>();
 		list.add(choXacNhan);
 		list.add(dangGiaoHang);
-		list.add(daNhanHang);
+		list.add(daGiao);
 		list.add(huyDonHang);
+		list.add(daNhanHang);
 		return list;
 	}
 
@@ -204,7 +205,7 @@ public class OrderRestController {
 		List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
 		return groupedData;
 	}
-	
+
 	@GetMapping("getOrderAndOrderdetailOrderId/{id}")
 	public List<OrderWithDetailsDTO> getOrderAndOrderdetailOrderId(@PathVariable("id") Integer id) {
 		List<OrderWithDetailsDTO> data = orderDao.getOrdersWithDetailsById(id);

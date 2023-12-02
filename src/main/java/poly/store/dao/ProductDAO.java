@@ -17,6 +17,9 @@ import poly.store.entity.ReportCate;
 public interface ProductDAO extends JpaRepository<Product, Integer> {
 
 	List<Product> findByCategory(Category cate);
+	
+	@Query("SELECT p FROM Product p WHERE p.id = :productid")
+	Product searchP( Integer productid);
 
 	List<Product> findByActiveted(Boolean activeted);
 

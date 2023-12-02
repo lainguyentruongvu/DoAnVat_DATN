@@ -36,7 +36,7 @@
 						<h6 style="padding-bottom: 10px;">Mã hóa đơn: [[*{id}]]</h6>
 						<article class="card">
 							<div class="card-body row">
-								<div class="col"> <strong>Tên :</strong> <br> [[*{id}]]</div>
+								<div class="col"> <strong>Tên :</strong> <br> [[*{account.name}]]</div>
 								<div class="col"> <strong>Ngày đặt hàng:</strong> <br>[[*{createdate}]] </div>
 								<div class="col"> <strong>Số điện thoại</strong> <br> <i class="fa fa-phone"></i>
 									[[*{phone}]] </div>
@@ -190,7 +190,7 @@
 
 								<label for="" style="font-size: 15px;"><i class="bi bi-wallet2"></i> Phương thức
 									thanh toán:
-									<label style="color: #F35022; font-weight: bold;">VN Pay</label></label>
+									<label style="color: #F35022; font-weight: bold;">[[*{statusorder ? 'VNPAY' : 'Thanh toán khi nhận hàng'}]]</label></label>
 
 							</div>
 						</div>
