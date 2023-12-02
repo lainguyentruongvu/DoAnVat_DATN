@@ -46,14 +46,11 @@
 										<div class="row">
 											<div class="col d-flex justify-content-end">
 												<button ng-click="create()" class="btn btn-primary"
-													ng-hide="index == -1" data-dismiss="modal"><i
-														class="bi bi-plus-circle"></i> Thêm</button> &nbsp;
+													ng-hide="index == -1" data-dismiss="modal">Thêm</button> &nbsp;
 												<button ng-click="update()" class="btn btn-primary"
-													ng-show="index == -1" data-dismiss="modal"><i
-														class="bi bi-person-add"></i> Cập nhật</button> &nbsp;
+													ng-show="index == -1" data-dismiss="modal">Cập nhật</button> &nbsp;
 												<button ng-click="delete(form)" class="btn btn-danger"
-													ng-show="index == -1" data-dismiss="modal"><i
-														class="bi bi-trash3"></i> Xóa</button> &nbsp;
+													ng-show="index == -1" data-dismiss="modal">Xóa</button> &nbsp;
 												<button ng-click="reset()" class="btn btn-info"><i
 														class="bi bi-arrow-clockwise"></i> Làm mới</button> &nbsp;
 											</div>
@@ -103,6 +100,7 @@
 											</div>
 										</form>
 									</div>
+
 									<!-- table -->
 									<table class="table table-borderless table-hover">
 										<thead>
@@ -120,6 +118,7 @@
 													{{item.id}}
 												</td>
 												<td><strong>{{item.name}}</strong></td>
+												
 												<td style="color: white;">
 													<a class="btn btn-warning" data-toggle="modal"
 														data-target="#user-form-modal" ng-click="edit(item)"><i
@@ -134,6 +133,7 @@
 
 										</tbody>
 									</table>
+
 									<nav aria-label="Table Paging" class="mb-0 text-muted">
 										<ul class="pagination justify-content-center mb-0">
 											<li class="page-item"><a class="page-link" href="#"

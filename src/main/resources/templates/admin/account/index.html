@@ -72,18 +72,21 @@
 														</div>
 														<div class="form-group">
 															<label>Trạng thái hoạt động:</label> <br>
-															<label>
+															<label class="">
 																<input type="radio" name="activeted"
 																	ng-model="form.activeted" value="false"
 																	ng-checked="form.activeted === false">
 																Không
 															</label>
+															<br>
 															<label>
 																<input type="radio" name="activeted"
 																	ng-model="form.activeted" value="true"
 																	ng-checked="form.activeted === true">
 																Có
 															</label>
+
+															
 														</div>
 													</div>
 												</div>
@@ -215,19 +218,17 @@
 										</form>
 									</div>
 									<!-- table -->
-									<table class="table table-borderless table-hover">
+									<table class="table table-borderless table-hover" style="font-size: 12px;">
 										<thead>
 											<tr>
-
-
-												<th>Đại diện</th>
-												<th>Tên đăng nhập</th>
-												<th>Họ và tên</th>
-												<th>Email</th>
-												<th>SĐT</th>
-												<th>Địa chỉ</th>
-												<th>Trạng thái</th>
-												<th>Công cụ</th>
+												<th><strong> Đại diện</strong></th>
+												<th><strong>Tên đăng nhập</strong></th>
+												<th><strong>Họ và tên</strong></th>
+												<th><strong>Email</strong></th>
+												<th><strong>SĐT</strong></th>
+												<th><strong> Địa chỉ</strong></th>
+												<th><strong>Trạng thái</strong></th>
+												<th><strong>Công cụ</strong></th>
 
 											</tr>
 										</thead>
@@ -241,31 +242,39 @@
 															height="50px" style="border-radius: 10px;">
 													</div>
 												</td>
+
 												<td><strong>{{item.username}}</strong></td>
+
 												<td>
-													<p class="mb-0 text-muted"><strong>{{item.name}}</strong></p>
+													<strong>{{item.name}}</strong>
 												</td>
 												<td>
-													<p class="mb-0 text-muted">{{item.email}}</p>
+													{{item.email}}
 												</td>
+
 												<td>
-													<p class="mb-0 text-muted"><a href="#"
-															class="text-muted">{{item.phone}}</a></p>
+												
+															{{item.phone}}
 
 												</td>
-												<td class="w-25"><small class="text-muted">{{item.address}}</small></td>
+												<td>{{item.address}}
+												
+												</td>
 												
 												<td>
-													<p class="mb-0 text-muted"><a href="#"
-															class="text-muted">{{item.activeted ? 'Cho phép' : 'Không
-															cho phép' }}</a></p>
+													
+														
+															{{item.activeted ? 'Cho phép' : 'Không
+															cho phép' }}
 
 												</td>
-												<td style="color: white;">
-													<a class="btn btn-warning" data-toggle="modal"
-														data-target="#user-form-modal" ng-click="edit(item)"><i
-															class="bi bi-pencil-square"></i> Sửa</a>
-													<a class="btn btn-danger" ng-click="delete(item)"><i
+
+												<td >
+													<a style="color: white;font-weight: bold;" class="btn btn-warning form-group" data-toggle="modal"
+														data-target="#user-form-modal" ng-click="edit(item)">
+														<i class="bi bi-pencil-square"></i> Sửa</a>
+
+													<a style="color: white;font-weight: bold;" class="btn btn-danger" ng-click="delete(item)"><i
 															class="bi bi-trash"></i> Xóa</a>
 												</td>
 											</tr>

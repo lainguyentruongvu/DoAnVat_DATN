@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::title},~{::body})}">
+
+<head>
+	<title>Đơn hàng </title>
+</head>
+
+<body th:object="${order}" class="vertical light" ng-app="app" ng-controller="ctrl"
+	style="font-family: Arial, Helvetica, sans-serif;">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<!-- Small table -->
+	<div class="col-md-12 my-4">
+		<div class="col-12">
+			<h5 class="divider line razor">THÔNG TIN ĐƠN HÀNG ĐÃ ĐẶT</h5>
+		</div>
+
+		<label style="font-weight: bold;" for="">Mã đơn:</label>
+		<span th:text="*{id}" class="form-group"></span><br>
+		<label style="font-weight: bold;">Ngày đặt hàng:</label>
+		<span th:text="*{createdate}" class="form-group"></span>
+
+		<h5 class="divider line double-razor">CÁC SẢN PHẨM TRONG ĐƠN</h5>
+		<div class="card shadow">
+			<div class="card-body">
+				<div class="toolbar">
+
+				</div>
+				<!-- table -->
+				<table class="table table-borderless table-hover">
+					<thead>
+						<tr>
+							<th>Hình ảnh</th>
+							<th>Tên sản phẩm</th>
+							<th>Đơn giá</th>
+							<th>Số lượng</th>
+							<th>Khối lượng</th>
+							<th>Tổng</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="detail:*{orderdetail}" th:object="${detail}">
+							<td>
+								<div class="avatar avatar-md">
+									<img th:src="@{|/images/product/*{product.image}|}" style="width: 70px;"
+										class="avatar-img ">
+								</div>
+							</td>
+							<td>
+								<p class="mb-0 text-muted"><strong>[[*{product.name}]]</strong></p>
+
+							</td>
+							<td>
+								<p class="mb-0 text-muted">[[*{#numbers.formatDecimal(price,0,'COMMA',0,'POINT')}]]</p>
+
+							</td>
+							<td>
+								<p class="mb-0 text-muted">[[*{quantity}]]</p>
+
+							</td>
+							<td>
+								<p class="mb-0 text-muted">[[*{weight}]]</p>
+
+							</td>
+
+							<td>
+								<p class="mb-0 text-muted">
+									[[*{#numbers.formatDecimal(price*quantity,0,'COMMA',0,'POINT')}]]</p>
+							</td>
+						</tr>
+					</tbody>
+
+				</table>
+
+			</div>
+			<button th:onclick="window.location.href='/orderuser'" class="btn btn-primary">Đến đơn hàng của bạn</button>
+		</div>
+	</div> <!-- customized table -->
+
+
+
+</body>
+
+</html>

@@ -232,6 +232,7 @@ Version:1.0
 		  Extra Scroll JS
 		=========================*/
 		$('.scroll').on("click", function (e) {
+			
 			var anchor = $(this);
 				$('html, body').stop().animate({
 					scrollTop: $(anchor.attr('href')).offset().top - 0

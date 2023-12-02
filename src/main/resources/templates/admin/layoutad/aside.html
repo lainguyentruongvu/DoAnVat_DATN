@@ -14,7 +14,8 @@
         <nav class="vertnav navbar navbar-light">
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
-            <img src="../../images/logo_noback.png" width="150px">
+            <a href="/"><img src="../../images/logo_noback.png" width="150px"></a>
+            
           </div>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item">
@@ -33,7 +34,7 @@
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
               <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fa fa-user" aria-hidden="true"></i>
+                
                 <i class="fe fe-user fe-16"></i>
                 <span class="ml-3 item-text">Tài khoản</span>
               </a>
@@ -51,6 +52,15 @@
               
             </li>
 
+            <p class="text-muted nav-heading mt-4 mb-1">
+              <span>Hình ảnh banner</span>
+            </p>
+            <li class="nav-item w-100">
+              <a class="nav-link" th:href="@{/admin/banner}">
+                <i class="bi bi-images"></i>
+                <span class="ml-3 item-text">Banner</span>
+              </a>
+            </li>
           
             
             <p class="text-muted nav-heading mt-4 mb-1">
@@ -88,7 +98,7 @@
             </li>
               <li class="nav-item w-100">
               <a class="nav-link" th:href="@{/admin/statusor}">
-                <i class="bi bi-box-seam"></i>
+                <i class="bi bi-app-indicator"></i>
                 <span class="ml-3 item-text">Trạng thái</span>
               </a>
             
@@ -155,11 +165,16 @@
             
           </ul>
          
-         
+     
+
+           
+           
+            
+          
        
           
          
-          <div class="btn-box w-100 mt-4 mb-1">
+          <div class="btn-box w-100 ">
             <a th:href="@{/auth/logout}" class="btn mb-2 btn-primary btn-lg btn-block">
               <i class="bi bi-box-arrow-left" ></i> Đăng xuất
             </a>
