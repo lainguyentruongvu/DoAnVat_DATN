@@ -204,5 +204,12 @@ public class OrderRestController {
 		List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
 		return groupedData;
 	}
+	
+	@GetMapping("getOrderAndOrderdetailOrderId/{id}")
+	public List<OrderWithDetailsDTO> getOrderAndOrderdetailOrderId(@PathVariable("id") Integer id) {
+		List<OrderWithDetailsDTO> data = orderDao.getOrdersWithDetailsById(id);
+		List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
+		return groupedData;
+	}
 
 }

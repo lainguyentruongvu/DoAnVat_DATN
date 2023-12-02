@@ -122,9 +122,11 @@ public class SignupController {
 				Account item = session.get("account");
 				// item.setCreatedate(new Date());
 				model.addAttribute("item", item);
+				item.setactiveted(true);
 				dao.save(item);
 				Authority au = new Authority();
 				au.setAccount(item);
+				
 				au.setRole(rdao.findById("CUST").get());
 				audao.save(au);
 			}

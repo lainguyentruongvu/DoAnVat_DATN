@@ -1,4 +1,8 @@
 const app = angular.module("app", []);
+
+
+
+
 app.controller("ctrl", function($scope, $http, $location, $window, $interval, $filter) {
 
 	$scope.banner_1900x700 = [];
@@ -11,8 +15,8 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	$scope.bannerthongtin2_370x300 = [];
 	$scope.bannerthongtin3_370x300 = [];
 
-	$scope.banner = function () {
-		$http.get('/rest/banner').then(function (resp) {
+	$scope.banner = function() {
+		$http.get('/rest/banner').then(function(resp) {
 			for (var i = 0; i < resp.data.length; i++) {
 				$scope.banner_1900x700 = resp.data[0];
 				$scope.anhphu1_600x370 = resp.data[1];
@@ -1368,16 +1372,20 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 
 
-	$scope.showOrderDetailDanhgia = function(orderId) {
-		$http.get(`/rest/order/orderDetails/` + orderId)
-			.then(function(response) {
-				$scope.selectedOrderDetails = response.data;
-				$('#orderDetailModaldanhgia').modal('show'); // Hiển thị modal chứa danh sách sản phẩm
-			})
-			.catch(function(error) {
-				console.error("Error fetching order details:", error);
-			});
+	$scope.showOrderDetail = function(orderId) {
+		var url = `/rest/order/getOrderAndOrderdetailOrderId/${orderId}`;
+		$http.get(url).then(resp => {
+			$scope.orderdetail = resp.data;
+			
+			window.location.href = "/order_detail/"+orderId;
+		});
 	};
+	
+	
+
+
+
+
 	$scope.closeModal = function() {
 		$("#closeBtn").modal("hide");
 	};

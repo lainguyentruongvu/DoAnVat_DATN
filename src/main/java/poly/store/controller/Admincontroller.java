@@ -52,4 +52,27 @@ public class Admincontroller {
 	public String banner() {
 		return "admin/banner/index";
 	}
+	@RequestMapping("/admin/static/evaluate")
+	public String staticevaluate() {
+		return "admin/static/evaluate";
+	}
+
+	@RequestMapping("/admin/static/favorite")
+	public String staticfavorite() {
+		return "admin/static/favorite";
+	}
+
+	@RequestMapping("/admin/static/product")
+	public String staticproduct() {
+		return "admin/static/product";
+	}
+	
+	@RequestMapping("/admin/static/category")
+	public String staticcategory() {
+		return "admin/static/category";
+	}
+	@RequestMapping("/admin/static/order")
+	public String staticorder() {
+		return "admin/static/order";
+	}
 }

@@ -75,10 +75,8 @@ public class OrderController {
 
 			for (Orderdetail orderdetail : details) {
 				Weight weight = weightDAO.findByWeightvalue(orderdetail.getWeight());
-				Productweight productweight = productweightdao
-						.findByProductAndWeight(orderdetail.getProduct(), weight);
-
-				productweight.setQuantity(productweight.getQuantity()-orderdetail.getQuantity());
+				Productweight productweight = productweightdao.findByProductAndWeight(orderdetail.getProduct(), weight);
+				productweight.setQuantity(productweight.getQuantity() - orderdetail.getQuantity());
 				productweightdao.save(productweight);
 			}
 
@@ -99,9 +97,10 @@ public class OrderController {
 		model.addAttribute("order", orderservice.findById(id));
 		return "cart/order";
 	}
-	
-	@RequestMapping("/order/detail")
-	public String orderdetailindex( Model model) {		
+
+	@RequestMapping("/order_detail/{id}")
+	public String orderdetailindex(Model model, @PathVariable("id") Integer id) {
+		model.addAttribute("order", orderservice.findById(id));
 		return "product/detail_order";
 	}
 }
