@@ -47,23 +47,23 @@
 							<a ng-click="status1(1)" class="nav-item nav-link" id="nav-cxl-tab" data-toggle="tab"
 								href="#nav-cxl" role="tab" aria-controls="nav-cxl" aria-selected="false">Chờ xử
 								lý<label ng-if="orderuserstatus[0] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[0]}})</label> </a>
+									style="color: red;">({{orderuserstatus[0]}})</label> </a>
 							<a ng-click="status2(2)" class="nav-item nav-link" id="nav-dgg-tab" data-toggle="tab"
 								href="#nav-dgg" role="tab" aria-controls="nav-dgg" aria-selected="false">Đang
 								giao<label ng-if="orderuserstatus[1] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[1]}})</label></a>
+									style="color: red;">({{orderuserstatus[1]}})</label></a>
 							<a ng-click="status3(3)" class="nav-item nav-link" id="nav-dg-tab" data-toggle="tab"
 								href="#nav-dg" role="tab" aria-controls="nav-dg" aria-selected="false">Đã giao
 								<label ng-if="orderuserstatus[2] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[2]}})</label> </a>
+									style="color: red;">({{orderuserstatus[2]}})</label> </a>
 							<a ng-click="status4(4)" class="nav-item nav-link" id="nav-dh-tab" data-toggle="tab"
 								href="#nav-dh" role="tab" aria-controls="nav-dh" aria-selected="false">Đã
 								hủy<label ng-if="orderuserstatus[3] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[3]}})</label></a>
+									style="color: red;">({{orderuserstatus[3]}})</label></a>
 							<a ng-click="status5(5)" class="nav-item nav-link" id="nav-ht-tab" data-toggle="tab"
 								href="#nav-ht" role="tab" aria-controls="nav-ht" aria-selected="false"> Hoàn
 								thành<label ng-if="orderuserstatus[4] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[4]}})</label></a>
+									style="color: red;">({{orderuserstatus[4]}})</label></a>
 
 						</div>
 					</nav>
@@ -110,7 +110,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
@@ -200,7 +200,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
@@ -288,7 +288,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
@@ -374,7 +374,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
@@ -459,7 +459,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
@@ -602,7 +602,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">

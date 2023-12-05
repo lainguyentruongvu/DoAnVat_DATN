@@ -32,14 +32,14 @@
 				
 				<div class="remember">
 					<input type="checkbox" name="check-box">
-					<span class="text">Remember me?</span>
+					<span class="text">Lưu tài khoản?</span>
 				</div>
 				<div>
 				<input type="submit" name="submit" value="Đăng nhập">
-				<h6 style="color: red;">[[${message}]]</h6>
-				<div class="login">
-						<div class="Oroption">Hoặc</div>
-					</div>
+				<h6 style="color: white; font-weight: bold; text-shadow: 1px 1px 2px #000;text-align: center;">[[${message}]]</h6>
+
+				
+				  
 					<div class="links">
 						<!-- <div class="facebook"><img src="images/facebook.png" alt="Facebook Icon" /> </div> -->
 						<!-- <div class="google"> <img src="images/google.png" alt="Facebook Icon" /> </div> -->
@@ -48,6 +48,7 @@
 						<button class="btn btn-primary facebook"><i class="bi bi-facebook"></i> Facebook</button>
 					</div>
 					<div class="signup"> Bạn không có tài khoản? <a th:href="@{/auth/register}">Đăng ký ngay!</a> </div>
+					<div class="signup"> Bạn quên mật khẩu? <a th:href="@{/auth/forgot-password}">Đăng nhập ngay!</a> </div>
 				</div>
 			</form>
 		</div>

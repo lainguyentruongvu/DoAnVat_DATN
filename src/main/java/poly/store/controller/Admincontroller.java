@@ -75,4 +75,8 @@ public class Admincontroller {
 	public String staticorder() {
 		return "admin/static/order";
 	}
+	@RequestMapping("/admin/combo")
+	public String combo() {
+		return "admin/combo/index";
+	}
 }
