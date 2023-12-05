@@ -90,9 +90,9 @@
 						<div class="col-lg-3">
 							<div class="all-category nav">
 
-								<li><a ng-click="product()"><i class="fa fa-bars"></i>&nbsp;LOẠI SẢN PHẨM</a>
-									<ul style="width: 262px;" class="dropdown">
-										<li ng-repeat="c in category"><a ng-click="productcategory(c.id)">{{c.name}}</a>
+								<li><a style="cursor: pointer;" ng-click="product()"><i class="fa fa-bars"></i>&nbsp;LOẠI SẢN PHẨM</a>
+									<ul style="width: 262px;cursor: pointer;" class="dropdown">
+										<li style="cursor: pointer;" ng-repeat="c in category"><a ng-click="productcategory(c.id)">{{c.name}}</a>
 										</li>
 									</ul>
 								</li>
@@ -120,7 +120,7 @@
 												</th:block>
 
 												<li>
-													<a id="username" th:if="${#request.remoteUser}"><i
+													<a style="cursor: pointer;" id="username" th:if="${#request.remoteUser}"><i
 															class="bi bi-person-fill"></i> [[${#request.remoteUser}]] <i
 															style="color: orange;" class="ti-angle-down"></i></a>
 													<ul class="dropdown"

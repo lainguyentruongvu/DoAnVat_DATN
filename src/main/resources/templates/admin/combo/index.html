@@ -22,9 +22,26 @@
 										<div class="col-md-12">
 											<div class="card shadow">
 												<div class="card-body">
-
-
-													<form>
+													<div class="container">
+														<div class="row justify-content-center align-items-center form-group" >
+															<img width="450px" height="350px" src="https://i.imgur.com/ukM60bC.jpg" class="img-thumbnail" alt="Responsive image">
+														</div>
+													</div>
+													<div class="input-group form-group">
+														<div class="input-group-prepend">
+															<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+														</div>
+														<div class="custom-file">
+															<input type="file" class="custom-file-input"
+																aria-describedby="inputGroupFileAddon01" id="image"
+																ng-model="bannerthongtin1_370x300.image"
+																onchange="angular.element(this).scope().imageChanged_bannerthongtin1_370x300(this.files)"
+																accept="image/png, image/jpeg">
+															<label class="custom-file-label" for="inputGroupFile01">Chọn
+																hình</label>
+														</div>
+													</div>
+										<form class="form-group">
 														<div class="form-row">
 															<div class="form-group col-md-6">
 																<label for="">Tên combo</label>
