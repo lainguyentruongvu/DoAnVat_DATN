@@ -98,8 +98,7 @@
 														<div class="product-action">
 															<a ng-click="productdetails(item.id);evalute(item.id)"
 																data-toggle="modal" data-target="#exampleModal"
-																title=""><i
-																	class=" ti-eye"></i><span>Xem</span></a>
+																title=""><i class=" ti-eye"></i><span>Xem</span></a>
 															<a title="" ng-click="checkAddOrRemove(item.id)"><i
 																	class=" ti-heart "></i><span>Yêu thích
 																</span></a>
@@ -112,23 +111,32 @@
 													</div>
 												</div>
 												<div class="product-content">
-													<h3><a style="font-size: 20px;font-family: Arial, Helvetica, sans-serif;cursor: pointer;">{{item.name}}</a></h3>
+													<h3><a
+															style="font-size: 20px;font-family: Arial, Helvetica, sans-serif;cursor: pointer;">{{item.name}}</a>
+													</h3>
 													<div class="product-price">
-														<span style="color: orange;font-weight: bold;">{{item.price | number :0}}</span>&emsp13;<span style="color: orange;font-weight: bold;">VNĐ</span>
+														<span style="color: orange;font-weight: bold;">{{item.price |
+															number :0}}</span>&emsp13;<span
+															style="color: orange;font-weight: bold;">VNĐ</span>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-									
+
 									<div class="container" style="margin-top: 20px;">
 										<div class="text-center">
-											<button style="background-color: orange;" ng-click="pagerproduct.first()" class="page-link btn">Trang đầu</button>
-											<button style="background-color: orange;" ng-click="pagerproduct.prev()" class="page-link btn">Lùi</button>
-											<button style="background-color: orange;" class="page-link btn">{{pagerfavorite.page + 1}}
-												trên {{pagerfavorite.count}}</button>
-											<button style="background-color: orange;" ng-click="pagerproduct.next()" class="page-link btn">Trang tiếp</button>
-											<button style="background-color: orange;" ng-click="pagerproduct.last()" class="page-link btn">Trang cuối</button>
+											<button style="background-color: orange;" ng-click="pagerproduct.first()"
+												class="page-link btn">Trang đầu</button>
+											<button style="background-color: orange;" ng-click="pagerproduct.prev()"
+												class="page-link btn">Trang sau</button>
+											<button style="background-color: orange;"
+												class="page-link btn">{{pagerproduct.page + 1}}
+												trên {{pagerproduct.count}}</button>
+											<button style="background-color: orange;" ng-click="pagerproduct.next()"
+												class="page-link btn">Trang tiếp</button>
+											<button style="background-color: orange;" ng-click="pagerproduct.last()"
+												class="page-link btn">Trang cuối</button>
 										</div>
 									</div>
 								</div>
@@ -206,10 +214,13 @@
 										<span class="out-of-stock">Hot</span>
 									</a>
 									<div class="button-head">
+
 										<div class="product-action">
+											<a ng-click="productdetails(item.id);evalute(item.id)" data-toggle="modal"
+												data-target="#exampleModal" title=""><i
+													class=" ti-eye"></i><span>Xem</span></a>
 											<a ng-click="checkAddOrRemove(item.id)">
 												<i class=" ti-heart "></i><span>Yêu thích</span></a>
-
 
 										</div>
 										<div class="product-action-2 ">
@@ -495,7 +506,7 @@
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				
+
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close"
 							aria-hidden="true"></span></button>
@@ -624,7 +635,7 @@
 									<a ng-click="addcartdetail(productdetail)" class="btn">THÊM VÀO GIỎ</a>
 									<a ng-click="checkAddOrRemove(productdetail.id)" class="btn min"><i
 											class="ti-heart"></i></a>
-									
+
 								</div>
 								<div class="default-social">
 									<h4 class="share-now">Share:</h4>
