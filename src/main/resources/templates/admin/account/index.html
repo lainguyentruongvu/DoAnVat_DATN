@@ -32,7 +32,33 @@
 											<div class="col">
 												<div class="row">
 													<div class="col-lg-6">
-														<div class="form-group img-thumbnail"
+														<div ng-if="imgaedefault == true"
+															class="form-group img-thumbnail"
+															style="padding-left: 50px;">
+															<img src="../../images/avt/default.png"
+																style="border-radius: 10px;" width="250px"
+																height="250px">
+															<hr>
+															<div class="input-group">
+																<div class="input-group-prepend">
+																	<span class="input-group-text"
+																		id="inputGroupFileAddon01">Tải lên</span>
+																</div>
+																<div class="custom-file">
+
+																	<input type="file" class="custom-file-input"
+																		aria-describedby="inputGroupFileAddon01"
+																		id="image" ng-model="form.image"
+																		onchange="angular.element(this).scope().imageChanged(this.files)"
+																		accept="image/png, image/jpeg">
+
+																	<label class="custom-file-label"
+																		for="inputGroupFile01">Chọn ảnh</label>
+																</div>
+															</div>
+														</div>
+														<div ng-if="imgaedefault == false"
+															class="form-group img-thumbnail"
 															style="padding-left: 50px;">
 															<img src="../../images/avt/{{form.image}}"
 																style="border-radius: 10px;" width="250px"
@@ -211,7 +237,8 @@
 
 												</div>
 												<div class="form-group col-auto"> <input type="text"
-													 ng-change="submitFormAccount()" ng-model="searchKeyword"	class="form-control" id="search1" value=""
+														ng-change="submitFormAccount()" ng-model="searchKeyword"
+														class="form-control" id="search1" value=""
 														placeholder="Tìm kiếm"></div>
 											</div>
 										</form>
@@ -228,6 +255,7 @@
 												<th><strong> Địa chỉ</strong></th>
 												<th><strong>Trạng thái</strong></th>
 												<th><strong>Công cụ</strong></th>
+
 											</tr>
 										</thead>
 										<tbody>
@@ -235,7 +263,11 @@
 											<tr ng-repeat="item in pager.items">
 
 												<td>
-													<div class="avatar avatar-md">
+													<div ng-if="item.image == null" class="avatar avatar-md">
+														<img src="../../images/avt/default.png" width="80px"
+															height="50px" style="border-radius: 10px;">
+													</div>
+													<div ng-if="item.image != null" class="avatar avatar-md">
 														<img src="../../images/avt/{{item.image}}" width="80px"
 															height="50px" style="border-radius: 10px;">
 													</div>
@@ -268,9 +300,9 @@
 												</td>
 
 												<td>
-													<a style="color: white;font-weight: bold;"
-														class="btn btn-warning" data-toggle="modal"
-														data-target="#user-form-modal" ng-click="edit(item)">
+													<a style="color: white;font-weight: bold;" class="btn btn-warning"
+														data-toggle="modal" data-target="#user-form-modal"
+														ng-click="edit(item)">
 														<i class="bi bi-pencil-square"></i> Sửa</a>
 
 													<a style="color: white;font-weight: bold;" class="btn btn-danger"

@@ -32,7 +32,24 @@
                       <div class="col">
                         <div class="row">
                           <div class="col-lg-6">
-                            <div class="form-group img-thumbnail" style="padding-left: 50px;">
+                            <div ng-if="imgaedefault == true" class="form-group img-thumbnail" style="padding-left: 50px;">
+                              <img src="../../images/product/default.png" style="border-radius: 10px;" width="250px"
+                                height="250px">
+                              <hr>
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+                                </div>
+                                <div class="custom-file">
+                                  <input type="file" class="custom-file-input" aria-describedby="inputGroupFileAddon01"
+                                    id="image" ng-model="form.image"
+                                    onchange="angular.element(this).scope().imageChanged(this.files)"
+                                    accept="image/png, image/jpeg">
+                                  <label class="custom-file-label" for="inputGroupFile01">Chọn ảnh</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div ng-if="imgaedefault == false" class="form-group img-thumbnail" style="padding-left: 50px;">
                               <img src="../../images/product/{{form.image}}" style="border-radius: 10px;" width="250px"
                                 height="250px">
                               <hr>
@@ -118,7 +135,7 @@
                                 placeholder="Nhập số lượng">
                               <input ng-show="index == -1" class="form-control" readonly
                                 style="background-color: white;" ng-model="formprow.quantity" />
-                              
+
                             </div>
                           </div>
                         </div>
