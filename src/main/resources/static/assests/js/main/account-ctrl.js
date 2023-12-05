@@ -11,7 +11,7 @@ app.controller("account-ctrl", function($scope, $http) {
 		});
 	}
 
-	//Tìm kiếm	
+	//Tìm kiếm người dùng
 	$scope.searchKeyword = '';
 	$scope.submitFormAccount = function() {
 		$http.get('/rest/accounts/search/', {
@@ -25,12 +25,13 @@ app.controller("account-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		});
 	}
-	
+
 
 
 
 
 	$scope.edit = function(item) {
+		$scope.imgaedefault = false;
 		$scope.form = angular.copy(item);
 		$scope.index = -1;
 		window.scrollTo({
@@ -47,7 +48,28 @@ app.controller("account-ctrl", function($scope, $http) {
 			behavior: 'smooth'
 		});
 	}
+
+
+	var modal = document.getElementById("user-form-modal");
+	document.addEventListener("keydown", function(event) {
+		// Kiểm tra xem phím đã nhấn có phải là phím Esc (mã phím 27) không
+		if (event.keyCode === 27) {
+			$scope.imgaedefault = true;
+			console.log($scope.weightvalue)
+		}
+	});
+	document.addEventListener("click", function(event) {
+		// Kiểm tra xem người dùng đã nhấp chuột bên ngoài modal chưa
+		if (event.target === modal) {
+			// Nếu người dùng đã nhấp chuột bên ngoài modal, đóng modal
+			$scope.imgaedefault = true;
+			console.log($scope.weightvalue)
+		}
+	});
+
+	$scope.imgaedefault = true;
 	$scope.imageChanged = function(files) {
+		$scope.imgaedefault = false;
 		var data = new FormData();
 		data.append('file', files[0]);
 		$http.post('/rest/upload/avt', data, {
@@ -88,6 +110,32 @@ app.controller("account-ctrl", function($scope, $http) {
 
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
+		var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (filter.test(item.email) == false) {
+			Swal.fire({
+				type: 'error',
+				title: 'Email chưa đúng định dạng',
+				text: error,
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+			return;
+		}
+		if (vnf_regex.test(item.phone) == false) {
+			Swal.fire({
+				type: 'error',
+				title: 'Số điện thoại chưa đúng định dạng',
+				text: error,
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+			return;
+		}
 		for (var i = 0; i < $scope.items.length; i++) {
 			if (item.email === $scope.items[i].email) {
 				Swal.fire({
@@ -113,6 +161,7 @@ app.controller("account-ctrl", function($scope, $http) {
 			}
 		}
 		if (item.password === item.repassword) {
+			item.image = 'default.png'
 			$http.post(`/rest/accounts`, item).then(resp => {
 				$scope.initialize();
 				Swal.fire({
@@ -361,7 +410,25 @@ app.controller("product-ctrl", function($scope, $http) {
 		});
 	}
 
+	var modal = document.getElementById("user-form-modal");
+	document.addEventListener("keydown", function(event) {
+		// Kiểm tra xem phím đã nhấn có phải là phím Esc (mã phím 27) không
+		if (event.keyCode === 27) {
+			$scope.imgaedefault = true;
+			console.log($scope.weightvalue)
+		}
+	});
+	document.addEventListener("click", function(event) {
+		// Kiểm tra xem người dùng đã nhấp chuột bên ngoài modal chưa
+		if (event.target === modal) {
+			// Nếu người dùng đã nhấp chuột bên ngoài modal, đóng modal
+			$scope.imgaedefault = true;
+			console.log($scope.weightvalue)
+		}
+	});
+	$scope.imgaedefault = true;
 	$scope.imageChanged = function(files) {
+		$scope.imgaedefault = false;
 		var data = new FormData();
 		data.append('file', files[0]);
 		$http.post('/rest/upload/product', data, {
@@ -450,6 +517,7 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 
 	$scope.edit = function(item) {
+		$scope.imgaedefault = false;
 		$scope.form = angular.copy(item);
 		$scope.priceww = $scope.form.price
 		console.log($scope.form)
@@ -560,8 +628,9 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 	//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
 	//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
+	$scope.imgaedefault = true;
 	$scope.weightadmin = function(id, price) {
-		console.log(id, price)
+		$scope.imgaedefault = false;
 		$scope.showbtn_them = true;
 		$scope.showbtn_addweight = true;
 		$http.get(`/rest/cart/checkproductweight/${id}/${price}`).then(resp => {
@@ -1318,7 +1387,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 	}
 	//Tìm kiếm chương trình giảm giá
 	$scope.submitFormDiscount = function() {
-		
+
 		$http.get('/rest/discount/search', {
 			params: {
 				name: $scope.searchKeyword
@@ -1332,7 +1401,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 	}
 
 	$scope.getweight = function(idproduct) {
-	console.log(idproduct.id);
+		console.log(idproduct.id);
 		$http.get(`/rest/weightvalue2/getProductweigth/${idproduct.id}`).then(function(response) {
 			$scope.productweight = response.data;
 
