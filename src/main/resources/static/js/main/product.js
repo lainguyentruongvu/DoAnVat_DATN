@@ -435,7 +435,11 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				if (index !== -1) {
 					$scope.selectedItems.splice(index, 1);
 					localStorage.setItem('selectedItems', JSON.stringify($scope.selectedItems));
+
+					$scope.giamgia();
+					$scope.tinhtien();
 				}
+
 			}).catch(error => {
 				Swal.fire("Error", "Xóa sản phẩm thất bại!", "error");
 				console.log("Error", error);
@@ -576,27 +580,32 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	$scope.giamgia = function() {
 		$http.get("/rest/voucher").then(resp => {
 			$scope.voucher = resp.data;
+			console.log($scope.voucher);
+			if ($scope.coupon != []) {
+				// Use Array.prototype.find() instead of a for loop
+				var foundVoucher = $scope.voucher.find(v => v.id === $scope.coupon);
 
-			for (var i = 0; i <= $scope.voucher.length; i++) {
-				if ($scope.voucher[i].id === $scope.coupon) {
-
-					var timeVoucherEnd = new Date($scope.voucher[i].enddate).toISOString().slice(0, 10);
+				if (foundVoucher) {
+					var timeVoucherEnd = new Date(foundVoucher.enddate).toISOString().slice(0, 10);
 					var timenow = new Date().toISOString().slice(0, 10);
 
 					if (timeVoucherEnd >= timenow) {
-						var giamgia = $scope.voucher[i].discount / 100;
+						var giamgia = foundVoucher.discount / 100;
 						var tiengiam = parseFloat($scope.totalPrice) * parseFloat(giamgia);
 						$scope.total = $scope.totalPrice - tiengiam;
 						$scope.viewgiamgia = tiengiam;
+						sessionStorage.setItem('coupon', $scope.coupon);
 
-						break;
 					} else {
-						Swal.fire("error", "Mã giảm giá hết hạn", "error");
-						break;
+						Swal.fire("Lỗi ", "Mã giảm giá hết hạn", "error");
+						sessionStorage.setItem('coupon', []);
 					}
-				} else if ($scope.voucher[i].id !== $scope.coupon) {
+				} else {
+					// This block should only be executed after the loop
+					sessionStorage.setItem('coupon', []);
 					$scope.viewgiamgia = 0;
 					$scope.tinhtien();
+					Swal.fire("Lỗi", "Mã giảm giá không tồn tại", "error");
 				}
 			}
 		});
@@ -690,29 +699,8 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					for (var i = 0; i < $scope.selectedItems.length; i++) {
 						$scope.deleteida($scope.selectedItems[i].id)
 					}
-					//
-					//					for (var i = 0; i < $scope.selectedItems.length; i++) {
-					//						processProduct($scope.selectedItems[i]);
-					//					}
-					//					function processProduct(item) {
-					//						$http.get(`/rest/order/weight/${item.weightvalue}`).then(resp => {
-					//							$scope.weightquantt = resp.data;
-					//							$http.get(`/rest/order/productweight/${item.product.id}/${$scope.weightquantt.id}`).then(resp => {
-					//								console.log(resp.data.id);
-					//								$http.put(`/rest/order/putquantity/${resp.data.id}/${item.quantity}`).then(resp => {
-					//								}).catch(error => {
-					//									console.log(error)
-					//								});
-					//
-					//							}).catch(error => {
-					//								console.log(error)
-					//							});
-					//						}).catch(error => {
-					//							console.log(error);
-					//						});
-					//					}
-
 					localStorage.clear();
+					sessionStorage.clear();
 					console.log(resp);
 
 				}).catch(error => {
@@ -725,7 +713,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	}
 
 
-
+	$scope.message = "";
 	$scope.thanhtoan = function() {
 
 		//Lấy dữ liệu từ localStore
@@ -750,7 +738,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				id: 1
 			},
 			statusorder: $scope.statusorder,
-			message: $("#message").text(),
+			message: $scope.message,
 			get orderdetail() {
 				return $scope.selectedItems.map(item => {
 					return {
@@ -783,14 +771,13 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 							localStorage.clear();
 							$window.location.href = "/order/detail/" + resp.data.id;
 						}
-
-
 					}
 
 					for (var i = 0; i < $scope.selectedItems.length; i++) {
 						processProduct($scope.selectedItems[i], checkComplete);
 					}
 					localStorage.clear();
+					sessionStorage.clear();
 					console.log(resp);
 				}).catch(error => {
 					Swal.fire("Error", "Đặt hàng thất bại!", "error");
@@ -824,16 +811,18 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	//Kiểm tra thanh toán
 
 	$scope.cbthanhtoan = function() {
-		//		$scope.name = document.getElementById('name').value;
-		//
-		//		$scope.phone = document.getElementById('phone').value;
-
 		var check = $('input[name="payment"]:checked').val();
-		if ($scope.address == null || $scope.ship == null) {
+		var phone = $("#phone").val();
+		var name = document.getElementById("name").value;
+		if ($scope.address == null || $scope.ship == null || phone == [] || name == []) {
 			if ($scope.address == null) {
-				Swal.fire("Error", "Vui lòng chọn địa chỉ", "error");
-			} else {
-				Swal.fire("Error", "Vui lòng chọn phương thức vận chuyển", "error");
+				Swal.fire("Lỗi", "Vui lòng chọn địa chỉ", "error");
+			} if ($scope.ship == null) {
+				Swal.fire("Lỗi", "Vui lòng chọn phương thức vận chuyển", "error");
+			} if (phone == []) {
+				Swal.fire("Lỗi", "Số điện thoại không được bỏ trống", "error");
+			} if (name == []) {
+				Swal.fire("Lỗi", "Họ và tên không được bỏ trống", "error");
 			}
 		} else {
 
@@ -880,10 +869,15 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	//Lấy phí ship API
 	document.addEventListener('phiDataAvailable', function(event) {
 		$scope.$apply(function() {
+			var total = document.getElementById("total").innerHTML;
+			var totalreplace = parseFloat(total.replace(',', ''));
+			console.log(totalreplace);
 			// Truy cập dữ liệu từ event.detail
 			$scope.ship = event.detail;
 			//Tính tổng tiền thanh toán
-			$scope.tongtienthanhtoan = $scope.total + $scope.ship;
+			$scope.tongtienthanhtoan = totalreplace + $scope.ship;
+			console.log($scope.tongtienthanhtoan);
+
 		});
 	});
 
@@ -1312,7 +1306,10 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	};
 	//End Updatepassword
-
+	$scope.showAll = false;
+	$scope.toggleShowAll = function() {
+		$scope.showAll = !$scope.showAll;
+	};
 
 	//Hiển thị đơn hàng người dùng
 	$scope.orderuserfc = function() {
@@ -1386,7 +1383,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		var url = `/rest/order/getOrderAndOrderdetailOrderId/${orderId}`;
 		$http.get(url).then(resp => {
 			$scope.orderdetail = resp.data;
-
 			window.location.href = "/order_detail/" + orderId;
 		});
 	};

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import poly.store.dao.AccountDAO;
 import poly.store.entity.Account;
 import poly.store.services.AccountService;
 
@@ -25,6 +26,8 @@ public class AccountRestController {
 
 	@Autowired
 	AccountService accountService;
+	@Autowired
+	AccountDAO accountdao;
 
 	@GetMapping
 	public List<Account> getAccounts(@RequestParam("admin") Optional<Boolean> admin) {
@@ -60,5 +63,11 @@ public class AccountRestController {
 		
 		ac.setPassword(matkhau);
 		return accountService.update(ac);
+	}
+	
+	
+	@GetMapping("search")
+	public List<Account> findByUsernameLike(@RequestParam(name = "name") String name) {
+		return accountdao.findByUsernameLike(name);
 	}
 }

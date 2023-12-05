@@ -36,7 +36,7 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
 	@Query("SELECT NEW ProductStatistics(p.name, SUM(od.quantity), SUM(od.price * od.quantity)) " + "FROM Product p "
 			+ "JOIN Orderdetail od ON od.product.id = p.id " + "GROUP BY p.name " + "ORDER BY SUM(od.quantity) DESC")
 	List<ProductStatistics> findTopSellingProducts();
-
+///cate
 	@Query("SELECT NEW poly.store.entity.ReportCate(o.product.category.name, COUNT(o), SUM(o.quantity ), SUM(o.price * o.quantity)) FROM Orderdetail o GROUP BY o.product.category.name ORDER BY COUNT(o) DESC")
 	List<ReportCate> getProductSummary();
 

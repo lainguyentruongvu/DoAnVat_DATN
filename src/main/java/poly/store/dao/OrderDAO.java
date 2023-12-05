@@ -64,7 +64,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	@Query("SELECT NEW Revenuestatistics(FUNCTION('DAY', o.createdate), SUM(o.totalamount)) FROM Order o WHERE o.statusorder = true GROUP BY FUNCTION('DAY', o.createdate)")
 	List<Revenuestatistics> getDateRevenue();
 
-	@Query("SELECT NEW OrderStatistics(MONTH(o.createdate), COUNT(o)) " + "FROM Order o WHERE o.statusorder = true "
+	@Query("SELECT NEW OrderStatistics(MONTH(o.createdate), COUNT(o)) " + "FROM Order o "
 			+ "GROUP BY MONTH(o.createdate) ")
 	List<OrderStatistics> countOrdersByMonth();
 
@@ -72,15 +72,15 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	Long countOrdersByStatus(String username,Integer status);
 	
 
-	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE username = :userId")
-	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserId( String userId);
+	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE username = :userId ORDER BY o.createdate DESC")
+	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserId(String userId);
 	
 	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE o.id = :orderid")
 	List<OrderWithDetailsDTO> getOrdersWithDetailsById( Integer orderid);
 	
 	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE username = :userId AND o.status = :orderStatus ")
 	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserIdStatus( String userId ,Status orderStatus);
-	
+	/////
 	@Query("SELECT NEW poly.store.entity.Report(b.createdate, a.name, COUNT(*), SUM(b.totalamount)) " + "FROM Order b "
 			+ "JOIN Account a ON b.account.username = a.username " + "WHERE b.createdate >= ?1 AND b.createdate <= ?2 "
 			+ "GROUP BY b.createdate, a.name " + "ORDER BY SUM(b.totalamount) DESC")

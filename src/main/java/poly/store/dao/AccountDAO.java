@@ -4,14 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import poly.store.entity.Account;
 
-
-
-public interface AccountDAO extends JpaRepository<Account, String>{
+public interface AccountDAO extends JpaRepository<Account, String> {
 	Account findByUsername(String username);
-	
 
 	@Query("SELECT DISTINCT ar.account FROM Authority ar WHERE ar.role.id IN('DIRE','STAF')")
 	List<Account> getAdministrators();
@@ -25,8 +23,8 @@ public interface AccountDAO extends JpaRepository<Account, String>{
 
 	@Query("SELECT a FROM Account a WHERE a.token=?1")
 	public Account findByToken(String token);
-	
-	
-	
-	
+
+	@Query("SELECT u FROM Account u WHERE u.name LIKE %:name%")
+	List<Account> findByUsernameLike(@Param("name") String name);
+
 }

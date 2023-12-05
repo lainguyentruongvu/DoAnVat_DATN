@@ -59,6 +59,5 @@ public class WeightvalueRestController {
 		weightservice.delete(weightid);
 	}
 		
-		
 	
 }

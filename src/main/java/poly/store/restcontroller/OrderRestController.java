@@ -1,18 +1,19 @@
 package poly.store.restcontroller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -152,7 +153,7 @@ public class OrderRestController {
 		if (newStatus == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid new status");
 		}
-
+		order.setStatusorder(true);
 		order.setStatus(newStatus);
 		orderservice.save(order);
 
@@ -175,9 +176,8 @@ public class OrderRestController {
 	public List<OrderWithDetailsDTO> getOrderByUsernameStatus(@PathVariable("id") String id,
 			@PathVariable("status") Status status) {
 		List<OrderWithDetailsDTO> data = orderDao.getOrdersWithDetailsByUserIdStatus(id, status);
-
 		List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
-
+		Collections.reverse(groupedData);
 		return groupedData;
 
 	}
@@ -203,6 +203,7 @@ public class OrderRestController {
 	public List<OrderWithDetailsDTO> getOrderAndOrderdetail(@PathVariable("id") String id) {
 		List<OrderWithDetailsDTO> data = orderDao.getOrdersWithDetailsByUserId(id);
 		List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
+		Collections.reverse(groupedData);
 		return groupedData;
 	}
 

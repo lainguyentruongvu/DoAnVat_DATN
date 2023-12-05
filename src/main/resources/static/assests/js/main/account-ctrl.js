@@ -8,9 +8,26 @@ app.controller("account-ctrl", function($scope, $http) {
 	$scope.initialize = function() {
 		$http.get('/rest/accounts').then(function(response) {
 			$scope.items = response.data;
-			console.log($scope.items);
 		});
 	}
+
+	//Tìm kiếm	
+	$scope.searchKeyword = '';
+	$scope.submitFormAccount = function() {
+		$http.get('/rest/accounts/search/', {
+			params: {
+				name: $scope.searchKeyword
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
+			$scope.pager.first();
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+	
+
+
 
 
 	$scope.edit = function(item) {
@@ -665,7 +682,7 @@ app.controller("order-ctrl", function($scope, $http) {
 	$scope.initialize = function() {
 
 		$http.get("/rest/order/hienthitrangthai").then(resp => {
-			$scope.list = resp.data;			
+			$scope.list = resp.data;
 		});
 		$http.get("/rest/order").then(resp => {
 			$scope.orderlist = resp.data;
@@ -1298,6 +1315,28 @@ app.controller("discount-ctrl", function($scope, $http) {
 	$scope.reset_smooth_table = function() {
 		$scope.form = {};
 		$(".nav-tabs a:eq(0)").tab('show')
+	}
+	//Tìm kiếm chương trình giảm giá
+	$scope.submitFormDiscount = function() {
+		
+		$http.get('/rest/discount/search', {
+			params: {
+				name: $scope.searchKeyword
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
+			$scope.pager.first();
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
+	$scope.getweight = function(idproduct) {
+	console.log(idproduct.id);
+		$http.get(`/rest/weightvalue2/getProductweigth/${idproduct.id}`).then(function(response) {
+			$scope.productweight = response.data;
+
+		});
 	}
 
 	$scope.create = function() {

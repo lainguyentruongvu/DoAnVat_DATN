@@ -140,27 +140,27 @@
 
 						</div>
 						<div th:if="*{status.id == 4}" class="track">
-							
-							<h3 style=" text-align: center; padding-left: 440px;padding-top: 20px;">Đơn hàng đã bị hủy</h3>
-							
+
+							<h3 style=" text-align: center; padding-left: 440px;padding-top: 20px;">Đơn hàng đã bị hủy
+							</h3>
+
 
 
 						</div>
-						
+
 						<hr>
 
 						<div th:each="detail:*{orderdetail}" th:object="${detail}" class="container">
 							<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 							<div class="row">
 								<div class="col-lg-2">
-									<img class=""
-										th:src="@{|/images/product/*{product.image}|}"
-										alt="" width="150px">
+									<img class="" th:src="@{|/images/product/*{product.image}|}" alt="" width="150px">
 								</div>
 								<div class="col-lg-8" style="padding: 10px;">
-									<label for="" style="font-size: 20px;"> [[*{product.name}]]  [[*{weight}]]</label><br>
+									<label for="" style="font-size: 20px;"> [[*{product.name}]]
+										[[*{weight}]]</label><br>
 									<label for="" style="color: #757575;">[[*{product.category.name}]]
-										</label><br>
+									</label><br>
 									<label for="" style="font-size: 20px;">x[[*{quantity}]]</label>
 								</div>
 								<div class="col-lg-2">
@@ -169,7 +169,7 @@
 								</div>
 							</div>
 							<hr>
-							<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->								
+							<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 						</div>
 						<div class="row" style="padding-top: 20px;">
 							<div class="col-lg-9">
@@ -177,20 +177,25 @@
 							</div>
 							<div class="col-lg-3" style="font-family: Arial, Helvetica, sans-serif;">
 								<label for="" style="font-size: 15px;"> Tổng tiền hàng:
-									<label style="color: black;">[[*{#numbers.formatDecimal(totalamount-ship,0,'COMMA',0,'POINT')}]] VNĐ</label></label>
+									<label
+										style="color: black;">[[*{#numbers.formatDecimal(totalamount-ship,0,'COMMA',0,'POINT')}]]
+										VNĐ</label></label>
 
 								<label for="" style="font-size: 15px;"> Phí vận chuyển:
-									<label style="color: black;">[[*{#numbers.formatDecimal(ship,0,'COMMA',0,'POINT')}]] VNĐ</label></label>
+									<label style="color: black;">[[*{#numbers.formatDecimal(ship,0,'COMMA',0,'POINT')}]]
+										VNĐ</label></label>
 
-								<label for="" style="font-size: 15px;"> Giảm giá:
-									<label style="color: black;">[[*{voucher.discount}]]</label></label>
+								<label for="" style="font-size: 15px;">Đã giảm giá:
+									<label style="color: black;"
+										>[[*{voucher.discount}]]%</label></label>
 
 								<label for="" style="font-size: 20px;"> Thành tiền: <label
 										style="color: #F35022; font-weight: bold;">[[*{#numbers.formatDecimal(totalamount,0,'COMMA',0,'POINT')}]]VNĐ</label></label>
 
 								<label for="" style="font-size: 15px;"><i class="bi bi-wallet2"></i> Phương thức
 									thanh toán:
-									<label style="color: #F35022; font-weight: bold;">[[*{statusorder ? 'VNPAY' : 'Thanh toán khi nhận hàng'}]]</label></label>
+									<label style="color: #F35022; font-weight: bold;">[[*{statusorder ? 'VNPAY' : 'Thanh
+										toán khi nhận hàng'}]]</label></label>
 
 							</div>
 						</div>

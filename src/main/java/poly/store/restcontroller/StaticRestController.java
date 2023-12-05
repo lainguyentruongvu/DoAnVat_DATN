@@ -77,22 +77,22 @@ public class StaticRestController {
 	public Integer demslsp() {
 		return productDao.countProduct();
 	}
-
+	//Thống kê doanh thu ngày
 	@GetMapping("/getDateRevenue")
 	public List<Revenuestatistics> getDateRevenue() {
 		return orderDao.getDateRevenue();
 	}
-
+	//Thống kê doanh thu tháng
 	@GetMapping("/getMonthRevenue")
 	public List<Revenuestatistics> getMonthRevenue() {
 		return orderDao.getMonthRevenue();
 	}
-
+	//Thống kê doanh thu năm
 	@GetMapping("/getYearRevenue")
 	public List<Revenuestatistics> getYearRevenue() {
 		return orderDao.getYearRevenue();
 	}
-
+	//Thống kê đơn theo tháng ngày
 	@GetMapping("/countOrdersByMonth")
 	public List<OrderStatistics> countOrdersByMonth() {
 		return orderDao.countOrdersByMonth();
@@ -118,6 +118,8 @@ public class StaticRestController {
 		return productDao.findTopSellingProducts();
 	}
 
+	
+	////ff
 	@GetMapping("/getProductSummary")
 	public List<ReportCate> getProductSummary() {
 		return productDao.getProductSummary();

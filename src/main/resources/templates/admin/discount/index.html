@@ -38,7 +38,9 @@
 
 															<label>Mã sản phẩm và tên:</label> <select
 																class="form-control" id="exampleFormControlSelect1"
-																ng-model="form.product.id">
+																ng-model="form.product.id"
+																ng-change="getweight(form.product.id)"
+																ng-options="c as (c.id + ': ' + c.name) for c in product | orderBy:'name'">
 																<option ng-repeat="c in product" ng-value="c.id">
 																	{{c.id}}
 																	: {{c.name}}</option>
@@ -75,7 +77,8 @@
 															<label>Trọng lượng sản phẩm</label>
 															<select class="form-control" id="exampleFormControlSelect1"
 																ng-model="form.weightvalue">
-																<option ng-repeat="p in productweight" ng-value="p.weight.weightvalue">
+																<option ng-repeat="p in productweight"
+																	ng-value="p.weight.weightvalue">
 																	{{p.weight.id}}
 																	: {{p.weight.weightvalue}}</option>
 															</select>
@@ -91,13 +94,17 @@
 
 										<div class="row">
 											<div class="col d-flex justify-content-end">
-												<button style="color: white;font-weight: bold;" ng-click="create()" class="btn btn-primary"
-													ng-hide="index == -1" data-dismiss="modal"> Thêm</button> &nbsp;
-												<button  style="color: white;font-weight: bold;" ng-click="update()" class="btn btn-primary"
-													ng-show="index == -1" data-dismiss="modal"> Cập nhật</button> &nbsp;
-												<button  style="color: white;font-weight: bold;" ng-click="delete(form)" class="btn btn-danger"
-													ng-show="index == -1" data-dismiss="modal"> Xóa</button> &nbsp;
-												<button   style="color: white;font-weight: bold;" ng-click="reset()" class="btn btn-info"> Làm mới</button> &nbsp;
+												<button style="color: white;font-weight: bold;" ng-click="create()"
+													class="btn btn-primary" ng-hide="index == -1" data-dismiss="modal">
+													Thêm</button> &nbsp;
+												<button style="color: white;font-weight: bold;" ng-click="update()"
+													class="btn btn-primary" ng-show="index == -1" data-dismiss="modal">
+													Cập nhật</button> &nbsp;
+												<button style="color: white;font-weight: bold;" ng-click="delete(form)"
+													class="btn btn-danger" ng-show="index == -1" data-dismiss="modal">
+													Xóa</button> &nbsp;
+												<button style="color: white;font-weight: bold;" ng-click="reset()"
+													class="btn btn-info"> Làm mới</button> &nbsp;
 											</div>
 										</div>
 									</form>
@@ -139,7 +146,7 @@
 													<label class="sr-only">Tìm kiếm</label>
 
 												</div>
-												<div class="form-group col-auto"> <input type="text"
+												<div class="form-group col-auto"> <input type="text" ng-change="submitFormDiscount()" ng-model="searchKeyword"
 														class="form-control" id="search1" value=""
 														placeholder="Tìm kiếm"></div>
 											</div>
@@ -163,7 +170,7 @@
 											<tr ng-repeat="item in pager.items">
 
 												<td>
-												 <strong>{{item.product.name}}</strong>
+													<strong>{{item.product.name}}</strong>
 												</td>
 												<td><strong>{{item.discount}}</strong></td>
 												<td>

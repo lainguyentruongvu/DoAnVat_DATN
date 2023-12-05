@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import poly.store.dao.DiscountDAO;
 import poly.store.entity.Discount;
+import poly.store.entity.Product;
 import poly.store.entity.Voucher;
 import poly.store.services.DiscountService;
 
@@ -23,7 +26,8 @@ import poly.store.services.DiscountService;
 public class DiscountRestController {
 	@Autowired
 	DiscountService discountservice;
-	
+	@Autowired
+	DiscountDAO discountdao;
 	
 	
 	@GetMapping()
@@ -49,5 +53,10 @@ public class DiscountRestController {
 	@DeleteMapping("{discountid}")
 	public void delete(@PathVariable("discountid") Integer discountid) {
 		discountservice.delete(discountid);
+	}
+	@GetMapping("search")
+	public List<Discount> search(@RequestParam(name = "name") String name) {
+		List<Discount> searchdiscount = discountdao.searchProductsByKeyword(name);
+		return searchdiscount;
 	}
 }
