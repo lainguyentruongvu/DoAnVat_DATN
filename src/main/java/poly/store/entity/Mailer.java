@@ -17,7 +17,7 @@ public class Mailer {
 	String[] attachments;
 
 	public Mailer(String to, String subject, String body) {
-		this.from = "poly@fpt.edu.vn";
+		this.from = "shopdoandav@gmail.com";
 		this.to = to;
 		this.subject = subject;
 		this.body = body;
