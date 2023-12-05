@@ -748,6 +748,28 @@ app.controller("product-ctrl", function($scope, $http) {
 
 //Order Order Order Order Order Order Order Order Order Order Order Order Order 
 app.controller("order-ctrl", function($scope, $http) {
+
+
+
+	//Tìm kiếm người dùng
+	$scope.searchKeyword = '';
+	$scope.submitFormOrder = function() {
+
+		$http.get('/rest/order/search', {
+
+			params: {
+				name: $scope.searchKeyword
+			}
+
+		}).then(function(response) {
+			$scope.orderlist = response.data;
+			$scope.pager.first();
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
+
 	$scope.initialize = function() {
 
 		$http.get("/rest/order/hienthitrangthai").then(resp => {
@@ -764,6 +786,19 @@ app.controller("order-ctrl", function($scope, $http) {
 			$scope.items = resp.data;
 		});
 	}
+	//Xuất file excel
+	$scope.exportToExcel = function() {
+
+		var dataArray = $scope.orderlist.map(function(item) {
+			return [item.id, item.createdate, item.totalamount, item.ship, item.address, item.phone, item.message, item.account.username, item.status.name, item.statusorder, item.voucher.id];
+		});
+
+		var columnHeaders = Object.keys($scope.orderlist[0]); // Giả sử tất cả các đối tượng có cùng cấu trúc
+
+		// Sử dụng alasql để xuất dữ liệu thành file Excel với tiêu đề cột
+		var query = 'SELECT * INTO XLSX("DonHang.xlsx",{headers:true}) FROM ?';
+		var worksheet = alasql(query, [[columnHeaders].concat(dataArray)]);
+	};
 
 
 	$scope.changeStatus = function(orderId, newStatusId) {

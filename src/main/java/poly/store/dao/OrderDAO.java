@@ -4,11 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-
+import org.springframework.data.repository.query.Param;
 
 import poly.store.entity.Account;
 import poly.store.entity.Order;
@@ -20,6 +18,10 @@ import poly.store.entity.Revenuestatistics;
 import poly.store.entity.Status;
 
 public interface OrderDAO extends JpaRepository<Order, Integer> {
+
+	@Query("SELECT u FROM Order u WHERE u.account.name LIKE %:name%")
+	List<Order> findByUsernameLike(@Param("name") String name);
+
 	@Query("SELECT o FROM Order o WHERE o.status.id = ?1")
 	List<Order> stautus(Integer id);
 
@@ -69,21 +71,21 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	List<OrderStatistics> countOrdersByMonth();
 
 	@Query("SELECT  COUNT(o) FROM Order o WHERE username = :username AND o.status.id = :status")
-	Long countOrdersByStatus(String username,Integer status);
-	
+	Long countOrdersByStatus(String username, Integer status);
 
 	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE username = :userId ORDER BY o.createdate DESC")
 	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserId(String userId);
-	
+
 	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE o.id = :orderid")
-	List<OrderWithDetailsDTO> getOrdersWithDetailsById( Integer orderid);
-	
+	List<OrderWithDetailsDTO> getOrdersWithDetailsById(Integer orderid);
+
 	@Query("SELECT NEW poly.store.entity.OrderWithDetailsDTO(o, od) FROM Order o INNER JOIN Orderdetail od ON o.id = od.order.id WHERE username = :userId AND o.status = :orderStatus ")
-	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserIdStatus( String userId ,Status orderStatus);
+	List<OrderWithDetailsDTO> getOrdersWithDetailsByUserIdStatus(String userId, Status orderStatus);
+
 	/////
 	@Query("SELECT NEW poly.store.entity.Report(b.createdate, a.name, COUNT(*), SUM(b.totalamount)) " + "FROM Order b "
 			+ "JOIN Account a ON b.account.username = a.username " + "WHERE b.createdate >= ?1 AND b.createdate <= ?2 "
 			+ "GROUP BY b.createdate, a.name " + "ORDER BY SUM(b.totalamount) DESC")
 	List<Report> getReportData(Date startDate, Date endDate);
-	
+
 }

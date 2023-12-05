@@ -91,6 +91,11 @@ public class OrderRestController {
 	public List<Order> orderliststatus(Model model) {
 		return orderDao.getProductsSortedByDate();
 	}
+	
+	@GetMapping("/search")
+	public List<Order> findByUsernameLike(@RequestParam(name = "name") String name) {
+		return orderDao.findByUsernameLike(name);
+	}
 
 	// Hiển thị trạng thái
 	@GetMapping("/hienthitrangthai")

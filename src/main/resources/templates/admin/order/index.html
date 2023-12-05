@@ -3,6 +3,7 @@
 
 <head>
 	<title>Quản lý đơn hàng</title>
+
 </head>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -142,12 +143,11 @@
 										<div class="col">
 											<form class="form-inline">
 												<div class="form-row">
-													<div class="form-group col-auto">
-														<label for="search" class="sr-only">Tìm kiếm</label>
-														<input type="text" class="form-control" id="search" value=""
-															placeholder="Tìm kiếm...">
-													</div>
-													
+													<div class="form-group col-auto"> <input type="text"
+															ng-change="submitFormOrder()" ng-model="searchKeyword"
+															class="form-control" id="search1" value=""
+															placeholder="Tìm kiếm"></div>
+
 												</div>
 											</form>
 										</div>
@@ -158,7 +158,7 @@
 													id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true"
 													aria-expanded="false"> Công cụ </button>
 												<div class="dropdown-menu" aria-labelledby="actionMenuButton">
-													<a class="dropdown-item" href="#">Xuất excel</a>
+													<a class="dropdown-item" ng-click="exportToExcel()">Xuất excel</a>
 													<a class="dropdown-item" href="#">Xuất PDF</a>
 												</div>
 											</div>
@@ -188,7 +188,7 @@
 										<tbody>
 											<tr ng-repeat="item in pager.orderlist">
 												<td>{{item.account.name}}</td>
-												<td>{{item.createdate}}</td>
+												<td>{{ item.createdate | date:'dd/MM/yyyy HH:mm' }}</td>
 												<td>{{item.totalamount}}</td>
 												<td>{{item.ship}}</td>
 												<td>{{item.address}}</td>
@@ -298,6 +298,7 @@
 			</div>
 		</div>
 	</div>
+	<script src="https://cdn.jsdelivr.net/alasql/0.7/alasql.min.js"></script>
 </body>
 
 </html>
