@@ -581,6 +581,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		$http.get("/rest/voucher").then(resp => {
 			$scope.voucher = resp.data;
 			console.log($scope.voucher);
+			console.log($scope.coupon);
 			if ($scope.coupon != []) {
 				// Use Array.prototype.find() instead of a for loop
 				var foundVoucher = $scope.voucher.find(v => v.id === $scope.coupon);
@@ -638,7 +639,8 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	$scope.kiemtragiamgia = function() {
 		$scope.coupon = sessionStorage.getItem('coupon');
-		if ($scope.coupon == []) {
+		console.log($scope.coupon);
+		if ($scope.coupon == [] || $scope.coupon == null) {
 			$scope.coupon = 'KHONGGIAM';
 		} else {
 			$scope.coupon;
@@ -650,7 +652,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		var encodedTotalPrice = btoa($scope.total);
 		var url = '/checkout/' + encodedTotalPrice;
 		window.location.href = url;
-		sessionStorage.setItem('coupon', $scope.coupon);
+
 
 	}
 

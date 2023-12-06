@@ -25,12 +25,16 @@
 		</div>
 	</div>
 	<!-- End Breadcrumbs -->
-
+	<div ng-if="!cartdetails || cartdetails.length === 0">
+		<!-- Hình ảnh hoặc thông báo khi orderuser rỗng -->
+		<img src="../images/khongcodonhang.jpg" alt="Empty Order" />
+	</div>
 	<!-- Shopping Cart -->
 	<div class="shopping-cart section">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
+
 					<!-- Shopping Summery -->
 					<table class="table shopping-summery">
 						<thead>
@@ -99,10 +103,10 @@
 								<div class="left">
 									<div class="coupon">
 										<form>
-											<input type="text"  ng-model="coupon"
-												placeholder="Nhập mã giảm giá">
+											<input type="text" ng-model="coupon" placeholder="Nhập mã giảm giá">
 											<button ng-click="giamgia()" class="btn" id="voucher"
-												style="background-color: orange; color: white; font-family: Arial, Helvetica, sans-serif;font-weight: bold;" disabled>Áp
+												style="background-color: orange; color: white; font-family: Arial, Helvetica, sans-serif;font-weight: bold;"
+												disabled>Áp
 												dụng</button>
 										</form>
 									</div>
@@ -118,13 +122,18 @@
 										<li>Tổng tiền<span>{{totalPrice | number :0}} VNĐ</span></li>
 										<!--										<li>Shipping<span>Free</span></li>-->
 										<li>Giảm giá<span>{{viewgiamgia | number:0}} </span></li>
-										<li class="last">Tổng thanh toán<span id="toltalcheckout">{{total | number:0}} VNĐ</span></li>
+										<li class="last">Tổng thanh toán<span id="toltalcheckout">{{total | number:0}}
+												VNĐ</span></li>
 									</ul>
 									<div class="button5">
 
-										<a ng-click="dathang()"> <button style="background-color: orange; color: white; font-family: Arial, Helvetica, sans-serif;font-weight: bold;" class="btn" id="place-order">Đặt
+										<a ng-click="dathang()"> <button
+												style="background-color: orange; color: white; font-family: Arial, Helvetica, sans-serif;font-weight: bold;"
+												class="btn" id="place-order">Đặt
 												hàng</button></a>
-										<a href="/" style="color: white; font-family: Arial, Helvetica, sans-serif;font-weight: bold;" class="btn">Tiếp tục mua sắm</a>
+										<a href="/"
+											style="color: white; font-family: Arial, Helvetica, sans-serif;font-weight: bold;"
+											class="btn">Tiếp tục mua sắm</a>
 									</div>
 								</div>
 							</div>

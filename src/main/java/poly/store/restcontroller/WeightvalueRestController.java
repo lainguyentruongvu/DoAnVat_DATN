@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import poly.store.dao.ProductWeightDAO;
+import poly.store.dao.WeightDAO;
+import poly.store.entity.Account;
 import poly.store.entity.Product;
 import poly.store.entity.Productweight;
 import poly.store.entity.Weight;
@@ -25,6 +28,8 @@ public class WeightvalueRestController {
 	
 	@Autowired
 	WeightService weightservice;
+	@Autowired
+	WeightDAO weightdao;
 	@Autowired
 	ProductWeightDAO productWeightDAO ;
 	
@@ -57,6 +62,11 @@ public class WeightvalueRestController {
 	@DeleteMapping("{weightid}")
 	public void delete(@PathVariable("weightid") Integer weightid) {
 		weightservice.delete(weightid);
+	}
+	
+	@GetMapping("search")
+	public List<Weight> findByWeightLike(@RequestParam(name = "name") String name) {
+		return weightdao.findByWeightLike(name);
 	}
 		
 	

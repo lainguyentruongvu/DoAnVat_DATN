@@ -95,6 +95,7 @@
 
 												</div>
 												<div class="form-group col-auto"> <input type="text"
+														ng-change="submitFormCategory()" ng-model="searchKeyword"
 														class="form-control" id="search1" value=""
 														placeholder="Tìm kiếm"></div>
 											</div>
@@ -113,12 +114,12 @@
 										<tbody>
 
 											<tr ng-repeat="item in pager.items">
-												
+
 												<td>
 													{{item.id}}
 												</td>
 												<td><strong>{{item.name}}</strong></td>
-												
+
 												<td style="color: white;">
 													<a class="btn btn-warning" data-toggle="modal"
 														data-target="#user-form-modal" ng-click="edit(item)"><i

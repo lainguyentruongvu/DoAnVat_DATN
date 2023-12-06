@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import poly.store.dao.CategoryDAO;
 import poly.store.dao.ProductDAO;
+import poly.store.entity.Account;
 import poly.store.entity.Category;
 import poly.store.entity.Discount;
 import poly.store.entity.Product;
@@ -27,6 +29,8 @@ import poly.store.services.ProductService;
 public class CategoryRestController {	
 	@Autowired
 	CategoryService categoryservice;
+	@Autowired
+	CategoryDAO categorydao;
 	
 	@Autowired
 	 ProductDAO productdao;
@@ -45,6 +49,10 @@ public class CategoryRestController {
 	@GetMapping("{categoryid}")
 	public Category getOne(@PathVariable("categoryid") Integer categoryid) {
 		return categoryservice.findById(categoryid);
+	}
+	@GetMapping("search")
+	public List<Category> findByCategoryLike(@RequestParam(name = "name") String name) {
+		return categorydao.findByCategoryLike(name);
 	}
 	
 	@PostMapping

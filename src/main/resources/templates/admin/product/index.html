@@ -2,279 +2,316 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/layoutad/layout::dynamic(~{::title},~{::body})}">
 
 <head>
-  <title>Quản lý sản phẩm</title>
+	<title>Quản lý sản phẩm</title>
 </head>
 
 <body class="vertical light" ng-app="app" ng-controller="product-ctrl">
 
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-  <div class="container">
-    <div class="row flex-lg-nowrap">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<div class="container">
+		<div class="row flex-lg-nowrap">
 
 
-      <div class="col">
+			<div class="col">
 
-        <!-- FORM NHẬP THÔNG TIN -->
-        <div class="modal fade" role="dialog" tabindex="-1" id="user-form-modal">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" ng-click="reset()">Thêm sửa sản phẩm</h5>
-                <button type="button" class="close" data-dismiss="modal" ng-click="thoatmodal()">
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="py-1">
-                  <form class="form" method="post" enctype="multipart/form-data">
+				<!-- FORM NHẬP THÔNG TIN -->
+				<div class="modal fade" role="dialog" tabindex="-1" id="user-form-modal">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" ng-click="reset()">Thêm sửa sản phẩm</h5>
+								<button type="button" class="close" data-dismiss="modal" ng-click="thoatmodal()">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="py-1">
+									<form class="form" method="post" enctype="multipart/form-data">
 
-                    <div class="row">
-                      <div class="col">
-                        <div class="row">
-                          <div class="col-lg-6">
-                            <div ng-if="imgaedefault == true" class="form-group img-thumbnail" style="padding-left: 50px;">
-                              <img src="../../images/product/default.png" style="border-radius: 10px;" width="250px"
-                                height="250px">
-                              <hr>
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-                                </div>
-                                <div class="custom-file">
-                                  <input type="file" class="custom-file-input" aria-describedby="inputGroupFileAddon01"
-                                    id="image" ng-model="form.image"
-                                    onchange="angular.element(this).scope().imageChanged(this.files)"
-                                    accept="image/png, image/jpeg">
-                                  <label class="custom-file-label" for="inputGroupFile01">Chọn ảnh</label>
-                                </div>
-                              </div>
-                            </div>
-                            <div ng-if="imgaedefault == false" class="form-group img-thumbnail" style="padding-left: 50px;">
-                              <img src="../../images/product/{{form.image}}" style="border-radius: 10px;" width="250px"
-                                height="250px">
-                              <hr>
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
-                                </div>
-                                <div class="custom-file">
-                                  <input type="file" class="custom-file-input" aria-describedby="inputGroupFileAddon01"
-                                    id="image" ng-model="form.image"
-                                    onchange="angular.element(this).scope().imageChanged(this.files)"
-                                    accept="image/png, image/jpeg">
-                                  <label class="custom-file-label" for="inputGroupFile01">Chọn ảnh</label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-6">
-                            <div class="form-group">
-                              <label>Tên sản phẩm</label> <strong>*</strong>
-                              <input class="form-control" ng-model="form.name" type="text" name="name"
-                                placeholder="Nhập tên sản phẩm">
-                            </div>
+										<div class="row">
+											<div class="col">
+												<div class="row">
+													<div class="col-lg-6">
+														<div ng-if="imgaedefault == true"
+															class="form-group img-thumbnail"
+															style="padding-left: 50px;">
+															<img src="../../images/product/default.png"
+																style="border-radius: 10px;" width="250px"
+																height="250px">
+															<hr>
+															<div class="input-group">
+																<div class="input-group-prepend">
+																	<span class="input-group-text"
+																		id="inputGroupFileAddon01">Tải lên</span>
+																</div>
+																<div class="custom-file">
+																	<input type="file" class="custom-file-input"
+																		aria-describedby="inputGroupFileAddon01"
+																		id="image" ng-model="form.image"
+																		onchange="angular.element(this).scope().imageChanged(this.files)"
+																		accept="image/png, image/jpeg">
+																	<label class="custom-file-label"
+																		for="inputGroupFile01">Chọn ảnh</label>
+																</div>
+															</div>
+														</div>
+														<div ng-if="imgaedefault == false"
+															class="form-group img-thumbnail"
+															style="padding-left: 50px;">
+															<img src="../../images/product/{{form.image}}"
+																style="border-radius: 10px;" width="250px"
+																height="250px">
+															<hr>
+															<div class="input-group">
+																<div class="input-group-prepend">
+																	<span class="input-group-text"
+																		id="inputGroupFileAddon01">Tải lên</span>
+																</div>
+																<div class="custom-file">
+																	<input type="file" class="custom-file-input"
+																		aria-describedby="inputGroupFileAddon01"
+																		id="image" ng-model="form.image"
+																		onchange="angular.element(this).scope().imageChanged(this.files)"
+																		accept="image/png, image/jpeg">
+																	<label class="custom-file-label"
+																		for="inputGroupFile01">Chọn ảnh</label>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-6">
+														<div class="form-group">
+															<label>Tên sản phẩm</label> <strong>*</strong>
+															<input class="form-control" ng-model="form.name" type="text"
+																name="name" placeholder="Nhập tên sản phẩm">
+														</div>
 
-                            <div class="form-group">
-                              <label>Loại sản phẩm</label> <strong>*</strong>
-                              <select class="custom-select mr-sm-2" id="inlineFormCustomSelectPref1"
-                                ng-model="form.category.id">
-                                <option value="">Chọn loại sản phẩm</option>
-                                <option ng-repeat="cate in categorys" ng-value="cate.id">{{cate.name}}</option>
-                              </select>
-                            </div>
-                            <div class="form-group">
-                              <label>Ngày tạo</label> <strong>*</strong>
-                              <input ng-show="index == -1" class="form-control"
-                                ng-model="form.createdate | date:'dd-MM-yyyy'" type="text" value="{{createdate}}"
-                                readonly style="background-color: white;">
-                              <input ng-hide="index == -1" class="form-control" ng-model="form.createdate" type="date"
-                                value="{{createdate}}" readonly style="background-color: white;">
-                            </div>
-                            <div class="form-group">
-                              <label>Trạng thái hoạt động:</label> <strong>*</strong> <br> 
-                              <label>
-                                <input type="radio" name="activeted" ng-model="form.activeted" value="false"
-                                  ng-checked="form.activeted === false">
-                                Không
-                              </label>
-                              <label>
-                                <input type="radio" name="activeted" ng-model="form.activeted" value="true"
-                                  ng-checked="form.activeted === true">
-                                Có
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Giá tiền</label> <strong>*</strong>
-                              <input ng-hide="index == -1" class="form-control" ng-model="form.price" type="text"
-                                placeholder="Nhập giá tiền">
-                              <input ng-show="index == -1" class="form-control" readonly
-                                style="background-color: white;" ng-model="form.price" />
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Trọng lượng</label> <strong>*</strong>
-                              <select ng-hide="index == -1" class="custom-select mr-sm-2"
-                                id="inlineFormCustomSelectPref1" ng-model="formprow.weight.id">
-                                <option value="">Chọn trọng lượng sản phẩm</option>
-                                <option ng-repeat="w in weight" ng-value="{{w.id}}">{{w.weightvalue}}</option>
-                              </select>
-                              <input ng-show="index == -1" class="form-control" hidden ng-model="formprow.weight.id" />
-                              <input ng-show="index == -1" class="form-control" readonly
-                                style="background-color: white;" ng-model="formprow.weight.weightvalue" />
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Số lượng</label> <strong>*</strong>
-                              <input ng-hide="index == -1" class="form-control" ng-model="formprow.quantity" type="text"
-                                placeholder="Nhập số lượng">
-                              <input ng-show="index == -1" class="form-control" readonly
-                                style="background-color: white;" ng-model="formprow.quantity" />
+														<div class="form-group">
+															<label>Loại sản phẩm</label> <strong>*</strong>
+															<select class="custom-select mr-sm-2"
+																id="inlineFormCustomSelectPref1"
+																ng-model="form.category.id">
+																<option value="">Chọn loại sản phẩm</option>
+																<option ng-repeat="cate in categorys"
+																	ng-value="cate.id">{{cate.name}}</option>
+															</select>
+														</div>
+														<div class="form-group">
+															<label>Ngày tạo</label> <strong>*</strong>
+															<input ng-show="index == -1" class="form-control"
+																ng-model="form.createdate | date:'dd-MM-yyyy'"
+																type="text" value="{{createdate}}" readonly
+																style="background-color: white;">
+															<input ng-hide="index == -1" class="form-control"
+																ng-model="form.createdate" type="date"
+																value="{{createdate}}" readonly
+																style="background-color: white;">
+														</div>
+														<div class="form-group">
+															<label>Trạng thái hoạt động:</label> <strong>*</strong> <br>
+															<label>
+																<input type="radio" name="activeted"
+																	ng-model="form.activeted" value="false"
+																	ng-checked="form.activeted === false">
+																Không
+															</label>
+															<label>
+																<input type="radio" name="activeted"
+																	ng-model="form.activeted" value="true"
+																	ng-checked="form.activeted === true">
+																Có
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col">
+														<div class="form-group">
+															<label>Giá tiền</label> <strong>*</strong>
+															<input ng-hide="index == -1" class="form-control"
+																ng-model="form.price" type="text"
+																placeholder="Nhập giá tiền">
+															<input ng-show="index == -1" class="form-control" readonly
+																style="background-color: white;"
+																ng-model="form.price" />
+														</div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+															<label>Trọng lượng</label> <strong>*</strong>
+															<select ng-hide="index == -1" class="custom-select mr-sm-2"
+																id="inlineFormCustomSelectPref1"
+																ng-model="formprow.weight.id">
+																<option value="">Chọn trọng lượng sản phẩm</option>
+																<option ng-repeat="w in weight" ng-value="{{w.id}}">
+																	{{w.weightvalue}}</option>
+															</select>
+															<input ng-show="index == -1" class="form-control" hidden
+																ng-model="formprow.weight.id" />
+															<input ng-show="index == -1" class="form-control" readonly
+																style="background-color: white;"
+																ng-model="formprow.weight.weightvalue" />
+														</div>
+													</div>
+													<div class="col">
+														<div class="form-group">
+															<label>Số lượng</label> <strong>*</strong>
+															<input ng-hide="index == -1" class="form-control"
+																ng-model="formprow.quantity" type="text"
+																placeholder="Nhập số lượng">
+															<input ng-show="index == -1" class="form-control" readonly
+																style="background-color: white;"
+																ng-model="formprow.quantity" />
 
-                            </div>
-                          </div>
-                        </div>
+														</div>
+													</div>
+												</div>
 
-                        <div class="row">
-                          <div class="col mb-3">
-                            <div class="form-group">
-                              <label>Thông tin sản phẩm</label> <strong>*</strong>
-                              <textarea class="form-control" ng-model="form.discription" rows="5"
-                                placeholder="Thông tin sản phẩm"></textarea>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+												<div class="row">
+													<div class="col mb-3">
+														<div class="form-group">
+															<label>Thông tin sản phẩm</label> <strong>*</strong>
+															<textarea class="form-control" ng-model="form.discription"
+																rows="5" placeholder="Thông tin sản phẩm"></textarea>
+														</div>
+													</div>
+												</div>
+											</div>
 
-                    </div>
+										</div>
 
-                    <div class="row">
-                      <div class="col d-flex justify-content-end">
-                        <button ng-click="createpro()" class="btn btn-primary" ng-hide="index == -1"
-                          data-dismiss="modal">Thêm</button> &nbsp;
-                        <button ng-click="updatepro()" class="btn btn-primary" ng-show="index == -1"
-                          data-dismiss="modal"> Cập nhật</button> &nbsp;
-                        <button ng-click="deletepro(form)" class="btn btn-danger" ng-show="index == -1" hidden="hidden"
-                          data-dismiss="modal"><i class="bi bi-trash3"></i> Xóa</button> &nbsp;
-                        <button ng-click="reset()" class="btn btn-info"><i class="bi bi-arrow-clockwise"></i> Làm
-                          mới</button> &nbsp;
-                      </div>
-                    </div>
-                  </form>
+										<div class="row">
+											<div class="col d-flex justify-content-end">
+												<button ng-click="createpro()" class="btn btn-primary"
+													ng-hide="index == -1" data-dismiss="modal">Thêm</button> &nbsp;
+												<button ng-click="updatepro()" class="btn btn-primary"
+													ng-show="index == -1" data-dismiss="modal"> Cập nhật</button> &nbsp;
+												<button ng-click="deletepro(form)" class="btn btn-danger"
+													ng-show="index == -1" hidden="hidden" data-dismiss="modal"><i
+														class="bi bi-trash3"></i> Xóa</button> &nbsp;
+												<button ng-click="reset()" class="btn btn-info"><i
+														class="bi bi-arrow-clockwise"></i> Làm
+													mới</button> &nbsp;
+											</div>
+										</div>
+									</form>
 
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <main role="main" class="main-content">
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-12">
-          <div class="row">
-            <!-- Small table -->
-            <div class="col-md-12 my-4">
-              <h2 class="h4 mb-1">QUẢN LÝ SẢN PHẤM</h2>
-              <p class="mb-3">Công cụ thêm sửa xóa sản phẩm</p>
-              <div class="card shadow">
-                <div class="card-body">
-                  <div class="toolbar">
-                    <form class="form">
-                      <div class="form-row">
-                        <div class="form-group col-auto mr-auto">
-                          <label class="my-1 mr-2 sr-only" for="inlineFormCustomSelectPref1">Show</label>
-                          <select hidden class="custom-select mr-sm-2" id="inlineFormCustomSelectPref1">
-                            <option value="">...</option>
-                            <option value="1">12</option>
-                            <option value="2" selected>32</option>
-                            <option value="3">64</option>
-                            <option value="3">128</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-auto">
-                          <button style="color: white;" class="btn btn-success btn-block" type="button"
-                            data-toggle="modal" data-target="#user-form-modal" ng-click="reset()"><i class="bi bi-folder-plus"></i> Thêm sản phẩm</button>
-                          <label class="sr-only">Tìm kiếm</label>
-                        </div>
-                        <div class="form-group col-auto"> <input type="text" class="form-control" id="search1" value=""
-                            placeholder="Tìm kiếm"></div>
-                      </div>
-                    </form>
-                  </div>
-                  <!-- table -->
-                  <table class="table table-borderless table-hover">
-                    <thead>
-                      <tr>
-                        <th>Id</th>
-                        <th>Hình ảnh</th>
-                        <th>Tên sản phẩm</th>
-                        <th>Loại sản phẩm</th>
-                        <th>Giá tiền</th>
-                        <th>Trạng thái</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                      <tr ng-repeat="item in pager.itempros">
-                        <td><strong>{{item.id}}</strong></td>
-                        <td>
-                          <div class="avatar avatar-md">
-                            <img src="../../images/product/{{item.image}}" width="80px" height="50px"
-                              style="border-radius: 10px;">
-                          </div>
-                        </td>
-                        <td><strong>{{item.name}}</strong></td>
-                        <td>
-                          <p class="mb-0 text-muted"><strong>{{item.category.name}}</strong></p>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">{{item.price}}</p>
-                        </td>
-                        <td>
-                          <p class="mb-0 text-muted">{{item.activeted ? 'Hiển thị' : 'Không hiển thị'}}</p>
-
-                        </td>
-
-                        <td style="color: white;">
-                          <a class="btn btn-warning" data-toggle="modal" data-target="#user-form-modal"
-                            ng-click="edit(item)"><i class="bi bi-pencil-square"></i> Sửa</a>
-                          <a class="btn btn-danger" ng-click="deletepro(item)" hidden="hidden"><i class="bi bi-trash" ></i> Xóa</a>
-                        </td>
-                      </tr>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-                    </tbody>
-                  </table>
+	<main role="main" class="main-content">
+		<div class="container-fluid">
+			<div class="row justify-content-center">
+				<div class="col-12">
+					<div class="row">
+						<!-- Small table -->
+						<div class="col-md-12 my-4">
+							<h2 class="h4 mb-1">QUẢN LÝ SẢN PHẤM</h2>
+							<p class="mb-3">Công cụ thêm sửa xóa sản phẩm</p>
+							<div class="card shadow">
+								<div class="card-body">
+									<div class="toolbar">
+										<form class="form">
+											<div class="form-row">
+												<div class="form-group col-auto mr-auto">
+													<label class="my-1 mr-2 sr-only"
+														for="inlineFormCustomSelectPref1">Show</label>
 
-                  <nav aria-label="Table Paging" class="mb-0 text-muted">
-                    <ul class="pagination justify-content-center mb-0">
-                      <li class="page-item"><a class="page-link" ng-click="pager.prev()">Trang sau</a></li>
-                      <li ng-show="pager.page != 0" class="page-item"><a class="page-link" ng-click="pager.prev()">{{pager.page}}</a></li>
-                      <li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a></li>
-                      <li ng-show="pager.page != pager.count - 1" class="page-item"><a class="page-link" ng-click="pager.next()">{{pager.page + 2}}</a></li>
-                      <li class="page-item"><a class="page-link" ng-click="pager.next()">Trang trước</a></li>
-                    </ul>
-                  </nav>
-                </div>
-              </div>
-            </div> <!-- customized table -->
-          </div> <!-- end section -->
-          <div class="row">
-            <!-- Striped rows -->
+												</div>
+												<div class="form-group col-auto">
+													<button style="color: white;" class="btn btn-success btn-block"
+														type="button" data-toggle="modal" data-target="#user-form-modal"
+														ng-click="reset()"><i class="bi bi-folder-plus"></i> Thêm sản
+														phẩm</button>
+													<label class="sr-only">Tìm kiếm</label>
+												</div>
+												<div class="form-group col-auto"> <input type="text"
+														ng-change="submitFormProduct()" ng-model="searchKeyword"
+														class="form-control" id="search1" value=""
+														placeholder="Tìm kiếm"></div>
+										</form>
+									</div>
+									<!-- table -->
+									<table class="table table-borderless table-hover">
+										<thead>
+											<tr>
+												<th>Id</th>
+												<th>Hình ảnh</th>
+												<th>Tên sản phẩm</th>
+												<th>Loại sản phẩm</th>
+												<th>Giá tiền</th>
+												<th>Trạng thái</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
 
-  </main> <!-- main -->
-  </div> <!-- .wrapper -->
+											<tr ng-repeat="item in pager.itempros">
+												<td><strong>{{item.id}}</strong></td>
+												<td>
+													<div class="avatar avatar-md">
+														<img src="../../images/product/{{item.image}}" width="80px"
+															height="50px" style="border-radius: 10px;">
+													</div>
+												</td>
+												<td><strong>{{item.name}}</strong></td>
+												<td>
+													<p class="mb-0 text-muted"><strong>{{item.category.name}}</strong>
+													</p>
+												</td>
+												<td>
+													<p class="mb-0 text-muted">{{item.price}}</p>
+												</td>
+												<td>
+													<p class="mb-0 text-muted">{{item.activeted ? 'Hiển thị' : 'Không
+														hiển thị'}}</p>
+
+												</td>
+
+												<td style="color: white;">
+													<a class="btn btn-warning" data-toggle="modal"
+														data-target="#user-form-modal" ng-click="edit(item)"><i
+															class="bi bi-pencil-square"></i> Sửa</a>
+													<a class="btn btn-danger" ng-click="deletepro(item)"
+														hidden="hidden"><i class="bi bi-trash"></i> Xóa</a>
+												</td>
+											</tr>
+
+
+										</tbody>
+									</table>
+
+									<nav aria-label="Table Paging" class="mb-0 text-muted">
+										<ul class="pagination justify-content-center mb-0">
+											<li class="page-item"><a class="page-link" ng-click="pager.prev()">Trang
+													sau</a></li>
+											<li ng-show="pager.page != 0" class="page-item"><a class="page-link"
+													ng-click="pager.prev()">{{pager.page}}</a></li>
+											<li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a>
+											</li>
+											<li ng-show="pager.page != pager.count - 1" class="page-item"><a
+													class="page-link" ng-click="pager.next()">{{pager.page + 2}}</a>
+											</li>
+											<li class="page-item"><a class="page-link" ng-click="pager.next()">Trang
+													trước</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
+						</div> <!-- customized table -->
+					</div> <!-- end section -->
+					<div class="row">
+						<!-- Striped rows -->
+
+	</main> <!-- main -->
+	</div> <!-- .wrapper -->
 
 
 

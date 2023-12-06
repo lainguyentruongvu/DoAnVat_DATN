@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import poly.store.dao.StatusDAO;
+import poly.store.entity.Account;
 import poly.store.entity.Status;
 import poly.store.services.StatusService;
 
@@ -22,6 +25,8 @@ import poly.store.services.StatusService;
 public class StatusRestController {
 	@Autowired
 	StatusService statusService;
+	@Autowired
+	StatusDAO statusdao;
 
 	@GetMapping()
 	public List<Status> findAll() {
@@ -46,5 +51,9 @@ public class StatusRestController {
 	@DeleteMapping("{statusid}")
 	public void delete(@PathVariable("statusid") Integer statusid) {
 		statusService.delete(statusid);
+	}
+	@GetMapping("search")
+	public List<Status> findByStatusLike(@RequestParam(name = "name") String name) {
+		return statusdao.findByStatusLike(name);
 	}
 }
