@@ -24,7 +24,7 @@ public interface AccountDAO extends JpaRepository<Account, String> {
 	@Query("SELECT a FROM Account a WHERE a.token=?1")
 	public Account findByToken(String token);
 
-	@Query("SELECT u FROM Account u WHERE u.name LIKE %:name%")
+	@Query("SELECT u FROM Account u WHERE u.name LIKE %:name% OR u.username LIKE %:name% OR u.email LIKE %:name%")
 	List<Account> findByUsernameLike(@Param("name") String name);
 
 }
