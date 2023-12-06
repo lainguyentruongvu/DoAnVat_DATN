@@ -18,11 +18,11 @@
 							<div class="row">
 								<div class="col-lg-4">
 									<div ng-if="imgaedefault == false" class="form-group img-thumbnail">
-										<img src="../../images/product/{{productweight.product.image}}"
+										<img src="../../images/product/{{productweight.product.image}}" class="container"
 											style="border-radius: 10px;" width="250px" height="250px">
 									</div>
 									<div ng-if="imgaedefault == true" class="form-group img-thumbnail">
-										<img src="../../images/product/default.png" style="border-radius: 10px;"
+										<img src="../../images/product/default.png" style="border-radius: 10px;" class="container"
 											width="250px" height="250px">
 									</div>
 								</div>
@@ -158,16 +158,12 @@
 											</table>
 											<nav aria-label="Table Paging" class="mb-0 text-muted">
 												<ul class="pagination justify-content-center mb-0">
-													<li class="page-item"><a class="page-link"
-															ng-click="pager.prev()">Previous</a></li>
-													<li class="page-item"><a class="page-link">{{pager.page}}</a></li>
-													<li class="page-item active"><a class="page-link">{{pager.page + 1
-															}}</a></li>
-													<li class="page-item"><a class="page-link">{{pager.page + 2}}</a>
-													</li>
-													<li class="page-item"><a class="page-link"
-															ng-click="pager.next()">Next</a></li>
-												</ul>
+													<li class="page-item"><a class="page-link" ng-click="pager.prev()">Trang sau</a></li>
+													<li ng-show="pager.page != 0" class="page-item"><a class="page-link" ng-click="pager.prev()">{{pager.page}}</a></li>
+													<li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a></li>
+													<li ng-show="pager.page != pager.count - 1" class="page-item"><a class="page-link" ng-click="pager.next()">{{pager.page + 2}}</a></li>
+													<li class="page-item"><a class="page-link" ng-click="pager.next()">Trang trước</a></li>
+												  </ul>
 											</nav>
 										</div>
 									</div>

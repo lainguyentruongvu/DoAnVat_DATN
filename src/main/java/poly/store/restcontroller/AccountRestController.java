@@ -15,8 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import poly.store.dao.AccountDAO;
+import poly.store.dao.AuthorityDAO;
+import poly.store.dao.RoleDAO;
 import poly.store.entity.Account;
+import poly.store.entity.Authority;
+import poly.store.entity.Role;
 import poly.store.services.AccountService;
 
 @CrossOrigin("*")
@@ -28,6 +33,12 @@ public class AccountRestController {
 	AccountService accountService;
 	@Autowired
 	AccountDAO accountdao;
+	
+	@Autowired
+	AuthorityDAO authorityDAO;
+	
+	@Autowired
+	RoleDAO roleDAO;
 
 	@GetMapping
 	public List<Account> getAccounts(@RequestParam("admin") Optional<Boolean> admin) {
@@ -44,7 +55,13 @@ public class AccountRestController {
 
 	@PostMapping
 	public Account create(@RequestBody Account account) {
-		return accountService.create(account);
+		Account acc = accountService.create(account);
+		Authority au = new Authority();
+		au.setAccount(acc);
+		Role role = roleDAO.findById("STAF").get();
+		au.setRole(role);
+		authorityDAO.save(au);
+		return acc;
 	}
 
 	@PutMapping("{username}")
