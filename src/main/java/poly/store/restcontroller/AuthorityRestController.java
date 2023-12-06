@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import poly.store.dao.AuthorityDAO;
 import poly.store.entity.Authority;
 import poly.store.services.AuthorityService;
 
@@ -24,6 +25,9 @@ public class AuthorityRestController {
 
 	@Autowired
 	AuthorityService authorityService;
+	
+	@Autowired
+	AuthorityDAO authorityDAO;
 
 	@GetMapping
 	public List<Authority> findAll(@RequestParam("admin") Optional<Boolean> admin) {
@@ -36,6 +40,11 @@ public class AuthorityRestController {
 	@PostMapping
 	public Authority post(@RequestBody Authority auth) {
 		return authorityService.create(auth);
+	}
+	
+	@PostMapping("/acc")
+	public Authority postacc(@RequestBody Authority auth) {
+		return authorityDAO.save(auth);
 	}
 
 	@DeleteMapping("{id}")

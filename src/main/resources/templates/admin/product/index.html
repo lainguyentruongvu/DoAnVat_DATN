@@ -20,7 +20,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" ng-click="reset()">Thêm sửa sản phẩm</h5>
-                <button type="button" class="close" data-dismiss="modal">
+                <button type="button" class="close" data-dismiss="modal" ng-click="thoatmodal()">
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
@@ -69,13 +69,13 @@
                           </div>
                           <div class="col-6">
                             <div class="form-group">
-                              <label>Tên sản phẩm</label>
+                              <label>Tên sản phẩm</label> <strong>*</strong>
                               <input class="form-control" ng-model="form.name" type="text" name="name"
                                 placeholder="Nhập tên sản phẩm">
                             </div>
 
                             <div class="form-group">
-                              <label>Loại sản phẩm</label>
+                              <label>Loại sản phẩm</label> <strong>*</strong>
                               <select class="custom-select mr-sm-2" id="inlineFormCustomSelectPref1"
                                 ng-model="form.category.id">
                                 <option value="">Chọn loại sản phẩm</option>
@@ -83,7 +83,7 @@
                               </select>
                             </div>
                             <div class="form-group">
-                              <label>Ngày tạo</label>
+                              <label>Ngày tạo</label> <strong>*</strong>
                               <input ng-show="index == -1" class="form-control"
                                 ng-model="form.createdate | date:'dd-MM-yyyy'" type="text" value="{{createdate}}"
                                 readonly style="background-color: white;">
@@ -91,7 +91,7 @@
                                 value="{{createdate}}" readonly style="background-color: white;">
                             </div>
                             <div class="form-group">
-                              <label>Trạng thái hoạt động:</label> <br>
+                              <label>Trạng thái hoạt động:</label> <strong>*</strong> <br> 
                               <label>
                                 <input type="radio" name="activeted" ng-model="form.activeted" value="false"
                                   ng-checked="form.activeted === false">
@@ -108,7 +108,7 @@
                         <div class="row">
                           <div class="col">
                             <div class="form-group">
-                              <label>Giá tiền</label>
+                              <label>Giá tiền</label> <strong>*</strong>
                               <input ng-hide="index == -1" class="form-control" ng-model="form.price" type="text"
                                 placeholder="Nhập giá tiền">
                               <input ng-show="index == -1" class="form-control" readonly
@@ -117,7 +117,7 @@
                           </div>
                           <div class="col">
                             <div class="form-group">
-                              <label>Trọng lượng</label>
+                              <label>Trọng lượng</label> <strong>*</strong>
                               <select ng-hide="index == -1" class="custom-select mr-sm-2"
                                 id="inlineFormCustomSelectPref1" ng-model="formprow.weight.id">
                                 <option value="">Chọn trọng lượng sản phẩm</option>
@@ -130,7 +130,7 @@
                           </div>
                           <div class="col">
                             <div class="form-group">
-                              <label>Số lượng</label>
+                              <label>Số lượng</label> <strong>*</strong>
                               <input ng-hide="index == -1" class="form-control" ng-model="formprow.quantity" type="text"
                                 placeholder="Nhập số lượng">
                               <input ng-show="index == -1" class="form-control" readonly
@@ -143,7 +143,7 @@
                         <div class="row">
                           <div class="col mb-3">
                             <div class="form-group">
-                              <label>Thông tin sản phẩm</label>
+                              <label>Thông tin sản phẩm</label> <strong>*</strong>
                               <textarea class="form-control" ng-model="form.discription" rows="5"
                                 placeholder="Thông tin sản phẩm"></textarea>
                             </div>
@@ -159,7 +159,7 @@
                           data-dismiss="modal">Thêm</button> &nbsp;
                         <button ng-click="updatepro()" class="btn btn-primary" ng-show="index == -1"
                           data-dismiss="modal"> Cập nhật</button> &nbsp;
-                        <button ng-click="deletepro(form)" class="btn btn-danger" ng-show="index == -1"
+                        <button ng-click="deletepro(form)" class="btn btn-danger" ng-show="index == -1" hidden="hidden"
                           data-dismiss="modal"><i class="bi bi-trash3"></i> Xóa</button> &nbsp;
                         <button ng-click="reset()" class="btn btn-info"><i class="bi bi-arrow-clockwise"></i> Làm
                           mới</button> &nbsp;
@@ -249,7 +249,7 @@
                         <td style="color: white;">
                           <a class="btn btn-warning" data-toggle="modal" data-target="#user-form-modal"
                             ng-click="edit(item)"><i class="bi bi-pencil-square"></i> Sửa</a>
-                          <a class="btn btn-danger" ng-click="deletepro(item)"><i class="bi bi-trash"></i> Xóa</a>
+                          <a class="btn btn-danger" ng-click="deletepro(item)" hidden="hidden"><i class="bi bi-trash" ></i> Xóa</a>
                         </td>
                       </tr>
 
@@ -259,11 +259,11 @@
 
                   <nav aria-label="Table Paging" class="mb-0 text-muted">
                     <ul class="pagination justify-content-center mb-0">
-                      <li class="page-item"><a class="page-link" ng-click="pager.prev()">Previous</a></li>
-                      <li class="page-item"><a class="page-link">{{pager.page}}</a></li>
+                      <li class="page-item"><a class="page-link" ng-click="pager.prev()">Trang sau</a></li>
+                      <li ng-show="pager.page != 0" class="page-item"><a class="page-link" ng-click="pager.prev()">{{pager.page}}</a></li>
                       <li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a></li>
-                      <li class="page-item"><a class="page-link">{{pager.page + 2}}</a></li>
-                      <li class="page-item"><a class="page-link" ng-click="pager.next()">Next</a></li>
+                      <li ng-show="pager.page != pager.count - 1" class="page-item"><a class="page-link" ng-click="pager.next()">{{pager.page + 2}}</a></li>
+                      <li class="page-item"><a class="page-link" ng-click="pager.next()">Trang trước</a></li>
                     </ul>
                   </nav>
                 </div>
