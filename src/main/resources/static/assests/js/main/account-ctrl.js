@@ -86,7 +86,7 @@ app.controller("account-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -95,7 +95,7 @@ app.controller("account-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -238,7 +238,7 @@ app.controller("account-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật thông tin người dùng',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -270,7 +270,7 @@ app.controller("account-ctrl", function($scope, $http) {
 					$scope.initialize();
 					// Show success message
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -490,7 +490,7 @@ app.controller("product-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -533,7 +533,7 @@ app.controller("product-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm người dùng',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -586,9 +586,9 @@ app.controller("product-ctrl", function($scope, $http) {
 			var index = $scope.itempros.findIndex(p => p.id == item.id);
 			$scope.itempros[index] = item;
 			$scope.initialize();
-			Swal.fire("Success", "Cập nhật thành công!", "success");
+			Swal.fire("Thành công", "Cập nhật thành công!", "success");
 		}).catch(error => {
-			Swal.fire("Error", "Cập nhật thất bại!", "error");
+			Swal.fire("Lỗi", "Cập nhật thất bại!", "error");
 			console.log("Error", error);
 		})
 	}
@@ -610,15 +610,15 @@ app.controller("product-ctrl", function($scope, $http) {
 				var index = $scope.itempros.findIndex(p => p.id == item.id);
 				$scope.itempros.splice(index, 1);
 				$scope.reset();
-				Swal.fire("Success", "Xóa sản phẩm thành công!", "success");
+				Swal.fire("Thành công", "Xóa sản phẩm thành công!", "success");
 			}).catch(error => {
 				$http.put(`/rest/products/${item.id}`, item).then(resp => {
 					var index = $scope.itempros.findIndex(p => p.id == item.id);
 					$scope.itempros[index] = item;
 					$scope.initialize();
-					Swal.fire("Success", "Đã tắt trạng thái hoạt động sản phẩm!", "success");
+					Swal.fire("Thành công", "Đã tắt trạng thái hoạt động sản phẩm!", "success");
 				}).catch(error => {
-					Swal.fire("Error", "Không thể tắt trạng thái hoạt động sản phẩm!", "error");
+					Swal.fire("Lỗi", "Không thể tắt trạng thái hoạt động sản phẩm!", "error");
 					console.log("Error", error);
 				})
 				console.log("Error", error);
@@ -727,7 +727,7 @@ app.controller("product-ctrl", function($scope, $http) {
 					console.log("Error", error);
 				})
 			} else {
-				alert("Có rồi bớt thêm");
+				alert("Trong lượng đã có");
 			}
 		}).catch(error => {
 
@@ -744,9 +744,9 @@ app.controller("product-ctrl", function($scope, $http) {
 		$http.put(`/rest/products/productweight/${item.id}`, item).then(resp => {
 			var index = $scope.itempros.findIndex(p => p.id == item.id);
 			$scope.productweight[index] = item;
-			Swal.fire("Success", "Cập nhật thành công!", "success");
+			Swal.fire("Thành công", "Cập nhật thành công!", "success");
 		}).catch(error => {
-			Swal.fire("Error", "Cập nhật thất bại!", "error");
+			Swal.fire("Lỗi", "Cập nhật thất bại!", "error");
 			console.log("Error", error);
 		})
 	}
@@ -758,11 +758,11 @@ app.controller("product-ctrl", function($scope, $http) {
 				$http.delete(`/rest/products/productweight/${idproweight}`).then(resp => {
 					$scope.weightadmin(idpro, resp.data.price);
 				}).catch(error => {
-					Swal.fire("Error", "Xóa thất bại!", "error");
+					Swal.fire("Lỗi", "Xóa thất bại!", "error");
 					console.log("Error", error);
 				})
 			} else {
-				alert("Trọng lượng mặc định không được xó")
+				alert("Trọng lượng mặc định không được xóa")
 			}
 		}).catch(error => {
 			console.log("Error", error);
@@ -899,7 +899,7 @@ app.controller("order-ctrl", function($scope, $http) {
 					icon: 'success',
 					title: 'Thành công',
 					text: 'Trạng thái đơn hàng được cập nhật thành công',
-					confirmButtonText: 'OK'
+					confirmButtonText: 'Xong'
 				});
 			});
 	}
@@ -1315,7 +1315,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm mã',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1343,7 +1343,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật mã',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1371,7 +1371,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 					$scope.items.splice(index, 1);
 					$scope.reset();
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -1438,6 +1438,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 			$scope.items.forEach(item => {
 				item.startdate = new Date(item.startdate)
 				item.enddate = new Date(item.enddate)
+			
 			})
 		});
 		$http.get('/rest/products').then(function(response) {
@@ -1446,7 +1447,20 @@ app.controller("discount-ctrl", function($scope, $http) {
 		});
 	}
 
-
+	//Tìm kiếm sản phẩm
+	$scope.searchKeywordProduct = "";
+	$scope.submitFormProducts = function() {
+		$http.get('/rest/products/search', {
+			params: {
+				keyword: $scope.searchKeywordProduct
+			}
+		}).then(function(response) {
+			$scope.product = response.data;
+			$scope.pager.first();
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
 
 
 	$scope.edit = function(item) {
@@ -1491,10 +1505,10 @@ app.controller("discount-ctrl", function($scope, $http) {
 	}
 
 	$scope.getweight = function(idproduct) {
-		console.log(idproduct.id);
-		$http.get(`/rest/weightvalue2/getProductweigth/${idproduct.id}`).then(function(response) {
+		console.log(idproduct);
+		$http.get(`/rest/weightvalue2/getProductweigth/${idproduct}`).then(function(response) {
 			$scope.productweight = response.data;
-
+			console.log($scope.productweight);
 		});
 	}
 
@@ -1517,7 +1531,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm mã',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1545,7 +1559,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật ',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1570,7 +1584,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 					$scope.items.splice(index, 1);
 					$scope.reset();
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -1693,7 +1707,7 @@ app.controller("category-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm mã',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1721,7 +1735,7 @@ app.controller("category-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập ',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1751,7 +1765,7 @@ app.controller("category-ctrl", function($scope, $http) {
 
 					// Show success message
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -1832,7 +1846,7 @@ app.controller("static-ctrl", function($scope, $http) {
 	$scope.exportToExcelCategory = function() {
 
 		var dataArray = $scope.getProductSummary.map(function(item) {
-			return [item.name, item.numberOfOrders, item.totalQuantity,item.avgPrice];
+			return [item.name, item.numberOfOrders, item.totalQuantity, item.avgPrice];
 		});
 
 		//		var columnHeaders = Object.keys($scope.orderlist[0]); // Giả sử tất cả các đối tượng có cùng cấu trúc
@@ -2204,7 +2218,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2213,7 +2227,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2248,7 +2262,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2257,7 +2271,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2292,7 +2306,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2301,7 +2315,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2336,7 +2350,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2345,7 +2359,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2380,7 +2394,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2389,7 +2403,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2424,7 +2438,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2433,7 +2447,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2468,7 +2482,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2477,7 +2491,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2512,7 +2526,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2521,7 +2535,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2557,7 +2571,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2566,7 +2580,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2657,7 +2671,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm mã',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2685,7 +2699,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật ',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2710,7 +2724,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 					$scope.items.splice(index, 1);
 					$scope.reset();
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -2833,7 +2847,7 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2862,7 +2876,7 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật ',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2895,7 +2909,7 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 
 					// Show success message
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);

@@ -346,7 +346,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	//Chuong trình giảm giá
 	$scope.addcartbestseller = function(item, discount, endate) {
 		if (endate == "Đã kết thúc") {
-			Swal.fire("Error", "Sản phẩm đã hết thời gian giảm giá!", "error");
+			Swal.fire("Lỗi", "Sản phẩm đã hết thời gian giảm giá!", "error");
 
 		} else {
 
@@ -383,14 +383,14 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 		console.log($scope.quantity)
 		if ($scope.quantity >= quantity) {
-			Swal.fire("error", "Vượt quá số lượng trong kho", "error");
+			Swal.fire("Lỗi", "Vượt quá số lượng trong kho", "error");
 		} else {
 			$scope.quantity = $scope.quantity + 1;
 		}
 	}
 	$scope.productdetaireduce = function() {
 		if ($scope.quantity <= 1) {
-			Swal.fire("error", "Số lượng không nhỏ hơn một", "error");
+			Swal.fire("Lỗi", "Số lượng không nhỏ hơn một", "error");
 		} else {
 			$scope.quantity = $scope.quantity - 1;
 		}
@@ -424,7 +424,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					localStorage.setItem('selectedItems', JSON.stringify($scope.selectedItems));
 				}
 			}).catch(error => {
-				Swal.fire("Error", "Xóa sản phẩm thất bại!", "error");
+				Swal.fire("Lỗi", "Xóa sản phẩm thất bại!", "error");
 				console.log("Error", error);
 			})
 		} else {
@@ -441,7 +441,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				}
 
 			}).catch(error => {
-				Swal.fire("Error", "Xóa sản phẩm thất bại!", "error");
+				Swal.fire("Lỗi", "Xóa sản phẩm thất bại!", "error");
 				console.log("Error", error);
 			})
 		}
@@ -580,8 +580,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	$scope.giamgia = function() {
 		$http.get("/rest/voucher").then(resp => {
 			$scope.voucher = resp.data;
-			console.log($scope.voucher);
-			console.log($scope.coupon);
 			if ($scope.coupon != []) {
 				// Use Array.prototype.find() instead of a for loop
 				var foundVoucher = $scope.voucher.find(v => v.id === $scope.coupon);
@@ -706,7 +704,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					console.log(resp);
 
 				}).catch(error => {
-					Swal.fire("Error", "Đặt hàng thất bại!", "error");
+					Swal.fire("Lỗi", "Đặt hàng thất bại!", "error");
 					console.log(error)
 				})
 			}
@@ -762,7 +760,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 						$scope.deleteida($scope.selectedItems[i].id)
 					}
 
-					Swal.fire("Success", "Đặt hàng thành công!", "success");
+					Swal.fire("Lỗi", "Đặt hàng thành công!", "success");
 					var count = 0;
 					var totalItems = $scope.selectedItems.length;
 
@@ -771,7 +769,10 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 						count++;
 						if (count === totalItems) {
 							localStorage.clear();
-							$window.location.href = "/order/detail/" + resp.data.id;
+							setTimeout(function() {
+								$window.location.href = "/order/detail/" + resp.data.id;
+							}, 3000);
+
 						}
 					}
 
@@ -782,7 +783,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					sessionStorage.clear();
 					console.log(resp);
 				}).catch(error => {
-					Swal.fire("Error", "Đặt hàng thất bại!", "error");
+					Swal.fire("Lỗi", "Đặt hàng thất bại!", "error");
 					console.log(error)
 				})
 
@@ -1217,7 +1218,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật thông tin người dùng',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1239,7 +1240,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -1248,7 +1249,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1287,7 +1288,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					Swal.fire({
 						type: 'error',
 						title: 'Lỗi cập nhật thông tin người dùng',
-						text: error,
+						text: "Lỗi",
 						icon: "error",
 						showConfirmButton: false,
 						timer: 2000
@@ -1296,11 +1297,11 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				});
 
 			} else {
-				Swal.fire("Error", "Xác nhận mật khẩu không chính xác!", "error");
+				Swal.fire("Lỗi", "Xác nhận mật khẩu không chính xác!", "error");
 			}
 
 		} else {
-			Swal.fire("Error", "Mật khẩu cũ không chính xác!", "error");
+			Swal.fire("Lỗi", "Mật khẩu cũ không chính xác!", "error");
 
 		}
 
@@ -1418,8 +1419,8 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				title: 'Xác nhận',
 				text: 'Bạn chắc chắn hủy đơn hàng không?',
 				showCancelButton: true,
-				confirmButtonText: 'OK',
-				cancelButtonText: 'Hủy'
+				confirmButtonText: 'Hủy',
+				cancelButtonText: 'Đóng'
 			}).then((result) => {
 				if (result.isConfirmed) {
 					// Nếu người dùng chọn "OK," thực hiện thay đổi trạng thái
@@ -1445,8 +1446,8 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				title: 'Xác nhận',
 				text: 'Bạn chắc chắn đã nhận được đơn hàng',
 				showCancelButton: true,
-				confirmButtonText: 'OK',
-				cancelButtonText: 'Hủy'
+				confirmButtonText: 'Đã nhận',
+				cancelButtonText: 'Đóng'
 			}).then((result) => {
 				if (result.isConfirmed) {
 					// Nếu người dùng chọn "OK," thực hiện thay đổi trạng thái
@@ -1487,7 +1488,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					icon: 'success',
 					title: 'Thành công',
 					text: 'Trạng thái đơn hàng được cập nhật thành công',
-					confirmButtonText: 'OK'
+					confirmButtonText: 'Đóng'
 				});
 			});
 	}
@@ -1551,7 +1552,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 						icon: 'success',
 						title: 'Thành công',
 						text: 'Đánh giá đơn hàng thành công',
-						confirmButtonText: 'OK'
+						confirmButtonText: 'Đóng'
 					});
 
 				}).catch(error => {
@@ -1562,7 +1563,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					icon: 'info',
 					title: 'Thất bại',
 					text: 'Đơn hàng đã được đánh giá',
-					confirmButtonText: 'OK'
+					confirmButtonText: 'Đóng'
 				});
 			}
 
