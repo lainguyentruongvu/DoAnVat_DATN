@@ -760,7 +760,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 						$scope.deleteida($scope.selectedItems[i].id)
 					}
 
-					Swal.fire("Lỗi", "Đặt hàng thành công!", "success");
+					Swal.fire("Thành công", "Đặt hàng thành công!", "success");
 					var count = 0;
 					var totalItems = $scope.selectedItems.length;
 
