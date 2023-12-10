@@ -91,8 +91,11 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			}
 		}).then(function(response) {
 			$scope.products = response.data;
-			$scope.pager.first();
 			console.log('Search results:', response.data);
+			var productContainer = document.getElementById('productContainer');
+			if (productContainer) {
+				productContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
 		}).catch(error => {
 			console.log("Error", error);
 		});
@@ -204,7 +207,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 							},
 							cart: {
 								id: $scope.cartid
-
 							}
 						}
 						$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweightnull.id, $scope.data).then(resp => {
@@ -715,7 +717,10 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	$scope.message = "";
 	$scope.thanhtoan = function() {
-
+		var to_ward_code = document.getElementById("ward").value;
+		var to_district_id = document.getElementById("district").value;
+		console.log(to_ward_code);
+		console.log(to_district_id);
 		//Lấy dữ liệu từ localStore
 		$scope.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
 
@@ -739,6 +744,8 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			},
 			statusorder: $scope.statusorder,
 			message: $scope.message,
+			towardcode: to_ward_code,
+			todistrictid: to_district_id,
 			get orderdetail() {
 				return $scope.selectedItems.map(item => {
 					return {
@@ -1196,12 +1203,64 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	//bestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestseler
 
-
 	//Profile
+	$scope.listaccounts = function() {
+		$http.get('/rest/accounts').then(function(response) {
+			$scope.listaccount = response.data;
+		});
+	}
+	$scope.listaccounts();
 	$scope.account = {};
 	$scope.updateAccount = function() {
 
-		console.log($scope.account)
+
+		var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (filter.test($scope.account.email) == false) {
+			Swal.fire({
+				type: 'error',
+				title: 'Email chưa đúng định dạng',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+			return;
+		}
+		if (vnf_regex.test($scope.account.phone) == false) {
+			Swal.fire({
+				type: 'error',
+				title: 'Số điện thoại chưa đúng định dạng',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+			return;
+		}
+		for (var i = 0; i < $scope.listaccount.length; i++) {
+			if ($scope.account.email === $scope.listaccount[i].email && $scope.account.username !== $scope.listaccount[i].username) {
+				Swal.fire({
+					type: 'error',
+					title: 'Email đã được sử dụng!',
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Error", error);
+				return;
+			}
+			if ($scope.account.phone === $scope.listaccount[i].phone && $scope.account.username !== $scope.listaccount[i].username) {
+				Swal.fire({
+					type: 'error',
+					title: 'Số điện thoại đã được sử dụng!',
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				return;
+			}
+		}
 		$http.put(`/rest/accounts/${$scope.account.username}`, $scope.account).then(function(response) {
 			// Xử lý phản hồi sau khi cập nhật thành công
 			Swal.fire({
@@ -1225,6 +1284,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			})
 			console.log("Erorr", err);
 		});
+
 	};
 
 	$scope.imageChanged = function(files) {
@@ -1268,45 +1328,55 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		let pw = document.getElementById("pawword").value;
 		let pwcf = document.getElementById("cfpw").value;
 
-		if (pwold == pwoldnl) {
-			if (pw == pwcf) {
-				$http.put(`/rest/accounts/updatepassword/${$scope.account.username}`, pw).then(function(response) {
-					// Xử lý phản hồi sau khi cập nhật thành công
-					Swal.fire({
-						type: 'success',
-						title: 'Cập nhật thành công',
-						text: 'Thông tin người dùng đã được cập nhật',
-						icon: "success",
-						showConfirmButton: false,
-						timer: 2000
-					})
-					document.getElementById("pwold").value = "";
-					document.getElementById("pawword").value = "";
-					document.getElementById("cfpw").value = "";
-				}).catch(function(error) {
-					// Xử lý lỗi nếu cập nhật không thành công
-					Swal.fire({
-						type: 'error',
-						title: 'Lỗi cập nhật thông tin người dùng',
-						text: "Lỗi",
-						icon: "error",
-						showConfirmButton: false,
-						timer: 2000
-					})
-					console.log("Erorr", err);
-				});
+		if (!pwoldnl || !pw || !pwcf) {
+			Swal.fire({
+				type: 'error',
+				title: 'Cập nhật thất bại',
+				text: 'Vui lòng nhập đầy đủ thông tin',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+		} else {
+			if (pwold === pwoldnl) {
+				if (pw == pwcf) {
+					$http.put(`/rest/accounts/updatepassword/${$scope.account.username}`, pw).then(function(response) {
+						// Xử lý phản hồi sau khi cập nhật thành công
+						Swal.fire({
+							type: 'success',
+							title: 'Cập nhật thành công',
+							text: 'Thông tin người dùng đã được cập nhật',
+							icon: "success",
+							showConfirmButton: false,
+							timer: 2000
+						})
+						document.getElementById("pwold").value = "";
+						document.getElementById("pawword").value = "";
+						document.getElementById("cfpw").value = "";
+					}).catch(function(error) {
+						// Xử lý lỗi nếu cập nhật không thành công
+						Swal.fire({
+							type: 'error',
+							title: 'Lỗi cập nhật thông tin người dùng',
+							text: "Lỗi",
+							icon: "error",
+							showConfirmButton: false,
+							timer: 2000
+						})
+						console.log("Erorr", err);
+					});
+
+				} else {
+					Swal.fire("Lỗi", "Xác nhận mật khẩu không chính xác!", "error");
+				}
 
 			} else {
-				Swal.fire("Lỗi", "Xác nhận mật khẩu không chính xác!", "error");
+				Swal.fire("Lỗi", "Mật khẩu cũ không chính xác!", "error");
+
 			}
 
-		} else {
-			Swal.fire("Lỗi", "Mật khẩu cũ không chính xác!", "error");
 
 		}
-
-
-
 	};
 	//End Updatepassword
 	$scope.showAll = false;
@@ -1389,11 +1459,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			window.location.href = "/order_detail/" + orderId;
 		});
 	};
-
-
-
-
-
 
 	$scope.closeModal = function() {
 		$("#closeBtn").modal("hide");

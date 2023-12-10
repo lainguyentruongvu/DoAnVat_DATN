@@ -37,8 +37,11 @@ public class Order implements Serializable {
 	String phone;
 	String message;
 	Boolean statusorder;
+	String towardcode;
+	Integer todistrictid;
+	
 
-	@OneToMany(mappedBy = "order" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	List<Orderdetail> orderdetail;
 

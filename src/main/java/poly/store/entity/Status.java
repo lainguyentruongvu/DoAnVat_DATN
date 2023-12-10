@@ -27,6 +27,6 @@ public class Status implements Serializable {
 	String name;
 
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
+	@OneToMany(mappedBy = "status")
 	List<Order> order;
 }

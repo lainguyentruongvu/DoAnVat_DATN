@@ -218,5 +218,6 @@ public class OrderRestController {
 		List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
 		return groupedData;
 	}
+	
 
 }

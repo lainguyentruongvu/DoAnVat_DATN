@@ -40,7 +40,6 @@
 																class="form-control" id="exampleFormControlSelect1"
 																ng-model="form.product.id"
 																ng-change="getweight(form.product.id)">
-
 																<option ng-repeat="c in product" ng-value="c.id">
 																	{{c.id}}
 																	: {{c.name}}</option>
@@ -75,12 +74,12 @@
 													<div class="col">
 														<div class="form-group">
 															<label>Trọng lượng sản phẩm</label>
-															<select class="form-control" id="exampleFormControlSelect1"
+															<select class="form-control" id="category"
 																ng-model="form.weightvalue">
 																<option ng-repeat="p in productweight"
 																	ng-value="p.weight.weightvalue">
-																	{{p.weight.id}}
-																	: {{p.weight.weightvalue}}</option>
+
+																	{{p.weight.weightvalue}}</option>
 															</select>
 														</div>
 													</div>

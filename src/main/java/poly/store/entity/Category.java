@@ -15,11 +15,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 @SuppressWarnings("serial")
 @Data
 @Entity
@@ -30,7 +34,7 @@ public class Category  implements Serializable{
 	Integer id;
 	String name;
 	@JsonIgnore
-	@OneToMany(mappedBy = "category" ,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "category")
 	List<Product> products;
 
 }
