@@ -51,9 +51,17 @@
 						<tbody>
 
 							<tr ng-repeat="item in cartdetails">
-								<td> <input ng-model="item.selected" ng-click="batdk()" name="cdid"
+
+
+								<td>
+									
+									
+
+									<input ng-model="item.selected" ng-click="batdk()" name="cdid"
 										ng-change="toggleSelected(item)" type="checkbox">
 								</td>
+
+
 								<td class="image"><img src="../images/product/{{item.product.image}}"
 										alt="{{item.image}}"></td>
 								<td class="product-des" data-title="Description">

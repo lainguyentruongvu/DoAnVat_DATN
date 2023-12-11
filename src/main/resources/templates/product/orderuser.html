@@ -118,10 +118,11 @@
 												{{ orderdetail.product.price | number:0}} VNĐ</label>
 										</div>
 									</div>
-									<div ng-if="item.orderdetail.length > 2">
-										<button ng-click="toggleShowAll()">
-											{{ showAll ? 'Thu gọn' : 'Hiển thị tất cả' }}
-										</button>
+									
+									<div style="text-align: center;font-size: 25px;cursor: pointer;" ng-if="item.orderdetail.length > 2">
+										<a ng-click="toggleShowAll()">
+											<i class="fa fa-arrows-v" aria-hidden="true"></i>
+										</a>
 									</div>
 									<hr>
 									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->

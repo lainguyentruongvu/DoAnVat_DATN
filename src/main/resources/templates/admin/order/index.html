@@ -168,11 +168,13 @@
 									<table class="table table-bordered" style="font-size: 13px;">
 										<thead>
 											<tr>
+												<th colspan="1">Mã ĐH</th>
 												<th colspan="2">Thông tin người đặt</th>
 												<th colspan="4">Thông tin giao hàng</th>
 												<th colspan="4">Xử lý đơn</th>
 											</tr>
 											<tr>
+												<th style="width: 2%;">Mã đơn hàng</th>
 												<th style="width: 15%;">Người đặt</th>
 												<th style="width: 8%;">Ngày mua</th>
 												<th style="width: 6%;">Tổng tiền</th>
@@ -187,10 +189,11 @@
 										</thead>
 										<tbody>
 											<tr ng-repeat="item in pager.orderlist">
+												<td>{{item.id}}</td>
 												<td>{{item.account.name}}</td>
 												<td>{{ item.createdate | date:'dd/MM/yyyy HH:mm' }}</td>
-												<td>{{item.totalamount}}</td>
-												<td>{{item.ship}}</td>
+												<td>{{item.totalamount | number:0}}</td>
+												<td>{{item.ship | number:0}}</td>
 												<td>{{item.address}}</td>
 												<td>{{item.voucher.id}}</td>
 												<td>
@@ -213,7 +216,7 @@
 												<td>
 													{{ item.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán' }}
 												</td>
-												<td><a href="javascript:void(0)"  ng-click="showOrderDetail(item.id)">Xem
+												<td><a href="javascript:void(0)" ng-click="showOrderDetail(item.id)">Xem
 														chi tiết</a></td>
 
 												<td>
@@ -230,7 +233,7 @@
 
 													<button style="color: white;font-weight: bold;"
 														ng-if="item.status.id === 2" ng-click="changeStatus(item.id, 3)"
-														class="btn btn-success bg-success"><i
+														class="btn btn-success badge-info"><i
 															class="bi bi-check2-circle"></i> Hoàn thành</button>
 												</td>
 											</tr>
