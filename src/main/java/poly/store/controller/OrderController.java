@@ -1,7 +1,13 @@
 package poly.store.controller;
 
+import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +25,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import net.minidev.json.JSONObject;
 import poly.store.dao.AccountDAO;
 import poly.store.dao.CartDAO;
 import poly.store.dao.CartdetailDAO;
@@ -26,15 +36,9 @@ import poly.store.dao.OrderDAO;
 import poly.store.dao.OrderdetailDAO;
 import poly.store.dao.ProductWeightDAO;
 import poly.store.dao.WeightDAO;
-import poly.store.entity.Account;
-import poly.store.entity.Cart;
-import poly.store.entity.Cartdetail;
-import poly.store.entity.Category;
-import poly.store.entity.Item;
+
 import poly.store.entity.Order;
-import poly.store.entity.OrderWithDetailsDTO;
 import poly.store.entity.Orderdetail;
-import poly.store.entity.Product;
 import poly.store.entity.Productweight;
 import poly.store.entity.Weight;
 
@@ -109,63 +113,63 @@ public class OrderController {
 
 	@RequestMapping("/order_detail/{id}")
 	public String orderdetailindex(Model model, @PathVariable("id") Integer id) {
-//		String apiUrl = "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/leadtime";
-//		String shopId = "190510";
-//		String token = "bd356f37-951e-11ee-8bfa-8a2dda8ec551";
-//		HttpHeaders headers = new HttpHeaders();
-//		Order order = orderservice.findById(id);
-//		List<Orderdetail> orderDetails = orderdetaildao.findByOrder(order);
-//
-//		// Tạo danh sách items
-//		List<Item> items = new ArrayList<>();
-//		Item item = new Item();
-//		// Duyệt qua danh sách orderDetails và thêm vào danh sách items
-//		for (Orderdetail currentOrderDetail : orderDetails) {
-//
-//			item.setName(currentOrderDetail.getProduct().getName());
-//			item.setQuantity(currentOrderDetail.getQuantity());
-//			item.setPrice(currentOrderDetail.getPrice());
-//			item.setLength(500);
-//			item.setWidth(200);
-//			item.setWeight(200);
-//			item.setCategory("aaaa");
-//			items.add(item);
-//
-//		}
-//
-//		headers.setContentType(MediaType.APPLICATION_JSON);
-//		headers.set("ShopId", shopId);
-//		headers.set("Token", token);
+		String apiUrl = "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/leadtime";
+		String shopId = "190510";
+		String token = "bd356f37-951e-11ee-8bfa-8a2dda8ec551";
+		HttpHeaders headers = new HttpHeaders();
+		Order order = orderservice.findById(id);
 
-//		var cod_amount = 0;
-//		if (order.getStatusorder() == true) {
-//			cod_amount = (int) (order.getTotalamount() - order.getShip());
-//		} else {
-//			cod_amount = 0;
-//		}
-//		String requestBody = "{" + "\"payment_type_id\": 2," + "\"note\": \"" + order.getMessage() + "\","
-//				+ "\"required_note\": \"KHONGCHOXEMHANG\"," + "\"from_ward_code\": \"550108\"," + "\"return_phone\": \""
-//				+ order.getPhone() + "\"," + "\"return_address\": \"" + order.getAddress() + "\","
-//				+ "\"return_district_id\": " + 1442 + "," + "\"return_ward_code\":\"20109\"," + "\"to_name\": \""
-//				+ order.getAccount().getName() + "\"," + "\"to_phone\": \"" + order.getPhone() + "\","
-//				+ "\"to_address\": \"" + order.getAddress() + "\"," + "\"to_ward_code\": \""
-//				+ order.getTowardcode().toString() + "\"," + "\"to_district_id\": " + order.getTodistrictid() + ","
-//				+ "\"cod_amount\": " + cod_amount + "," + "\"weight\": 200," + "\"length\": 3," + "\"width\": 18,"
-//				+ "\"height\": 19," + "\"cod_failed_amount\": 2000," + "\"pick_station_id\": 1442,"
-//				+ "\"insurance_value\": 10000," + "\"service_id\": 0," + "\"service_type_id\": 2," + "\"coupon\": null,"
-//				+ "\"items\": " + items + // Đặt giá trị thích hợp cho items
-//				"}";
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("ShopId", shopId);
+		headers.set("Token", token);
 
-//		String requestBody = "{" + "\"from_district_id\": " + 1750 + "," + "\"from_ward_code\": \"" + "511110" + "\","
-//				+ "\"to_district_id\": " + order.getTodistrictid() + "," + "\"to_ward_code\": \""
-//				+ order.getTowardcode().toString() + "\"," + "\"service_id\": " + 53319 + "}";
-//		HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
+		String requestBody = "{" + "\"from_district_id\": " + 1750 + "," + "\"from_ward_code\": \"" + "511110" + "\","
+				+ "\"to_district_id\": " + order.getTodistrictid() + "," + "\"to_ward_code\": \""
+				+ order.getTowardcode().toString() + "\"," + "\"service_id\": " + 53319 + "}";
+		HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
 
 		// Gửi yêu cầu API và nhận phản hồi
-//		RestTemplate restTemplate = new RestTemplate();
-//		ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, request, String.class);
-//		String responseBody = response.getBody();
-//		System.out.println(request);
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, request, String.class);
+		String responseBody = response.getBody();
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			// Đọc dữ liệu JSON thành một đối tượng Map
+			Map<String, Object> jsonMap = objectMapper.readValue(responseBody,
+					new TypeReference<Map<String, Object>>() {
+					});
+
+			// Lấy đối tượng "data" từ Map
+			Map<String, Object> dataMap = (Map<String, Object>) jsonMap.get("data");
+			Object leadtimeObject = dataMap.get("leadtime");
+			if (leadtimeObject != null) {
+				Long leadtime;
+				// Kiểm tra kiểu dữ liệu của giá trị và chuyển đổi nếu cần
+				if (leadtimeObject instanceof Integer) {
+					leadtime = ((Integer) leadtimeObject).longValue();
+				} else if (leadtimeObject instanceof Long) {
+					leadtime = (Long) leadtimeObject;
+				} else {
+					// Xử lý trường hợp khác nếu cần
+					leadtime = null;
+				}
+				// Chuyển đổi timestamp sang LocalDateTime
+				Instant instant = Instant.ofEpochSecond(leadtime);
+				LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("Asia/Ho_Chi_Minh"));
+
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+				String formattedDateTime = localDateTime.format(formatter);
+				// Thêm giá trị leadtime vào model hoặc làm bất kỳ điều gì bạn muốn với nó
+				System.out.println(formattedDateTime);
+				model.addAttribute("leadtime", formattedDateTime);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		model.addAttribute("order", orderservice.findById(id));
 		return "product/detail_order";
 	}

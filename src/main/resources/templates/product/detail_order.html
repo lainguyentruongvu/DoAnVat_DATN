@@ -37,9 +37,12 @@
 						<article class="card">
 							<div class="card-body row">
 								<div class="col"> <strong>Tên :</strong> <br> [[*{account.name}]]</div>
-								<div class="col"> <strong>Ngày đặt hàng:</strong> <br>[[*{createdate}]] </div>
+								<div class="col"> <strong>Ngày đặt hàng:</strong><br><span th:text="*{#dates.format(createdate, 'dd/MM/yyyy HH:mm')}"></span> </div>
 								<div class="col"> <strong>Số điện thoại</strong> <br> <i class="fa fa-phone"></i>
 									[[*{phone}]] </div>
+								<div class="col"> <strong>Dự kiến giao hàng</strong> <br>
+									<p><span th:text="${leadtime}"></span></p>
+								</div>
 								<div class="col"> <strong>Trạng thái thanh toán:</strong> <br> [[*{statusorder ? 'Đã
 									thanh toán' : 'Chưa thanh toán'}]]
 								</div>
@@ -186,8 +189,7 @@
 										VNĐ</label></label>
 
 								<label for="" style="font-size: 15px;">Đã giảm giá:
-									<label style="color: black;"
-										>[[*{voucher.discount}]]%</label></label>
+									<label style="color: black;">[[*{voucher.discount}]]%</label></label>
 
 								<label for="" style="font-size: 20px;"> Thành tiền: <label
 										style="color: #F35022; font-weight: bold;">[[*{#numbers.formatDecimal(totalamount,0,'COMMA',0,'POINT')}]]VNĐ</label></label>
@@ -200,7 +202,8 @@
 							</div>
 						</div>
 						<hr>
-						<a style="background-color: orange;color: white;font-weight: bold;" href="/orderuser" class="btn btn-warning" data-abc="true"> <i class="fa fa-chevron-left"></i>
+						<a style="background-color: orange;color: white;font-weight: bold;" href="/orderuser"
+							class="btn btn-warning" data-abc="true"> <i class="fa fa-chevron-left"></i>
 							Quay về</a>
 					</div>
 				</article>

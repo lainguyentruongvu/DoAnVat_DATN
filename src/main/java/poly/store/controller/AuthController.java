@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,7 @@ import net.bytebuddy.utility.RandomString;
 import poly.store.dao.AccountDAO;
 import poly.store.dao.CartDAO;
 import poly.store.entity.Account;
+import poly.store.entity.Authority;
 import poly.store.entity.Cart;
 import poly.store.services.AccountService;
 import poly.store.services.MailerService;
@@ -66,7 +69,6 @@ public class AuthController {
 
 	@RequestMapping("/auth/login/success")
 	public String logInSuccess(Model model, @ModelAttribute("account") Account account) {
-
 		String username = session.get("username");
 		Account acc = accountDAO.findById(username).get();
 		Cart checkcart = cartDAO.findByAccount(acc);
@@ -79,7 +81,17 @@ public class AuthController {
 			session.set("cart", cart);
 		}
 		session.set("cart", checkcart);
+
+		for (Authority aa : acc.getAuthorities()) {
+			if (aa.getRole().getId().equals("DIRE") || aa.getRole().getId().equals("STAF")) {
+				return "redirect:/admin";
+			} else {
+				return "redirect:/";
+			}
+		}
+
 		return "redirect:/";
+
 	}
 
 	@RequestMapping("/auth/login/error")
@@ -161,12 +173,18 @@ public class AuthController {
 	public String processForgotPassword(@RequestParam("email") String email, HttpServletRequest request, Model model)
 			throws Exception {
 		try {
-			String token = RandomString.make(50);
-			accountService.updateToken(token, email);
-			String resetLink = getSiteURL(request) + "/auth/reset-password?token=" + token;
-			mailer.sendEmail(email, resetLink);
-			model.addAttribute("message", "Chúng tôi đã gửi đường dẫn trong email của bạn"
-					+ "Nếu bạn không thấy email vui lòng kiểm tra thư rác của bạn");
+			Account acc = accountDAO.findByEmail(email);
+			if (acc == null) {
+				model.addAttribute("message", "Email không tồn tại");
+				return "auth/quenMatkhau";
+			} else {
+				String token = RandomString.make(50);
+				accountService.updateToken(token, email);
+				String resetLink = getSiteURL(request) + "/auth/reset-password?token=" + token;
+				mailer.sendEmail(email, resetLink);
+				model.addAttribute("message", "Chúng tôi đã gửi đường dẫn trong email của bạn " 
+						+ "Nếu bạn không thấy email vui lòng kiểm tra thư rác của bạn");
+			}
 		} catch (MessagingException e) {
 			e.printStackTrace();
 			model.addAttribute("error", "Lỗi email");

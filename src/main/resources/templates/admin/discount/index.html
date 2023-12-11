@@ -34,15 +34,15 @@
 													<div class="col">
 														<div class="form-group">
 															<label>Mã sản phẩm và tên:</label>
-															<input type="text" ng-change="submitFormProducts()"
-																ng-model="searchKeywordProduct" class="form-control"
-																id="search1" value="" placeholder="Tìm kiếm"><select
+<!--															<input type="text" ng-change="submitFormProducts()"-->
+<!--																ng-model="searchKeywordProduct" class="form-control"-->
+<!--																id="search1" value="" placeholder="Tìm kiếm">-->
+																<select
 																class="form-control" id="exampleFormControlSelect1"
 																ng-model="form.product.id"
 																ng-change="getweight(form.product.id)">
-																<option ng-repeat="c in product" ng-value="c.id">
-																	{{c.id}}
-																	: {{c.name}}</option>
+																<option ng-repeat="c in product" ng-value="c.id" data-name="{{c.name}}">
+																	{{c.name}}:{{c.id}}</option>
 															</select>
 														</div>
 													</div>
@@ -140,7 +140,7 @@
 												<div class="form-group col-auto">
 													<button style="color: white;" class="btn btn-success btn-block"
 														type="button" data-toggle="modal" data-target="#user-form-modal"
-														ng-click="reset()"><i class="bi bi-folder-plus"></i>
+														ng-click="reset();Options();"><i class="bi bi-folder-plus"></i>
 														Thêm</button>
 													<label class="sr-only">Tìm kiếm</label>
 

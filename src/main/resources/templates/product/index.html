@@ -28,9 +28,7 @@
 					<div class="single-banner">
 						<img src="../../images/banner/{{anhphu1_600x370.image}}" alt="#">
 						<div class="content">
-							<p>Siêu khuyến mãi</p>
-							<h3>Bánh trán trộn, đóng sẳn</h3>
-							<a href="#">Xem ngay</a>
+							
 						</div>
 					</div>
 				</div>
@@ -40,9 +38,7 @@
 					<div class="single-banner">
 						<img src="../../images/banner/{{anhphu2_600x370.image}}" alt="#">
 						<div class="content">
-							<p>Ship toàn quốc</p>
-							<h3>Các đồ ăn vặt đóng gói</h3>
-							<a href="#">Mua ngay</a>
+							
 						</div>
 					</div>
 				</div>
@@ -98,7 +94,7 @@
 														<div class="product-action">
 															<a ng-click="productdetails(item.id);evalute(item.id)"
 																data-toggle="modal" data-target="#exampleModal"
-																title=""><i class=" ti-eye"></i><span>Xem</span></a>
+																title=""><i style="size: 50px;" class=" ti-eye"></i><span>Xem</span></a>
 															<a title="" ng-click="checkAddOrRemove(item.id)"><i
 																	class=" ti-heart "></i><span>Yêu thích
 																</span></a>
@@ -112,12 +108,12 @@
 												</div>
 												<div class="product-content">
 													<h3><a
-															style="font-size: 20px;font-family: Arial, Helvetica, sans-serif;cursor: pointer;">{{item.name}}</a>
+															style="font-size: 20px;font-family: Arial, Helvetica, sans-serif;cursor: pointer;font-weight: bold;">{{item.name}}</a>
 													</h3>
 													<div class="product-price">
-														<span style="color: orange;font-weight: bold;">{{item.price |
+														<span style="color: orange;font-weight: bold; cursor: pointer;">{{item.price |
 															number :0}}</span>&emsp13;<span
-															style="color: orange;font-weight: bold;">VNĐ</span>
+															style="color: orange;font-weight: bold;cursor: pointer">VNĐ</span>
 													</div>
 												</div>
 											</div>
@@ -169,7 +165,7 @@
 					<div class="single-banner">
 						<img src="../../images/banner/{{banner1_600x370.image}}" alt="#">
 						<div class="content">
-							<a href="#">Xem ngay!</a>
+							
 						</div>
 					</div>
 				</div>
@@ -230,9 +226,9 @@
 									</div>
 								</div>
 								<div class="product-content">
-									<h3><a>{{item.name}}</a></h3>
+									<h3 ><a style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;cursor: pointer;font-weight: bold;">{{item.name}}</a></h3>
 									<div class="product-price">
-										<span>{{item.price | number :0}}</span>&emsp13;<span>VNĐ</span>
+										<span style="color: orange;font-family: Arial, Helvetica, sans-serif;font-weight: bold;cursor: pointer;">{{item.price | number :0}} &emsp13;VNĐ</span>
 									</div>
 								</div>
 							</div>
@@ -245,7 +241,7 @@
 	<!-- End Most Popular Area -->
 
 	<!-- Start Shop Home List  -->
-	<section class="shop-home-list section">
+	<section class="shop-home-list section" style="font-family: Arial, Helvetica, sans-serif;">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-4 col-md-6 col-12">
@@ -396,8 +392,8 @@
 						<img src="../../images/banner/{{bannerthongtin1_370x300.image}}" alt="#">
 						<div class="content">
 							<p class="date">9 tháng 9 , 2023. Thứ 7</p>
-							<a href="#" class="title">Sản phẩm combo của nhà TaokaeNoi vừa ra mắt</a>
-							<a href="#" class="more-btn">Xem thêm</a>
+							<a style="font-size: 20px;" href="#" class="title">Sản phẩm combo của nhà TaokaeNoi vừa ra mắt</a>
+							
 						</div>
 					</div>
 					<!-- End Single Blog  -->
@@ -407,9 +403,9 @@
 					<div class="shop-single-blog">
 						<img src="../../images/banner/{{bannerthongtin2_370x300.image}}" alt="#">
 						<div class="content">
-							<p class="date">22 July, 2020. Monday</p>
-							<a href="#" class="title">Man’s Fashion Winter Sale</a>
-							<a href="#" class="more-btn">Continue Reading</a>
+							<p class="date">9 tháng 9 , 2023. Thứ 7</p>
+							<a style="font-size: 20px;" href="#" class="title">Sản phẩm combo của nhà TaokaeNoi vừa ra mắt</a>
+						
 						</div>
 					</div>
 					<!-- End Single Blog  -->
@@ -419,9 +415,9 @@
 					<div class="shop-single-blog">
 						<img src="../../images/banner/{{bannerthongtin3_370x300.image}}" alt="#">
 						<div class="content">
-							<p class="date">22 July, 2020. Monday</p>
-							<a href="#" class="title">Women Fashion Festive</a>
-							<a href="#" class="more-btn">Continue Reading</a>
+							<p class="date">9 tháng 9 , 2023. Thứ 7</p>
+							<a style="font-size: 20px;" href="#" class="title">Sản phẩm combo của nhà TaokaeNoi vừa ra mắt</a>
+							
 						</div>
 					</div>
 					<!-- End Single Blog  -->
@@ -533,7 +529,7 @@
 								<strong style="font-size: 20px;" ng-if="check==false"
 									id="weightvalue">{{weightvalue}}</strong>
 								<div class="quickview-ratting-review">
-									<div ng-repeat="average in averages" class="quickview-ratting-wrap">
+									<div ng-repeat="average in averages" class="quickview-ratting-wrap">													
 										<div ng-if="average.averageRating == 1" class="quickview-ratting">
 											<i class="yellow fa fa-star"></i>
 											<i class="fa fa-star"></i>
@@ -541,6 +537,7 @@
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 										</div>
+
 										<div ng-if="average.averageRating == 2" class="quickview-ratting">
 											<i class="yellow fa fa-star"></i>
 											<i class="yellow fa fa-star"></i>
@@ -649,8 +646,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-lg-12">
+						<div class="row ">
+							<div class="col-lg-12 form-group">
 								<div ng-repeat="evalute in evalutes" class="col-lg-12 form-group">
 									<div>
 										<img style="height: 70px;

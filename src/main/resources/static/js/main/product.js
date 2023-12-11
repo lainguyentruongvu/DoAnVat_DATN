@@ -96,9 +96,40 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			if (productContainer) {
 				productContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			}
+			$scope.pagerproduct.first();
 		}).catch(error => {
 			console.log("Error", error);
 		});
+	}
+	$scope.pagerproduct = {
+		page: 0,
+		size: 8,
+		get products() {
+			var start = this.page * this.size;
+			return $scope.products.slice(start, start + this.size);
+
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.products.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
 	}
 
 
@@ -904,6 +935,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	//Đăng xuất xóa localStorage
 	$scope.logout = function() {
 		localStorage.clear();
+		sessionStorage.clear();
 	}
 
 
@@ -1112,36 +1144,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 
 
-	$scope.pagerproduct = {
-		page: 0,
-		size: 12,
-		get products() {
-			var start = this.page * this.size;
-			return $scope.products.slice(start, start + this.size);
-
-		},
-		get count() {
-			return Math.ceil(1.0 * $scope.products.length / this.size);
-		},
-		first() {
-			this.page = 0;
-		},
-		prev() {
-			this.page--;
-			if (this.page < 0) {
-				this.last();
-			}
-		},
-		next() {
-			this.page++;
-			if (this.page >= this.count) {
-				this.first();
-			}
-		},
-		last() {
-			this.page = this.count - 1;
-		}
-	}
 
 	//bestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestselerbestseler
 

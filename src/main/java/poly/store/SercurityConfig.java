@@ -64,7 +64,8 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 		// Quyền yêu cầu truy cập
 		http.authorizeRequests().antMatchers("/favorites").authenticated().antMatchers("/favorite/error")
 				.authenticated().antMatchers("/order/**", "/auth/change-password").authenticated()
-				.antMatchers("/admin/**").hasAnyRole("STAF", "DIRE").antMatchers("/rest/authorities").hasRole("DIRE")
+				.antMatchers("/cart", "/checkout/**").authenticated().antMatchers("/admin/**")
+				.hasAnyRole("STAF", "DIRE")
 				.anyRequest().permitAll();
 		// Đăng nhập
 		http.formLogin().loginPage("/auth/login/form").loginProcessingUrl("/auth/login")

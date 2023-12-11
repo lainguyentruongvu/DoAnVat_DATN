@@ -2,46 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/layout::dynamic(~{::title},~{::body})}">
 
 <head>
-	<title>Giới thiệu </title>
+	<title>Chính sách</title>
 </head>
 <style>
-	#snowflakeContainer{position:absolute;left:0px;top:0px;}
-	.snowflake{padding-left:15px;font-size:14px;line-height:24px;position:fixed;color:#ebebeb;user-select:none;z-index:1000;-moz-user-select:none;-ms-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
-	.snowflake:hover {cursor:default}
+
 </style>
 <body th:object="${order}" class="vertical light" ng-app="app" ng-controller="ctrl"
 	style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
 
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-	<!-- Small table -->
-	<div class="col-md-12 my-4">
-		<div class="col-12">
-			<h5 class="divider line razor">GIỚI THIỆU VỀ DAV-6</h5>
-		</div>
+	
+	 <!-- Content Section -->
+   <div class="container mt-5" style="padding-bottom: 50px;">
+    <div class="jumbotron">
+      <a  class="display-4">Chính Sách Bán Đồ Ăn Vặt DAV-6</a>
+      <p class="lead">Chào mừng bạn đến với DAV-6, nơi mang đến cho bạn những trải nghiệm ẩm thực đặc sắc thông qua việc cung cấp
+        các sản phẩm đồ ăn vặt chất lượng và an toàn.</p>
+    </div>
 
-		<div class="container mt-5" style="padding-bottom: 30px;">
-			<div class="row">
-				<div class="col-md-6">
-					<img src="https://i.ibb.co/VCpLP6w/logo-noback.png" alt="Shop Logo">
-				</div>
-				<div class="col-md-6">
-					<h2>Giới Thiệu - DAV-6</h2>
-					<p>Chào mừng bạn đến với DAV-6, địa chỉ tin cậy cho những loại đồ ăn vặt ngon. Chúng tôi đam mê mang đến những loại đồ ăn vặt chất lượng và thơm ngon để làm hài lòng khẩu vị của bạn. Bộ sưu tập đa dạng của chúng tôi phục vụ mọi sở thích và sự ưa chuộng. Cho dù bạn là người thích ngọt hay người yêu thích đồ ăn mặn, chúng tôi đều có đủ sự lựa chọn.</p>
-					<p>Tại DAV-6, chúng tôi cam kết mang lại trải nghiệm thú vị khi thưởng thức đồ ăn vặt. Sự cam kết của chúng tôi đảm bảo bạn sẽ tận hưởng từng miếng đồ ăn được chọn lọc cẩn thận của chúng tôi. Hãy thoải mái khám phá menu của chúng tôi và khám phá những món ưa thích mới của bạn.</p>
-					<p>Cảm ơn bạn đã lựa chọn DAV-6. Chúng tôi mong được phục vụ bạn với những loại đồ ăn ngon nhất!</p>
-				</div>
-			</div>
-		</div>
+    <h2 class="custom-link">1. Chất Lượng và An Toàn Thực Phẩm</h2>
+    <p>Chúng tôi cam kết cung cấp đồ ăn vặt chỉ từ những nguyên liệu chất lượng và đảm bảo an toàn cho sức khỏe của bạn. Mọi sản
+      phẩm của chúng tôi đều được kiểm tra chất lượng định kỳ để đảm bảo sự tin tưởng từ phía khách hàng.</p>
 
+    <h2 class="custom-link">2. Giá Trị Dành Cho Khách Hàng</h2>
+    <p>Chúng tôi cam kết mang đến giá trị tốt nhất cho khách hàng. Bạn sẽ luôn tận hưởng trải nghiệm mua sắm với giá cạnh tranh và
+      ưu đãi đặc biệt từ DAV-6.</p>
 
-		<style>
-			#snowflakeContainer{position:absolute;left:0px;top:0px;}
-			.snowflake{padding-left:15px;font-size:14px;line-height:24px;position:fixed;color:#ebebeb;user-select:none;z-index:1000;-moz-user-select:none;-ms-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
-			.snowflake:hover {cursor:default}
-		</style>
-		<div id='snowflakeContainer'>
-		<p class='snowflake'>❄</p>
-		</div>
+    <h2 class="custom-link">3. Giao Hàng Nhanh Chóng và An Toàn</h2>
+    <p>DAV-6 hỗ trợ dịch vụ giao hàng nhanh chóng và an toàn. Chúng tôi cam kết sản phẩm của bạn sẽ đến tay bạn trong tình trạng
+      hoàn hảo và nguyên vẹn.</p>
+
+    <!-- Thêm các phần khác tùy theo nhu cầu của bạn -->
+
+  </div>
+	
 		<script >
 			//<![CDATA[
 			var requestAnimationFrame=window.requestAnimationFrame||window.mozRequestAnimationFrame||window.webkitRequestAnimationFrame||window.msRequestAnimationFrame;var transforms=["transform","msTransform","webkitTransform","mozTransform","oTransform"];var transformProperty=getSupportedPropertyName(transforms);var snowflakes=[];var browserWidth;var browserHeight;var numberOfSnowflakes=50;var resetPosition=false;function setup(){window.addEventListener("DOMContentLoaded",generateSnowflakes,false);window.addEventListener("resize",setResetFlag,false)}setup();function getSupportedPropertyName(b){for(var a=0;a<b.length;a++){if(typeof document.body.style[b[a]]!="undefined"){return b[a]}}return null}function Snowflake(b,a,d,e,c){this.element=b;this.radius=a;this.speed=d;this.xPos=e;this.yPos=c;this.counter=0;this.sign=Math.random()<0.5?1:-1;this.element.style.opacity=0.5+Math.random();this.element.style.fontSize=4+Math.random()*30+"px"}Snowflake.prototype.update=function(){this.counter+=this.speed/5000;this.xPos+=this.sign*this.speed*Math.cos(this.counter)/40;this.yPos+=Math.sin(this.counter)/40+this.speed/30;setTranslate3DTransform(this.element,Math.round(this.xPos),Math.round(this.yPos));if(this.yPos>browserHeight){this.yPos=-50}};function setTranslate3DTransform(a,c,b){var d="translate3d("+c+"px, "+b+"px, 0)";a.style[transformProperty]=d}function generateSnowflakes(){var b=document.querySelector(".snowflake");var h=b.parentNode;browserWidth=document.documentElement.clientWidth;browserHeight=document.documentElement.clientHeight;for(var d=0;d<numberOfSnowflakes;d++){var j=b.cloneNode(true);h.appendChild(j);var e=getPosition(50,browserWidth);var a=getPosition(50,browserHeight);var c=5+Math.random()*40;var g=4+Math.random()*10;var f=new Snowflake(j,g,c,e,a);snowflakes.push(f)}h.removeChild(b);moveSnowflakes()}function moveSnowflakes(){for(var b=0;b<snowflakes.length;b++){var a=snowflakes[b];a.update()}if(resetPosition){browserWidth=document.documentElement.clientWidth;browserHeight=document.documentElement.clientHeight;for(var b=0;b<snowflakes.length;b++){var a=snowflakes[b];a.xPos=getPosition(50,browserWidth);a.yPos=getPosition(50,browserHeight)}resetPosition=false}requestAnimationFrame(moveSnowflakes)}function getPosition(b,a){return Math.round(-1*b+Math.random()*(a+2*b))}function setResetFlag(a){resetPosition=true};

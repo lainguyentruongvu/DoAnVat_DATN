@@ -19,7 +19,7 @@ import poly.store.entity.Status;
 
 public interface OrderDAO extends JpaRepository<Order, Integer> {
 
-	@Query("SELECT u FROM Order u WHERE u.account.name LIKE %:name%")
+	@Query("SELECT u FROM Order u WHERE u.account.name LIKE %:name% OR u.id LIKE %:name% OR  u.address LIKE %:name%")
 	List<Order> findByUsernameLike(@Param("name") String name);
 
 	@Query("SELECT o FROM Order o WHERE o.status.id = ?1")

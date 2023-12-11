@@ -83,6 +83,11 @@ public class IndexController {
 		return "about/aboutUs";
 
 	}
+	@RequestMapping("policy")
+	public String policy(Model model) {
+		return "chinhSach/policy";
+
+	}
 
 	@RequestMapping("detail/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id) {
