@@ -2867,7 +2867,21 @@ app.controller("banner-ctrl", function($scope, $http) {
 			$scope.initialize();
 		});
 	}
+	$scope.bannerthongtin1_370x300_save = function() {
+		var item = angular.copy($scope.bannerthongtin1_370x300);
+		$http.put(`/rest/banner/${item.id}`, $scope.bannerthongtin1_370x300).then(resp => {
+			console.log(resp.data);
+		});
+		Swal.fire({
+			type: 'success',
+			title: 'Lưu thông tin thành công',
+			text: 'Thành công',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
 
+	}
 	$scope.imageChanged_bannerthongtin2_370x300 = function(files) {
 		var item = angular.copy($scope.bannerthongtin2_370x300);
 		var data = new FormData();
@@ -2911,7 +2925,21 @@ app.controller("banner-ctrl", function($scope, $http) {
 			$scope.initialize();
 		});
 	}
+	$scope.bannerthongtin2_370x300_save = function() {
+		var item = angular.copy($scope.bannerthongtin2_370x300);
+		$http.put(`/rest/banner/${item.id}`, $scope.bannerthongtin2_370x300).then(resp => {
+			console.log(resp.data);
+		});
+		Swal.fire({
+			type: 'success',
+			title: 'Lưu thông tin thành công',
+			text: 'Thành công',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
 
+	}
 
 	$scope.imageChanged_bannerthongtin3_370x300 = function(files) {
 		var item = angular.copy($scope.bannerthongtin3_370x300);
@@ -2955,6 +2983,21 @@ app.controller("banner-ctrl", function($scope, $http) {
 		$http.put(`/rest/banner/${item.id}`, $scope.bannerthongtin3_370x300).then(resp => {
 			$scope.initialize();
 		});
+	}
+	$scope.bannerthongtin3_370x300_save = function() {
+		var item = angular.copy($scope.bannerthongtin3_370x300);
+		$http.put(`/rest/banner/${item.id}`, $scope.bannerthongtin3_370x300).then(resp => {
+			console.log(resp.data);
+		});
+		Swal.fire({
+			type: 'success',
+			title: 'Lưu thông tin thành công',
+			text: 'Thành công',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
+
 	}
 
 })

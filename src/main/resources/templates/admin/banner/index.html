@@ -41,10 +41,11 @@
 											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
 										<!-- Nút "X" để xóa ảnh -->
-										<button class="btn btn-danger btn-sm" ng-click="deleteimageChangedbanner1900x700()"
+										<button class="btn btn-danger btn-sm"
+											ng-click="deleteimageChangedbanner1900x700()"
 											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
-									
+
 								</div>
 							</div>
 							<hr>
@@ -71,7 +72,8 @@
 											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
 										<!-- Nút "X" để xóa ảnh -->
-										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_anhphu1_600x370()"
+										<button class="btn btn-danger btn-sm"
+											ng-click="deleteimageChanged_anhphu1_600x370()"
 											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
 								</div>
@@ -99,7 +101,8 @@
 											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
 										<!-- Nút "X" để xóa ảnh -->
-										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_anhphu2_600x370()"
+										<button class="btn btn-danger btn-sm"
+											ng-click="deleteimageChanged_anhphu2_600x370()"
 											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
 								</div>
@@ -125,7 +128,8 @@
 											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
 										<!-- Nút "X" để xóa ảnh -->
-										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_anhphu3_600x370()"
+										<button class="btn btn-danger btn-sm"
+											ng-click="deleteimageChanged_anhphu3_600x370()"
 											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
 								</div>
@@ -155,7 +159,8 @@
 											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
 										<!-- Nút "X" để xóa ảnh -->
-										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_banner1_600x370()"
+										<button class="btn btn-danger btn-sm"
+											ng-click="deleteimageChanged_banner1_600x370()"
 											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
 								</div>
@@ -181,7 +186,8 @@
 											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
 										<!-- Nút "X" để xóa ảnh -->
-										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_banner2_600x370()"
+										<button class="btn btn-danger btn-sm"
+											ng-click="deleteimageChanged_banner2_600x370()"
 											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
 								</div>
@@ -207,20 +213,24 @@
 										</div>
 									</div>
 
-									<div class="form-group" style="position: relative; height: 200px; overflow: hidden;">
+									<div class="form-group"
+										style="position: relative; height: 200px; overflow: hidden;">
 										<img src="../../images/banner/{{bannerthongtin1_370x300.image}}" alt=""
 											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
 										<!-- Nút "X" để xóa ảnh -->
-										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_bannerthongtin1_370x300()"
+										<button class="btn btn-danger btn-sm"
+											ng-click="deleteimageChanged_bannerthongtin1_370x300()"
 											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
 									<div class="form-group">
 										<div class="form-group">
-										<label for="">Tiêu đề</label>
-										<input class="form-control" type="text">
-									</div>
-										<button class="btn btn-primary"><i class="bi bi-floppy2-fill"></i> Lưu</button>
+											<label for="">Tiêu đề</label>
+											<input class="form-control" type="text"
+												ng-model="bannerthongtin1_370x300.discription">
+										</div>
+										<button ng-click="bannerthongtin1_370x300_save()" class="btn btn-primary"><i
+												class="bi bi-floppy2-fill"></i> Lưu</button>
 									</div>
 
 								</div>
@@ -243,21 +253,25 @@
 
 									</div>
 
-									<div class="form-group" style="position: relative; height: 200px; overflow: hidden;">
+									<div class="form-group"
+										style="position: relative; height: 200px; overflow: hidden;">
 										<img src="../../images/banner/{{bannerthongtin2_370x300.image}}" alt=""
 											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
 										<!-- Nút "X" để xóa ảnh -->
-										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_bannerthongtin2_370x300()"
+										<button class="btn btn-danger btn-sm"
+											ng-click="deleteimageChanged_bannerthongtin2_370x300()"
 											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
 
 									<div class="form-group">
 										<div class="form-group">
-										<label for="">Tiêu đề</label>
-										<input class="form-control" type="text">
-									</div>
-										<button class="btn btn-primary"><i class="bi bi-floppy2-fill"></i> Lưu</button>
+											<label for="">Tiêu đề</label>
+											<input class="form-control" type="text"
+												ng-model="bannerthongtin2_370x300.discription">
+										</div>
+										<button ng-click="bannerthongtin2_370x300_save()" class="btn btn-primary"><i
+												class="bi bi-floppy2-fill"></i> Lưu</button>
 									</div>
 
 								</div>
@@ -279,20 +293,24 @@
 										</div>
 									</div>
 
-									<div class="form-group" style="position: relative; height: 200px; overflow: hidden;">
+									<div class="form-group"
+										style="position: relative; height: 200px; overflow: hidden;">
 										<img src="../../images/banner/{{bannerthongtin3_370x300.image}}" alt=""
 											style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 
 										<!-- Nút "X" để xóa ảnh -->
-										<button class="btn btn-danger btn-sm" ng-click="deleteimageChanged_bannerthongtin3_370x300()"
+										<button class="btn btn-danger btn-sm"
+											ng-click="deleteimageChanged_bannerthongtin3_370x300()"
 											style="position: absolute; top: 5px; right: 5px;">X</button>
 									</div>
 									<div class="form-group">
 										<div class="form-group">
-										<label for="">Tiêu đề</label>
-										<input class="form-control" type="text">
-									</div>
-										<button class="btn btn-primary"><i class="bi bi-floppy2-fill"></i> Lưu</button>
+											<label for="">Tiêu đề</label>
+											<input class="form-control" type="text"
+												ng-model="bannerthongtin3_370x300.discription">
+										</div>
+										<button ng-click="bannerthongtin3_370x300_save()" class="btn btn-primary"><i
+												class="bi bi-floppy2-fill"></i> Lưu</button>
 									</div>
 								</div>
 							</div>
