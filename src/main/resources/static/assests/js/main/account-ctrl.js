@@ -1,24 +1,24 @@
 const app = angular.module("app", []);
-app.controller("account-ctrl", function($scope, $http) {
+app.controller("account-ctrl", function ($scope, $http) {
 	$scope.isDisabled = false;
 	$scope.items = [];
 	$scope.form = {};
 	$scope.roles = {};
 
-	$scope.initialize = function() {
-		$http.get('/rest/accounts').then(function(response) {
+	$scope.initialize = function () {
+		$http.get('/rest/accounts').then(function (response) {
 			$scope.items = response.data;
 		});
 	}
 
 	//Tìm kiếm người dùng
 	$scope.searchKeyword = '';
-	$scope.submitFormAccount = function() {
+	$scope.submitFormAccount = function () {
 		$http.get('/rest/accounts/search/', {
 			params: {
 				name: $scope.searchKeyword
 			}
-		}).then(function(response) {
+		}).then(function (response) {
 			$scope.items = response.data;
 
 		}).catch(error => {
@@ -30,7 +30,7 @@ app.controller("account-ctrl", function($scope, $http) {
 
 
 
-	$scope.edit = function(item) {
+	$scope.edit = function (item) {
 		$scope.isDisabled = true;
 		$scope.imgaedefault = true;
 		$scope.form = angular.copy(item);
@@ -41,7 +41,7 @@ app.controller("account-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 		$scope.form = {};
 		$scope.index = 0;
 		window.scrollTo({
@@ -52,7 +52,7 @@ app.controller("account-ctrl", function($scope, $http) {
 
 
 	var modal = document.getElementById("user-form-modal");
-	document.addEventListener("keydown", function(event) {
+	document.addEventListener("keydown", function (event) {
 		// Kiểm tra xem phím đã nhấn có phải là phím Esc (mã phím 27) không
 		if (event.keyCode === 27) {
 			$scope.imgaedefault = true;
@@ -60,7 +60,7 @@ app.controller("account-ctrl", function($scope, $http) {
 
 		}
 	});
-	document.addEventListener("click", function(event) {
+	document.addEventListener("click", function (event) {
 		// Kiểm tra xem người dùng đã nhấp chuột bên ngoài modal chưa
 		if (event.target === modal) {
 			// Nếu người dùng đã nhấp chuột bên ngoài modal, đóng modal
@@ -70,13 +70,13 @@ app.controller("account-ctrl", function($scope, $http) {
 		}
 	});
 
-	$scope.thoatmodal = function() {
+	$scope.thoatmodal = function () {
 		$scope.imgaedefault = true;
 		$scope.isDisabled = false;
 	}
 
 	$scope.imgaedefault = true;
-	$scope.imageChanged = function(files) {
+	$scope.imageChanged = function (files) {
 		$scope.imgaedefault = false;
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -108,7 +108,7 @@ app.controller("account-ctrl", function($scope, $http) {
 		})
 	}
 
-	$scope.reset_smooth_table = function() {
+	$scope.reset_smooth_table = function () {
 		$scope.form = {};
 		window.scrollTo({
 			top: 1000,
@@ -116,7 +116,7 @@ app.controller("account-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.create = function() {
+	$scope.create = function () {
 		var item = angular.copy($scope.form);
 		var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
 		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -167,7 +167,10 @@ app.controller("account-ctrl", function($scope, $http) {
 		}
 		if (item.password != null) {
 			if (item.password === item.repassword) {
-				item.image = 'default.png'
+				if (item.image == null) {
+					item.image = 'default.png'
+				}
+
 				$http.post(`/rest/accounts`, item).then(resp => {
 					// $scope.data_author = {
 					// 	account: {id: item.username},
@@ -223,9 +226,9 @@ app.controller("account-ctrl", function($scope, $http) {
 	}
 
 	// Cập nhật
-	$scope.update = function() {
+	$scope.update = function () {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/accounts/${item.username}`, item).then(function(response) {
+		$http.put(`/rest/accounts/${item.username}`, item).then(function (response) {
 			var index = $scope.items.findIndex(p => p.username == item.username);
 			$scope.items[index] = item;
 			$scope.initialize();
@@ -238,7 +241,7 @@ app.controller("account-ctrl", function($scope, $http) {
 				timer: 2000
 			})
 			$scope.reset_smooth_table();
-		}).catch(function(error) {
+		}).catch(function (error) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật thông tin người dùng',
@@ -252,7 +255,7 @@ app.controller("account-ctrl", function($scope, $http) {
 	}
 
 	// Xóa
-	$scope.delete = function(item) {
+	$scope.delete = function (item) {
 		// Show a confirmation dialog
 		Swal.fire({
 			title: 'Xóa người dùng!',
@@ -263,10 +266,10 @@ app.controller("account-ctrl", function($scope, $http) {
 			cancelButtonColor: '#d33',
 			cancelButtonText: 'Hủy',
 			confirmButtonText: 'Vâng, Tôi đồng ý!'
-		}).then(function(result) {
+		}).then(function (result) {
 			if (result.isConfirmed) {
 				// If user confirms deletion, send delete request
-				$http.delete(`/rest/accounts/${item.username}`).then(function(response) {
+				$http.delete(`/rest/accounts/${item.username}`).then(function (response) {
 					// Remove the item from the items array
 					var index = $scope.items.findIndex(p => p.username == item.username);
 					$scope.items.splice(index, 1);
@@ -278,7 +281,7 @@ app.controller("account-ctrl", function($scope, $http) {
 						'Đã xóa thành công',
 						'success'
 					);
-				}).catch(function(err) {
+				}).catch(function (err) {
 					// Show error message if deletion fails
 					Swal.fire({
 						type: 'error',
@@ -332,7 +335,7 @@ app.controller("account-ctrl", function($scope, $http) {
 })
 //////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-app.controller("authority-ctrl", function($scope, $http, $location) {
+app.controller("authority-ctrl", function ($scope, $http, $location) {
 	var url = "/rest/roles";
 	var url1 = "/rest/authorities";
 	var url2 = "/rest/accounts?admin=false";
@@ -341,7 +344,7 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 	$scope.admins = [];
 	$scope.authorities = [];
 
-	var sweetalert = function(text) {
+	var sweetalert = function (text) {
 		Swal.fire({
 			icon: "success",
 			title: text,
@@ -350,7 +353,7 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 		});
 	}
 
-	$scope.initialize = function() {
+	$scope.initialize = function () {
 		//load roles
 		$http.get(url).then(resp => {
 			$scope.roles = resp.data;
@@ -365,13 +368,13 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 		});
 	}
 
-	$scope.authority_of = function(acc, role) {
+	$scope.authority_of = function (acc, role) {
 		if ($scope.authorities) {
 			return $scope.authorities.find(ur => ur.account.username == acc.username && ur.role.id == role.id);
 		}
 	}
 
-	$scope.authority_changed = function(acc, role) {
+	$scope.authority_changed = function (acc, role) {
 		var authority = $scope.authority_of(acc, role);
 		if (authority) {
 			$scope.revoke_authority(authority); //da cap quyen => thu hoi quyen(xoa)
@@ -385,7 +388,7 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 	}
 
 	//them moi authority
-	$scope.grant_authority = function(authority) {
+	$scope.grant_authority = function (authority) {
 		$http.post(`${url1}`, authority).then(resp => {
 			$scope.authorities.push(resp.data);
 			sweetalert("Cấp quyền sử dụng thành công!");
@@ -396,7 +399,7 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 	}
 
 	//xoa authority
-	$scope.revoke_authority = function(authority) {
+	$scope.revoke_authority = function (authority) {
 		$http.delete(`${url1}/${authority.id}`).then(resp => {
 			var index = $scope.authorities.findIndex(a => a.id == authority.id);
 			$scope.authorities.splice(index, 1);
@@ -413,7 +416,7 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 
 
 /////////////////minh thien////////////////////////
-app.controller("product-ctrl", function($scope, $http) {
+app.controller("product-ctrl", function ($scope, $http) {
 
 
 	$scope.itempros = [];
@@ -421,28 +424,28 @@ app.controller("product-ctrl", function($scope, $http) {
 	$scope.weight = [];
 	$scope.createdate = new Date().toISOString().slice(0, 10)
 
-	$scope.initialize = function() {
-		$http.get('/rest/products').then(function(resp) {
+	$scope.initialize = function () {
+		$http.get('/rest/products').then(function (resp) {
 			$scope.itempros = resp.data;
 		});
 	}
 
 	//Tìm kiếm sản phẩm
 	$scope.searchKeyword = '';
-	$scope.submitFormProduct = function() {
+	$scope.submitFormProduct = function () {
 		$http.get('/rest/products/search/', {
 			params: {
 				keyword: $scope.searchKeyword
 			}
-		}).then(function(response) {
+		}).then(function (response) {
 			$scope.itempros = response.data;
-
+			$scope.pager.first()
 		}).catch(error => {
 			console.log("Error", error);
 		});
 	}
 
-	$scope.reset_smooth_table = function() {
+	$scope.reset_smooth_table = function () {
 		$scope.form = {};
 		window.scrollTo({
 			top: 1000,
@@ -451,14 +454,14 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 
 	var modal = document.getElementById("user-form-modal");
-	document.addEventListener("keydown", function(event) {
+	document.addEventListener("keydown", function (event) {
 		// Kiểm tra xem phím đã nhấn có phải là phím Esc (mã phím 27) không
 		if (event.keyCode === 27) {
 			$scope.imgaedefault = true;
 
 		}
 	});
-	document.addEventListener("click", function(event) {
+	document.addEventListener("click", function (event) {
 		// Kiểm tra xem người dùng đã nhấp chuột bên ngoài modal chưa
 		if (event.target === modal) {
 			// Nếu người dùng đã nhấp chuột bên ngoài modal, đóng modal
@@ -466,12 +469,12 @@ app.controller("product-ctrl", function($scope, $http) {
 
 		}
 	});
-	$scope.thoatmodal = function() {
+	$scope.thoatmodal = function () {
 		$scope.imgaedefault = true;
 	}
 
 	$scope.imgaedefault = true;
-	$scope.imageChanged = function(files) {
+	$scope.imageChanged = function (files) {
 		$scope.imgaedefault = false;
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -503,7 +506,7 @@ app.controller("product-ctrl", function($scope, $http) {
 		})
 	}
 
-	$scope.createpro = function() {
+	$scope.createpro = function () {
 		$scope.form.createdate = $scope.createdate;
 		var item = angular.copy($scope.form);
 		$http.post(`/rest/products`, item).then(resp => {
@@ -547,20 +550,20 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 
 
-	$scope.weight = function() {
-		$http.get('/rest/products/weight').then(function(resp) {
+	$scope.weight = function () {
+		$http.get('/rest/products/weight').then(function (resp) {
 			$scope.weight = resp.data;
 		});
 
 	}
 
-	$scope.categorys = function() {
-		$http.get('/rest/category').then(function(resp) {
+	$scope.categorys = function () {
+		$http.get('/rest/category').then(function (resp) {
 			$scope.categorys = resp.data;
 		});
 	}
 
-	$scope.edit = function(item) {
+	$scope.edit = function (item) {
 		$scope.imgaedefault = false;
 		$scope.form = angular.copy(item);
 		$scope.priceww = $scope.form.price
@@ -583,7 +586,7 @@ app.controller("product-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.updatepro = function() {
+	$scope.updatepro = function () {
 		var item = angular.copy($scope.form);
 		console.log(item)
 		$http.put(`/rest/products/${item.id}`, item).then(resp => {
@@ -597,7 +600,7 @@ app.controller("product-ctrl", function($scope, $http) {
 		})
 	}
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 		$scope.form = {};
 		$scope.formprow = {}
 		$scope.index = 0;
@@ -608,7 +611,7 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 
 	//Xóa sản phẩm
-	$scope.deletepro = function(item) {
+	$scope.deletepro = function (item) {
 		if (item.activeted == false) {
 			$http.delete(`/rest/products/${item.id}`).then(resp => {
 				var index = $scope.itempros.findIndex(p => p.id == item.id);
@@ -673,7 +676,7 @@ app.controller("product-ctrl", function($scope, $http) {
 	//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
 	//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
 	$scope.imgaedefault = true;
-	$scope.weightadmin = function(id, price) {
+	$scope.weightadmin = function (id, price) {
 		$scope.imgaedefault = false;
 		$scope.showbtn_them = true;
 		$scope.showbtn_addweight = true;
@@ -693,7 +696,7 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 
 
-	$scope.weightquantityandprice = function(idpro, idw) {
+	$scope.weightquantityandprice = function (idpro, idw) {
 		$scope.showbtn_del_upd = true;
 		$scope.showbtn_addweight = false;
 		$scope.showsel = false;
@@ -710,7 +713,7 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 
 
-	$scope.resetformw = function() {
+	$scope.resetformw = function () {
 		$scope.productweight.price = null;
 		$scope.productweight.quantity = null;
 		$scope.productweight.id = null;
@@ -720,7 +723,7 @@ app.controller("product-ctrl", function($scope, $http) {
 		$scope.showbtn_del_upd = false;
 	}
 
-	$scope.addweight = function(item) {
+	$scope.addweight = function (item) {
 		$scope.productweight = angular.copy(item)
 		$http.get(`/rest/products/weight/quantityandprice/${$scope.productweight.product.id}/${$scope.productweight.weight.id}`).then(resp => {
 			if (resp.data.length == 0) {
@@ -742,7 +745,7 @@ app.controller("product-ctrl", function($scope, $http) {
 
 	}
 
-	$scope.updateweight = function() {
+	$scope.updateweight = function () {
 		var item = angular.copy($scope.productweight);
 		console.log(item)
 		$http.put(`/rest/products/productweight/${item.id}`, item).then(resp => {
@@ -755,7 +758,7 @@ app.controller("product-ctrl", function($scope, $http) {
 		})
 	}
 
-	$scope.deleteweight = function(idpro) {
+	$scope.deleteweight = function (idpro) {
 		var idproweight = $scope.productweight.id;
 		$http.get(`/rest/products/${idpro}`).then(resp => {
 			if ($scope.productweight.price != resp.data.price) { //So sánh giá của weight với giá của product mặc định --> nếu giống thì k cho xó
@@ -791,25 +794,25 @@ app.controller("product-ctrl", function($scope, $http) {
 
 
 //Order Order Order Order Order Order Order Order Order Order Order Order Order 
-app.controller("order-ctrl", function($scope, $http) {
+app.controller("order-ctrl", function ($scope, $http) {
 
 
 
-	$scope.showOrderDetail1 = function(orderId) {
+	$scope.showOrderDetail1 = function (orderId) {
 		$http.get("/rest/order/getOrderAndOrderdetailOrderId/" + orderId)
-			.then(function(response) {
+			.then(function (response) {
 				$scope.selectedOrderDetails = response.data;
 				$scope.UpBill();
 				console.log($scope.selectedOrderDetails);
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				console.error("Error fetching order details:", error);
 			});
 
 	};
 
 
-	$scope.UpBill = function() {
+	$scope.UpBill = function () {
 
 
 		var headers = {
@@ -887,7 +890,7 @@ app.controller("order-ctrl", function($scope, $http) {
 
 	//Tìm kiếm người dùng
 	$scope.searchKeyword = '';
-	$scope.submitFormOrder = function() {
+	$scope.submitFormOrder = function () {
 
 		$http.get('/rest/order/search', {
 
@@ -895,7 +898,7 @@ app.controller("order-ctrl", function($scope, $http) {
 				name: $scope.searchKeyword
 			}
 
-		}).then(function(response) {
+		}).then(function (response) {
 			$scope.orderlist = response.data;
 
 		}).catch(error => {
@@ -904,7 +907,7 @@ app.controller("order-ctrl", function($scope, $http) {
 	}
 
 
-	$scope.initialize = function() {
+	$scope.initialize = function () {
 
 		$http.get("/rest/order/hienthitrangthai").then(resp => {
 			$scope.list = resp.data;
@@ -914,16 +917,16 @@ app.controller("order-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.trangthai = function(id) {
+	$scope.trangthai = function (id) {
 		var url = `/rest/order/trangthai/${id}`;
 		$http.get(url).then(resp => {
 			$scope.items = resp.data;
 		});
 	}
 	//Xuất file excel
-	$scope.exportToExcel = function() {
+	$scope.exportToExcel = function () {
 
-		var dataArray = $scope.orderlist.map(function(item) {
+		var dataArray = $scope.orderlist.map(function (item) {
 			var statusOrderFormatted = item.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán';
 			return [item.id, item.createdate, item.totalamount, item.ship, item.address, item.phone, item.message, statusOrderFormatted, item.account.username, item.status.name, item.voucher.id];
 		});
@@ -950,7 +953,7 @@ app.controller("order-ctrl", function($scope, $http) {
 	};
 
 
-	$scope.changeStatus = function(orderId, newStatusId) {
+	$scope.changeStatus = function (orderId, newStatusId) {
 		console.log(orderId, newStatusId);
 
 		if (newStatusId === 4) {
@@ -977,7 +980,7 @@ app.controller("order-ctrl", function($scope, $http) {
 
 	function performStatusChange(orderId, newStatusId) {
 		$http.put("/rest/order/" + orderId + "/status?newStatusId=" + newStatusId)
-			.then(function(response) {
+			.then(function (response) {
 				$scope.items.push(response.data);
 				for (var i = 0; i < $scope.items.length; i++) {
 					if ($scope.items[i].id === orderId) {
@@ -986,7 +989,7 @@ app.controller("order-ctrl", function($scope, $http) {
 					}
 				}
 				$scope.initialize();
-			}).catch(function(error) {
+			}).catch(function (error) {
 				$scope.trangthai(newStatusId);
 				$scope.initialize();
 				Swal.fire({
@@ -999,28 +1002,28 @@ app.controller("order-ctrl", function($scope, $http) {
 	}
 
 
-	$scope.trangthai = function(id) {
+	$scope.trangthai = function (id) {
 		var url = `/rest/order/trangthai/${id}`;
 		$http.get(url).then(resp => {
 			$scope.orderlist = resp.data;
 		});
 	}
 
-	$scope.showOrderDetail = function(orderId) {
+	$scope.showOrderDetail = function (orderId) {
 		$http.get("/rest/order/orderDetails/" + orderId)
-			.then(function(response) {
+			.then(function (response) {
 				//						$("#donhangdanggiao").modal("hide");
 				//						$("#dagiao").modal("hide");
 				//						$("#dahuy").modal("hide");
 				$scope.selectedOrderDetails = response.data;
 				$('#orderDetailModal').modal('show'); // Hiển thị modal chứa danh sách sản phẩm
 			})
-			.catch(function(error) {
+			.catch(function (error) {
 				console.error("Error fetching order details:", error);
 			});
 		$('#orderDetailModal').modal('show'); // Hiển thị modal chứa danh sách sản phẩm
 	};
-	$scope.closeModal = function() {
+	$scope.closeModal = function () {
 		$("#orderDetailModal").modal("hide");
 	};
 
@@ -1073,21 +1076,21 @@ app.controller("order-ctrl", function($scope, $http) {
 
 
 //Home
-app.controller("home-ctrl", function($scope, $http) {
-	angular.element(document.getElementById('getMonthRevenue')).on('click', function() {
+app.controller("home-ctrl", function ($scope, $http) {
+	angular.element(document.getElementById('getMonthRevenue')).on('click', function () {
 		$scope.getMonthRevenue();
 	});
-	angular.element(document.getElementById('getYearRevenue')).on('click', function() {
+	angular.element(document.getElementById('getYearRevenue')).on('click', function () {
 		$scope.getYearRevenue();
 	});
-	angular.element(document.getElementById('getDateRevenue')).on('click', function() {
+	angular.element(document.getElementById('getDateRevenue')).on('click', function () {
 		$scope.getDateRevenue();
 	});
 
 
 
 
-	$scope.viewstatistics = function() {
+	$scope.viewstatistics = function () {
 		$http.get("/rest/static/tongthunhap").then(resp => {
 			$scope.tongthunhap = resp.data;
 			console.log($scope.tongthunhap);
@@ -1118,7 +1121,7 @@ app.controller("home-ctrl", function($scope, $http) {
 
 
 
-	$scope.initialize = function() {
+	$scope.initialize = function () {
 
 		var lineChart = document.getElementById('lineChart').getContext('2d'),
 			barChart = document.getElementById('barChart').getContext('2d'),
@@ -1134,7 +1137,7 @@ app.controller("home-ctrl", function($scope, $http) {
 
 
 		//Thống kê theo năm
-		$scope.getYearRevenue = function() {
+		$scope.getYearRevenue = function () {
 			$http.get("/rest/static/getYearRevenue").then(resp => {
 				$scope.revenuestatistics = resp.data;
 				$scope.calendar = "năm"
@@ -1149,7 +1152,7 @@ app.controller("home-ctrl", function($scope, $http) {
 		$scope.getYearRevenue();
 
 		//Thống kê theo tháng
-		$scope.getMonthRevenue = function() {
+		$scope.getMonthRevenue = function () {
 
 			$http.get("/rest/static/getMonthRevenue").then(resp => {
 				$scope.revenuestatistics = resp.data;
@@ -1163,7 +1166,7 @@ app.controller("home-ctrl", function($scope, $http) {
 			});
 		}
 		//Thống kê theo ngày
-		$scope.getDateRevenue = function() {
+		$scope.getDateRevenue = function () {
 
 			$http.get("/rest/static/getDateRevenue").then(resp => {
 				$scope.revenuestatistics = resp.data;
@@ -1177,7 +1180,7 @@ app.controller("home-ctrl", function($scope, $http) {
 			});
 		}
 
-		$scope.countOrdersByMonthfc = function() {
+		$scope.countOrdersByMonthfc = function () {
 			$http.get("/rest/static/countOrdersByMonth").then(resp => {
 				$scope.countOrdersByMonth = resp.data;
 				var countOrdersByMonth = $scope.countOrdersByMonth.map(item => item.orderCount);
@@ -1190,7 +1193,7 @@ app.controller("home-ctrl", function($scope, $http) {
 		}
 		$scope.countOrdersByMonthfc();
 
-		$scope.sumSoldProductsByCategoryfc = function() {
+		$scope.sumSoldProductsByCategoryfc = function () {
 			$http.get("/rest/static/sumSoldProductsByCategory").then(resp => {
 				$scope.sumSoldProductsByCategory = resp.data;
 				var sumSoldProductsByCategory = $scope.sumSoldProductsByCategory.map(item => item.categoryName);
@@ -1237,7 +1240,7 @@ app.controller("home-ctrl", function($scope, $http) {
 				},
 				tooltips: {
 					callbacks: {
-						label: function(tooltipItem, data) {
+						label: function (tooltipItem, data) {
 							var label = data.datasets[tooltipItem.datasetIndex].label || '';
 							var value = formatCurrency(tooltipItem.yLabel);
 							return label + ': ' + value;
@@ -1301,7 +1304,7 @@ app.controller("home-ctrl", function($scope, $http) {
 					backgroundColor: ["#1d7af3", "#f3545d", "#00FF00", "#FFFF00", "#99CCFF", "#FF3399", "#9900CC"],
 					borderWidth: 0
 				}],
-				labels: ['Khách mới', 'Khách cũ',]
+				labels: ['Khách mới', 'Khách cũ', ]
 			},
 			options: {
 				responsive: true,
@@ -1317,9 +1320,9 @@ app.controller("home-ctrl", function($scope, $http) {
 				},
 				tooltips: {
 					callbacks: {
-						label: function(tooltipItem, data) {
+						label: function (tooltipItem, data) {
 							var dataset = data.datasets[tooltipItem.datasetIndex];
-							var total = dataset.data.reduce(function(previousValue, currentValue) {
+							var total = dataset.data.reduce(function (previousValue, currentValue) {
 								return previousValue + currentValue;
 							});
 							var currentValue = dataset.data[tooltipItem.index];
@@ -1347,7 +1350,7 @@ app.controller("home-ctrl", function($scope, $http) {
 })
 
 ////voucher admin
-app.controller("voucher-ctrl", function($scope, $http) {
+app.controller("voucher-ctrl", function ($scope, $http) {
 
 	$scope.items = [];
 	$scope.form = {};
@@ -1355,8 +1358,8 @@ app.controller("voucher-ctrl", function($scope, $http) {
 
 
 
-	$scope.initialize = function() {
-		$http.get('/rest/voucher').then(function(response) {
+	$scope.initialize = function () {
+		$http.get('/rest/voucher').then(function (response) {
 			$scope.items = response.data;
 			$scope.items.forEach(item => {
 				item.startdate = new Date(item.startdate)
@@ -1368,14 +1371,14 @@ app.controller("voucher-ctrl", function($scope, $http) {
 
 
 
-	$scope.edit = function(item) {
+	$scope.edit = function (item) {
 		$scope.form = angular.copy(item);
 		$("#magiamgia").prop('disabled', true);
 		$scope.index = -1;
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 		$scope.form = {
 			startdate: new Date(),
 			enddate: Date()
@@ -1387,12 +1390,12 @@ app.controller("voucher-ctrl", function($scope, $http) {
 
 
 
-	$scope.reset_smooth_table = function() {
+	$scope.reset_smooth_table = function () {
 		$scope.form = {};
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
 
-	$scope.create = function() {
+	$scope.create = function () {
 		var item = angular.copy($scope.form);
 		if (item.id == null || item.startdate == null || item.enddate == null || item.discount == null) {
 			Swal.fire({
@@ -1413,7 +1416,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 				timer: 2000
 			})
 		} else {
-			$http.get(`/rest/voucher`).then(function(response) {
+			$http.get(`/rest/voucher`).then(function (response) {
 				$scope.voucher = response.data;
 				console.log($scope.voucher);
 				for (var i = 0; i < $scope.voucher.length; i++) {
@@ -1466,7 +1469,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 	}
 
 	// Cập nhật
-	$scope.update = function() {
+	$scope.update = function () {
 		var item = angular.copy($scope.form);
 
 		if (item.startdate > item.enddate) {
@@ -1478,7 +1481,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 				timer: 2000
 			})
 		} else {
-			$http.put(`/rest/voucher/${item.id}`, item).then(function(response) {
+			$http.put(`/rest/voucher/${item.id}`, item).then(function (response) {
 				var index = $scope.items.findIndex(p => p.id == item.id);
 				$scope.items[index] = item;
 				Swal.fire({
@@ -1489,7 +1492,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 					timer: 2000
 				})
 				//				$scope.reset_smooth_table();
-			}).catch(function(error) {
+			}).catch(function (error) {
 				Swal.fire({
 					type: 'error',
 					title: 'Lỗi cập nhật mã',
@@ -1507,7 +1510,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 
 
 	// Xóa
-	$scope.delete = function(item) {
+	$scope.delete = function (item) {
 		Swal.fire({
 			title: 'Xóa người dùng!',
 			text: "Bạn chắc chắn muốn xóa người dùng này chứ ?",
@@ -1515,9 +1518,9 @@ app.controller("voucher-ctrl", function($scope, $http) {
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
 			confirmButtonText: 'Vâng, Tôi đồng ý!'
-		}).then(function(result) {
+		}).then(function (result) {
 			if (result.value) {
-				$http.delete(`/rest/voucher/${item.id}`).then(function(response) {
+				$http.delete(`/rest/voucher/${item.id}`).then(function (response) {
 					var index = $scope.items.findIndex(p => p.id == item.id);
 					$scope.items.splice(index, 1);
 					$scope.reset();
@@ -1526,7 +1529,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 						'Đã xóa thành công',
 						'success'
 					);
-				}).catch(function(err) {
+				}).catch(function (err) {
 					Swal.fire({
 						type: 'error',
 						title: 'Lỗi xóa người dùng',
@@ -1575,7 +1578,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 	$scope.initialize();
 })
 /////discount hahahaha
-app.controller("discount-ctrl", function($scope, $http) {
+app.controller("discount-ctrl", function ($scope, $http) {
 
 	$scope.items = [];
 	$scope.form = {};
@@ -1583,16 +1586,15 @@ app.controller("discount-ctrl", function($scope, $http) {
 
 
 
-	$scope.initialize = function() {
-		$http.get('/rest/discount').then(function(response) {
+	$scope.initialize = function () {
+		$http.get('/rest/discount').then(function (response) {
 			$scope.items = response.data;
 			$scope.items.forEach(item => {
 				item.startdate = new Date(item.startdate)
 				item.enddate = new Date(item.enddate)
-
 			})
 		});
-		$http.get('/rest/products').then(function(response) {
+		$http.get('/rest/products').then(function (response) {
 			$scope.product = response.data;
 
 		});
@@ -1600,12 +1602,12 @@ app.controller("discount-ctrl", function($scope, $http) {
 
 	//Tìm kiếm sản phẩm
 	$scope.searchKeywordProduct = "";
-	$scope.submitFormProducts = function() {
+	$scope.submitFormProducts = function () {
 		$http.get('/rest/products/search', {
 			params: {
 				keyword: $scope.searchKeywordProduct
 			}
-		}).then(function(response) {
+		}).then(function (response) {
 			$scope.product = response.data;
 
 		}).catch(error => {
@@ -1614,20 +1616,20 @@ app.controller("discount-ctrl", function($scope, $http) {
 	}
 
 
-	$scope.edit = function(item) {
+	$scope.edit = function (item) {
 		$("#exampleFormControlSelect1").prop('disabled', true);
 		$("#category").prop('disabled', true);
 		$scope.form = angular.copy(item);
 		$scope.prductww = $scope.form.product.id;
 		$scope.index = -1;
 		$(".nav-tabs a:eq(0)").tab('show')
-		$http.get(`/rest/weightvalue2/getProductweigth/${$scope.prductww}`).then(function(response) {
+		$http.get(`/rest/weightvalue2/getProductweigth/${$scope.prductww}`).then(function (response) {
 			$scope.productweight = response.data;
 		});
 
 	}
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 		$("#exampleFormControlSelect1").prop('disabled', false);
 		$("#category").prop('disabled', false);
 		$scope.form = {
@@ -1640,18 +1642,18 @@ app.controller("discount-ctrl", function($scope, $http) {
 
 
 
-	$scope.reset_smooth_table = function() {
+	$scope.reset_smooth_table = function () {
 		$scope.form = {};
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
 	//Tìm kiếm chương trình giảm giá
-	$scope.submitFormDiscount = function() {
+	$scope.submitFormDiscount = function () {
 
 		$http.get('/rest/discount/search', {
 			params: {
 				name: $scope.searchKeyword
 			}
-		}).then(function(response) {
+		}).then(function (response) {
 			$scope.items = response.data;
 
 		}).catch(error => {
@@ -1659,15 +1661,15 @@ app.controller("discount-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.getweight = function(idproduct) {
+	$scope.getweight = function (idproduct) {
 		console.log(idproduct);
-		$http.get(`/rest/weightvalue2/getProductweigth/${idproduct}`).then(function(response) {
+		$http.get(`/rest/weightvalue2/getProductweigth/${idproduct}`).then(function (response) {
 			$scope.productweight = response.data;
 			console.log($scope.productweight);
 		});
 	}
 
-	$scope.create = function() {
+	$scope.create = function () {
 
 
 
@@ -1685,7 +1687,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 			})
 			return;
 		}
-		$http.get(`/rest/discount`).then(function(response) {
+		$http.get(`/rest/discount`).then(function (response) {
 			$scope.discount = response.data;
 			console.log($scope.discount);
 			for (var i = 0; i < $scope.discount.length; i++) {
@@ -1745,7 +1747,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 	}
 
 	// Cập nhật
-	$scope.update = function() {
+	$scope.update = function () {
 		var item = angular.copy($scope.form);
 		if (item.startdate > item.enddate) {
 			Swal.fire({
@@ -1757,7 +1759,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 			})
 			return;
 		} else {
-			$http.put(`/rest/discount/${item.id}`, item).then(function(response) {
+			$http.put(`/rest/discount/${item.id}`, item).then(function (response) {
 				var index = $scope.items.findIndex(p => p.id == item.id);
 				$scope.items[index] = item;
 				Swal.fire({
@@ -1768,7 +1770,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 					timer: 2000
 				})
 				$scope.reset_smooth_table();
-			}).catch(function(error) {
+			}).catch(function (error) {
 				Swal.fire({
 					type: 'error',
 					title: 'Lỗi cập nhật ',
@@ -1783,7 +1785,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 	}
 
 	// Xóa
-	$scope.delete = function(item) {
+	$scope.delete = function (item) {
 		Swal.fire({
 			title: 'Xóa sản phẩm giảm giá!',
 			text: 'Bạn chắc chắn muốn xóa sản phẩm giảm giá này chứ ?',
@@ -1791,9 +1793,9 @@ app.controller("discount-ctrl", function($scope, $http) {
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
 			confirmButtonText: 'Vâng, Tôi đồng ý!'
-		}).then(function(result) {
+		}).then(function (result) {
 			if (result.isConfirmed) {
-				$http.delete(`/rest/discount/${item.id}`).then(function(response) {
+				$http.delete(`/rest/discount/${item.id}`).then(function (response) {
 					var index = $scope.items.findIndex(p => p.id == item.id);
 					$scope.items.splice(index, 1);
 					$scope.reset();
@@ -1802,7 +1804,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 						'Đã xóa thành công',
 						'success'
 					);
-				}).catch(function(err) {
+				}).catch(function (err) {
 					Swal.fire({
 						type: 'error',
 						title: 'Lỗi xóa ',
@@ -1852,7 +1854,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 
 })
 
-app.controller("category-ctrl", function($scope, $http) {
+app.controller("category-ctrl", function ($scope, $http) {
 
 	$scope.items = [];
 	$scope.form = {};
@@ -1860,20 +1862,20 @@ app.controller("category-ctrl", function($scope, $http) {
 
 
 
-	$scope.initialize = function() {
-		$http.get('/rest/category').then(function(response) {
+	$scope.initialize = function () {
+		$http.get('/rest/category').then(function (response) {
 			$scope.items = response.data;
 			console.log($scope.items);
 		});
 	}
 	//Tìm kiếm loại
 	$scope.searchKeyword = '';
-	$scope.submitFormCategory = function() {
+	$scope.submitFormCategory = function () {
 		$http.get('/rest/category/search/', {
 			params: {
 				name: $scope.searchKeyword
 			}
-		}).then(function(response) {
+		}).then(function (response) {
 			$scope.items = response.data;
 
 		}).catch(error => {
@@ -1883,13 +1885,13 @@ app.controller("category-ctrl", function($scope, $http) {
 
 
 
-	$scope.edit = function(item) {
+	$scope.edit = function (item) {
 		$scope.form = angular.copy(item);
 		$scope.index = -1;
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 		$scope.form = {
 
 		};
@@ -1899,14 +1901,14 @@ app.controller("category-ctrl", function($scope, $http) {
 
 
 
-	$scope.reset_smooth_table = function() {
+	$scope.reset_smooth_table = function () {
 		$scope.form = {};
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
 
-	$scope.create = function() {
+	$scope.create = function () {
 		var item = angular.copy($scope.form);
-		if(item.name==null){
+		if (item.name == null) {
 			Swal.fire({
 				type: 'error',
 				title: 'Vui lòng nhập đầy đủ thông tin',
@@ -1916,7 +1918,7 @@ app.controller("category-ctrl", function($scope, $http) {
 			})
 			return;
 		}
-		
+
 		$http.post(`/rest/category`, item).then(resp => {
 			$scope.initialize();
 			$scope.items.push(resp.data);
@@ -1944,9 +1946,9 @@ app.controller("category-ctrl", function($scope, $http) {
 	}
 
 	// Cập nhật
-	$scope.update = function() {
+	$scope.update = function () {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/category/${item.id}`, item).then(function(response) {
+		$http.put(`/rest/category/${item.id}`, item).then(function (response) {
 			var index = $scope.items.findIndex(p => p.id == item.id);
 			$scope.items[index] = item;
 			Swal.fire({
@@ -1957,7 +1959,7 @@ app.controller("category-ctrl", function($scope, $http) {
 				timer: 2000
 			})
 			$scope.reset_smooth_table();
-		}).catch(function(error) {
+		}).catch(function (error) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập ',
@@ -1971,7 +1973,7 @@ app.controller("category-ctrl", function($scope, $http) {
 	}
 
 	// Xóa
-	$scope.delete = function(item) {
+	$scope.delete = function (item) {
 		// Show a confirmation dialog
 		Swal.fire({
 			title: 'Xóa loại sản phẩm!',
@@ -1980,10 +1982,10 @@ app.controller("category-ctrl", function($scope, $http) {
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
 			confirmButtonText: 'Vâng, Tôi đồng ý!'
-		}).then(function(result) {
+		}).then(function (result) {
 			if (result.isConfirmed) {
 				// If user confirms deletion, send delete request
-				$http.delete(`/rest/category/${item.id}`).then(function(response) {
+				$http.delete(`/rest/category/${item.id}`).then(function (response) {
 					// Remove the item from the items array
 					var index = $scope.items.findIndex(p => p.id == item.id);
 					$scope.items.splice(index, 1);
@@ -1995,7 +1997,7 @@ app.controller("category-ctrl", function($scope, $http) {
 						'Đã xóa thành công',
 						'success'
 					);
-				}).catch(function(err) {
+				}).catch(function (err) {
 					// Show error message if deletion fails
 					Swal.fire({
 						type: 'error',
@@ -2045,20 +2047,20 @@ app.controller("category-ctrl", function($scope, $http) {
 	$scope.initialize();
 })
 
-app.controller("static-ctrl", function($scope, $http) {
+app.controller("static-ctrl", function ($scope, $http) {
 
-	$scope.static = function() {
-		$http.get('/rest/static/getProductReviewsStatistics').then(function(response) {
+	$scope.static = function () {
+		$http.get('/rest/static/getProductReviewsStatistics').then(function (response) {
 			$scope.evaluate = response.data;
 			console.log($scope.evaluate);
 		});
-		$http.get('/rest/static/getFavoriteCountPerProduct').then(function(response) {
+		$http.get('/rest/static/getFavoriteCountPerProduct').then(function (response) {
 			$scope.favorite = response.data;
 		});
-		$http.get('/rest/static/findTopSellingProducts').then(function(response) {
+		$http.get('/rest/static/findTopSellingProducts').then(function (response) {
 			$scope.findTopSellingProducts = response.data;
 		});
-		$http.get('/rest/static/getProductSummary').then(function(response) {
+		$http.get('/rest/static/getProductSummary').then(function (response) {
 			$scope.getProductSummary = response.data;
 		});
 
@@ -2069,9 +2071,9 @@ app.controller("static-ctrl", function($scope, $http) {
 
 
 	//Xuất file excel
-	$scope.exportToExcelCategory = function() {
+	$scope.exportToExcelCategory = function () {
 
-		var dataArray = $scope.getProductSummary.map(function(item) {
+		var dataArray = $scope.getProductSummary.map(function (item) {
 			return [item.name, item.numberOfOrders, item.totalQuantity, item.avgPrice];
 		});
 
@@ -2088,9 +2090,9 @@ app.controller("static-ctrl", function($scope, $http) {
 			[columnHeaders].concat(dataArray)
 		]);
 	};
-	$scope.exportToExcelProducts = function() {
+	$scope.exportToExcelProducts = function () {
 
-		var dataArray = $scope.findTopSellingProducts.map(function(item) {
+		var dataArray = $scope.findTopSellingProducts.map(function (item) {
 			return [item.name, item.totalQuantitySold, item.totalRevenue];
 		});
 
@@ -2106,9 +2108,9 @@ app.controller("static-ctrl", function($scope, $http) {
 			[columnHeaders].concat(dataArray)
 		]);
 	};
-	$scope.exportToExcelFavorite = function() {
+	$scope.exportToExcelFavorite = function () {
 
-		var dataArray = $scope.favorite.map(function(item) {
+		var dataArray = $scope.favorite.map(function (item) {
 			return [item.product.name, item.favoriteCount];
 		});
 
@@ -2124,9 +2126,9 @@ app.controller("static-ctrl", function($scope, $http) {
 			[columnHeaders].concat(dataArray)
 		]);
 	};
-	$scope.exportToExcelEvaluate = function() {
+	$scope.exportToExcelEvaluate = function () {
 
-		var dataArray = $scope.evaluate.map(function(item) {
+		var dataArray = $scope.evaluate.map(function (item) {
 			return [item.productName, item.averageRating, item.totalReviews];
 		});
 
@@ -2360,7 +2362,7 @@ app.controller("static-ctrl", function($scope, $http) {
 
 
 
-	$scope.loadProducts = function() {
+	$scope.loadProducts = function () {
 
 		// Gửi yêu cầu đến API để lấy dữ liệu
 		$http.get('/rest/static/getReportData', {
@@ -2368,11 +2370,11 @@ app.controller("static-ctrl", function($scope, $http) {
 				startDate: formatDate($scope.startDate),
 				endDate: formatDate($scope.endDate)
 			}
-		}).then(function(response) {
+		}).then(function (response) {
 			$scope.items = response.data;
 			$scope.pager.count = Math.ceil($scope.items.length / $scope.pager.size);
 
-		}, function(error) {
+		}, function (error) {
 			console.log(error);
 		});
 	};
@@ -2396,7 +2398,7 @@ app.controller("static-ctrl", function($scope, $http) {
 })
 
 ////banner admin
-app.controller("banner-ctrl", function($scope, $http) {
+app.controller("banner-ctrl", function ($scope, $http) {
 
 	$scope.banner_1900x700 = [];
 	$scope.anhphu1_600x370 = [];
@@ -2408,8 +2410,8 @@ app.controller("banner-ctrl", function($scope, $http) {
 	$scope.bannerthongtin2_370x300 = [];
 	$scope.bannerthongtin3_370x300 = [];
 
-	$scope.initialize = function() {
-		$http.get('/rest/banner').then(function(resp) {
+	$scope.initialize = function () {
+		$http.get('/rest/banner').then(function (resp) {
 			for (var i = 0; i < resp.data.length; i++) {
 				$scope.banner_1900x700 = resp.data[0];
 				$scope.anhphu1_600x370 = resp.data[1];
@@ -2426,7 +2428,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 
 	$scope.initialize();
 
-	$scope.imageChangedbanner1900x700 = function(files) {
+	$scope.imageChangedbanner1900x700 = function (files) {
 		var item = angular.copy($scope.banner_1900x700);
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -2461,7 +2463,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		})
 	}
-	$scope.deleteimageChangedbanner1900x700 = function() {
+	$scope.deleteimageChangedbanner1900x700 = function () {
 		var item = angular.copy($scope.banner_1900x700);
 		$scope.banner_1900x700.image = '1900x750.jpg';
 		$scope.banner_1900x700.createdate = new Date();
@@ -2470,7 +2472,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.imageChanged_anhphu1_600x370 = function(files) {
+	$scope.imageChanged_anhphu1_600x370 = function (files) {
 		var item = angular.copy($scope.anhphu1_600x370);
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -2505,7 +2507,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		})
 	}
-	$scope.deleteimageChanged_anhphu1_600x370 = function() {
+	$scope.deleteimageChanged_anhphu1_600x370 = function () {
 		var item = angular.copy($scope.anhphu1_600x370);
 		$scope.anhphu1_600x370.image = '600x370.jpg';
 		$scope.anhphu1_600x370.createdate = new Date();
@@ -2514,7 +2516,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.imageChanged_anhphu2_600x370 = function(files) {
+	$scope.imageChanged_anhphu2_600x370 = function (files) {
 		var item = angular.copy($scope.anhphu2_600x370);
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -2549,7 +2551,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		})
 	}
-	$scope.deleteimageChanged_anhphu2_600x370 = function() {
+	$scope.deleteimageChanged_anhphu2_600x370 = function () {
 		var item = angular.copy($scope.anhphu2_600x370);
 		$scope.anhphu2_600x370.image = '600x370.jpg';
 		$scope.anhphu2_600x370.createdate = new Date();
@@ -2558,7 +2560,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.imageChanged_anhphu3_600x370 = function(files) {
+	$scope.imageChanged_anhphu3_600x370 = function (files) {
 		var item = angular.copy($scope.anhphu3_600x370);
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -2593,7 +2595,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		})
 	}
-	$scope.deleteimageChanged_anhphu3_600x370 = function() {
+	$scope.deleteimageChanged_anhphu3_600x370 = function () {
 		var item = angular.copy($scope.anhphu3_600x370);
 		$scope.anhphu3_600x370.image = '600x370.jpg';
 		$scope.anhphu3_600x370.createdate = new Date();
@@ -2602,7 +2604,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.imageChanged_banner1_600x370 = function(files) {
+	$scope.imageChanged_banner1_600x370 = function (files) {
 		var item = angular.copy($scope.banner1_600x370);
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -2637,7 +2639,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		})
 	}
-	$scope.deleteimageChanged_banner1_600x370 = function() {
+	$scope.deleteimageChanged_banner1_600x370 = function () {
 		var item = angular.copy($scope.banner1_600x370);
 		$scope.banner1_600x370.image = '600x370.jpg';
 		$scope.banner1_600x370.createdate = new Date();
@@ -2646,7 +2648,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.imageChanged_banner2_600x370 = function(files) {
+	$scope.imageChanged_banner2_600x370 = function (files) {
 		var item = angular.copy($scope.banner2_600x370);
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -2681,7 +2683,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		})
 	}
-	$scope.deleteimageChanged_banner2_600x370 = function() {
+	$scope.deleteimageChanged_banner2_600x370 = function () {
 		var item = angular.copy($scope.banner2_600x370);
 		$scope.banner2_600x370.image = '600x370.jpg';
 		$scope.banner2_600x370.createdate = new Date();
@@ -2690,7 +2692,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.imageChanged_bannerthongtin1_370x300 = function(files) {
+	$scope.imageChanged_bannerthongtin1_370x300 = function (files) {
 		var item = angular.copy($scope.bannerthongtin1_370x300);
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -2725,7 +2727,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		})
 	}
-	$scope.deleteimageChanged_bannerthongtin1_370x300 = function() {
+	$scope.deleteimageChanged_bannerthongtin1_370x300 = function () {
 		var item = angular.copy($scope.bannerthongtin1_370x300);
 		$scope.bannerthongtin1_370x300.image = '370x300.jpg';
 		$scope.bannerthongtin1_370x300.createdate = new Date();
@@ -2733,8 +2735,22 @@ app.controller("banner-ctrl", function($scope, $http) {
 			$scope.initialize();
 		});
 	}
+	$scope.bannerthongtin1_370x300_save = function () {
+		var item = angular.copy($scope.bannerthongtin1_370x300);
+		$http.put(`/rest/banner/${item.id}`, $scope.bannerthongtin1_370x300).then(resp => {
+			console.log(resp.data);
+		});
+		Swal.fire({
+			type: 'success',
+			title: 'Lưu thông tin thành công',
+			text: 'Thành công',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
 
-	$scope.imageChanged_bannerthongtin2_370x300 = function(files) {
+	}
+	$scope.imageChanged_bannerthongtin2_370x300 = function (files) {
 		var item = angular.copy($scope.bannerthongtin2_370x300);
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -2769,7 +2785,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		})
 	}
-	$scope.deleteimageChanged_bannerthongtin2_370x300 = function() {
+	$scope.deleteimageChanged_bannerthongtin2_370x300 = function () {
 		var item = angular.copy($scope.bannerthongtin2_370x300);
 		$scope.bannerthongtin2_370x300.image = '370x300.jpg';
 		$scope.bannerthongtin2_370x300.createdate = new Date();
@@ -2777,9 +2793,23 @@ app.controller("banner-ctrl", function($scope, $http) {
 			$scope.initialize();
 		});
 	}
+	$scope.bannerthongtin2_370x300_save = function () {
+		var item = angular.copy($scope.bannerthongtin2_370x300);
+		$http.put(`/rest/banner/${item.id}`, $scope.bannerthongtin2_370x300).then(resp => {
+			console.log(resp.data);
+		});
+		Swal.fire({
+			type: 'success',
+			title: 'Lưu thông tin thành công',
+			text: 'Thành công',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
 
+	}
 
-	$scope.imageChanged_bannerthongtin3_370x300 = function(files) {
+	$scope.imageChanged_bannerthongtin3_370x300 = function (files) {
 		var item = angular.copy($scope.bannerthongtin3_370x300);
 		var data = new FormData();
 		data.append('file', files[0]);
@@ -2814,7 +2844,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			console.log("Error", error);
 		})
 	}
-	$scope.deleteimageChanged_bannerthongtin3_370x300 = function() {
+	$scope.deleteimageChanged_bannerthongtin3_370x300 = function () {
 		var item = angular.copy($scope.bannerthongtin3_370x300);
 		$scope.bannerthongtin3_370x300.image = '370x300.jpg';
 		$scope.bannerthongtin3_370x300.createdate = new Date();
@@ -2822,10 +2852,25 @@ app.controller("banner-ctrl", function($scope, $http) {
 			$scope.initialize();
 		});
 	}
+	$scope.bannerthongtin3_370x300_save = function () {
+		var item = angular.copy($scope.bannerthongtin3_370x300);
+		$http.put(`/rest/banner/${item.id}`, $scope.bannerthongtin3_370x300).then(resp => {
+			console.log(resp.data);
+		});
+		Swal.fire({
+			type: 'success',
+			title: 'Lưu thông tin thành công',
+			text: 'Thành công',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
+
+	}
 
 })
 //weightvalue
-app.controller("weightvalue2-ctrl", function($scope, $http) {
+app.controller("weightvalue2-ctrl", function ($scope, $http) {
 
 	$scope.items = [];
 	$scope.form = {};
@@ -2835,12 +2880,12 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 
 	//Tìm kiếm người dùng
 	$scope.searchKeyword = '';
-	$scope.submitFormWeight = function() {
+	$scope.submitFormWeight = function () {
 		$http.get('/rest/weightvalue2/search/', {
 			params: {
 				name: $scope.searchKeyword
 			}
-		}).then(function(response) {
+		}).then(function (response) {
 			$scope.items = response.data;
 
 		}).catch(error => {
@@ -2850,8 +2895,8 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 
 
 
-	$scope.initialize = function() {
-		$http.get('/rest/weightvalue2').then(function(response) {
+	$scope.initialize = function () {
+		$http.get('/rest/weightvalue2').then(function (response) {
 			$scope.items = response.data;
 		});
 	}
@@ -2859,13 +2904,13 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 
 
 
-	$scope.edit = function(item) {
+	$scope.edit = function (item) {
 		$scope.form = angular.copy(item);
 		$scope.index = -1;
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 		$scope.form = {};
 		$scope.index = 0;
 		$(".nav-tabs a:eq(0)").tab('show')
@@ -2873,12 +2918,12 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 
 
 
-	$scope.reset_smooth_table = function() {
+	$scope.reset_smooth_table = function () {
 		$scope.form = {};
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
 
-	$scope.create = function() {
+	$scope.create = function () {
 		var item = angular.copy($scope.form);
 		$http.post(`/rest/weightvalue2`, item).then(resp => {
 			$scope.initialize();
@@ -2908,9 +2953,9 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 	}
 
 	// Cập nhật
-	$scope.update = function() {
+	$scope.update = function () {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/weightvalue2/${item.id}`, item).then(function(response) {
+		$http.put(`/rest/weightvalue2/${item.id}`, item).then(function (response) {
 			var index = $scope.items.findIndex(p => p.weightid == item.weightid);
 			$scope.items[index] = item;
 			Swal.fire({
@@ -2921,7 +2966,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 				timer: 2000
 			})
 			$scope.reset_smooth_table();
-		}).catch(function(error) {
+		}).catch(function (error) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật ',
@@ -2935,7 +2980,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 	}
 
 	// Xóa
-	$scope.delete = function(item) {
+	$scope.delete = function (item) {
 		Swal.fire({
 			title: 'Xóa!',
 			text: 'Bạn chắc chắn muốn xóa trọng lượng này chứ ?',
@@ -2943,9 +2988,9 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
 			confirmButtonText: 'Vâng, Tôi đồng ý!'
-		}).then(function(result) {
+		}).then(function (result) {
 			if (result.isConfirmed) {
-				$http.delete(`/rest/weightvalue2/${item.id}`).then(function(response) {
+				$http.delete(`/rest/weightvalue2/${item.id}`).then(function (response) {
 					var index = $scope.items.findIndex(p => p.weightid == item.weightid);
 					$scope.items.splice(index, 1);
 					$scope.reset();
@@ -2954,7 +2999,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 						'Đã xóa thành công',
 						'success'
 					);
-				}).catch(function(err) {
+				}).catch(function (err) {
 					Swal.fire({
 						type: 'error',
 						title: 'Lỗi xóa',
@@ -3004,7 +3049,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 })
 
 /// StatusOR
-app.controller("statusOR-ctrl", function($scope, $http) {
+app.controller("statusOR-ctrl", function ($scope, $http) {
 
 	$scope.items = [];
 	$scope.form = {};
@@ -3012,12 +3057,12 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 
 	//Tìm kiếm người dùng
 	$scope.searchKeyword = '';
-	$scope.submitFormStatus = function() {
+	$scope.submitFormStatus = function () {
 		$http.get('/rest/StatusOR/search/', {
 			params: {
 				name: $scope.searchKeyword
 			}
-		}).then(function(response) {
+		}).then(function (response) {
 			$scope.items = response.data;
 
 		}).catch(error => {
@@ -3025,8 +3070,8 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 		});
 	}
 
-	$scope.initialize = function() {
-		$http.get('/rest/StatusOR').then(function(response) {
+	$scope.initialize = function () {
+		$http.get('/rest/StatusOR').then(function (response) {
 			$scope.items = response.data;
 			console.log($scope.items);
 
@@ -3036,13 +3081,13 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 
 
 
-	$scope.edit = function(item) {
+	$scope.edit = function (item) {
 		$scope.form = angular.copy(item);
 		$scope.index = -1;
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
 
-	$scope.reset = function() {
+	$scope.reset = function () {
 		$scope.form = {};
 		$scope.index = 0;
 		$(".nav-tabs a:eq(0)").tab('show')
@@ -3050,12 +3095,12 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 
 
 
-	$scope.reset_smooth_table = function() {
+	$scope.reset_smooth_table = function () {
 		$scope.form = {};
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
 
-	$scope.create = function() {
+	$scope.create = function () {
 		var item = angular.copy($scope.form);
 		$http.post(`/rest/StatusOR`, item).then(resp => {
 			$scope.initialize();
@@ -3084,9 +3129,9 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 	}
 
 	// Cập nhật
-	$scope.update = function() {
+	$scope.update = function () {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/StatusOR/${item.id}`, item).then(function(response) {
+		$http.put(`/rest/StatusOR/${item.id}`, item).then(function (response) {
 			var index = $scope.items.findIndex(p => p.statusid == item.statusid);
 			$scope.items[index] = item;
 			$scope.initialize();
@@ -3098,7 +3143,7 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 				timer: 2000
 			})
 			$scope.reset_smooth_table();
-		}).catch(function(error) {
+		}).catch(function (error) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật ',
@@ -3112,7 +3157,7 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 	}
 
 	// Xóa
-	$scope.delete = function(item) {
+	$scope.delete = function (item) {
 		// Show a confirmation dialog
 		Swal.fire({
 			title: 'Xóa trạng thái!',
@@ -3123,10 +3168,10 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 			cancelButtonColor: '#d33',
 			cancelButtonText: 'Hủy',
 			confirmButtonText: 'Vâng, Tôi đồng ý!'
-		}).then(function(result) {
+		}).then(function (result) {
 			if (result.isConfirmed) {
 				// If user confirms deletion, send delete request
-				$http.delete(`/rest/StatusOR/${item.id}`).then(function(response) {
+				$http.delete(`/rest/StatusOR/${item.id}`).then(function (response) {
 					// Remove the item from the items array
 					var index = $scope.items.findIndex(p => p.statusid == item.statusid);
 					$scope.items.splice(index, 1);
@@ -3139,7 +3184,7 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 						'Đã xóa thành công',
 						'success'
 					);
-				}).catch(function(err) {
+				}).catch(function (err) {
 					// Show error message if deletion fails
 					Swal.fire({
 						type: 'error',
@@ -3188,4 +3233,372 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 	}
 
 	$scope.initialize();
+})
+
+app.controller("combo-ctrl", function ($scope, $http) {
+
+
+	$scope.itempros = [];
+	$scope.itemcombos = [];
+	$scope.itemproductcombos = [];
+	$scope.form = [];
+
+	$scope.listproduct = function () {
+		$http.get('/rest/productweights').then(function (resp) {
+			$scope.itempros = resp.data;
+		});
+	}
+
+	$scope.listcombo = function () {
+		$http.get('/rest/combos').then(function (resp) {
+			$scope.itemcombos = resp.data;
+		});
+	}
+	$scope.hiddenform = true;
+	$scope.hiddenbutton = false;
+	$scope.hiddenhiddentotal = true;
+	$scope.listproductcombo = function (idcombo) {
+		$scope.addprocombo = true;
+		$scope.hiddenform = false;
+		$scope.hiddenbutton = true;
+		$scope.hiddenhiddentotal = false;
+		$http.get(`/rest/combos/${idcombo}`).then(function (resp) {
+			$scope.form = resp.data;
+		});
+
+		$http.get(`/rest/productcombos/${idcombo}`).then(function (resp) {
+			$scope.itemproductcombos = resp.data;
+			$scope.form.price = 0;
+			for (var i = 0; i < $scope.itemproductcombos.length; i++) {
+				$scope.form.price = $scope.form.price + $scope.itemproductcombos[i].productweight.price;
+			}
+		});
+
+		window.scrollTo({
+			top: 200,
+			behavior: 'smooth'
+		});
+
+	}
+	$scope.hiddenthem = false;
+	$scope.hiddensua = true;
+	$scope.hiddenxoa = true;
+	$scope.formcombo = function (idcombo) {
+		$scope.hiddenform = true;
+		$scope.addprocombo = false;
+		$scope.hiddenbutton = false;
+		$scope.hiddenthem = true;
+		$scope.hiddensua = false;
+		$scope.hiddenxoa = false;
+		$http.get(`/rest/combos/${idcombo}`).then(function (resp) {
+			$scope.form = resp.data;
+			console.log($scope.form)
+		});
+		window.scrollTo({
+			top: 80,
+			behavior: 'smooth'
+		});
+
+	}
+
+	$scope.reset_smooth_table = function () {
+		$scope.form = [];
+		window.scrollTo({
+			top: 200,
+			behavior: 'smooth'
+		});
+	}
+
+	$scope.searchKeyword = '';
+	$scope.submitFormProduct = function () {
+		$http.get('/rest/productweights/search/', {
+			params: {
+				keyword: $scope.searchKeyword
+			}
+		}).then(function (resp) {
+			$scope.itempros = resp.data;
+			$scope.pager.first();
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
+	$scope.submitFormCombo = function () {
+		console.log($scope.searchKeyword)
+		$http.get('/rest/combos/search/', {
+			params: {
+				keyword: $scope.searchKeyword
+			}
+		}).then(function (resp) {
+			$scope.itemcombos = resp.data;
+			$scope.pagercombo.first();
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
+	$scope.imgaedefault = true;
+	$scope.imageChanged = function (files) {
+		$scope.imgaedefault = false;
+		var data = new FormData();
+		data.append('file', files[0]);
+		$http.post('/rest/upload/banner', data, {
+			transformRequest: angular.identity,
+			headers: {
+				'Content-Type': undefined
+			}
+		}).then(resp => {
+			$scope.form.image = resp.data.name;
+			Swal.fire({
+				type: 'success',
+				title: 'Thêm ảnh thành công',
+				text: '',
+				icon: "success",
+				showConfirmButton: false,
+				timer: 2000
+			})
+		}).catch(error => {
+			Swal.fire({
+				type: 'error',
+				title: 'Lỗi thêm ảnh',
+				text: "Lỗi",
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+		})
+	}
+	$scope.addprocombo = false;
+	$scope.createcombo = function (item) {
+		$scope.data = {
+			name: item.name,
+			startdate: item.startdate,
+			enddate: item.enddate,
+			sale: item.sale,
+			image: item.image,
+			price: item.price,
+
+		}
+		if ($scope.data.image == null) {
+			$scope.data.image = 'default.png'
+		}
+		if (item.name == null || item.startdate == null || item.enddate == null || item.sale == null) {
+			Swal.fire({
+				type: 'error',
+				title: 'Vui lòng không để trống thông tin',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			return;
+		} else if (item.enddate < item.startdate) {
+			Swal.fire({
+				type: 'error',
+				title: 'Ngày kết thúc phải sau ngày bất đầu',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			return;
+		} else {
+			$http.post(`/rest/combos`, $scope.data).then(resp => {
+				$scope.addprocombo = true;
+				$scope.itemcombos.id = resp.data.id
+				$scope.form.comboid = $scope.itemcombos.id
+				$scope.listproductcombo($scope.itemcombos.id)
+				$scope.listcombo();
+				window.scrollTo({
+					top: 650,
+					behavior: 'smooth'
+				});
+				Swal.fire({
+					type: 'success',
+					title: 'Thêm thành công',
+					icon: "success",
+					showConfirmButton: false,
+					timer: 2000
+				})
+			}).catch(error => {
+				Swal.fire({
+					type: 'error',
+					title: 'Lỗi thêm mã',
+					text: "Lỗi",
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Error", error);
+			})
+		}
+	}
+
+	$scope.add_pro_in_combo = function (item, id) {
+		$scope.data = {
+			productweight: {
+				id: item.id
+			},
+			combo: {
+				id: id
+			}
+		}
+		$http.get(`/rest/productcombos/${id}`).then(function (resp) {
+			$scope.itemproductcombos = resp.data;
+			for (var i = 0; i < $scope.itemproductcombos.length; i++) {
+				if ($scope.itemproductcombos[i].productweight.id == item.id) {
+					Swal.fire({
+						type: 'error',
+						title: 'Sản phẩm đang được sử dụng ở phần combo',
+						icon: "error",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					return;
+				}
+			}
+			$http.post(`/rest/productcombos`, $scope.data).then(resp => {
+				$scope.listproductcombo(resp.data.combo.id)
+				var form = angular.copy($scope.form)
+				$http.put(`/rest/combos/${form.id}`, form).then(function (resp) {})
+				window.scrollTo({
+					top: 200,
+					behavior: 'smooth'
+				});
+
+			}).catch(error => {
+				Swal.fire({
+					type: 'error',
+					title: 'Lỗi thêm sản phẩm',
+					text: "Lỗi",
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Error", error);
+			})
+
+		});
+
+
+	}
+
+	$scope.delcombo = function(){
+		Swal.fire({
+			type: 'success',
+			title: 'Đã tắt trạng thái combo',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
+	}
+
+	$scope.deleteproductcombos = function (id, idcombo) {
+		$http.delete(`/rest/productcombos/${id}`).then(resp => {
+			$scope.listproductcombo(idcombo)
+			var form = angular.copy($scope.form)
+			$http.put(`/rest/combos/${form.id}`, form).then(function (resp) {})
+			window.scrollTo({
+				top: 200,
+				behavior: 'smooth'
+			});
+		}).catch(error => {
+			Swal.fire({
+				type: 'error',
+				title: 'Lỗi xóa',
+				text: "Lỗi",
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+		})
+
+	}
+
+	$scope.pager = {
+		page: 0,
+		size: 5,
+		get itempros() {
+			var start = this.page * this.size;
+			return $scope.itempros.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.itempros.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+	}
+
+	$scope.pagercombo = {
+		pagercombo: 0,
+		size: 8,
+		get itemcombos() {
+			var start = this.pagercombo * this.size;
+			return $scope.itemcombos.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.itemcombos.length / this.size);
+		},
+		first() {
+			this.pagercombo = 0;
+		},
+		prev() {
+			this.pagercombo--;
+			if (this.pagercombo < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.pagercombo++;
+			if (this.pagercombo >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.pagercombo = this.count - 1;
+		}
+	}
+
+
+	// $scope.autodelete = function () {
+	// 	$http.get('/rest/combos').then(function (resp) {
+	// 		$scope.itemcombos = resp.data;
+	// 		var date = new Date().toISOString().slice(0, 10)
+	// 		console.log(date)
+	// 		for (var c = 0; c < $scope.itemcombos.length; c++) {
+	// 			console.log($scope.itemcombos[c].enddate)
+	// 			if (date > $scope.itemcombos[c].enddate) {
+	// 				$http.get(`/rest/productcombos/${$scope.itemcombos[c].id}`).then(function (resp) {
+	// 					$scope.itemproductcombos = resp.data;
+	// 					for (var i = 0; i < $scope.itemproductcombos.length; i++) {
+	// 						console.log($scope.itemproductcombos[i].id)
+	// 						$http.delete(`/rest/productcombos/${$scope.itemproductcombos[i].id}`).then(resp => {})
+	// 					}
+	// 				});
+	// 				// $http.delete(`/rest/combos/${$scope.itemcombos[c].id}`).then(resp => {})
+	// 			}
+
+	// 		}
+	// 	});
+	// }
+
+	// $scope.autodelete();
+	$scope.listproduct();
+	$scope.listcombo();
 })
