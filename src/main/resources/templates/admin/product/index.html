@@ -108,19 +108,17 @@
 																style="background-color: white;">
 														</div>
 														<div class="form-group">
-															<label>Trạng thái hoạt động:</label> <strong>*</strong> <br>
-															<label>
-																<input type="radio" name="activeted"
-																	ng-model="form.activeted" value="false"
-																	ng-checked="form.activeted === false">
-																Không
-															</label>
-															<label>
-																<input type="radio" name="activeted"
-																	ng-model="form.activeted" value="true"
-																	ng-checked="form.activeted === true">
-																Có
-															</label>
+															<div class="switch-holder">
+																<div class="switch-label">
+																	<i class="fa fa-bluetooth-b"></i>
+																	<span>Trạng thái sản phẩm</span>
+																</div>
+																<div class="switch-toggle">
+																	<input type="checkbox" id="activeted"
+																		ng-model="form.activeted">
+																	<label for="activeted"></label>
+																</div>
+															</div>
 														</div>
 													</div>
 												</div>

@@ -67,7 +67,7 @@ function service(districtid) {
 		},
 
 		success: function(data) {
-			renderDataS(data.data)
+			//			renderDataS(data.data)
 			console.log(data);
 			console.log(districtid);
 		},
@@ -79,7 +79,7 @@ function service(districtid) {
 	})
 }
 
-function phivc(serviceid, districtid, wardcode) {
+function phivc(districtid, wardcode) {
 	$.ajax({
 		type: "GET",
 		url: "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
@@ -88,7 +88,7 @@ function phivc(serviceid, districtid, wardcode) {
 			shop_id: "190510"
 		},
 		data: {
-			service_id: serviceid,
+			service_id: 53320,
 			insurance_value: 200000,
 			coupon: null,
 			from_district_id: 1572,
@@ -102,7 +102,7 @@ function phivc(serviceid, districtid, wardcode) {
 		success: function(data) {
 			var event = new CustomEvent('phiDataAvailable', { detail: data.data.total });
 			document.dispatchEvent(event);
-			//renderDataP(data.data, "ward")
+			//			renderDataP(data.data, "ward")
 			console.log(data.data.total);
 
 		},
@@ -137,13 +137,13 @@ var renderDataP = (array, select) => {
 	document.querySelector("#" + select).innerHTML = row;
 }
 
-var renderDataS = (array) => {
-	let row = '<option  value="">Chọn</option>';
-	array.forEach(element => {
-		row += `<option value="${element.service_id}">${element.short_name}</option>`;
-	});
-	document.querySelector("#service").innerHTML = row;
-}
+//var renderDataS = (array) => {
+//	let row = '<option  value="">Chọn</option>';
+//	array.forEach(element => {
+//		row += `<option value="${element.service_id}">${element.short_name}</option>`;
+//	});
+//	document.querySelector("#service").innerHTML = row;
+//}
 
 // Xử lý sự kiện thay đổi tỉnh
 $("#province").change(() => {
@@ -171,38 +171,38 @@ $("#ward").change(() => {
 	var dtid = district.value;
 
 	// lay service id tu select
-	var serviceid = document.getElementById("service");
-	var sid = serviceid.value;
+	//	var serviceid = document.getElementById("service");
+	//	var sid = serviceid.value;
 
 
 	// lay wardcode tu select
 	var ward = document.getElementById("ward");
 	var wardcode = ward.value;
 	console.log(wardcode)
-	phivc(sid, dtid, wardcode)
+	phivc(dtid, wardcode)
 	printResult();
 });
 
 // su kien thay doi dich vu
 
-$("#service").change(() => {
-	// lay id huyen tu select
-	var district = document.getElementById("district");
-	var dtid = district.value;
-
-	// lay service id tu select
-	var serviceid = document.getElementById("service");
-	var sid = serviceid.value;
-
-
-	// lay wardcode tu select
-	var ward = document.getElementById("ward");
-	var wardcode = ward.value;
-
-	console.log(wardcode)
-	phivc(sid, dtid, wardcode)
-	//printResult();
-});
+//$("#service").change(() => {
+//	// lay id huyen tu select
+//	var district = document.getElementById("district");
+//	var dtid = district.value;
+//
+//	// lay service id tu select
+//	var serviceid = document.getElementById("service");
+//	var sid = serviceid.value;
+//
+//
+//	// lay wardcode tu select
+//	var ward = document.getElementById("ward");
+//	var wardcode = ward.value;
+//
+//	console.log(sid)
+//	phivc(sid, dtid, wardcode)
+//	//printResult();
+//});
 
 // Hàm hiển thị kết quả khi tất cả các lựa chọn đã được chọn
 var printResult = () => {

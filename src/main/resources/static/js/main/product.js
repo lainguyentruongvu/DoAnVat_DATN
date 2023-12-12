@@ -692,7 +692,8 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 		//Lấy dữ liệu từ localStore
 		$scope.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
-
+		var to_ward_code = document.getElementById("ward").value;
+		var to_district_id = document.getElementById("district").value;
 		//Gọi hàm kiểm tra mã giãm giá		
 		$scope.kiemtragiamgia();
 
@@ -712,7 +713,9 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				id: 1
 			},
 			statusorder: $scope.statusorder,
-			message: $("#message").text(),
+			message: $scope.message,
+			towardcode: to_ward_code,
+			todistrictid: to_district_id,
 			get orderdetail() {
 				return $scope.selectedItems.map(item => {
 					return {

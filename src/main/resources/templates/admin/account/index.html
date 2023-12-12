@@ -86,9 +86,9 @@
 													<div class="col-6">
 														<div class="form-group">
 															<label>Tên đăng nhập</label> <strong>*</strong>
-															<input ng-disabled="isDisabled" class="form-control" ng-model="form.username"
-																type="text" name="name"
-																placeholder="Nhập tên đăng nhập" >
+															<input ng-disabled="isDisabled" class="form-control"
+																ng-model="form.username" type="text" name="name"
+																placeholder="Nhập tên đăng nhập">
 														</div>
 
 														<div class="form-group">
@@ -96,24 +96,19 @@
 															<input class="form-control" ng-model="form.name" type="text"
 																name="username" placeholder="Nhập họ và tên">
 														</div>
-														<div class="form-group">
-															<label>Trạng thái hoạt động:</label> <strong>*</strong> <br>
-															<label class="">
-																<input type="radio" name="activeted"
-																	ng-model="form.activeted" value="false"
-																	ng-checked="form.activeted === false">
-																Không
-															</label>
-															<br>
-															<label>
-																<input type="radio" name="activeted"
-																	ng-model="form.activeted" value="true"
-																	ng-checked="form.activeted === true">
-																Có
-															</label>
 
-
+														<div class="switch-holder">
+															<div class="switch-label">
+																<i class="fa fa-bluetooth-b"></i>
+																<span>Trạng thái hoạt động</span>
+															</div>
+															<div class="switch-toggle">
+																<input type="checkbox" id="activeted"
+																	ng-model="form.activeted">
+																<label for="activeted"></label>
+															</div>
 														</div>
+
 													</div>
 												</div>
 
@@ -138,7 +133,7 @@
 												<div class="row">
 													<div class="col mb-3">
 														<div class="form-group">
-															<label>Thông tin tài khoản</label> <strong>*</strong>
+															<label>Thông tin tài khoản</label>
 															<textarea class="form-control" ng-model="form.address"
 																rows="5" placeholder="Thông tin tài khoản"></textarea>
 														</div>
@@ -180,7 +175,7 @@
 													<div class="col">
 														<label><i>Mọi tài khoản tạo ở đây đều là quyền nhân
 																viên</i></label>
-																<label><i>{{erromessage}}</i></label>
+														<label><i>{{erromessage}}</i></label>
 													</div>
 												</div>
 											</div>
@@ -311,12 +306,18 @@
 									</table>
 									<nav aria-label="Table Paging" class="mb-0 text-muted">
 										<ul class="pagination justify-content-center mb-0">
-											<li class="page-item"><a class="page-link" ng-click="pager.prev()">Trang sau</a></li>
-											<li ng-show="pager.page != 0" class="page-item"><a class="page-link" ng-click="pager.prev()">{{pager.page}}</a></li>
-											<li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a></li>
-											<li ng-show="pager.page != pager.count - 1" class="page-item"><a class="page-link" ng-click="pager.next()">{{pager.page + 2}}</a></li>
-											<li class="page-item"><a class="page-link" ng-click="pager.next()">Trang trước</a></li>
-										  </ul>
+											<li class="page-item"><a class="page-link" ng-click="pager.prev()">Trang
+													sau</a></li>
+											<li ng-show="pager.page != 0" class="page-item"><a class="page-link"
+													ng-click="pager.prev()">{{pager.page}}</a></li>
+											<li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a>
+											</li>
+											<li ng-show="pager.page != pager.count - 1" class="page-item"><a
+													class="page-link" ng-click="pager.next()">{{pager.page + 2}}</a>
+											</li>
+											<li class="page-item"><a class="page-link" ng-click="pager.next()">Trang
+													trước</a></li>
+										</ul>
 									</nav>
 								</div>
 							</div>

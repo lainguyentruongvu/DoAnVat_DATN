@@ -18,11 +18,11 @@
 </head>
 
 <body>
-
 	<div class="formContent blur">
 
 		<div>
 			<h2><img src="../../images/logo_noback.png" alt="" style="width: 250px;"><br>Đăng nhập</h2>
+			
 			<form th:object="${account}" th:action="@{/auth/login}" method="post">
 				<label>Tên đăng nhập</label>
 				<input name="username" id="username" type="text" placeholder="">
@@ -47,8 +47,9 @@
 								class="bi bi-google"></i> Google</a> &nbsp;
 						<button class="btn btn-primary facebook"><i class="bi bi-facebook"></i> Facebook</button>
 					</div>
+					<a href="/"><i class="bi bi-arrow-return-left"></i> Quay về trang chủ</a>
 					<div style="text-shadow: 1px 1px 2px #000;" class="signup"> Bạn không có tài khoản? <a th:href="@{/auth/register}">Đăng ký ngay!</a> </div>
-					<div  style="text-shadow: 1px 1px 2px #000;" class="signup"> Bạn quên mật khẩu? <a th:href="@{/auth/forgot-password}">Đăng nhập ngay!</a> </div>
+					<div  style="text-shadow: 1px 1px 2px #000;" class="signup">Quên mật khẩu? <a th:href="@{/auth/forgot-password}">Lây lại ngay!</a> </div>
 				</div>
 			</form>
 		</div>

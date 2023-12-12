@@ -3366,3 +3366,370 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 
 	$scope.initialize();
 })
+app.controller("combo-ctrl", function($scope, $http) {
+
+
+	$scope.itempros = [];
+	$scope.itemcombos = [];
+	$scope.itemproductcombos = [];
+	$scope.form = [];
+
+	$scope.listproduct = function() {
+		$http.get('/rest/productweights').then(function(resp) {
+			$scope.itempros = resp.data;
+		});
+	}
+
+	$scope.listcombo = function() {
+		$http.get('/rest/combos').then(function(resp) {
+			$scope.itemcombos = resp.data;
+		});
+	}
+	$scope.hiddenform = true;
+	$scope.hiddenbutton = false;
+	$scope.hiddenhiddentotal = true;
+	$scope.listproductcombo = function(idcombo) {
+		$scope.addprocombo = true;
+		$scope.hiddenform = false;
+		$scope.hiddenbutton = true;
+		$scope.hiddenhiddentotal = false;
+		$http.get(`/rest/combos/${idcombo}`).then(function(resp) {
+			$scope.form = resp.data;
+		});
+
+		$http.get(`/rest/productcombos/${idcombo}`).then(function(resp) {
+			$scope.itemproductcombos = resp.data;
+			$scope.form.price = 0;
+			for (var i = 0; i < $scope.itemproductcombos.length; i++) {
+				$scope.form.price = $scope.form.price + $scope.itemproductcombos[i].productweight.price;
+			}
+		});
+
+		window.scrollTo({
+			top: 200,
+			behavior: 'smooth'
+		});
+
+	}
+	$scope.hiddenthem = false;
+	$scope.hiddensua = true;
+	$scope.hiddenxoa = true;
+	$scope.formcombo = function(idcombo) {
+		$scope.hiddenform = true;
+		$scope.addprocombo = false;
+		$scope.hiddenbutton = false;
+		$scope.hiddenthem = true;
+		$scope.hiddensua = false;
+		$scope.hiddenxoa = false;
+		$http.get(`/rest/combos/${idcombo}`).then(function(resp) {
+			$scope.form = resp.data;
+			console.log($scope.form)
+		});
+		window.scrollTo({
+			top: 80,
+			behavior: 'smooth'
+		});
+
+	}
+
+	$scope.reset_smooth_table = function() {
+		$scope.form = [];
+		window.scrollTo({
+			top: 200,
+			behavior: 'smooth'
+		});
+	}
+
+	$scope.searchKeyword = '';
+	$scope.submitFormProduct = function() {
+		$http.get('/rest/productweights/search/', {
+			params: {
+				keyword: $scope.searchKeyword
+			}
+		}).then(function(resp) {
+			$scope.itempros = resp.data;
+			$scope.pager.first();
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
+	$scope.submitFormCombo = function() {
+		console.log($scope.searchKeyword)
+		$http.get('/rest/combos/search/', {
+			params: {
+				keyword: $scope.searchKeyword
+			}
+		}).then(function(resp) {
+			$scope.itemcombos = resp.data;
+			$scope.pagercombo.first();
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
+	$scope.imgaedefault = true;
+	$scope.imageChanged = function(files) {
+		$scope.imgaedefault = false;
+		var data = new FormData();
+		data.append('file', files[0]);
+		$http.post('/rest/upload/banner', data, {
+			transformRequest: angular.identity,
+			headers: {
+				'Content-Type': undefined
+			}
+		}).then(resp => {
+			$scope.form.image = resp.data.name;
+			Swal.fire({
+				type: 'success',
+				title: 'Thêm ảnh thành công',
+				text: '',
+				icon: "success",
+				showConfirmButton: false,
+				timer: 2000
+			})
+		}).catch(error => {
+			Swal.fire({
+				type: 'error',
+				title: 'Lỗi thêm ảnh',
+				text: "Lỗi",
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+		})
+	}
+	$scope.addprocombo = false;
+	$scope.createcombo = function(item) {
+		$scope.data = {
+			name: item.name,
+			startdate: item.startdate,
+			enddate: item.enddate,
+			sale: item.sale,
+			image: item.image,
+			price: item.price,
+
+		}
+		if ($scope.data.image == null) {
+			$scope.data.image = 'default.png'
+		}
+		if (item.name == null || item.startdate == null || item.enddate == null || item.sale == null) {
+			Swal.fire({
+				type: 'error',
+				title: 'Vui lòng không để trống thông tin',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			return;
+		} else if (item.enddate < item.startdate) {
+			Swal.fire({
+				type: 'error',
+				title: 'Ngày kết thúc phải sau ngày bất đầu',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			return;
+		} else {
+			$http.post(`/rest/combos`, $scope.data).then(resp => {
+				$scope.addprocombo = true;
+				$scope.itemcombos.id = resp.data.id
+				$scope.form.comboid = $scope.itemcombos.id
+				$scope.listproductcombo($scope.itemcombos.id)
+				$scope.listcombo();
+				window.scrollTo({
+					top: 650,
+					behavior: 'smooth'
+				});
+				Swal.fire({
+					type: 'success',
+					title: 'Thêm thành công',
+					icon: "success",
+					showConfirmButton: false,
+					timer: 2000
+				})
+			}).catch(error => {
+				Swal.fire({
+					type: 'error',
+					title: 'Lỗi thêm mã',
+					text: "Lỗi",
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Error", error);
+			})
+		}
+	}
+
+	$scope.add_pro_in_combo = function(item, id) {
+		$scope.data = {
+			productweight: {
+				id: item.id
+			},
+			combo: {
+				id: id
+			}
+		}
+		$http.get(`/rest/productcombos/${id}`).then(function(resp) {
+			$scope.itemproductcombos = resp.data;
+			for (var i = 0; i < $scope.itemproductcombos.length; i++) {
+				if ($scope.itemproductcombos[i].productweight.id == item.id) {
+					Swal.fire({
+						type: 'error',
+						title: 'Sản phẩm đang được sử dụng ở phần combo',
+						icon: "error",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					return;
+				}
+			}
+			$http.post(`/rest/productcombos`, $scope.data).then(resp => {
+				$scope.listproductcombo(resp.data.combo.id)
+				var form = angular.copy($scope.form)
+				$http.put(`/rest/combos/${form.id}`, form).then(function(resp) { })
+				window.scrollTo({
+					top: 200,
+					behavior: 'smooth'
+				});
+
+			}).catch(error => {
+				Swal.fire({
+					type: 'error',
+					title: 'Lỗi thêm sản phẩm',
+					text: "Lỗi",
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Error", error);
+			})
+
+		});
+
+
+	}
+
+	$scope.delcombo = function() {
+		Swal.fire({
+			type: 'success',
+			title: 'Đã tắt trạng thái combo',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
+	}
+
+	$scope.deleteproductcombos = function(id, idcombo) {
+		$http.delete(`/rest/productcombos/${id}`).then(resp => {
+			$scope.listproductcombo(idcombo)
+			var form = angular.copy($scope.form)
+			$http.put(`/rest/combos/${form.id}`, form).then(function(resp) { })
+			window.scrollTo({
+				top: 200,
+				behavior: 'smooth'
+			});
+		}).catch(error => {
+			Swal.fire({
+				type: 'error',
+				title: 'Lỗi xóa',
+				text: "Lỗi",
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+		})
+
+	}
+
+	$scope.pager = {
+		page: 0,
+		size: 5,
+		get itempros() {
+			var start = this.page * this.size;
+			return $scope.itempros.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.itempros.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+	}
+
+	$scope.pagercombo = {
+		pagercombo: 0,
+		size: 8,
+		get itemcombos() {
+			var start = this.pagercombo * this.size;
+			return $scope.itemcombos.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.itemcombos.length / this.size);
+		},
+		first() {
+			this.pagercombo = 0;
+		},
+		prev() {
+			this.pagercombo--;
+			if (this.pagercombo < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.pagercombo++;
+			if (this.pagercombo >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.pagercombo = this.count - 1;
+		}
+	}
+
+
+	// $scope.autodelete = function () {
+	// 	$http.get('/rest/combos').then(function (resp) {
+	// 		$scope.itemcombos = resp.data;
+	// 		var date = new Date().toISOString().slice(0, 10)
+	// 		console.log(date)
+	// 		for (var c = 0; c < $scope.itemcombos.length; c++) {
+	// 			console.log($scope.itemcombos[c].enddate)
+	// 			if (date > $scope.itemcombos[c].enddate) {
+	// 				$http.get(`/rest/productcombos/${$scope.itemcombos[c].id}`).then(function (resp) {
+	// 					$scope.itemproductcombos = resp.data;
+	// 					for (var i = 0; i < $scope.itemproductcombos.length; i++) {
+	// 						console.log($scope.itemproductcombos[i].id)
+	// 						$http.delete(`/rest/productcombos/${$scope.itemproductcombos[i].id}`).then(resp => {})
+	// 					}
+	// 				});
+	// 				// $http.delete(`/rest/combos/${$scope.itemcombos[c].id}`).then(resp => {})
+	// 			}
+
+	// 		}
+	// 	});
+	// }
+
+	// $scope.autodelete();
+	$scope.listproduct();
+	$scope.listcombo();
+})
