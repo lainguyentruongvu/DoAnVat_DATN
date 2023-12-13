@@ -118,8 +118,9 @@
 												{{ orderdetail.product.price | number:0}} VNĐ</label>
 										</div>
 									</div>
-									
-									<div style="text-align: center;font-size: 25px;cursor: pointer;" ng-if="item.orderdetail.length > 2">
+
+									<div style="text-align: center;font-size: 25px;cursor: pointer;"
+										ng-if="item.orderdetail.length > 2">
 										<a ng-click="toggleShowAll()">
 											<i class="fa fa-arrows-v" aria-hidden="true"></i>
 										</a>
@@ -194,7 +195,7 @@
 
 									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div style="padding-top: 10px;" class="row"
-										ng-repeat="orderdetail in item.orderdetail">
+										ng-repeat="orderdetail in item.orderdetail | limitTo: (showAll ? item.orderdetail.length : 2)">
 										<div class="col-lg-2">
 											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
@@ -213,7 +214,12 @@
 												{{ orderdetail.product.price | number:0}} VNĐ</label>
 										</div>
 									</div>
-
+									<div style="text-align: center;font-size: 25px;cursor: pointer;"
+										ng-if="item.orderdetail.length > 2">
+										<a ng-click="toggleShowAll()">
+											<i class="fa fa-arrows-v" aria-hidden="true"></i>
+										</a>
+									</div>
 									<hr>
 									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
@@ -282,7 +288,7 @@
 
 									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div style="padding-top: 10px;" class="row"
-										ng-repeat="orderdetail in item.orderdetail">
+										ng-repeat="orderdetail in item.orderdetail | limitTo: (showAll ? item.orderdetail.length : 2)">
 										<div class="col-lg-2">
 											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
@@ -301,7 +307,12 @@
 												{{ orderdetail.product.price | number:0}} VNĐ</label>
 										</div>
 									</div>
-
+									<div style="text-align: center;font-size: 25px;cursor: pointer;"
+										ng-if="item.orderdetail.length > 2">
+										<a ng-click="toggleShowAll()">
+											<i class="fa fa-arrows-v" aria-hidden="true"></i>
+										</a>
+									</div>
 									<hr>
 									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
@@ -368,7 +379,7 @@
 
 									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div style="padding-top: 10px;" class="row"
-										ng-repeat="orderdetail in item.orderdetail">
+										ng-repeat="orderdetail in item.orderdetail | limitTo: (showAll ? item.orderdetail.length : 2)">
 										<div class="col-lg-2">
 											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
@@ -387,7 +398,12 @@
 												{{ orderdetail.product.price | number:0}} VNĐ</label>
 										</div>
 									</div>
-
+									<div style="text-align: center;font-size: 25px;cursor: pointer;"
+										ng-if="item.orderdetail.length > 2">
+										<a ng-click="toggleShowAll()">
+											<i class="fa fa-arrows-v" aria-hidden="true"></i>
+										</a>
+									</div>
 									<hr>
 									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
@@ -453,7 +469,7 @@
 
 									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div style="padding-top: 10px;" class="row"
-										ng-repeat="orderdetail in item.orderdetail">
+										ng-repeat="orderdetail in item.orderdetail | limitTo: (showAll ? item.orderdetail.length : 2)">
 										<div class="col-lg-2">
 											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
@@ -527,7 +543,12 @@
 										<!--											</div>-->
 										<!--										</div>-->
 									</div>
-
+									<div style="text-align: center;font-size: 25px;cursor: pointer;"
+										ng-if="item.orderdetail.length > 2">
+										<a ng-click="toggleShowAll()">
+											<i class="fa fa-arrows-v" aria-hidden="true"></i>
+										</a>
+									</div>
 									<hr>
 									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
@@ -596,7 +617,7 @@
 
 									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div style="padding-top: 10px;" class="row"
-										ng-repeat="orderdetail in item.orderdetail">
+										ng-repeat="orderdetail in item.orderdetail | limitTo: (showAll ? item.orderdetail.length : 2)">
 										<div class="col-lg-2">
 											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
@@ -674,7 +695,12 @@
 
 
 									</div>
-
+									<div style="text-align: center;font-size: 25px;cursor: pointer;"
+										ng-if="item.orderdetail.length > 2">
+										<a ng-click="toggleShowAll()">
+											<i class="fa fa-arrows-v" aria-hidden="true"></i>
+										</a>
+									</div>
 									<hr>
 									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">

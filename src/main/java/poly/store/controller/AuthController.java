@@ -81,13 +81,16 @@ public class AuthController {
 			session.set("cart", cart);
 		}
 		session.set("cart", checkcart);
-
-		for (Authority aa : acc.getAuthorities()) {
-			if (aa.getRole().getId().equals("DIRE") || aa.getRole().getId().equals("STAF")) {
-				return "redirect:/admin";
-			} else {
-				return "redirect:/";
+		if (acc.getAuthorities() != null) {
+			for (Authority aa : acc.getAuthorities()) {
+				if (aa.getRole().getId().equals("DIRE") || aa.getRole().getId().equals("STAF")) {
+					return "redirect:/admin";
+				} else {
+					return "redirect:/";
+				}
 			}
+		} else {
+			return "redirect:/";
 		}
 
 		return "redirect:/";
@@ -182,7 +185,7 @@ public class AuthController {
 				accountService.updateToken(token, email);
 				String resetLink = getSiteURL(request) + "/auth/reset-password?token=" + token;
 				mailer.sendEmail(email, resetLink);
-				model.addAttribute("message", "Chúng tôi đã gửi đường dẫn trong email của bạn " 
+				model.addAttribute("message", "Chúng tôi đã gửi đường dẫn trong email của bạn "
 						+ "Nếu bạn không thấy email vui lòng kiểm tra thư rác của bạn");
 			}
 		} catch (MessagingException e) {
