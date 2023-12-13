@@ -33,15 +33,16 @@
 												<div class="row">
 													<div class="col">
 														<div class="form-group">
-															<!--  <label>ID Sản Phẩm (ProductID)</label>
-                              <input class="form-control" ng-model="form.product.id" type="text" name="" placeholder="Nhập ProductID"> -->
-
-															<label>Mã sản phẩm và tên:</label> <select
+															<label>Mã sản phẩm và tên:</label>
+<!--															<input type="text" ng-change="submitFormProducts()"-->
+<!--																ng-model="searchKeywordProduct" class="form-control"-->
+<!--																id="search1" value="" placeholder="Tìm kiếm">-->
+																<select
 																class="form-control" id="exampleFormControlSelect1"
-																ng-model="form.product.id">
-																<option ng-repeat="c in product" ng-value="c.id">
-																	{{c.id}}
-																	: {{c.name}}</option>
+																ng-model="form.product.id"
+																ng-change="getweight(form.product.id)">
+																<option ng-repeat="c in product" ng-value="c.id" data-name="{{c.name}}">
+																	{{c.name}}:{{c.id}}</option>
 															</select>
 														</div>
 													</div>
@@ -73,11 +74,12 @@
 													<div class="col">
 														<div class="form-group">
 															<label>Trọng lượng sản phẩm</label>
-															<select class="form-control" id="exampleFormControlSelect1"
+															<select class="form-control" id="category"
 																ng-model="form.weightvalue">
-																<option ng-repeat="p in productweight" ng-value="p.weight.weightvalue">
-																	{{p.weight.id}}
-																	: {{p.weight.weightvalue}}</option>
+																<option ng-repeat="p in productweight"
+																	ng-value="p.weight.weightvalue">
+
+																	{{p.weight.weightvalue}}</option>
 															</select>
 														</div>
 													</div>
@@ -91,17 +93,17 @@
 
 										<div class="row">
 											<div class="col d-flex justify-content-end">
-												<button ng-click="create()" class="btn btn-primary"
-													ng-hide="index == -1" data-dismiss="modal"><i
-														class="bi bi-person-plus"></i> Thêm</button> &nbsp;
-												<button ng-click="update()" class="btn btn-primary"
-													ng-show="index == -1" data-dismiss="modal"><i
-														class="bi bi-person-add"></i> Cập nhật</button> &nbsp;
-												<button ng-click="delete(form)" class="btn btn-danger"
-													ng-show="index == -1" data-dismiss="modal"><i
-														class="bi bi-trash3"></i> Xóa</button> &nbsp;
-												<button ng-click="reset()" class="btn btn-info"><i
-														class="bi bi-arrow-clockwise"></i> Làm mới</button> &nbsp;
+												<button style="color: white;font-weight: bold;" ng-click="create()"
+													class="btn btn-primary" ng-hide="index == -1" data-dismiss="modal">
+													Thêm</button> &nbsp;
+												<button style="color: white;font-weight: bold;" ng-click="update()"
+													class="btn btn-primary" ng-show="index == -1" data-dismiss="modal">
+													Cập nhật</button> &nbsp;
+												<button style="color: white;font-weight: bold;" ng-click="delete(form)"
+													class="btn btn-danger" ng-show="index == -1" data-dismiss="modal">
+													Xóa</button> &nbsp;
+												<button style="color: white;font-weight: bold;" ng-click="reset()"
+													class="btn btn-info"> Làm mới</button> &nbsp;
 											</div>
 										</div>
 									</form>
@@ -138,12 +140,13 @@
 												<div class="form-group col-auto">
 													<button style="color: white;" class="btn btn-success btn-block"
 														type="button" data-toggle="modal" data-target="#user-form-modal"
-														ng-click="reset()"><i class="bi bi-folder-plus"></i>
+														ng-click="reset();Options();"><i class="bi bi-folder-plus"></i>
 														Thêm</button>
 													<label class="sr-only">Tìm kiếm</label>
 
 												</div>
 												<div class="form-group col-auto"> <input type="text"
+														ng-change="submitFormDiscount()" ng-model="searchKeyword"
 														class="form-control" id="search1" value=""
 														placeholder="Tìm kiếm"></div>
 											</div>
@@ -155,6 +158,7 @@
 											<tr>
 
 												<th>ID Sản phẩm (ProductID)</th>
+												<th>Trọng lượng</th>
 												<th>Giảm giá (Discount)</th>
 												<th>Ngày bắt đầu (StartDay)</th>
 												<th>Ngày kết thúc (EndDay)</th>
@@ -167,9 +171,13 @@
 											<tr ng-repeat="item in pager.items">
 
 												<td>
-													{{item.product.name}}
+													<strong>{{item.product.name}}</strong>
 												</td>
-												<td><strong>{{item.discount}}</strong></td>
+												<td>
+													<strong>{{item.weightvalue}}</strong>
+												</td>
+
+												<td><strong>{{item.discount}}%</strong></td>
 												<td>
 													<p class="mb-0 text-muted"><strong>{{item.startdate |
 															date:'dd/MM/yyyy'}}</strong></p>

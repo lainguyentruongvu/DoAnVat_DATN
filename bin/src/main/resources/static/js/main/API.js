@@ -1,6 +1,6 @@
-const linkt = "https://online-gateway.ghn.vn/shiip/public-api/master-data/province";
-const linkh = "https://online-gateway.ghn.vn/shiip/public-api/master-data/district";
-const linkx = "https://online-gateway.ghn.vn/shiip/public-api/master-data/ward";
+const linkt = "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province";
+const linkh = "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district";
+const linkx = "https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/ward";
 
 $(document).ready(function() {
 	window.onload = function() {
@@ -10,7 +10,7 @@ $(document).ready(function() {
 		$.ajax({
 			type: "GET",
 			url: linkt,
-			headers: { token: "4c987fa9-3cdb-11ee-b394-8ac29577e80e" },
+			headers: { token: "bd356f37-951e-11ee-8bfa-8a2dda8ec551" },
 			success: function(data) {
 				renderData(data.data, "province")
 				console.log(data);
@@ -26,7 +26,7 @@ function huyen(provinceid) {
 	$.ajax({
 		type: "GET",
 		url: linkh,
-		headers: { token: "4c987fa9-3cdb-11ee-b394-8ac29577e80e" },
+		headers: { token: "bd356f37-951e-11ee-8bfa-8a2dda8ec551" },
 		data: { province_id: provinceid },
 		success: function(data) {
 			renderDataH(data.data, "district")
@@ -42,7 +42,7 @@ function phuong(districtid) {
 	$.ajax({
 		type: "GET",
 		url: linkx,
-		headers: { token: "4c987fa9-3cdb-11ee-b394-8ac29577e80e" },
+		headers: { token: "bd356f37-951e-11ee-8bfa-8a2dda8ec551" },
 		data: { district_id: districtid },
 		success: function(data) {
 			renderDataP(data.data, "ward")
@@ -57,17 +57,17 @@ function phuong(districtid) {
 function service(districtid) {
 	$.ajax({
 		type: "GET",
-		url: "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services",
-		headers: { token: "4c987fa9-3cdb-11ee-b394-8ac29577e80e" },
+		url: "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services",
+		headers: { token: "bd356f37-951e-11ee-8bfa-8a2dda8ec551" },
 		data: {
-			shop_id: 4463615,
+			shop_id: 190510,
 			from_district: 1572,
 			to_district: districtid,
-			
+
 		},
 
 		success: function(data) {
-			renderDataS(data.data)
+			//			renderDataS(data.data)
 			console.log(data);
 			console.log(districtid);
 		},
@@ -79,16 +79,16 @@ function service(districtid) {
 	})
 }
 
-function phivc(serviceid, districtid, wardcode) {
+function phivc(districtid, wardcode) {
 	$.ajax({
 		type: "GET",
-		url: "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+		url: "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
 		headers: {
-			token: "4c987fa9-3cdb-11ee-b394-8ac29577e80e",
-			shop_id: "4463615"
+			token: "bd356f37-951e-11ee-8bfa-8a2dda8ec551",
+			shop_id: "190510"
 		},
 		data: {
-			service_id: serviceid,
+			service_id: 53320,
 			insurance_value: 200000,
 			coupon: null,
 			from_district_id: 1572,
@@ -102,7 +102,7 @@ function phivc(serviceid, districtid, wardcode) {
 		success: function(data) {
 			var event = new CustomEvent('phiDataAvailable', { detail: data.data.total });
 			document.dispatchEvent(event);
-			//renderDataP(data.data, "ward")
+			//			renderDataP(data.data, "ward")
 			console.log(data.data.total);
 
 		},
@@ -137,13 +137,13 @@ var renderDataP = (array, select) => {
 	document.querySelector("#" + select).innerHTML = row;
 }
 
-var renderDataS = (array) => {
-	let row = '<option  value="">Chọn</option>';
-	array.forEach(element => {
-		row += `<option value="${element.service_id}">${element.short_name}</option>`;
-	});
-	document.querySelector("#service").innerHTML = row;
-}
+//var renderDataS = (array) => {
+//	let row = '<option  value="">Chọn</option>';
+//	array.forEach(element => {
+//		row += `<option value="${element.service_id}">${element.short_name}</option>`;
+//	});
+//	document.querySelector("#service").innerHTML = row;
+//}
 
 // Xử lý sự kiện thay đổi tỉnh
 $("#province").change(() => {
@@ -171,38 +171,38 @@ $("#ward").change(() => {
 	var dtid = district.value;
 
 	// lay service id tu select
-	var serviceid = document.getElementById("service");
-	var sid = serviceid.value;
+	//	var serviceid = document.getElementById("service");
+	//	var sid = serviceid.value;
 
 
 	// lay wardcode tu select
 	var ward = document.getElementById("ward");
 	var wardcode = ward.value;
-	//console.log(wardcode)
-	//phivc(sid, dtid, wardcode)
+	console.log(wardcode)
+	phivc(dtid, wardcode)
 	printResult();
 });
 
 // su kien thay doi dich vu
 
-$("#service").change(() => {
-	// lay id huyen tu select
-	var district = document.getElementById("district");
-	var dtid = district.value;
-
-	// lay service id tu select
-	var serviceid = document.getElementById("service");
-	var sid = serviceid.value;
-
-
-	// lay wardcode tu select
-	var ward = document.getElementById("ward");
-	var wardcode = ward.value;
-
-	console.log(wardcode)
-	phivc(sid, dtid, wardcode)
-	//printResult();
-});
+//$("#service").change(() => {
+//	// lay id huyen tu select
+//	var district = document.getElementById("district");
+//	var dtid = district.value;
+//
+//	// lay service id tu select
+//	var serviceid = document.getElementById("service");
+//	var sid = serviceid.value;
+//
+//
+//	// lay wardcode tu select
+//	var ward = document.getElementById("ward");
+//	var wardcode = ward.value;
+//
+//	console.log(sid)
+//	phivc(sid, dtid, wardcode)
+//	//printResult();
+//});
 
 // Hàm hiển thị kết quả khi tất cả các lựa chọn đã được chọn
 var printResult = () => {

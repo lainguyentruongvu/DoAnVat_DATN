@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Login</title>
+<title>QUÊN MẬT KHẨU</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Transparent login form using html and css" />
@@ -25,13 +25,14 @@
 					<input type="email" name="email" required>
 					
 					<input type="submit" name="submit" value="Gửi mã">
+					<h5 style="color: red; text-align: center;" >[[${message}]]</h5>
 					<div class="remember">
 							<div class="login"><div class="Oroption">Hoặc</div></div>
 							<div class="links">
 								<button class="btn btn-danger google"><i class="bi bi-google"></i> Google</button> &nbsp;
 									<button class="btn btn-primary facebook"><i class="bi bi-facebook"></i> Facebook</button>
 							</div>
-							<div class="signup"> Bạn đã nhớ tài khoản? <a href="#">Đăng nhập ngay!</a> </div>
+							<div class="signup"> Bạn đã nhớ tài khoản? <a th:href="@{/auth/login/form}">Đăng nhập ngay!</a> </div>
 					</div>
 			</form>
 		</div>

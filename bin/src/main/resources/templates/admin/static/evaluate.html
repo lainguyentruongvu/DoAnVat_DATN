@@ -29,7 +29,7 @@
 													id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true"
 													aria-expanded="false"> Công cụ </button>
 												<div class="dropdown-menu" aria-labelledby="actionMenuButton">
-													<a class="dropdown-item" href="#">Xuất excel</a>
+													<a class="dropdown-item" ng-click="exportToExcelEvaluate()">Xuất excel</a>
 													<a class="dropdown-item" href="#">Xuất PDF</a>
 												</div>
 											</div>
@@ -46,7 +46,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="item in evaluate">
+											<tr ng-repeat="item in evaluatepager.evaluate">
 												<td>{{item.productName}}</td>
 												<td>{{item.averageRating}}</td>
 												<td>{{item.totalReviews
@@ -58,13 +58,20 @@
 									<nav aria-label="Table Paging" class="mb-0 text-muted">
 										<ul class="pagination justify-content-center mb-0">
 											<li class="page-item"><a class="page-link"
-													ng-click="pager.prev()">Previous</a></li>
-											<li class="page-item"><a class="page-link">{{pager.page}}</a></li>
-											<li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a>
+													ng-click="evaluatepager.prev()">Trang
+													sau</a></li>
+											<li ng-show="pager.page != 0" class="page-item"><a class="page-link"
+													ng-click="evaluatepager.prev()">{{evaluatepager.page}}</a></li>
+											<li class="page-item active"><a class="page-link">{{evaluatepager.page + 1
+													}}</a>
 											</li>
-											<li class="page-item"><a class="page-link">{{pager.page + 2}}</a></li>
-											<li class="page-item"><a class="page-link" ng-click="pager.next()">Next</a>
+											<li ng-show="favoritepager.page != favoritepager.count - 1" class="page-item"><a
+													class="page-link"
+													ng-click="evaluatepager.next()">{{evaluatepager.page + 2}}</a>
 											</li>
+											<li class="page-item"><a class="page-link"
+													ng-click="evaluatepager.next()">Trang
+													trước</a></li>
 										</ul>
 									</nav>
 								</div>
@@ -74,49 +81,7 @@
 
 
 	</main> <!-- main -->
-	<!-- 				Chi tiết đơn hàng-->
-	<div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="orderDetailModalLabel">
-						Detail</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<table class="data-tables table table-striped table-bordered" style="width: 100%">
-						<thead>
-							<tr>
-								<th style="width: 20%">Hình ảnh</th>
-								<th style="width: 40%">Tên sản phẩm</th>
-								<th style="width: 20%">Giá</th>
-								<th style="width: 20%">Số lượng</th>
-								<th style="width: 20%">Khối lượng</th>
-								<th style="width: 20%">Tổng</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="orderDetail in selectedOrderDetails">
-								<td><img src="/images/product/{{orderDetail.product.image}}" alt=""
-										style="width: 100px"></td>
-								<td>{{ orderDetail.product.name }}</td>
-								<td>{{ orderDetail.price |number :0}}</td>
-								<td>{{ orderDetail.quantity }}</td>
-								<td>{{ orderDetail.weight}}</td>
-								<td>{{ orderDetail.quantity*orderDetail.price |number :0 }}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" ng-click="closeModal()">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
 </body>
 
 </html>

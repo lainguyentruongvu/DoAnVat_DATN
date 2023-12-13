@@ -10,7 +10,7 @@
 
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<div class="">
-		<div >
+		<div>
 
 			<!-- BẮT ĐẦU PHẦN NỘI DUNG CỦA CRUD VOUCHER -->
 			<main role="main" class="main-content">
@@ -44,12 +44,14 @@
 											<h3 style="color: rgb(255, 255, 255);text-align: center;">
 												<img src="../../images/logo_noback.png" width="170px" alt=""><br>
 												ĐỒ ĂN VẶT
-												</h3>
+											</h3>
 
-												<div style="color: 10px; color: white;">
-												<p id="showNgayBatDau" style="text-align:center;">Ngày bắt đầu: 01/01/yyyy</p>
-												<p id="showNgayHetHan" style="text-align:center;">Ngày hết hạn: 01/01/yyyy</p>
-												</div>
+											<div style="color: 10px; color: white;">
+												<p id="showNgayBatDau" style="text-align:center;">Ngày bắt đầu:
+													01/01/yyyy</p>
+												<p id="showNgayHetHan" style="text-align:center;">Ngày hết hạn:
+													01/01/yyyy</p>
+											</div>
 										</div>
 
 										<div class="col-lg-8" style="text-align: center;">
@@ -57,21 +59,20 @@
 											<h4 style="font-size: 50px;padding-top: 20px;">VOUCHER
 											</h4>
 
-												<div class="col-lg-12 justify-content-center" >
+											<div class="col-lg-12 justify-content-center">
 												<p id="showTengiamgia"
-												style=" font-size: 30px;color: orange; font-weight: bold; text-align: center;">
-												NỘI DUNG CHƯƠNG TRÌNH</p>	
-												</div>
-												
-												<div class="col-lg-12 justify-content-center" >
+													style=" font-size: 30px;color: orange; font-weight: bold; text-align: center;">
+													NỘI DUNG CHƯƠNG TRÌNH</p>
+											</div>
+
+											<div class="col-lg-12 justify-content-center">
 												<p id="showGiaTriGiam"
-												style=" font-size: 16px;color: orange; font-weight: bold;">
-												GIẢM GIÁ 00% </p>
-												</div>
-												
-												<div class="col-lg-12 justify-content-center" >
-												<p id="showMagiamgia"
-												style="font-size: 16px;
+													style=" font-size: 16px;color: orange; font-weight: bold;">
+													GIẢM GIÁ 00% </p>
+											</div>
+
+											<div class="col-lg-12 justify-content-center">
+												<p id="showMagiamgia" style="font-size: 16px;
 												color: orange;
 												font-weight: bold;
 												border: 2px solid;
@@ -79,10 +80,10 @@
 												border-radius: 3px;
 												color: darkgreen;
 												">
-												MÃ GIẢM GIÁ</p>
-												</div>
-	
-											
+													MÃ GIẢM GIÁ</p>
+											</div>
+
+
 
 										</div>
 
@@ -108,49 +109,57 @@
 															<div class="form-group col-md-6">
 																<label for="">Mã voucher</label>
 																<input type="text" class="form-control"
-																 oninput="document.getElementById('showMagiamgia').textContent = this.value || 'MÃ GIẢM GIÁ';"
-																id="" ng-model="form.id">
+																	oninput="document.getElementById('showMagiamgia').textContent = this.value || 'MÃ GIẢM GIÁ';"
+																	id="magiamgia" ng-model="form.id">
 															</div>
-															
+
 															<div class="form-group col-md-6">
 																<label for="">Tên voucher</label>
 																<input type="text" class="form-control"
-																 oninput="document.getElementById('showTengiamgia').textContent = this.value || 'TEN GIẢM GIÁ';"
-																id="" ng-model="form.name">
+																	oninput="document.getElementById('showTengiamgia').textContent = this.value || 'TEN GIẢM GIÁ';"
+																	id="" ng-model="form.name">
 															</div>
 														</div>
-														
-														
+
+
 														<div class="form-row">
 															<div class="form-group col-md-6">
 																<label for="">Thời gian áp dụng</label>
 																<input type="date" class="form-control"
-																ng-model="form.startdate"
+																	ng-model="form.startdate"
 																	oninput="document.getElementById('showNgayBatDau').textContent = 'Ngày bắt đầu: ' + (this.value ? new Date(this.value).toLocaleDateString('vi-VN') : '');">
 															</div>
 															<div class="form-group col-md-6">
 																<label for="">Thời gian hết hạn</label>
 																<input type="date" class="form-control"
-																ng-model="form.enddate"
-																	id="" oninput="document.getElementById('showNgayHetHan').textContent = 'Ngày hết hạn: ' + (this.value ? new Date(this.value).toLocaleDateString('vi-VN') : '');">
+																	ng-model="form.enddate" id=""
+																	oninput="document.getElementById('showNgayHetHan').textContent = 'Ngày hết hạn: ' + (this.value ? new Date(this.value).toLocaleDateString('vi-VN') : '');">
 															</div>
 														</div>
 														<div class="form-row">
 															<div class="form-group col-md-6">
 																<label for="">Giá trị giảm (%)</label>
 																<input type="text" class="form-control"
-																ng-model="form.discount"
-																 oninput="document.getElementById('showGiaTriGiam').textContent = this.value ? 'Giảm giá ' + this.value + '%' : 'Giảm giá';"
-																id="">
+																	ng-model="form.discount"
+																	oninput="document.getElementById('showGiaTriGiam').textContent = this.value ? 'Giảm giá ' + this.value + '%' : 'Giảm giá';"
+																	id="">
 															</div>
-															
-														</div>
-														
 
-														<button type="submit" ng-click="create()" ng-hide="index == -1" class="btn btn-success">Thêm</button>
-														<button type="submit" ng-click="update()" ng-show="index == -1" class="btn btn-warning">Cập nhật</button>
-														<button type="submit" ng-click="delete(form)" ng-show="index == -1" class="btn btn-danger">Xóa</button>
-														<button type="submit" ng-click="reset()" class="btn btn-primary">Reset</button>
+														</div>
+
+
+														<button style="color: white; font-weight: bold;" type="submit"
+															ng-click="create()" ng-hide="index == -1"
+															class="btn btn-success">Thêm</button>
+														<button style="color: white; font-weight: bold;" type="submit"
+															ng-click="update()" ng-show="index == -1"
+															class="btn btn-warning">Cập nhật</button>
+														<button style="color: white; font-weight: bold;" type="submit"
+															ng-click="delete(form)" ng-show="index == -1"
+															class="btn btn-danger">Xóa</button>
+														<button style="color: white; font-weight: bold;" type="submit"
+															ng-click="reset()" class="btn btn-primary">Reset</button>
+
 													</form>
 
 												</div>
@@ -166,11 +175,11 @@
 
 						<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
-						<div class="row justify-content-center">
+							<div class="row justify-content-center">
 
 								<div class="col-12" style="padding-top: 20px;">
 									<h2 class="mb-2 page-title">DANH SÁCH VOUCHER</h2>
-									
+
 									<div class="row my-4">
 										<!-- Small table -->
 										<div class="col-md-12">
@@ -179,40 +188,39 @@
 													<!-- table -->
 													<table class="table datatables table-hover" id="dataTable-1">
 														<thead>
-															
+
 															<tr>
-																
-																<th>Mã voucher</th>
-																<th>Giảm (%)</th>
-																<th>Ngày bắt đầu</th>
-																<th>Ngày hết hạn</th>
-																<th>Thao tác</th>
+																<th><strong>Mã voucher</strong> </th>
+																<th><strong>Tên voucher</strong></th>
+																<th><strong>Giảm (%)</strong></th>
+																<th><strong>Ngày bắt đầu</strong></th>
+																<th><strong>Ngày hết hạn</strong></th>
+																<th><strong>Thao tác</strong></th>
 															</tr>
-															
+
 														</thead>
 														<tbody>
-															
-															<tr ng-repeat="item in pager.items">
+
+															<tr ng-if="item.id !== 'KHONGGIAM'" ng-repeat="item in pager.items">
 																<td>{{item.id}}</td>
 																<td>{{item.name}}</td>
 																<td>{{item.discount}}</td>
 																<td>{{item.startdate | date:'dd/MM/yyyy'}}</td>
 																<td>{{item.enddate | date : 'dd/MM/yyyy'}}</td>
 																<td>
-																<button
-																		class="btn btn-sm dropdown-toggle more-horizontal"
-																		type="button" data-toggle="dropdown"
-																		aria-haspopup="true" aria-expanded="false">
-																		<span class="text-muted sr-only">Thao tác</span>
-																	</button>
-																	<div class="dropdown-menu dropdown-menu-right">
-																		<a class="dropdown-item" href="#" ng-click="edit(item)" style="color: orange;font-weight: bold;">Chỉnh sửa</a>
-																		<a class="dropdown-item" href="#" ng-click="delete(item)" style="color: darkred;font-weight: bold;">Xóa</a>
-																	</div>
+
+
+																	<button class="btn btn-warning" href="#"
+																		ng-click="edit(item)"
+																		style="color: white;font-weight: bold;">Sửa</button>
+																	<button class="btn btn-danger" href="#"
+																		ng-click="delete(item)"
+																		style="color: white;font-weight: bold;">Xóa</button>
+
 																</td>
 															</tr>
-															
-															
+
+
 
 														</tbody>
 													</table>
@@ -240,139 +248,8 @@
 		</div> <!-- .container-fluid -->
 
 
-		<div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
-			aria-hidden="true">
-			<div class="modal-dialog modal-sm" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="defaultModalLabel">Notifications</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="list-group list-group-flush my-n3">
-							<div class="list-group-item bg-transparent">
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<span class="fe fe-box fe-24"></span>
-									</div>
-									<div class="col">
-										<small><strong>Package has uploaded successfull</strong></small>
-										<div class="my-0 text-muted small">Package is zipped and uploaded</div>
-										<small class="badge badge-pill badge-light text-muted">1m ago</small>
-									</div>
-								</div>
-							</div>
-							<div class="list-group-item bg-transparent">
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<span class="fe fe-download fe-24"></span>
-									</div>
-									<div class="col">
-										<small><strong>Widgets are updated successfull</strong></small>
-										<div class="my-0 text-muted small">Just create new layout Index, form, table
-										</div>
-										<small class="badge badge-pill badge-light text-muted">2m ago</small>
-									</div>
-								</div>
-							</div>
-							<div class="list-group-item bg-transparent">
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<span class="fe fe-inbox fe-24"></span>
-									</div>
-									<div class="col">
-										<small><strong>Notifications have been sent</strong></small>
-										<div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
-										<small class="badge badge-pill badge-light text-muted">30m ago</small>
-									</div>
-								</div> <!-- / .row -->
-							</div>
-							<div class="list-group-item bg-transparent">
-								<div class="row align-items-center">
-									<div class="col-auto">
-										<span class="fe fe-link fe-24"></span>
-									</div>
-									<div class="col">
-										<small><strong>Link was attached to menu</strong></small>
-										<div class="my-0 text-muted small">New layout has been attached to the menu
-										</div>
-										<small class="badge badge-pill badge-light text-muted">1h ago</small>
-									</div>
-								</div>
-							</div> <!-- / .row -->
-						</div> <!-- / .list-group -->
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Clear
-							All</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog"
-			aria-labelledby="defaultModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="defaultModalLabel">Shortcuts</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body px-5">
-						<div class="row align-items-center">
-							<div class="col-6 text-center">
-								<div class="squircle bg-success justify-content-center">
-									<i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Control area</p>
-							</div>
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-activity fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Activity</p>
-							</div>
-						</div>
-						<div class="row align-items-center">
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-droplet fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Droplet</p>
-							</div>
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Upload</p>
-							</div>
-						</div>
-						<div class="row align-items-center">
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-users fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Users</p>
-							</div>
-							<div class="col-6 text-center">
-								<div class="squircle bg-primary justify-content-center">
-									<i class="fe fe-settings fe-32 align-self-center text-white"></i>
-								</div>
-								<p>Settings</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 
 
-
-
-
-		</div>
 	</div>
 
 

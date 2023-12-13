@@ -29,7 +29,7 @@
 													id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true"
 													aria-expanded="false"> Công cụ </button>
 												<div class="dropdown-menu" aria-labelledby="actionMenuButton">
-													<a class="dropdown-item" href="#">Xuất excel</a>
+													<a class="dropdown-item" ng-click="exportToExcelCategory()">Xuất excel</a>
 													<a class="dropdown-item" href="#">Xuất PDF</a>
 												</div>
 											</div>
@@ -46,7 +46,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="item in getProductSummary">
+											<tr ng-repeat="item in categorypager.getProductSummary">
 												<td>{{item.name}}</td>
 												<td>{{item.numberOfOrders}}</td>
 												<td>{{item.totalQuantity}}</td>
@@ -57,14 +57,17 @@
 									</table>
 									<nav aria-label="Table Paging" class="mb-0 text-muted">
 										<ul class="pagination justify-content-center mb-0">
-											<li class="page-item"><a class="page-link"
-													ng-click="pager.prev()">Previous</a></li>
-											<li class="page-item"><a class="page-link">{{pager.page}}</a></li>
-											<li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a>
+											<li class="page-item"><a class="page-link" ng-click="categorypager.prev()">Trang
+													sau</a></li>
+											<li ng-show="categorypager.page != 0" class="page-item"><a class="page-link"
+													ng-click="categorypager.prev()">{{categorypager.page}}</a></li>
+											<li class="page-item active"><a class="page-link">{{categorypager.page + 1 }}</a>
 											</li>
-											<li class="page-item"><a class="page-link">{{pager.page + 2}}</a></li>
-											<li class="page-item"><a class="page-link" ng-click="pager.next()">Next</a>
+											<li ng-show="categorypager.page != categorypager.count - 1" class="page-item"><a
+													class="page-link" ng-click="categorypager.next()">{{categorypager.page + 2}}</a>
 											</li>
+											<li class="page-item"><a class="page-link" ng-click="categorypager.next()">Trang
+													trước</a></li>
 										</ul>
 									</nav>
 								</div>
@@ -109,6 +112,7 @@
 								<td>{{ orderDetail.quantity*orderDetail.price |number :0 }}</td>
 							</tr>
 						</tbody>
+
 					</table>
 				</div>
 				<div class="modal-footer">

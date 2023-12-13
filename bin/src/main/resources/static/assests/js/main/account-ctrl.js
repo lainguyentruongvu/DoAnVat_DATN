@@ -1,6 +1,6 @@
 const app = angular.module("app", []);
 app.controller("account-ctrl", function($scope, $http) {
-
+	$scope.isDisabled = false;
 	$scope.items = [];
 	$scope.form = {};
 	$scope.roles = {};
@@ -8,12 +8,31 @@ app.controller("account-ctrl", function($scope, $http) {
 	$scope.initialize = function() {
 		$http.get('/rest/accounts').then(function(response) {
 			$scope.items = response.data;
-			console.log($scope.items);
+		});
+	}
+
+	//Tìm kiếm người dùng
+	$scope.searchKeyword = '';
+	$scope.submitFormAccount = function() {
+		$http.get('/rest/accounts/search/', {
+			params: {
+				name: $scope.searchKeyword
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
+
+		}).catch(error => {
+			console.log("Error", error);
 		});
 	}
 
 
+
+
+
 	$scope.edit = function(item) {
+		$scope.isDisabled = true;
+		$scope.imgaedefault = false;
 		$scope.form = angular.copy(item);
 		$scope.index = -1;
 		window.scrollTo({
@@ -30,7 +49,35 @@ app.controller("account-ctrl", function($scope, $http) {
 			behavior: 'smooth'
 		});
 	}
+
+
+	var modal = document.getElementById("user-form-modal");
+	document.addEventListener("keydown", function(event) {
+		// Kiểm tra xem phím đã nhấn có phải là phím Esc (mã phím 27) không
+		if (event.keyCode === 27) {
+			$scope.imgaedefault = true;
+			$scope.isDisabled = false;
+
+		}
+	});
+	document.addEventListener("click", function(event) {
+		// Kiểm tra xem người dùng đã nhấp chuột bên ngoài modal chưa
+		if (event.target === modal) {
+			// Nếu người dùng đã nhấp chuột bên ngoài modal, đóng modal
+			$scope.imgaedefault = true;
+			$scope.isDisabled = false;
+
+		}
+	});
+
+	$scope.thoatmodal = function() {
+		$scope.imgaedefault = true;
+		$scope.isDisabled = false;
+	}
+
+	$scope.imgaedefault = true;
 	$scope.imageChanged = function(files) {
+		$scope.imgaedefault = false;
 		var data = new FormData();
 		data.append('file', files[0]);
 		$http.post('/rest/upload/avt', data, {
@@ -43,7 +90,7 @@ app.controller("account-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -52,7 +99,7 @@ app.controller("account-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -71,23 +118,46 @@ app.controller("account-ctrl", function($scope, $http) {
 
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
+		var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (filter.test(item.email) == false) {
+			Swal.fire({
+				type: 'error',
+				title: 'Email chưa đúng định dạng',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+			return;
+		}
+		if (vnf_regex.test(item.phone) == false) {
+			Swal.fire({
+				type: 'error',
+				title: 'Số điện thoại chưa đúng định dạng',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+			return;
+		}
 		for (var i = 0; i < $scope.items.length; i++) {
 			if (item.email === $scope.items[i].email) {
 				Swal.fire({
 					type: 'error',
 					title: 'Email đã được sử dụng!',
-					text: error,
 					icon: "error",
 					showConfirmButton: false,
 					timer: 2000
 				})
 				console.log("Error", error);
 				return;
-			} else if (item.phone === $scope.items[i].phone) {
+			}
+			if (item.phone === $scope.items[i].phone) {
 				Swal.fire({
 					type: 'error',
 					title: 'Số điện thoại đã được sử dụng!',
-					text: error,
 					icon: "error",
 					showConfirmButton: false,
 					timer: 2000
@@ -95,34 +165,55 @@ app.controller("account-ctrl", function($scope, $http) {
 				return;
 			}
 		}
-		if (item.password === item.repassword) {
-			$http.post(`/rest/accounts`, item).then(resp => {
-				$scope.initialize();
-				Swal.fire({
-					type: 'success',
-					title: 'Thêm thành công',
+		if (item.password != null) {
+			if (item.password === item.repassword) {
+				item.image = 'default.png'
+				$http.post(`/rest/accounts`, item).then(resp => {
+					// $scope.data_author = {
+					// 	account: {id: item.username},
+					// 	role: {id: 'STAF'}
+					// }
+					// console.log($scope.data_author)
+					// $http.post(`/rest/authorities/acc`, $scope.data_author).then(resp => {
+					// 	//Phân quyền cho user khi tạo -> Quyền: "Nhân viên"
+					// 	console.log(resp.data)
+					// }).catch(error => {
+					// 	console.log("Error: ", error);
+					// });
+					///////////////////////////////////////////////////////////
+					Swal.fire({
+						type: 'success',
+						title: 'Thêm thành công',
 
-					icon: "success",
-					showConfirmButton: false,
-					timer: 2000
+						icon: "success",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					$scope.reset_smooth_table();
+					$scope.initialize();
+				}).catch(error => {
+					Swal.fire({
+						type: 'error',
+						title: 'Lỗi thêm người dùng',
+						icon: "error",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					console.log("Error", error);
 				})
-				$scope.reset_smooth_table();
-			}).catch(error => {
+			} else {
 				Swal.fire({
 					type: 'error',
-					title: 'Lỗi thêm người dùng',
-					text: error,
+					title: 'Mật khẩu không trùng khớp',
 					icon: "error",
 					showConfirmButton: false,
 					timer: 2000
 				})
-				console.log("Error", error);
-			})
+			}
 		} else {
 			Swal.fire({
 				type: 'error',
-				title: 'Mật khẩu không trùng khớp',
-				text: error,
+				title: 'Không được để trống mật khẩu !',
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -134,6 +225,57 @@ app.controller("account-ctrl", function($scope, $http) {
 	// Cập nhật
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
+
+		var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if (filter.test(item.email) == false) {
+			Swal.fire({
+				type: 'error',
+				title: 'Email chưa đúng định dạng',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+			return;
+		}
+		if (vnf_regex.test(item.phone) == false) {
+			Swal.fire({
+				type: 'error',
+				title: 'Số điện thoại chưa đúng định dạng',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+			return;
+		}
+		for (var i = 0; i < $scope.items.length; i++) {
+			if (item.email === $scope.items[i].email && item.username !== $scope.items[i].username) {
+				Swal.fire({
+					type: 'error',
+					title: 'Email đã được sử dụng!',
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Error", error);
+				return;
+			}
+			if (item.phone === $scope.items[i].phone && item.username !== $scope.items[i].username) {
+				Swal.fire({
+					type: 'error',
+					title: 'Số điện thoại đã được sử dụng!',
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				return;
+			}
+		}
+
+
+
 		$http.put(`/rest/accounts/${item.username}`, item).then(function(response) {
 			var index = $scope.items.findIndex(p => p.username == item.username);
 			$scope.items[index] = item;
@@ -151,7 +293,7 @@ app.controller("account-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật thông tin người dùng',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -183,7 +325,7 @@ app.controller("account-ctrl", function($scope, $http) {
 					$scope.initialize();
 					// Show success message
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -263,16 +405,53 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 		//load roles
 		$http.get(url).then(resp => {
 			$scope.roles = resp.data;
+			console.log($scope.roles);
 		});
 
 		$http.get(url2).then(resp => {
 			$scope.admins = resp.data;
+			console.log($scope.admins);
 		});
 
 		$http.get(url3).then(resp => {
 			$scope.authorities = resp.data;
+			console.log($scope.authorities);
 		});
 	}
+
+
+	$scope.pager = {
+		page: 0,
+		size: 4,
+		get admins() {
+			var start = this.page * this.size;
+			return $scope.admins.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.admins.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+
+	}
+
+
 
 	$scope.authority_of = function(acc, role) {
 		if ($scope.authorities) {
@@ -292,29 +471,41 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 			$scope.grant_authority(authority); //chua duoc cap quyen => cap quyen(them moi)
 		}
 	}
+	$scope.set = function(acc, role) {
+
+		$http.get(`/rest/authorities/${acc.username}/${role.id}`).then(resp => {
+			sweetalert("Thay đổi quyền thành công!");
+			$scope.initialize();
+		}).catch(error => {
+			sweetalert("Thay đổi quyền thất bại!");
+			console.log("Error: ", error);
+		});
+	}
+
+
 
 	//them moi authority
-	$scope.grant_authority = function(authority) {
-		$http.post(`${url1}`, authority).then(resp => {
-			$scope.authorities.push(resp.data);
-			sweetalert("Cấp quyền sử dụng thành công!");
-		}).catch(error => {
-			sweetalert("Cấp quyền sử dụng thất bại!");
-			console.log("Error: ", error);
-		});
-	}
-
-	//xoa authority
-	$scope.revoke_authority = function(authority) {
-		$http.delete(`${url1}/${authority.id}`).then(resp => {
-			var index = $scope.authorities.findIndex(a => a.id == authority.id);
-			$scope.authorities.splice(index, 1);
-			sweetalert("Thu hồi quyền sử dụng thành công!");
-		}).catch(error => {
-			sweetalert("Thu hồi quyền sử dụng thất bại!");
-			console.log("Error: ", error);
-		});
-	}
+	//	$scope.grant_authority = function(authority) {
+	//		$http.post(`${url1}`, authority).then(resp => {
+	//			$scope.authorities.push(resp.data);
+	//			sweetalert("Cấp quyền sử dụng thành công!");
+	//		}).catch(error => {
+	//			sweetalert("Cấp quyền sử dụng thất bại!");
+	//			console.log("Error: ", error);
+	//		});
+	//	}
+	//
+	//	//xoa authority
+	//	$scope.revoke_authority = function(authority) {
+	//		$http.delete(`${url1}/${authority.id}`).then(resp => {
+	//			var index = $scope.authorities.findIndex(a => a.id == authority.id);
+	//			$scope.authorities.splice(index, 1);
+	//			sweetalert("Thu hồi quyền sử dụng thành công!");
+	//		}).catch(error => {
+	//			sweetalert("Thu hồi quyền sử dụng thất bại!");
+	//			console.log("Error: ", error);
+	//		});
+	//	}
 
 	$scope.initialize();
 });
@@ -336,6 +527,21 @@ app.controller("product-ctrl", function($scope, $http) {
 		});
 	}
 
+	//Tìm kiếm sản phẩm
+	$scope.searchKeyword = '';
+	$scope.submitFormProduct = function() {
+		$http.get('/rest/products/search/', {
+			params: {
+				keyword: $scope.searchKeyword
+			}
+		}).then(function(response) {
+			$scope.itempros = response.data;
+
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
 	$scope.reset_smooth_table = function() {
 		$scope.form = {};
 		window.scrollTo({
@@ -344,7 +550,29 @@ app.controller("product-ctrl", function($scope, $http) {
 		});
 	}
 
+	var modal = document.getElementById("user-form-modal");
+	document.addEventListener("keydown", function(event) {
+		// Kiểm tra xem phím đã nhấn có phải là phím Esc (mã phím 27) không
+		if (event.keyCode === 27) {
+			$scope.imgaedefault = true;
+
+		}
+	});
+	document.addEventListener("click", function(event) {
+		// Kiểm tra xem người dùng đã nhấp chuột bên ngoài modal chưa
+		if (event.target === modal) {
+			// Nếu người dùng đã nhấp chuột bên ngoài modal, đóng modal
+			$scope.imgaedefault = true;
+
+		}
+	});
+	$scope.thoatmodal = function() {
+		$scope.imgaedefault = true;
+	}
+
+	$scope.imgaedefault = true;
 	$scope.imageChanged = function(files) {
+		$scope.imgaedefault = false;
 		var data = new FormData();
 		data.append('file', files[0]);
 		$http.post('/rest/upload/product', data, {
@@ -366,7 +594,7 @@ app.controller("product-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -409,7 +637,7 @@ app.controller("product-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm người dùng',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -433,6 +661,7 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 
 	$scope.edit = function(item) {
+		$scope.imgaedefault = false;
 		$scope.form = angular.copy(item);
 		$scope.priceww = $scope.form.price
 		console.log($scope.form)
@@ -461,9 +690,9 @@ app.controller("product-ctrl", function($scope, $http) {
 			var index = $scope.itempros.findIndex(p => p.id == item.id);
 			$scope.itempros[index] = item;
 			$scope.initialize();
-			Swal.fire("Success", "Cập nhật thành công!", "success");
+			Swal.fire("Thành công", "Cập nhật thành công!", "success");
 		}).catch(error => {
-			Swal.fire("Error", "Cập nhật thất bại!", "error");
+			Swal.fire("Lỗi", "Cập nhật thất bại!", "error");
 			console.log("Error", error);
 		})
 	}
@@ -485,15 +714,15 @@ app.controller("product-ctrl", function($scope, $http) {
 				var index = $scope.itempros.findIndex(p => p.id == item.id);
 				$scope.itempros.splice(index, 1);
 				$scope.reset();
-				Swal.fire("Success", "Xóa sản phẩm thành công!", "success");
+				Swal.fire("Thành công", "Xóa sản phẩm thành công!", "success");
 			}).catch(error => {
 				$http.put(`/rest/products/${item.id}`, item).then(resp => {
 					var index = $scope.itempros.findIndex(p => p.id == item.id);
 					$scope.itempros[index] = item;
 					$scope.initialize();
-					Swal.fire("Success", "Đã tắt trạng thái hoạt động sản phẩm!", "success");
+					Swal.fire("Thành công", "Đã tắt trạng thái hoạt động sản phẩm!", "success");
 				}).catch(error => {
-					Swal.fire("Error", "Không thể tắt trạng thái hoạt động sản phẩm!", "error");
+					Swal.fire("Lỗi", "Không thể tắt trạng thái hoạt động sản phẩm!", "error");
 					console.log("Error", error);
 				})
 				console.log("Error", error);
@@ -543,8 +772,9 @@ app.controller("product-ctrl", function($scope, $http) {
 	}
 	//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
 	//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT//WEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHTWEIGHT
+	$scope.imgaedefault = true;
 	$scope.weightadmin = function(id, price) {
-		console.log(id, price)
+		$scope.imgaedefault = false;
 		$scope.showbtn_them = true;
 		$scope.showbtn_addweight = true;
 		$http.get(`/rest/cart/checkproductweight/${id}/${price}`).then(resp => {
@@ -601,7 +831,7 @@ app.controller("product-ctrl", function($scope, $http) {
 					console.log("Error", error);
 				})
 			} else {
-				alert("Có rồi bớt thêm");
+				alert("Trong lượng đã có");
 			}
 		}).catch(error => {
 
@@ -618,9 +848,9 @@ app.controller("product-ctrl", function($scope, $http) {
 		$http.put(`/rest/products/productweight/${item.id}`, item).then(resp => {
 			var index = $scope.itempros.findIndex(p => p.id == item.id);
 			$scope.productweight[index] = item;
-			Swal.fire("Success", "Cập nhật thành công!", "success");
+			Swal.fire("Thành công", "Cập nhật thành công!", "success");
 		}).catch(error => {
-			Swal.fire("Error", "Cập nhật thất bại!", "error");
+			Swal.fire("Lỗi", "Cập nhật thất bại!", "error");
 			console.log("Error", error);
 		})
 	}
@@ -632,11 +862,11 @@ app.controller("product-ctrl", function($scope, $http) {
 				$http.delete(`/rest/products/productweight/${idproweight}`).then(resp => {
 					$scope.weightadmin(idpro, resp.data.price);
 				}).catch(error => {
-					Swal.fire("Error", "Xóa thất bại!", "error");
+					Swal.fire("Lỗi", "Xóa thất bại!", "error");
 					console.log("Error", error);
 				})
 			} else {
-				alert("Trọng lượng mặc định không được xó")
+				alert("Trọng lượng mặc định không được xóa")
 			}
 		}).catch(error => {
 			console.log("Error", error);
@@ -662,6 +892,116 @@ app.controller("product-ctrl", function($scope, $http) {
 
 //Order Order Order Order Order Order Order Order Order Order Order Order Order 
 app.controller("order-ctrl", function($scope, $http) {
+
+	$scope.showOrderDetail1 = function(orderId) {
+		$http.get("/rest/order/getOrderAndOrderdetailOrderId/" + orderId)
+			.then(function(response) {
+				$scope.selectedOrderDetails = response.data;
+				$scope.UpBill();
+				console.log($scope.selectedOrderDetails);
+			})
+			.catch(function(error) {
+				console.error("Error fetching order details:", error);
+			});
+
+	};
+
+
+	$scope.UpBill = function() {
+
+
+		var headers = {
+			"ShopId": "190510",
+			"Token": "bd356f37-951e-11ee-8bfa-8a2dda8ec551"
+		};
+		var config = {
+			headers: headers
+		};
+		var items = [];
+		var order = $scope.selectedOrderDetails[0].order;
+		var cod_amount = 0;
+		if (order.statusorder == true) {
+			cod_amount = order.totalamount - order.ship;
+		} else {
+			cod_amount = 0;
+		}
+
+
+		var data = {
+			"payment_type_id": 2,
+			"note": order.message,
+			"required_note": "KHONGCHOXEMHANG",
+			"from_ward_code": "550108",
+			"return_phone": "0969434926",
+			"return_address": "Ninh Kiều - Cần Thơ",
+			"return_district_id": 1442,
+			"return_ward_code": "20109",
+			"to_name": order.account.name,
+			"to_phone": order.phone,
+			"to_address": order.address,
+			"to_ward_code": order.towardcode.toString(),
+			"to_district_id": order.todistrictid,
+			"cod_amount": cod_amount,
+			"weight": 200,
+			"length": 3,
+			"width": 18,
+			"height": 19,
+			"cod_failed_amount": 2000,
+			"pick_station_id": 1442,
+			"insurance_value": 10000,
+			"service_id": 0,
+			"service_type_id": 2,
+			"coupon": null,
+			"items": items
+		}
+		var orderDetails = $scope.selectedOrderDetails[0].orderdetail;
+		// Lặp qua tất cả các orderdetail
+		for (var i = 0; i < orderDetails.length; i++) {
+			var currentOrderDetail = orderDetails[i];
+			data.items.push({
+				"name": currentOrderDetail.product.name,
+				"quantity": currentOrderDetail.quantity,
+				"price": currentOrderDetail.price,
+				"length": 500,
+				"width": 200,
+				"weight": 200,
+				"category": {
+					"level1": currentOrderDetail.product.category.name
+				}
+			});
+		}
+
+
+
+		console.log(data);
+		var url = "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create";
+		$http.post(url, data, config).then(resp => {
+			console.log(resp.data)
+		}).catch(error => {
+			alert("len don that bai!");
+			console.log(error)
+		})
+	}
+
+	//Tìm kiếm người dùng
+	$scope.searchKeyword = '';
+	$scope.submitFormOrder = function() {
+
+		$http.get('/rest/order/search', {
+
+			params: {
+				name: $scope.searchKeyword
+			}
+
+		}).then(function(response) {
+			$scope.orderlist = response.data;
+
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
+
 	$scope.initialize = function() {
 
 		$http.get("/rest/order/hienthitrangthai").then(resp => {
@@ -670,8 +1010,6 @@ app.controller("order-ctrl", function($scope, $http) {
 		$http.get("/rest/order").then(resp => {
 			$scope.orderlist = resp.data;
 		});
-
-
 	}
 
 	$scope.trangthai = function(id) {
@@ -680,10 +1018,39 @@ app.controller("order-ctrl", function($scope, $http) {
 			$scope.items = resp.data;
 		});
 	}
+	//Xuất file excel
+	$scope.exportToExcel = function() {
+
+		var dataArray = $scope.orderlist.map(function(item) {
+			var statusOrderFormatted = item.statusorder ? 'Đã thanh toán' : 'Chưa thanh toán';
+			return [item.id, item.createdate, item.totalamount, item.ship, item.address, item.phone, item.message, statusOrderFormatted, item.account.username, item.status.name, item.voucher.id];
+		});
+
+		//		var columnHeaders = Object.keys($scope.orderlist[0]); // Giả sử tất cả các đối tượng có cùng cấu trúc
+		var columnHeaders = [
+			'ID',
+			'CreateDate',
+			'TotalAmount',
+			'Ship',
+			'Address',
+			'Phone',
+			'Message',
+			'Status Order',
+			'Username',
+			'Status Name',
+			'Voucher ID'
+		];
+		// Sử dụng alasql để xuất dữ liệu thành file Excel với tiêu đề cột
+		var query = 'SELECT * INTO XLSX("DonHang.xlsx",{headers:true}) FROM ?';
+		var worksheet = alasql(query, [
+			[columnHeaders].concat(dataArray)
+		]);
+	};
 
 
 	$scope.changeStatus = function(orderId, newStatusId) {
 		console.log(orderId, newStatusId);
+
 
 		if (newStatusId === 4) {
 			// Sử dụng Swal.fire để hiển thị thông báo
@@ -692,7 +1059,7 @@ app.controller("order-ctrl", function($scope, $http) {
 				title: 'Xác nhận',
 				text: 'Bạn chắc chắn hủy đơn hàng không?',
 				showCancelButton: true,
-				confirmButtonText: 'OK',
+				confirmButtonText: 'Đồng ý',
 				cancelButtonText: 'Hủy'
 			}).then((result) => {
 				if (result.isConfirmed) {
@@ -700,9 +1067,34 @@ app.controller("order-ctrl", function($scope, $http) {
 					performStatusChange(orderId, newStatusId);
 				}
 			});
-		} else {
-			// Nếu newStatusId không phải 4, thực hiện ngay thay đổi trạng thái
-			performStatusChange(orderId, newStatusId);
+		} else if (newStatusId === 2) {
+			Swal.fire({
+				icon: 'warning',
+				title: 'Xác nhận',
+				text: 'Đơn hàng sẽ được vận chuyển?',
+				showCancelButton: true,
+				confirmButtonText: 'Đồng ý',
+				cancelButtonText: 'Hủy'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Nếu người dùng chọn "OK," thực hiện thay đổi trạng thái
+					performStatusChange(orderId, newStatusId);
+				}
+			});
+		} else if (newStatusId === 3) {
+			Swal.fire({
+				icon: 'warning',
+				title: 'Xác nhận',
+				text: 'Đơn hàng đã được giao thành công?',
+				showCancelButton: true,
+				confirmButtonText: 'Đồng ý',
+				cancelButtonText: 'Hủy'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					// Nếu người dùng chọn "OK," thực hiện thay đổi trạng thái
+					performStatusChange(orderId, newStatusId);
+				}
+			});
 		}
 	};
 
@@ -725,7 +1117,7 @@ app.controller("order-ctrl", function($scope, $http) {
 					icon: 'success',
 					title: 'Thành công',
 					text: 'Trạng thái đơn hàng được cập nhật thành công',
-					confirmButtonText: 'OK'
+					confirmButtonText: 'Xong'
 				});
 			});
 	}
@@ -804,18 +1196,7 @@ app.controller("order-ctrl", function($scope, $http) {
 // End  end end  Order Order Order Order Order Order Order Order Order Order Order Order Order 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+//Home
 app.controller("home-ctrl", function($scope, $http) {
 	angular.element(document.getElementById('getMonthRevenue')).on('click', function() {
 		$scope.getMonthRevenue();
@@ -1113,6 +1494,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 
 	$scope.edit = function(item) {
 		$scope.form = angular.copy(item);
+		$("#magiamgia").prop('disabled', true);
 		$scope.index = -1;
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
@@ -1122,6 +1504,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 			startdate: new Date(),
 			enddate: Date()
 		};
+		$("#magiamgia").prop('disabled', false);
 		$scope.index = 0;
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
@@ -1135,58 +1518,113 @@ app.controller("voucher-ctrl", function($scope, $http) {
 
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/voucher`, item).then(resp => {
-			$scope.initialize();
-			resp.data.createDate = new Date(resp.data.createDate);
-			$scope.items.push(resp.data);
-			$scope.reset();
-			Swal.fire({
-				type: 'success',
-				title: 'Thêm  thành công',
-				icon: "success",
-				showConfirmButton: false,
-				timer: 2000
-			})
-			$scope.reset_smooth_table();
-		}).catch(error => {
+		if (item.id == null || item.startdate == null || item.enddate == null || item.discount == null) {
 			Swal.fire({
 				type: 'error',
-				title: 'Lỗi thêm mã',
-				text: error,
+				title: 'Vui lòng không bỏ trống dữ liệu',
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
 			})
-			console.log("Error", error);
-		})
+			return;
+		}
+		if (item.startdate > item.enddate) {
+			Swal.fire({
+				type: 'error',
+				title: 'Ngày kết thúc phải lớn hơn ngày bắt đầu',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+		} else {
+			$http.get(`/rest/voucher`).then(function(response) {
+				$scope.voucher = response.data;
+				console.log($scope.voucher);
+				for (var i = 0; i < $scope.voucher.length; i++) {
+					if ($scope.voucher[i].id === item.id) {
+						Swal.fire({
+							type: 'error',
+							title: 'Mã voucher đã được sử dụng',
+							icon: "error",
+							showConfirmButton: false,
+							timer: 2000
+						})
+						return;
+					}
+				}
+				$http.post(`/rest/voucher`, item).then(resp => {
+					$scope.initialize();
+					resp.data.createDate = new Date(resp.data.createDate);
+					$scope.items.push(resp.data);
+					$scope.reset();
+					Swal.fire({
+						type: 'success',
+						title: 'Thêm  thành công',
+						icon: "success",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					$scope.reset_smooth_table();
+				}).catch(error => {
+					Swal.fire({
+						type: 'error',
+						title: 'Lỗi thêm mã',
+						text: "Lỗi",
+						icon: "error",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					console.log("Error", error);
+				})
+			})
 
+
+
+
+
+
+
+
+
+		}
 	}
 
 	// Cập nhật
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/voucher/${item.id}`, item).then(function(response) {
-			var index = $scope.items.findIndex(p => p.id == item.id);
-			$scope.items[index] = item;
-			Swal.fire({
-				type: 'success',
-				title: 'Cập nhật thành công',
-				icon: "success",
-				showConfirmButton: false,
-				timer: 2000
-			})
-			$scope.reset_smooth_table();
-		}).catch(function(error) {
+
+		if (item.startdate > item.enddate) {
 			Swal.fire({
 				type: 'error',
-				title: 'Lỗi cập nhật mã',
-				text: error,
+				title: 'Ngày kết thúc phải lớn hơn ngày bắt đầu',
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
 			})
-			console.log("Erorr", err);
-		})
+		} else {
+			$http.put(`/rest/voucher/${item.id}`, item).then(function(response) {
+				var index = $scope.items.findIndex(p => p.id == item.id);
+				$scope.items[index] = item;
+				Swal.fire({
+					type: 'success',
+					title: 'Cập nhật thành công',
+					icon: "success",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				//				$scope.reset_smooth_table();
+			}).catch(function(error) {
+				Swal.fire({
+					type: 'error',
+					title: 'Lỗi cập nhật mã',
+					text: "Lỗi",
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Erorr", err);
+			})
+		}
 	}
 
 
@@ -1208,7 +1646,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 					$scope.items.splice(index, 1);
 					$scope.reset();
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -1275,18 +1713,43 @@ app.controller("discount-ctrl", function($scope, $http) {
 			$scope.items.forEach(item => {
 				item.startdate = new Date(item.startdate)
 				item.enddate = new Date(item.enddate)
+
 			})
 		});
 		$http.get('/rest/products').then(function(response) {
 			$scope.product = response.data;
 
 		});
+
 	}
 
 
+	$scope.initialize();
+
+
+
+
+
+
+	//Tìm kiếm sản phẩm
+	$scope.searchKeywordProduct = "";
+	$scope.submitFormProducts = function() {
+		$http.get('/rest/products/search', {
+			params: {
+				keyword: $scope.searchKeywordProduct
+			}
+		}).then(function(response) {
+			$scope.product = response.data;
+
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
 
 
 	$scope.edit = function(item) {
+		$("#exampleFormControlSelect1").prop('disabled', true);
+		$("#category").prop('disabled', true);
 		$scope.form = angular.copy(item);
 		$scope.prductww = $scope.form.product.id;
 		$scope.index = -1;
@@ -1298,6 +1761,9 @@ app.controller("discount-ctrl", function($scope, $http) {
 	}
 
 	$scope.reset = function() {
+
+		$("#exampleFormControlSelect1").prop('disabled', false);
+		$("#category").prop('disabled', false);
 		$scope.form = {
 			startdate: new Date(),
 			enddate: Date()
@@ -1312,61 +1778,142 @@ app.controller("discount-ctrl", function($scope, $http) {
 		$scope.form = {};
 		$(".nav-tabs a:eq(0)").tab('show')
 	}
+	//Tìm kiếm chương trình giảm giá
+	$scope.submitFormDiscount = function() {
+
+		$http.get('/rest/discount/search', {
+			params: {
+				name: $scope.searchKeyword
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
+
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
+	$scope.getweight = function(idproduct) {
+
+		$http.get(`/rest/weightvalue2/getProductweigth/${idproduct}`).then(function(response) {
+			$scope.productweight = response.data;
+			console.log($scope.productweight);
+		});
+	}
+
+
+
 
 	$scope.create = function() {
+		$("#exampleFormControlSelect1").prop('disabled', false);
+		$("#category").prop('disabled', false);
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/discount`, item).then(resp => {
-			$scope.initialize();
-			resp.data.createDate = new Date(resp.data.createDate);
-			$scope.items.push(resp.data);
-			$scope.reset();
-			Swal.fire({
-				type: 'success',
-				title: 'Thêm thành công',
-				icon: "success",
-				showConfirmButton: false,
-				timer: 2000
-			})
-			$scope.reset_smooth_table();
-		}).catch(error => {
+		console.log(item)
+		if (item.startdate == null || item.enddate == null || item.discount == null || item.weightvalue == null) {
 			Swal.fire({
 				type: 'error',
-				title: 'Lỗi thêm mã',
-				text: error,
+				title: 'Vui lòng không bỏ trống dữ liệu',
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
 			})
-			console.log("Error", error);
-		})
+			return;
+		}
+		$http.get(`/rest/discount`).then(function(response) {
+			$scope.discount = response.data;
+			console.log($scope.discount);
+			for (var i = 0; i < $scope.discount.length; i++) {
+				if ($scope.discount[i].product.id === item.product.id && $scope.discount[i].weightvalue === item.weightvalue) {
+					Swal.fire({
+						type: 'error',
+						title: 'Sản phẩm đã được giảm giá',
+						icon: "error",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					return;
+				}
+			}
+
+			if (item.startdate > item.enddate) {
+				Swal.fire({
+					type: 'error',
+					title: 'Ngày kết thúc phải lớn hơn ngày bắt đầu',
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				return;
+			} else {
+				$http.post(`/rest/discount`, item).then(resp => {
+					$scope.initialize();
+					resp.data.createDate = new Date(resp.data.createDate);
+					$scope.items.push(resp.data);
+					$scope.reset();
+					Swal.fire({
+						type: 'success',
+						title: 'Thêm thành công',
+						icon: "success",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					$scope.reset_smooth_table();
+				}).catch(error => {
+					Swal.fire({
+						type: 'error',
+						title: 'Lỗi thêm mã',
+						text: "Lỗi",
+						icon: "error",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					console.log("Error", error);
+				})
+			}
+		});
+
+
+
+
 
 	}
 
 	// Cập nhật
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		$http.put(`/rest/discount/${item.id}`, item).then(function(response) {
-			var index = $scope.items.findIndex(p => p.id == item.id);
-			$scope.items[index] = item;
-			Swal.fire({
-				type: 'success',
-				title: 'Cập nhật thành công',
-				icon: "success",
-				showConfirmButton: false,
-				timer: 2000
-			})
-			$scope.reset_smooth_table();
-		}).catch(function(error) {
+		if (item.startdate > item.enddate) {
 			Swal.fire({
 				type: 'error',
-				title: 'Lỗi cập nhật ',
-				text: error,
+				title: 'Ngày kết thúc phải lớn hơn ngày bắt đầu',
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
 			})
-			console.log("Erorr", err);
-		})
+			return;
+		} else {
+			$http.put(`/rest/discount/${item.id}`, item).then(function(response) {
+				var index = $scope.items.findIndex(p => p.id == item.id);
+				$scope.items[index] = item;
+				Swal.fire({
+					type: 'success',
+					title: 'Cập nhật thành công',
+					icon: "success",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				$scope.reset_smooth_table();
+			}).catch(function(error) {
+				Swal.fire({
+					type: 'error',
+					title: 'Lỗi cập nhật ',
+					text: "Lỗi",
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Erorr", err);
+			})
+		}
 	}
 
 	// Xóa
@@ -1385,7 +1932,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 					$scope.items.splice(index, 1);
 					$scope.reset();
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -1435,7 +1982,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 
 	}
 
-	$scope.initialize();
+
 
 })
 
@@ -1453,7 +2000,20 @@ app.controller("category-ctrl", function($scope, $http) {
 			console.log($scope.items);
 		});
 	}
+	//Tìm kiếm loại
+	$scope.searchKeyword = '';
+	$scope.submitFormCategory = function() {
+		$http.get('/rest/category/search/', {
+			params: {
+				name: $scope.searchKeyword
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
 
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
 
 
 
@@ -1480,6 +2040,17 @@ app.controller("category-ctrl", function($scope, $http) {
 
 	$scope.create = function() {
 		var item = angular.copy($scope.form);
+		if (item.name == null) {
+			Swal.fire({
+				type: 'error',
+				title: 'Vui lòng nhập đầy đủ thông tin',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			return;
+		}
+
 		$http.post(`/rest/category`, item).then(resp => {
 			$scope.initialize();
 			$scope.items.push(resp.data);
@@ -1496,7 +2067,7 @@ app.controller("category-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm mã',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1524,7 +2095,7 @@ app.controller("category-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập ',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1554,7 +2125,7 @@ app.controller("category-ctrl", function($scope, $http) {
 
 					// Show success message
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -1613,6 +2184,7 @@ app.controller("static-ctrl", function($scope, $http) {
 	$scope.static = function() {
 		$http.get('/rest/static/getProductReviewsStatistics').then(function(response) {
 			$scope.evaluate = response.data;
+			console.log($scope.evaluate);
 		});
 		$http.get('/rest/static/getFavoriteCountPerProduct').then(function(response) {
 			$scope.favorite = response.data;
@@ -1627,8 +2199,267 @@ app.controller("static-ctrl", function($scope, $http) {
 	}
 	$scope.static();
 
+
+
+
+	//Xuất file excel
+	$scope.exportToExcelCategory = function() {
+
+		var dataArray = $scope.getProductSummary.map(function(item) {
+			return [item.name, item.numberOfOrders, item.totalQuantity, item.avgPrice];
+		});
+
+		//		var columnHeaders = Object.keys($scope.orderlist[0]); // Giả sử tất cả các đối tượng có cùng cấu trúc
+		var columnHeaders = [
+			'Tên sản phẩm',
+			'Số lượng đơn',
+			'Số lượng sản phẩm ',
+			'Tổng tiền ',
+		];
+		// Sử dụng alasql để xuất dữ liệu thành file Excel với tiêu đề cột
+		var query = 'SELECT * INTO XLSX("LoaiSanPham.xlsx",{headers:true}) FROM ?';
+		var worksheet = alasql(query, [
+			[columnHeaders].concat(dataArray)
+		]);
+	};
+	$scope.exportToExcelProducts = function() {
+
+		var dataArray = $scope.findTopSellingProducts.map(function(item) {
+			return [item.name, item.totalQuantitySold, item.totalRevenue];
+		});
+
+		//		var columnHeaders = Object.keys($scope.orderlist[0]); // Giả sử tất cả các đối tượng có cùng cấu trúc
+		var columnHeaders = [
+			'Tên sản phẩm',
+			'Số lượng ',
+			'Tổng tiền ',
+		];
+		// Sử dụng alasql để xuất dữ liệu thành file Excel với tiêu đề cột
+		var query = 'SELECT * INTO XLSX("SanPham.xlsx",{headers:true}) FROM ?';
+		var worksheet = alasql(query, [
+			[columnHeaders].concat(dataArray)
+		]);
+	};
+	$scope.exportToExcelFavorite = function() {
+
+		var dataArray = $scope.favorite.map(function(item) {
+			return [item.product.name, item.favoriteCount];
+		});
+
+		//		var columnHeaders = Object.keys($scope.orderlist[0]); // Giả sử tất cả các đối tượng có cùng cấu trúc
+		var columnHeaders = [
+			'Tên sản phẩm',
+			'Số lượng yêu thích',
+
+		];
+		// Sử dụng alasql để xuất dữ liệu thành file Excel với tiêu đề cột
+		var query = 'SELECT * INTO XLSX("YeuThich.xlsx",{headers:true}) FROM ?';
+		var worksheet = alasql(query, [
+			[columnHeaders].concat(dataArray)
+		]);
+	};
+	$scope.exportToExcelEvaluate = function() {
+
+		var dataArray = $scope.evaluate.map(function(item) {
+			return [item.productName, item.averageRating, item.totalReviews];
+		});
+
+		//		var columnHeaders = Object.keys($scope.orderlist[0]); // Giả sử tất cả các đối tượng có cùng cấu trúc
+		var columnHeaders = [
+			'Tên sản phẩm',
+			'Trung bình đánh giá',
+			'Số lượng đánh giá',
+
+		];
+		// Sử dụng alasql để xuất dữ liệu thành file Excel với tiêu đề cột
+		var query = 'SELECT * INTO XLSX("ĐanhGia.xlsx",{headers:true}) FROM ?';
+		var worksheet = alasql(query, [
+			[columnHeaders].concat(dataArray)
+		]);
+	};
+
+
+	$scope.categorypager = {
+		page: 0,
+		size: 8,
+		get getProductSummary() {
+			var start = this.page * this.size;
+			return $scope.getProductSummary.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.getProductSummary.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+
+	}
+
+	$scope.productspager = {
+		page: 0,
+		size: 8,
+		get findTopSellingProducts() {
+			var start = this.page * this.size;
+			return $scope.findTopSellingProducts.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.findTopSellingProducts.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+
+	}
+
+	$scope.favoritepager = {
+		page: 0,
+		size: 8,
+		get favorite() {
+			var start = this.page * this.size;
+			return $scope.favorite.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.favorite.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+
+	}
+	$scope.evaluatepager = {
+		page: 0,
+		size: 8,
+		get evaluate() {
+			var start = this.page * this.size;
+			return $scope.evaluate.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.evaluate.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+
+	}
+	$scope.evaluatepager = {
+		page: 0,
+		size: 8,
+		get evaluate() {
+			var start = this.page * this.size;
+			return $scope.evaluate.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.evaluate.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	$scope.items = [];
-	$scope.order = {
+	$scope.pager = {
 		page: 0,
 		size: 5,
 		get items() {
@@ -1672,9 +2503,8 @@ app.controller("static-ctrl", function($scope, $http) {
 				endDate: formatDate($scope.endDate)
 			}
 		}).then(function(response) {
-			console.log(response.data);
 			$scope.items = response.data;
-			$scope.order.count = Math.ceil($scope.items.length / $scope.order.size);
+			$scope.pager.count = Math.ceil($scope.items.length / $scope.pager.size);
 
 		}, function(error) {
 			console.log(error);
@@ -1748,7 +2578,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -1757,7 +2587,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1792,7 +2622,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -1801,7 +2631,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1836,7 +2666,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -1845,7 +2675,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1880,7 +2710,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -1889,7 +2719,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1924,7 +2754,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -1933,7 +2763,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -1968,7 +2798,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -1977,7 +2807,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2012,7 +2842,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2021,7 +2851,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2037,7 +2867,21 @@ app.controller("banner-ctrl", function($scope, $http) {
 			$scope.initialize();
 		});
 	}
+	$scope.bannerthongtin1_370x300_save = function() {
+		var item = angular.copy($scope.bannerthongtin1_370x300);
+		$http.put(`/rest/banner/${item.id}`, $scope.bannerthongtin1_370x300).then(resp => {
+			console.log(resp.data);
+		});
+		Swal.fire({
+			type: 'success',
+			title: 'Lưu thông tin thành công',
+			text: 'Thành công',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
 
+	}
 	$scope.imageChanged_bannerthongtin2_370x300 = function(files) {
 		var item = angular.copy($scope.bannerthongtin2_370x300);
 		var data = new FormData();
@@ -2056,7 +2900,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2065,7 +2909,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2081,7 +2925,21 @@ app.controller("banner-ctrl", function($scope, $http) {
 			$scope.initialize();
 		});
 	}
+	$scope.bannerthongtin2_370x300_save = function() {
+		var item = angular.copy($scope.bannerthongtin2_370x300);
+		$http.put(`/rest/banner/${item.id}`, $scope.bannerthongtin2_370x300).then(resp => {
+			console.log(resp.data);
+		});
+		Swal.fire({
+			type: 'success',
+			title: 'Lưu thông tin thành công',
+			text: 'Thành công',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
 
+	}
 
 	$scope.imageChanged_bannerthongtin3_370x300 = function(files) {
 		var item = angular.copy($scope.bannerthongtin3_370x300);
@@ -2101,7 +2959,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'success',
 				title: 'Thêm ảnh thành công',
-				text: '',
+				text: 'Thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -2110,7 +2968,7 @@ app.controller("banner-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ảnh',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2126,6 +2984,21 @@ app.controller("banner-ctrl", function($scope, $http) {
 			$scope.initialize();
 		});
 	}
+	$scope.bannerthongtin3_370x300_save = function() {
+		var item = angular.copy($scope.bannerthongtin3_370x300);
+		$http.put(`/rest/banner/${item.id}`, $scope.bannerthongtin3_370x300).then(resp => {
+			console.log(resp.data);
+		});
+		Swal.fire({
+			type: 'success',
+			title: 'Lưu thông tin thành công',
+			text: 'Thành công',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
+
+	}
 
 })
 //weightvalue
@@ -2134,6 +3007,23 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 	$scope.items = [];
 	$scope.form = {};
 	$scope.roles = {};
+
+
+
+	//Tìm kiếm người dùng
+	$scope.searchKeyword = '';
+	$scope.submitFormWeight = function() {
+		$http.get('/rest/weightvalue2/search/', {
+			params: {
+				name: $scope.searchKeyword
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
+
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
 
 
 
@@ -2184,7 +3074,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm mã',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2212,7 +3102,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật ',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2224,7 +3114,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 	// Xóa
 	$scope.delete = function(item) {
 		Swal.fire({
-			title: 'Xóa người dùng!',
+			title: 'Xóa!',
 			text: 'Bạn chắc chắn muốn xóa trọng lượng này chứ ?',
 			type: 'warning',
 			confirmButtonColor: '#3085d6',
@@ -2237,7 +3127,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 					$scope.items.splice(index, 1);
 					$scope.reset();
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -2297,7 +3187,20 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 	$scope.form = {};
 	$scope.roles = {};
 
+	//Tìm kiếm người dùng
+	$scope.searchKeyword = '';
+	$scope.submitFormStatus = function() {
+		$http.get('/rest/StatusOR/search/', {
+			params: {
+				name: $scope.searchKeyword
+			}
+		}).then(function(response) {
+			$scope.items = response.data;
 
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
 
 	$scope.initialize = function() {
 		$http.get('/rest/StatusOR').then(function(response) {
@@ -2347,7 +3250,7 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi thêm ',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2376,7 +3279,7 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 			Swal.fire({
 				type: 'error',
 				title: 'Lỗi cập nhật ',
-				text: error,
+				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
@@ -2409,7 +3312,7 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 
 					// Show success message
 					Swal.fire(
-						'Deleted!',
+						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
@@ -2458,7 +3361,375 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 			this.page = this.count - 1;
 		}
 
+
 	}
 
 	$scope.initialize();
+})
+app.controller("combo-ctrl", function($scope, $http) {
+
+
+	$scope.itempros = [];
+	$scope.itemcombos = [];
+	$scope.itemproductcombos = [];
+	$scope.form = [];
+
+	$scope.listproduct = function() {
+		$http.get('/rest/productweights').then(function(resp) {
+			$scope.itempros = resp.data;
+		});
+	}
+
+	$scope.listcombo = function() {
+		$http.get('/rest/combos').then(function(resp) {
+			$scope.itemcombos = resp.data;
+		});
+	}
+	$scope.hiddenform = true;
+	$scope.hiddenbutton = false;
+	$scope.hiddenhiddentotal = true;
+	$scope.listproductcombo = function(idcombo) {
+		$scope.addprocombo = true;
+		$scope.hiddenform = false;
+		$scope.hiddenbutton = true;
+		$scope.hiddenhiddentotal = false;
+		$http.get(`/rest/combos/${idcombo}`).then(function(resp) {
+			$scope.form = resp.data;
+		});
+
+		$http.get(`/rest/productcombos/${idcombo}`).then(function(resp) {
+			$scope.itemproductcombos = resp.data;
+			$scope.form.price = 0;
+			for (var i = 0; i < $scope.itemproductcombos.length; i++) {
+				$scope.form.price = $scope.form.price + $scope.itemproductcombos[i].productweight.price;
+			}
+		});
+
+		window.scrollTo({
+			top: 200,
+			behavior: 'smooth'
+		});
+
+	}
+	$scope.hiddenthem = false;
+	$scope.hiddensua = true;
+	$scope.hiddenxoa = true;
+	$scope.formcombo = function(idcombo) {
+		$scope.hiddenform = true;
+		$scope.addprocombo = false;
+		$scope.hiddenbutton = false;
+		$scope.hiddenthem = true;
+		$scope.hiddensua = false;
+		$scope.hiddenxoa = false;
+		$http.get(`/rest/combos/${idcombo}`).then(function(resp) {
+			$scope.form = resp.data;
+			console.log($scope.form)
+		});
+		window.scrollTo({
+			top: 80,
+			behavior: 'smooth'
+		});
+
+	}
+
+	$scope.reset_smooth_table = function() {
+		$scope.form = [];
+		window.scrollTo({
+			top: 200,
+			behavior: 'smooth'
+		});
+	}
+
+	$scope.searchKeyword = '';
+	$scope.submitFormProduct = function() {
+		$http.get('/rest/productweights/search/', {
+			params: {
+				keyword: $scope.searchKeyword
+			}
+		}).then(function(resp) {
+			$scope.itempros = resp.data;
+			$scope.pager.first();
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
+	$scope.submitFormCombo = function() {
+		console.log($scope.searchKeyword)
+		$http.get('/rest/combos/search/', {
+			params: {
+				keyword: $scope.searchKeyword
+			}
+		}).then(function(resp) {
+			$scope.itemcombos = resp.data;
+			$scope.pagercombo.first();
+		}).catch(error => {
+			console.log("Error", error);
+		});
+	}
+
+	$scope.imgaedefault = true;
+	$scope.imageChanged = function(files) {
+		$scope.imgaedefault = false;
+		var data = new FormData();
+		data.append('file', files[0]);
+		$http.post('/rest/upload/banner', data, {
+			transformRequest: angular.identity,
+			headers: {
+				'Content-Type': undefined
+			}
+		}).then(resp => {
+			$scope.form.image = resp.data.name;
+			Swal.fire({
+				type: 'success',
+				title: 'Thêm ảnh thành công',
+				text: '',
+				icon: "success",
+				showConfirmButton: false,
+				timer: 2000
+			})
+		}).catch(error => {
+			Swal.fire({
+				type: 'error',
+				title: 'Lỗi thêm ảnh',
+				text: "Lỗi",
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+		})
+	}
+	$scope.addprocombo = false;
+	$scope.createcombo = function(item) {
+		$scope.data = {
+			name: item.name,
+			startdate: item.startdate,
+			enddate: item.enddate,
+			sale: item.sale,
+			image: item.image,
+			price: item.price,
+
+		}
+		if ($scope.data.image == null) {
+			$scope.data.image = 'default.png'
+		}
+		if (item.name == null || item.startdate == null || item.enddate == null || item.sale == null) {
+			Swal.fire({
+				type: 'error',
+				title: 'Vui lòng không để trống thông tin',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			return;
+		} else if (item.enddate < item.startdate) {
+			Swal.fire({
+				type: 'error',
+				title: 'Ngày kết thúc phải sau ngày bất đầu',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			return;
+		} else {
+			$http.post(`/rest/combos`, $scope.data).then(resp => {
+				$scope.addprocombo = true;
+				$scope.itemcombos.id = resp.data.id
+				$scope.form.comboid = $scope.itemcombos.id
+				$scope.listproductcombo($scope.itemcombos.id)
+				$scope.listcombo();
+				window.scrollTo({
+					top: 650,
+					behavior: 'smooth'
+				});
+				Swal.fire({
+					type: 'success',
+					title: 'Thêm thành công',
+					icon: "success",
+					showConfirmButton: false,
+					timer: 2000
+				})
+			}).catch(error => {
+				Swal.fire({
+					type: 'error',
+					title: 'Lỗi thêm mã',
+					text: "Lỗi",
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Error", error);
+			})
+		}
+	}
+
+	$scope.add_pro_in_combo = function(item, id) {
+		$scope.data = {
+			productweight: {
+				id: item.id
+			},
+			combo: {
+				id: id
+			}
+		}
+		$http.get(`/rest/productcombos/${id}`).then(function(resp) {
+			$scope.itemproductcombos = resp.data;
+			for (var i = 0; i < $scope.itemproductcombos.length; i++) {
+				if ($scope.itemproductcombos[i].productweight.id == item.id) {
+					Swal.fire({
+						type: 'error',
+						title: 'Sản phẩm đang được sử dụng ở phần combo',
+						icon: "error",
+						showConfirmButton: false,
+						timer: 2000
+					})
+					return;
+				}
+			}
+			$http.post(`/rest/productcombos`, $scope.data).then(resp => {
+				$scope.listproductcombo(resp.data.combo.id)
+				var form = angular.copy($scope.form)
+				$http.put(`/rest/combos/${form.id}`, form).then(function(resp) { })
+				window.scrollTo({
+					top: 200,
+					behavior: 'smooth'
+				});
+
+			}).catch(error => {
+				Swal.fire({
+					type: 'error',
+					title: 'Lỗi thêm sản phẩm',
+					text: "Lỗi",
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Error", error);
+			})
+
+		});
+
+
+	}
+
+	$scope.delcombo = function() {
+		Swal.fire({
+			type: 'success',
+			title: 'Đã tắt trạng thái combo',
+			icon: "success",
+			showConfirmButton: false,
+			timer: 2000
+		})
+	}
+
+	$scope.deleteproductcombos = function(id, idcombo) {
+		$http.delete(`/rest/productcombos/${id}`).then(resp => {
+			$scope.listproductcombo(idcombo)
+			var form = angular.copy($scope.form)
+			$http.put(`/rest/combos/${form.id}`, form).then(function(resp) { })
+			window.scrollTo({
+				top: 200,
+				behavior: 'smooth'
+			});
+		}).catch(error => {
+			Swal.fire({
+				type: 'error',
+				title: 'Lỗi xóa',
+				text: "Lỗi",
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			console.log("Error", error);
+		})
+
+	}
+
+	$scope.pager = {
+		page: 0,
+		size: 5,
+		get itempros() {
+			var start = this.page * this.size;
+			return $scope.itempros.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.itempros.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+	}
+
+	$scope.pagercombo = {
+		pagercombo: 0,
+		size: 8,
+		get itemcombos() {
+			var start = this.pagercombo * this.size;
+			return $scope.itemcombos.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.itemcombos.length / this.size);
+		},
+		first() {
+			this.pagercombo = 0;
+		},
+		prev() {
+			this.pagercombo--;
+			if (this.pagercombo < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.pagercombo++;
+			if (this.pagercombo >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.pagercombo = this.count - 1;
+		}
+	}
+
+
+	// $scope.autodelete = function () {
+	// 	$http.get('/rest/combos').then(function (resp) {
+	// 		$scope.itemcombos = resp.data;
+	// 		var date = new Date().toISOString().slice(0, 10)
+	// 		console.log(date)
+	// 		for (var c = 0; c < $scope.itemcombos.length; c++) {
+	// 			console.log($scope.itemcombos[c].enddate)
+	// 			if (date > $scope.itemcombos[c].enddate) {
+	// 				$http.get(`/rest/productcombos/${$scope.itemcombos[c].id}`).then(function (resp) {
+	// 					$scope.itemproductcombos = resp.data;
+	// 					for (var i = 0; i < $scope.itemproductcombos.length; i++) {
+	// 						console.log($scope.itemproductcombos[i].id)
+	// 						$http.delete(`/rest/productcombos/${$scope.itemproductcombos[i].id}`).then(resp => {})
+	// 					}
+	// 				});
+	// 				// $http.delete(`/rest/combos/${$scope.itemcombos[c].id}`).then(resp => {})
+	// 			}
+
+	// 		}
+	// 	});
+	// }
+
+	// $scope.autodelete();
+	$scope.listproduct();
+	$scope.listcombo();
 })

@@ -117,7 +117,7 @@
 																		{{item.price | number :0}} VNĐ</p>
 																</td>
 																<td><a ng-click="add_pro_in_combo(item,form.id)"><i
-																			style="color: #00FF00;font-size: 20px;"
+																			style="color: #00FF00;font-size: 20px;cursor: pointer;"
 																			class="bi bi-plus-circle"></i></a></td>
 															</tr>
 														</tbody>
@@ -163,7 +163,7 @@
 																<td>{{item.productweight.product.name}}</td>
 																<td>{{item.productweight.weight.weightvalue}}</td>
 																<td>{{item.productweight.price | number :0}} VNĐ</td>
-																<td><a ng-click="deleteproductcombos(item.id,item.combo.id)"><i style="color: red;font-size: 20px;"
+																<td><a ng-click="deleteproductcombos(item.id,item.combo.id)"><i style="color: red;font-size: 20px;cursor: pointer;"
 																			class="bi bi-dash-circle"></i></a></td>
 															</tr>
 														</tbody>
@@ -268,7 +268,7 @@
 												<p class="mb-0 text-muted">{{item.price}}</p>
 											</td>
 											<td><button style="color: white; font-weight: bold;" type="submit"
-													ng-click="listproductcombo(item.id)" class="btn btn-warning">Sảm
+													ng-click="listproductcombo(item.id)" class="btn btn-primary">Sảm
 													phẩm</button>
 												<button style="color: white; font-weight: bold;" type="submit"
 													ng-click="formcombo(item.id)" class="btn btn-warning">combo</button>

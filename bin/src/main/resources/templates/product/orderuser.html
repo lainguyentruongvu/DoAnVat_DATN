@@ -47,23 +47,23 @@
 							<a ng-click="status1(1)" class="nav-item nav-link" id="nav-cxl-tab" data-toggle="tab"
 								href="#nav-cxl" role="tab" aria-controls="nav-cxl" aria-selected="false">Chờ xử
 								lý<label ng-if="orderuserstatus[0] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[0]}})</label> </a>
+									style="color: red;">({{orderuserstatus[0]}})</label> </a>
 							<a ng-click="status2(2)" class="nav-item nav-link" id="nav-dgg-tab" data-toggle="tab"
 								href="#nav-dgg" role="tab" aria-controls="nav-dgg" aria-selected="false">Đang
 								giao<label ng-if="orderuserstatus[1] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[1]}})</label></a>
+									style="color: red;">({{orderuserstatus[1]}})</label></a>
 							<a ng-click="status3(3)" class="nav-item nav-link" id="nav-dg-tab" data-toggle="tab"
 								href="#nav-dg" role="tab" aria-controls="nav-dg" aria-selected="false">Đã giao
 								<label ng-if="orderuserstatus[2] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[2]}})</label> </a>
+									style="color: red;">({{orderuserstatus[2]}})</label> </a>
 							<a ng-click="status4(4)" class="nav-item nav-link" id="nav-dh-tab" data-toggle="tab"
 								href="#nav-dh" role="tab" aria-controls="nav-dh" aria-selected="false">Đã
 								hủy<label ng-if="orderuserstatus[3] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[3]}})</label></a>
+									style="color: red;">({{orderuserstatus[3]}})</label></a>
 							<a ng-click="status5(5)" class="nav-item nav-link" id="nav-ht-tab" data-toggle="tab"
 								href="#nav-ht" role="tab" aria-controls="nav-ht" aria-selected="false"> Hoàn
 								thành<label ng-if="orderuserstatus[4] !== 0" for=""
-									style="color: rebeccapurple;">({{orderuserstatus[4]}})</label></a>
+									style="color: red;">({{orderuserstatus[4]}})</label></a>
 
 						</div>
 					</nav>
@@ -89,7 +89,8 @@
 										</div>
 										<div class="col-lg-6" style="padding-left: 360px;">
 											<i class="bi bi-truck" style="color: #26AA99;"></i> <label
-												style="color: #26AA99;"> Trạng thái</label> <i class="bi bi-question-circle"></i> | <label for=""
+												style="color: #26AA99;"> Trạng thái</label> <i
+												class="bi bi-question-circle"></i> | <label for=""
 												style="color: #F35022;">{{ item.order.status.name }}</label>
 										</div>
 
@@ -98,7 +99,7 @@
 
 									<!--BẮT ĐẦU  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div style="padding-top: 10px;" class="row"
-										ng-repeat="orderdetail in item.orderdetail">
+										ng-repeat="orderdetail in item.orderdetail | limitTo: (showAll ? item.orderdetail.length : 2)">
 										<div class="col-lg-2">
 											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
@@ -109,7 +110,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
@@ -117,7 +118,12 @@
 												{{ orderdetail.product.price | number:0}} VNĐ</label>
 										</div>
 									</div>
-
+									
+									<div style="text-align: center;font-size: 25px;cursor: pointer;" ng-if="item.orderdetail.length > 2">
+										<a ng-click="toggleShowAll()">
+											<i class="fa fa-arrows-v" aria-hidden="true"></i>
+										</a>
+									</div>
 									<hr>
 									<!--KẾT THÚC  1 SẢN PHẨM TRONG ĐƠNNNNNNNNN-->
 									<div class="row" style="padding-top: 20px;">
@@ -138,17 +144,19 @@
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
-											<button
-												ng-click="showOrderDetail(item.order.id)" class="btn btn-warning btn-lg"
-												style="color: white; border: 1px solid #757575;">Xem chi tiết</button>
+											<button ng-click="showOrderDetail(item.order.id)"
+												class="btn btn-warning btn-lg"
+												style="font-family: Arial, Helvetica, sans-serif;background-color:orange; color: white;font-weight: bold;">Xem
+												chi tiết</button>
 											<button ng-if="item.order.status.id === 3"
 												ng-click="changeStatusHT(item.order.id, 5)"
 												class="btn btn-default btn-lg"
-												style="color: #757575; border: 1px solid #757575;">Đã nhận được
+												style="background-color: orange;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: white;">Đã
+												nhận được
 												hàng</button>
 											<button ng-if="item.order.status.id === 1"
 												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
-												style="color: white; border: 1px solid #757575;">Hủy</button>
+												style="background-color: red;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: white;">Hủy</button>
 										</div>
 									</div>
 
@@ -197,7 +205,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
@@ -226,14 +234,18 @@
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
+											<button ng-click="showOrderDetail(item.order.id)"
+												class="btn btn-warning btn-lg"
+												style="color: white; border: 1px solid #757575;">Xem chi tiết</button>
 											<button ng-if="item.order.status.id === 3"
 												ng-click="changeStatusHT(item.order.id, 5)"
 												class="btn btn-default btn-lg"
-												style="color: #757575; border: 1px solid #757575;">Đã nhận được
+												style="background-color: orange;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: white;">Đã
+												nhận được
 												hàng</button>
 											<button ng-if="item.order.status.id === 1"
 												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
-												style="color: white; border: 1px solid #757575;">Hủy</button>
+												style="background-color: red;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: white;">Hủy</button>
 										</div>
 									</div>
 								</div>
@@ -281,7 +293,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
@@ -310,14 +322,18 @@
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
+											<button ng-click="showOrderDetail(item.order.id)"
+												class="btn btn-warning btn-lg"
+												style="color: white; border: 1px solid #757575;">Xem chi tiết</button>
 											<button ng-if="item.order.status.id === 3"
 												ng-click="changeStatusHT(item.order.id, 5)"
 												class="btn btn-default btn-lg"
-												style="color: #757575; border: 1px solid #757575;">Đã nhận được
+												style="background-color: orange;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: white;">Đã
+												nhận được
 												hàng</button>
 											<button ng-if="item.order.status.id === 1"
 												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
-												style="color: white; border: 1px solid #757575;">Hủy</button>
+												style="background-color: red;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: white;">Hủy</button>
 										</div>
 									</div>
 								</div>
@@ -363,7 +379,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
@@ -392,10 +408,14 @@
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
+											<button ng-click="showOrderDetail(item.order.id)"
+												class="btn btn-warning btn-lg"
+												style="color: white; border: 1px solid #757575;">Xem chi tiết</button>
 											<button ng-if="item.order.status.id === 3"
 												ng-click="changeStatusHT(item.order.id, 5)"
 												class="btn btn-default btn-lg"
-												style="color: #757575; border: 1px solid #757575;">Đã nhận được
+												style="background-color: orange;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: white;">Đã
+												nhận được
 												hàng</button>
 											<button ng-if="item.order.status.id === 1"
 												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
@@ -438,74 +458,74 @@
 											<img class="" src="../images/product/{{orderdetail.product.image}}" alt=""
 												width="150px">
 										</div>
-										<div class="col-lg-6" style="padding: 10px;">
+										<div class="col-lg-8" style="padding: 10px;">
 											<label for="" style="font-size: 20px;"> {{ orderdetail.product.name
 												}}</label><br>
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
 											<label for="" class="" style="padding-top: 50px; font-weight: bold;">
 												{{ orderdetail.product.price | number:0}} VNĐ</label>
 										</div>
-										<div class="col-lg-2" style="padding-top: 50px;">
-									
-												<a for="modal-toggler" id="modal-toggler-label">Đánh giá</a>
+										<!--										<div class="col-lg-2" style="padding-top: 50px;">-->
 
-												<input type="checkbox" id="modal-toggler">
-												<div id="overlay"></div>
-												<div id="modal-container">
+										<!--											<a style="background-color: yellow;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: black;"-->
+										<!--												for="modal-toggler" id="modal-toggler-label">Đánh giá</a>-->
 
-													<h2 style="font-family: Arial, Helvetica, sans-serif;">
-														Đánh
-														giá sản phẩm</h2>
-													<label type="button" class="close" 
-														aria-label="Close" for="modal-toggler" id="closeBtn"><span class="ti-close"
-															aria-hidden="true" ></span></label>
-													<p>
-													<div class="container d-flex justify-content-center">
-														<div class="row">
-															<div class="col-md-12">
-																<div class="stars">
-																	<form action="">
-																		<input class="star star-5" id="star-5"
-																			type="radio" name="star" value="5"
-																			ng-model="formData.rating" />
-																		<label class="star star-5" for="star-5"></label>
-																		<input class="star star-4" id="star-4"
-																			type="radio" name="star" value="5"
-																			ng-model="formData.rating" />
-																		<label class="star star-4" for="star-4"></label>
-																		<input class="star star-3" id="star-3"
-																			type="radio" name="star" value="4"
-																			ng-model="formData.rating" />
-																		<label class="star star-3" for="star-3"></label>
-																		<input class="star star-2" id="star-2"
-																			type="radio" name="star" value="2"
-																			ng-model="formData.rating" />
-																		<label class="star star-2" for="star-2"></label>
-																		<input class="star star-1" id="star-1"
-																			type="radio" name="star" value="1"
-																			ng-model="formData.rating" />
-																		<label class="star star-1" for="star-1"></label>
-																		<textarea name="comment"
-																			ng-model="formData.comment" id="comment"
-																			cols="10" rows="3"
-																			placeholder="Chi tiết"></textarea>
-																	</form>
-																</div>
-															</div>
-														</div>
-													</div>
-													</p>
-													<label class="btn" for="modal-toggler" id="closeBtn"
-														ng-click="evaluate(orderdetail.product.id)">Đánh
-														giá</label>
-												</div>										
-										</div>
+										<!--											<input type="checkbox" id="modal-toggler">-->
+										<!--											<div id="overlay"></div>-->
+										<!--											<div id="modal-container">-->
+
+										<!--												<h2 style="font-family: Arial, Helvetica, sans-serif;">-->
+										<!--													Đánh-->
+										<!--													giá sản phẩm</h2>-->
+										<!--												<label type="button" class="close" aria-label="Close"-->
+										<!--													for="modal-toggler" id="closeBtn"><span class="ti-close"-->
+										<!--														aria-hidden="true"></span></label>-->
+										<!--												<p>-->
+										<!--												<div class="container d-flex justify-content-center">-->
+										<!--													<div class="row">-->
+										<!--														<div class="col-md-12">-->
+										<!--															<div class="stars">-->
+										<!--																<form action="">-->
+										<!--																	<input class="star star-5" id="star-5" type="radio"-->
+										<!--																		name="star" value="5"-->
+										<!--																		ng-model="formData.rating" />-->
+										<!--																	<label class="star star-5" for="star-5"></label>-->
+										<!--																	<input class="star star-4" id="star-4" type="radio"-->
+										<!--																		name="star" value="5"-->
+										<!--																		ng-model="formData.rating" />-->
+										<!--																	<label class="star star-4" for="star-4"></label>-->
+										<!--																	<input class="star star-3" id="star-3" type="radio"-->
+										<!--																		name="star" value="4"-->
+										<!--																		ng-model="formData.rating" />-->
+										<!--																	<label class="star star-3" for="star-3"></label>-->
+										<!--																	<input class="star star-2" id="star-2" type="radio"-->
+										<!--																		name="star" value="2"-->
+										<!--																		ng-model="formData.rating" />-->
+										<!--																	<label class="star star-2" for="star-2"></label>-->
+										<!--																	<input class="star star-1" id="star-1" type="radio"-->
+										<!--																		name="star" value="1"-->
+										<!--																		ng-model="formData.rating" />-->
+										<!--																	<label class="star star-1" for="star-1"></label>-->
+										<!--																	<textarea name="comment" ng-model="formData.comment"-->
+										<!--																		id="comment" cols="10" rows="3"-->
+										<!--																		placeholder="Chi tiết"></textarea>-->
+										<!--																</form>-->
+										<!--															</div>-->
+										<!--														</div>-->
+										<!--													</div>-->
+										<!--												</div>-->
+										<!--												</p>-->
+										<!--												<label class="btn" for="modal-toggler" id="closeBtn"-->
+										<!--													ng-click="evaluate(orderdetail.product.id)">Đánh-->
+										<!--													giá</label>-->
+										<!--											</div>-->
+										<!--										</div>-->
 									</div>
 
 									<hr>
@@ -523,16 +543,20 @@
 													style="color: #F35022; font-weight: bold;">{{item.order.totalamount
 													| number:0}} VNĐ</label></label>
 										</div>
-										
+
 									</div>
 
 									<div class="row">
 										<div class="col-lg-7"></div>
 										<div class="col-lg-5" style=" font-weight: bold;">
+											<button ng-click="showOrderDetail(item.order.id)"
+												class="btn btn-warning btn-lg"
+												style="color: white; border: 1px solid #757575;">Xem chi tiết</button>
 											<button ng-if="item.order.status.id === 3"
 												ng-click="changeStatusHT(item.order.id, 5)"
 												class="btn btn-default btn-lg"
-												style="color: #757575; border: 1px solid #757575;">Đã nhận được
+												style="background-color: orange;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: white;">Đã
+												nhận được
 												hàng</button>
 											<button ng-if="item.order.status.id === 1"
 												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
@@ -583,7 +607,7 @@
 											<label for="" style="color: #757575;">{{ orderdetail.product.category.name
 												}}
 											</label><br>
-											<label for="" style="font-size: 20px;">{{ orderdetail.quantity
+											<label for="" style="font-size: 20px;">x {{ orderdetail.quantity
 												}}</label>
 										</div>
 										<div class="col-lg-2">
@@ -591,59 +615,60 @@
 												{{ orderdetail.product.price | number:0}} VNĐ</label>
 										</div>
 										<div class="col-lg-2" style="padding-top: 50px;">
-									
-												<label for="modal-toggler" id="modal-toggler-label">Đánh giá</label>
 
-												<input type="checkbox" id="modal-toggler">
-												<div id="overlay"></div>
-												<div id="modal-container">
+											<label ng-click="evaluategetproduct(orderdetail.product.id)"
+												for="modal-toggler"
+												style="background-color: yellow;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: black;"
+												id="modal-toggler-label">Đánh giá</label>
+											<input type="checkbox" id="modal-toggler">
+											<div id="overlay"></div>
+											<div id="modal-container">
 
-													<h2 style="font-family: Arial, Helvetica, sans-serif;">
-														Đánh
-														giá sản phẩm</h2>
-													<label type="button" class="close" 
-														aria-label="Close" for="modal-toggler" id="closeBtn"><span class="ti-close"
-															aria-hidden="true" ></span></label>
-													<p>
-													<div class="container d-flex justify-content-center">
-														<div class="row">
-															<div class="col-md-12">
-																<div class="stars">
-																	<form action="">
-																		<input class="star star-5" id="star-5"
-																			type="radio" name="star" value="5"
-																			ng-model="formData.rating" />
-																		<label class="star star-5" for="star-5"></label>
-																		<input class="star star-4" id="star-4"
-																			type="radio" name="star" value="5"
-																			ng-model="formData.rating" />
-																		<label class="star star-4" for="star-4"></label>
-																		<input class="star star-3" id="star-3"
-																			type="radio" name="star" value="4"
-																			ng-model="formData.rating" />
-																		<label class="star star-3" for="star-3"></label>
-																		<input class="star star-2" id="star-2"
-																			type="radio" name="star" value="2"
-																			ng-model="formData.rating" />
-																		<label class="star star-2" for="star-2"></label>
-																		<input class="star star-1" id="star-1"
-																			type="radio" name="star" value="1"
-																			ng-model="formData.rating" />
-																		<label class="star star-1" for="star-1"></label>
-																		<textarea name="comment"
-																			ng-model="formData.comment" id="comment"
-																			cols="10" rows="3"
-																			placeholder="Chi tiết"></textarea>
-																	</form>
-																</div>
+												<h2 style="font-family: Arial, Helvetica, sans-serif;">
+													Đánh
+													giá sản phẩm</h2>
+												<label type="button" class="close " aria-label="Close"
+													for="modal-toggler" id="closeBtn"><span class="ti-close"
+														aria-hidden="true"></span></label>
+												<p>
+												<div class="container d-flex justify-content-center">
+													<div class="row">
+														<div class="col-md-12">
+															<div class="stars">
+																<form action="">
+																	<input class="star star-5" id="star-5" type="radio"
+																		name="star" value="5"
+																		ng-model="formData.rating" />
+																	<label class="star star-5" for="star-5"></label>
+																	<input class="star star-4" id="star-4" type="radio"
+																		name="star" value="4"
+																		ng-model="formData.rating" />
+																	<label class="star star-4" for="star-4"></label>
+																	<input class="star star-3" id="star-3" type="radio"
+																		name="star" value="3"
+																		ng-model="formData.rating" />
+																	<label class="star star-3" for="star-3"></label>
+																	<input class="star star-2" id="star-2" type="radio"
+																		name="star" value="2"
+																		ng-model="formData.rating" />
+																	<label class="star star-2" for="star-2"></label>
+																	<input class="star star-1" id="star-1" type="radio"
+																		name="star" value="1"
+																		ng-model="formData.rating" />
+																	<label class="star star-1" for="star-1"></label>
+																	<textarea name="comment" ng-model="formData.comment"
+																		id="comment" cols="10" rows="3"
+																		placeholder="Chi tiết"></textarea>
+																</form>
 															</div>
 														</div>
 													</div>
-													</p>
-													<label class="btn" for="modal-toggler" id="closeBtn"
-														ng-click="evaluate(orderdetail.product.id)">Đánh
-														giá</label>
-												</div>										
+												</div>
+												</p>
+												<label style="background-color: orange;" class="btn" for="modal-toggler"
+													id="closeBtn" ng-click="evaluate(orderdetail.product.id)">Đánh
+													giá</label>
+											</div>
 										</div>
 
 
@@ -669,11 +694,14 @@
 
 									<div class="row">
 										<div class="col-lg-7"></div>
-										<div class="col-lg-5" style=" font-weight: bold;">
+										<div class="col-lg-5" style=" font-weight: bold;"><button
+												ng-click="showOrderDetail(item.order.id)" class="btn btn-warning btn-lg"
+												style="color: white; border: 1px solid #757575;">Xem chi tiết</button>
 											<button ng-if="item.order.status.id === 3"
 												ng-click="changeStatusHT(item.order.id, 5)"
 												class="btn btn-default btn-lg"
-												style="color: #757575; border: 1px solid #757575;">Đã nhận được
+												style="background-color: orange;font-family: Arial, Helvetica, sans-serif;font-weight: bold;color: white;">Đã
+												nhận được
 												hàng</button>
 											<button ng-if="item.order.status.id === 1"
 												ng-click="changeStatus(item.order.id, 4)" class="btn btn-warning btn-lg"
@@ -687,7 +715,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 
 
 	</section>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/layoutad/layout::dynamic(~{::title},~{::body})}">
+
+<head>
+	<title>Quản lý combo</title>
+
+</head>
+
+<body class="vertical light" ng-app="app" ng-controller="combo-ctrl">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<div class="">
+		<div>
+
+			<!-- BẮT ĐẦU PHẦN NỘI DUNG CỦA CRUD VOUCHER -->
+			<main role="main" class="main-content">
+				<div class="container-fluid">
+					<div class="col-12" style="padding: 20px;">
+						<h2 class="mb-2 page-title">QUẢN LÝ COMBO</h2>
+						<div class="row my-4">
+							<!-- Small table -->
+							<div class="col-md-12">
+								<div class="card shadow">
+									<div class="card-body">
+										<div class="container" ng-show="hiddenform == true">
+											<div class="row justify-content-center align-items-center form-group">
+												<img ng-show="imgaedefault == true"
+													src="../../images/banner/default.png" style="border-radius: 10px;"
+													width="250px" height="250px">
+												<img ng-show="imgaedefault == false" width="450px" height="350px"
+													src="../../images/banner/{{form.image}}" class="img-thumbnail"
+													alt="Responsive image">
+											</div>
+										</div>
+										<div ng-show="hiddenform == true" class="input-group form-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text" id="inputGroupFileAddon01">Tải lên</span>
+											</div>
+											<div class="custom-file">
+												<input type="file" class="custom-file-input"
+													aria-describedby="inputGroupFileAddon01" id="image"
+													ng-model="form.image"
+													onchange="angular.element(this).scope().imageChanged(this.files)"
+													accept="image/png, image/jpeg">
+												<label class="custom-file-label" for="inputGroupFile01">Chọn
+													hình</label>
+											</div>
+										</div>
+										<form ng-show="hiddenform == true" class="form-group">
+											<div class="form-row">
+												<div hidden="hidden" class="form-group col-md-6">
+													<label for="id">Mã combo</label>
+													<input type="text" class="form-control" id="id" ng-model="form.id">
+												</div>
+
+												<div class="form-group col-md-6">
+													<label for="name">Tên combo</label>
+													<input type="text" class="form-control" id="name"
+														ng-model="form.name" placeholder="Nhập tên combo">
+												</div>
+
+												<div class="form-group col-md-6">
+													<label for="sale">Giảm (%)</label>
+													<input type="text" class="form-control" id="sale"
+														ng-model="form.sale" placeholder="Nhập % giảm giá của combo">
+												</div>
+											</div>
+											<div class="form-row">
+												<div class="form-group col-md-6">
+													<label for="datestart">Thời gian áp dụng</label>
+													<input type="date" class="form-control" ng-model="form.startdate"
+														id="datestart"
+														oninput="document.getElementById('showNgayBatDau').textContent = 'Ngày bắt đầu: ' + (this.value ? new Date(this.value).toLocaleDateString('vi-VN') : '');">
+												</div>
+												<div class="form-group col-md-6">
+													<label for="dateend">Thời gian hết hạn</label>
+													<input type="date" class="form-control" ng-model="form.enddate"
+														id="dateend"
+														oninput="document.getElementById('showNgayHetHan').textContent = 'Ngày hết hạn: ' + (this.value ? new Date(this.value).toLocaleDateString('vi-VN') : '');">
+												</div>
+											</div>
+										</form>
+										<hr>
+										<div class="row" ng-show="addprocombo == true">
+											<div class="col">
+												<div class="list-group">
+													<div href="#" class="list-group-item active">
+														DANH SÁCH SẢN PHẨM
+													</div>
+													<div class="form-group">
+														<hr>
+														<div class="form-group col-auto"> <input type="text"
+																ng-change="submitFormProduct()" ng-model="searchKeyword"
+																class="form-control" id="search1" value=""
+																placeholder="Nhập tên sản phẩm cần tìm..."></div>
+													</div>
+													<table class="table table-hover">
+
+														<tbody>
+															<tr ng-repeat="item in pager.itempros">
+																<td><strong>{{item.id}}</strong></td>
+																<td>
+																	<div class="avatar avatar-md">
+																		<img src="../../images/product/{{item.product.image}}"
+																			width="80px" height="50px"
+																			style="border-radius: 10px;">
+																	</div>
+																</td>
+																<td><strong>{{item.product.name}}</strong></td>
+																<td>
+																	<p class="mb-0 text-muted">
+																		<strong>{{item.weight.weightvalue}}</strong>
+																	</p>
+																</td>
+																<td>
+																	<p class="mb-0 text-muted">
+																		{{item.price | number :0}} VNĐ</p>
+																</td>
+																<td><a ng-click="add_pro_in_combo(item,form.id)"><i
+																			style="color: #00FF00;font-size: 20px;"
+																			class="bi bi-plus-circle"></i></a></td>
+															</tr>
+														</tbody>
+													</table>
+
+												</div>
+												<nav aria-label="Table Paging" class="mb-0 text-muted">
+													<ul class="pagination justify-content-center mb-0">
+														<li class="page-item"><a class="page-link"
+																ng-click="pager.prev()">Trang
+																sau</a></li>
+														<li ng-show="pager.page != 0" class="page-item"><a
+																class="page-link"
+																ng-click="pager.prev()">{{pager.page}}</a></li>
+														<li class="page-item active"><a
+																class="page-link">{{pager.page + 1 }}</a>
+														</li>
+														<li ng-show="pager.page != pager.count - 1" class="page-item"><a
+																class="page-link"
+																ng-click="pager.next()">{{pager.page + 2}}</a>
+														</li>
+														<li class="page-item"><a class="page-link"
+																ng-click="pager.next()">Trang trước</a></li>
+													</ul>
+												</nav>
+											</div>
+
+											<div class="col">
+												<div class="list-group">
+													<div href="#" class="list-group-item active">
+														DANH SÁCH SẢN PHẨM THÀNH COMBO
+													</div>
+													<table class="table table-hover">
+														<tbody>
+															<tr ng-repeat="item in itemproductcombos">
+																<td>
+																	<div class="avatar avatar-md">
+																		<img src="../../images/product/{{item.productweight.product.image}}"
+																			width="80px" height="50px"
+																			style="border-radius: 10px;">
+																	</div>
+																</td>
+																<td>{{item.productweight.product.name}}</td>
+																<td>{{item.productweight.weight.weightvalue}}</td>
+																<td>{{item.productweight.price | number :0}} VNĐ</td>
+																<td><a ng-click="deleteproductcombos(item.id,item.combo.id)"><i style="color: red;font-size: 20px;"
+																			class="bi bi-dash-circle"></i></a></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<nav aria-label="Table Paging" class="mb-0 text-muted">
+
+												</nav>
+											</div>
+										</div>
+										<hr>
+										<div class="form-group" ng-show="hiddenbutton == false">
+											<button ng-show="hiddenthem == false" style="color: white; font-weight: bold;" type="submit"
+												ng-click="createcombo(form)" class="btn btn-success">Thêm</button>
+											<button ng-show="hiddensua == false" style="color: white; font-weight: bold;" type="submit"
+												ng-click="update()" class="btn btn-warning">Cập nhật</button>
+											<button ng-show="hiddenxoa == false" style="color: white; font-weight: bold;" type="submit"
+												ng-click="delcombo()" class="btn btn-danger">Xóa</button>
+											<button style="color: white; font-weight: bold;" type="submit"
+												ng-click="reset_smooth_table()" class="btn btn-primary">Reset</button>
+										</div>
+										<div style="float: right;" ng-show="hiddenhiddentotal == false">
+											<label for="">Combo -{{form.sale}}% tổng tiền: </label> <input style="border: white;"
+												class="text-center" type="text" readonly="true" ng-model="form.price - ((form.price/100)*form.sale) | number : 00"> VND
+										</div>
+
+									</div>
+
+								</div>
+
+							</div> <!-- simple table -->
+
+						</div> <!-- end section -->
+
+
+
+
+
+					</div> <!-- .col-12 -->
+
+
+
+					<div class="col-md-12 my-4">
+						<h2 class="h4 mb-1">DANH SÁCH COMBO ĐÃ TẠO</h2>
+						<p class="mb-3"></p>
+						<div class="card shadow">
+							<div class="card-body">
+								<div class="toolbar">
+									<form class="form">
+										<div class="form-row">
+
+											<div class="form-group col-auto">
+												<label for="search" class="sr-only">Search</label>
+												<div class="form-group col-auto"> <input type="text"
+														ng-change="submitFormCombo()" ng-model="searchKeyword"
+														class="form-control" id="search1" value=""
+														placeholder="Nhập tên combo cần tìm..."></div>
+											</div>
+										</div>
+									</form>
+								</div>
+								<!-- table -->
+								<table class="table table-hover col-12">
+									<thead>
+										<tr>
+											<th scope="col">Hình ảnh</th>
+											<th scope="col">Tên combo</th>
+											<th scope="col">Ngày bất đầu </th>
+											<th scope="col">Ngày kết thúc</th>
+											<th scope="col">Giảm (%)</th>
+											<th scope="col">Giá tiền</th>
+											<th scope="col">Công cụ</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="item in pagercombo.itemcombos">
+											<td>
+												<div class="avatar avatar-md">
+													<img src="../../images/banner/{{item.image}}" width="80px"
+														height="50px" style="border-radius: 10px;">
+												</div>
+											</td>
+											<td>
+												<p class="mb-0 text-muted">
+													<strong>{{item.name}}</strong>
+												</p>
+											</td>
+											<td>
+												<p class="mb-0 text-muted">
+													<strong>{{item.enddate}}</strong>
+												</p>
+											</td>
+											<td>
+												<p class="mb-0 text-muted">
+													<strong>{{item.enddate}}</strong>
+												</p>
+											</td>
+											<td>
+												<p class="mb-0 text-muted">{{item.sale}}</p>
+											</td>
+											<td>
+												<p class="mb-0 text-muted">{{item.price}}</p>
+											</td>
+											<td><button style="color: white; font-weight: bold;" type="submit"
+													ng-click="listproductcombo(item.id)" class="btn btn-warning">Sảm
+													phẩm</button>
+												<button style="color: white; font-weight: bold;" type="submit"
+													ng-click="formcombo(item.id)" class="btn btn-warning">combo</button>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+								<nav aria-label="Table Paging" class="mb-0 text-muted">
+									<ul class="pagination justify-content-center mb-0">
+										<li class="page-item"><a class="page-link" ng-click="pagercombo.prev()">Trang
+												sau</a></li>
+										<li ng-show="pagercombo.pagercombo != 0" class="page-item"><a class="page-link"
+												ng-click="pagercombo.prev()">{{pagercombo.pagercombo}}</a></li>
+										<li class="page-item active"><a
+												class="page-link">{{pagercombo.pagercombo + 1 }}</a>
+										</li>
+										<li ng-show="pagercombo.pagercombo != pagercombo.count - 1" class="page-item"><a
+												class="page-link"
+												ng-click="pagercombo.next()">{{pagercombo.pagercombo + 2}}</a>
+										</li>
+										<li class="page-item"><a class="page-link" ng-click="pagercombo.next()">Trang
+												trước</a></li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</div> <!-- customized table -->
+</body>
+
+</html>

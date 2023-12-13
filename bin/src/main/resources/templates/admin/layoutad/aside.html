@@ -7,165 +7,187 @@
 </head>
 
 <body>
-<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
-        <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
-          <i class="fe fe-x"><span class="sr-only"></span></i>
-        </a>
-        <nav class="vertnav navbar navbar-light">
-          <!-- nav bar -->
-          <div class="w-100 mb-4 d-flex">
-            <img src="../../images/logo_noback.png" width="150px">
-          </div>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item">
-              <a href="/admin" class="nav-link">
-                <i class="fe fe-home fe-16"></i>
-                <span class="ml-3 item-text">Trang chính</span><span class="sr-only">(current)</span>
-              </a>
-              
-            </li>
-          </ul>
+	<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+		<a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+			<i class="fe fe-x"><span class="sr-only"></span></i>
+		</a>
+		<nav class="vertnav navbar navbar-light">
+			<!-- nav bar -->
+			<div class="w-100 mb-4 d-flex">
+				<a href="/admin"><img src="../../images/logo_noback.png" width="150px"></a>
+
+			</div>
+			<ul class="navbar-nav flex-fill w-100 mb-2">
+				<li class="nav-item">
+					<a href="/admin" class="nav-link">
+						<i class="fe fe-home fe-16"></i>
+						<span class="ml-3 item-text">Trang chính</span><span class="sr-only">(current)</span>
+					</a>
+
+				</li>
+			</ul>
 
 
-         <p class="text-muted nav-heading mt-4 mb-1">
-            <span>Quản lý tài khoản</span>
-        </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
-              <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fa fa-user" aria-hidden="true"></i>
-                <i class="fe fe-user fe-16"></i>
-                <span class="ml-3 item-text">Tài khoản</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="forms">
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/admin/account}"><i class="bi bi-person-gear"></i> Công cụ</span></a>
-                </li>
+			<p class="text-muted nav-heading mt-4 mb-1">
+				<span>Quản lý tài khoản</span>
+			</p>
+			<ul class="navbar-nav flex-fill w-100 mb-2">
+				<li class="nav-item dropdown">
+					<a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
 
-                <li class="nav-item">
-                  <a class="nav-link pl-3" th:href="@{/admin/authority}"><i class="bi bi-person-lock"></i> Phân quyền tài khoản</span></a>
-                </li>
+						<i class="fe fe-user fe-16"></i>
+						<span class="ml-3 item-text">Tài khoản</span>
+					</a>
+					<ul class="collapse list-unstyled pl-4 w-100" id="forms">
+						<li class="nav-item">
+							<a class="nav-link pl-3" th:href="@{/admin/account}"><i class="bi bi-person-gear"></i> Công
+								cụ</span></a>
+						</li>
 
-              
-              </ul>
-              
-            </li>
-
-          
-            
-            <p class="text-muted nav-heading mt-4 mb-1">
-              <span>Quản lý sản phẩm</span>
-          </p>
-           
-            <li class="nav-item w-100">
-              <a class="nav-link" th:href="@{/admin/voucher}">
-                <i class="bi bi-currency-dollar"></i>
-                <span class="ml-3 item-text"> Mã giảm giá</span>
-              </a>
-            </li>
-            <li class="nav-item w-100">
-              <a class="nav-link" th:href="@{/admin/discount}">
-                <i class="bi bi-bag-fill"></i>
-                <span class="ml-3 item-text">Giảm giá sản phẩm</span>
-              </a>
-            </li>
-            <li class="nav-item w-100">
-              <a class="nav-link" th:href="@{/admin/category}">
-                <i class="bi bi-basket2"></i>
-                <span class="ml-3 item-text">Loại sản phẩm</span>
-              </a>
-            </li>
-
-            <p class="text-muted nav-heading mt-4 mb-1">
-              <span>Vận chuyển, xử lý đơn</span>
-          </p>
-
-            <li class="nav-item w-100">
-              <a class="nav-link" th:href="@{/admin/order}">
-                <i class="bi bi-box-seam"></i>
-                <span class="ml-3 item-text">Đơn hàng</span>
-              </a>
-            </li>
-              <li class="nav-item w-100">
-              <a class="nav-link" th:href="@{/admin/statusor}">
-                <i class="bi bi-box-seam"></i>
-                <span class="ml-3 item-text">Trạng thái</span>
-              </a>
-            
-
-            <p class="text-muted nav-heading mt-4 mb-1">
-              <span>Thống kê</span>
-          </p>
-            <li class="nav-item dropdown">
-              <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="bi bi-card-heading"></i>
-                <span class="ml-3 item-text">Thống kê sản phẩm</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="tables">
-                <li class="nav-item">	
-                  <a class="nav-link pl-3" th:href="@{/admin/static/evaluate}" ng-click="staticevaluate()"><span class="ml-1 item-text"><i class="bi bi-star"></i> Đánh giá sản phẩm</span></a>
-                </li>
-               
-                <li class="nav-item">
-                  <a class="nav-link pl-3"  th:href="@{/admin/static/product}"><span class="ml-1 item-text"><i class="bi bi-minecart-loaded"></i> Sản phẩm</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3"  th:href="@{/admin/static/category}"><span class="ml-1 item-text"><i class="bi bi-cart-dash"></i> Theo loại</span></a>
-                </li>
-                
-              </ul>
-              <a href="#ds" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="fe fe-grid fe-16"></i>
-                <span class="ml-3 item-text">Thống kê đơn, yêu thích</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="ds">
-                <li class="nav-item">
-                  <a class="nav-link pl-3"  th:href="@{/admin/static/favorite}"><span class="ml-1 item-text"><i class="bi bi-box2-heart"></i> Thông kê yêu thích </span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3"  th:href="@{/admin/static/order}"><span class="ml-1 item-text"><i class="bi bi-cart-plus"></i> Thông kê đơn hàng</span></a>
-                </li>
-              </ul>
-
-            </li>
+						<li th:if="${#request.isUserInRole('DIRE')}" class="nav-item">
+							<a class="nav-link pl-3" th:href="@{/admin/authority}"><i class="bi bi-person-lock"></i>
+								Phân quyền tài khoản</span></a>
+						</li>
 
 
-          </ul>
+					</ul>
 
-         
-         
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>Quản lý sản phẩm</span>
-          </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item dropdown">
-              <a href="#product" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-                <i class="bi bi-box-seam-fill"></i>
-                <span class="ml-3 item-text">Sản phẩm</span>
-              </a>
-              <ul class="collapse list-unstyled pl-4 w-100" id="product">
-                <a class="nav-link pl-3" href="/admin/product"><span class="ml-1"><i class="bi bi-list-check"></i> Danh sách sản phẩm</span></a>
-                <a class="nav-link pl-3" href="/admin/weight"><span class="ml-1"><i class="bi bi-card-list"></i> Danh sách trọng lượng sản phẩm</span></a>
-                 <a class="nav-link pl-3" th:href="@{/admin/weightvalue}"><span class="ml-1"><i class="bi bi-card-list"></i> Danh sách trọng lượng</span></a>
-                
-              </ul>
-            </li>
-           
-           
-            
-          </ul>
-         
-         
-       
-          
-         
-          <div class="btn-box w-100 mt-4 mb-1">
-            <a th:href="@{/auth/logout}" class="btn mb-2 btn-primary btn-lg btn-block">
-              <i class="bi bi-box-arrow-left" ></i> Đăng xuất
-            </a>
-          </div>
-        </nav>
-      </aside>
-      </body>
+				</li>
+
+				<p class="text-muted nav-heading mt-4 mb-1">
+					<span>Hình ảnh banner</span>
+				</p>
+				<li class="nav-item w-100">
+					<a class="nav-link" th:href="@{/admin/banner}">
+						<i class="bi bi-images"></i>
+						<span class="ml-3 item-text">Banner</span>
+					</a>
+				</li>
+
+
+				<p class="text-muted nav-heading mt-4 mb-1">
+					<span>Quản lý sản phẩm</span>
+				</p>
+
+				<li class="nav-item w-100">
+					<a class="nav-link" th:href="@{/admin/voucher}">
+						<i class="bi bi-currency-dollar"></i>
+						<span class="ml-3 item-text"> Mã giảm giá</span>
+					</a>
+				</li>
+				<li class="nav-item w-100">
+					<a class="nav-link" th:href="@{/admin/discount}">
+						<i class="bi bi-bag-fill"></i>
+						<span class="ml-3 item-text">Giảm giá sản phẩm</span>
+					</a>
+				</li>
+				<li class="nav-item w-100">
+					<a class="nav-link" th:href="@{/admin/category}">
+						<i class="bi bi-basket2"></i>
+						<span class="ml-3 item-text">Loại sản phẩm</span>
+					</a>
+				</li>
+				<li class="nav-item w-100">
+					<a class="nav-link" th:href="@{/admin/combo}">
+						<i class="bi bi-boxes"></i>
+						<span class="ml-3 item-text">Quản lý combo</span>
+					</a>
+				</li>
+
+
+				<p class="text-muted nav-heading mt-4 mb-1">
+					<span>Vận chuyển, xử lý đơn</span>
+				</p>
+
+				<li class="nav-item w-100">
+					<a class="nav-link" th:href="@{/admin/order}">
+						<i class="bi bi-box-seam"></i>
+						<span class="ml-3 item-text">Đơn hàng</span>
+					</a>
+				</li>
+				<li class="nav-item w-100">
+					<a class="nav-link" th:href="@{/admin/statusor}">
+						<i class="bi bi-app-indicator"></i>
+						<span class="ml-3 item-text">Trạng thái</span>
+					</a>
+
+
+					<p th:if="${#request.isUserInRole('DIRE')}" class="text-muted nav-heading mt-4 mb-1">
+						<span>Thống kê</span>
+					</p>
+				<li class="nav-item dropdown" th:if="${#request.isUserInRole('DIRE')}">
+					<a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+						<i class="bi bi-card-heading"></i>
+						<span class="ml-3 item-text">Thống kê sản phẩm</span>
+					</a>
+					<ul class="collapse list-unstyled pl-4 w-100" id="tables">
+						<li class="nav-item">
+							<a class="nav-link pl-3" th:href="@{/admin/static/evaluate}"
+								ng-click="staticevaluate()"><span class="ml-1 item-text"><i class="bi bi-star"></i> Đánh
+									giá sản phẩm</span></a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link pl-3" th:href="@{/admin/static/product}"><span class="ml-1 item-text"><i
+										class="bi bi-minecart-loaded"></i> Sản phẩm</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link pl-3" th:href="@{/admin/static/category}"><span class="ml-1 item-text"><i
+										class="bi bi-cart-dash"></i> Theo loại</span></a>
+						</li>
+
+					</ul>
+					<a href="#ds" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+						<i class="fe fe-grid fe-16"></i>
+						<span class="ml-3 item-text">Thống kê đơn, yêu thích</span>
+					</a>
+					<ul class="collapse list-unstyled pl-4 w-100" id="ds">
+						<li class="nav-item">
+							<a class="nav-link pl-3" th:href="@{/admin/static/favorite}"><span class="ml-1 item-text"><i
+										class="bi bi-box2-heart"></i> Thông kê yêu thích </span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link pl-3" th:href="@{/admin/static/order}"><span class="ml-1 item-text"><i
+										class="bi bi-cart-plus"></i> Thông kê đơn hàng</span></a>
+						</li>
+					</ul>
+
+				</li>
+
+
+			</ul>
+
+
+
+			<p class="text-muted nav-heading mt-4 mb-1">
+				<span>Quản lý sản phẩm</span>
+			</p>
+			<ul class="navbar-nav flex-fill w-100 mb-2">
+				<li class="nav-item dropdown">
+					<a href="#product" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+						<i class="bi bi-box-seam-fill"></i>
+						<span class="ml-3 item-text">Sản phẩm</span>
+					</a>
+					<ul class="collapse list-unstyled pl-4 w-100" id="product">
+						<a class="nav-link pl-3" href="/admin/product"><span class="ml-1"><i
+									class="bi bi-list-check"></i> Danh sách sản phẩm</span></a>
+						<a class="nav-link pl-3" href="/admin/weight"><span class="ml-1"><i class="bi bi-card-list"></i>
+								DS trọng lượng SP</span></a>
+						<a class="nav-link pl-3" th:href="@{/admin/weightvalue}"><span class="ml-1"><i
+									class="bi bi-list-ul"></i> Danh sách trọng lượng</span></a>
+
+					</ul>
+				</li>
+
+			</ul>
+
+			<div class="btn-box w-100 ">
+				<a th:href="@{/auth/logout}" class="btn mb-2 btn-primary btn-lg btn-block">
+					<i class="bi bi-box-arrow-left"></i> Đăng xuất
+				</a>
+			</div>
+		</nav>
+	</aside>
+</body>
 
 </html>

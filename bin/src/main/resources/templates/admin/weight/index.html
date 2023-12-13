@@ -2,165 +2,174 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/layoutad/layout::dynamic(~{::title},~{::body})}">
 
 <head>
-    <title>Trọng lượng</title>
+	<title>Trọng lượng</title>
 </head>
 
 <body class="vertical light" ng-app="app" ng-controller="product-ctrl">
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <div>
-        <div class="row flex-lg-nowrap">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<div>
+		<div class="row flex-lg-nowrap">
 
-            <main role="main" class="main-content">
-                <div class="container-fluid">
-                    <div class="row justify-content-center">
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group img-thumbnail" style="padding-left: 50px;">
-                                        <img src="../../images/product/{{productweight.product.image}}"
-                                            style="border-radius: 10px;" width="250px" height="250px">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group" hidden="hidden">
-                                        <label for="">Mã sản phẩm: </label>
-                                        <input type="text" ng-model="productweight.product.id" class="form-control" readonly="readonly" style="background-color: white;"></input>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Tên sản phẩm: </label>
-                                        <input type="text" ng-model="productweight.product.name" class="form-control" readonly="readonly" style="background-color: white;"></input>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Giá tiền:</label>
-                                        <input class="form-control" ng-model="productweight.price"></input>
-                                    </div>
-                                    <h5 class="title ng-scope">Trọng lượng</h5>
-                                    <div class="form-group custom-radio">
-										
-                                        <div class="radio-container" ng-repeat="item in productweights">
-                                          <input id="{{item.weight.weightvalue}}"
-                                                 ng-click="weightquantityandprice(item.product.id, item.weight.id)"
-                                                 type="radio" name="weight" ng-value="{{item.weight.weightvalue}}"
-                                                 style="display: none;"> <!-- Ẩn input radio -->
-                                      
-                                          <label ng-if="item.weight.weightvalue"
-                                                 class="radio-label"
-                                                 ng-class="{'selected': weightvalue === item.weight.weightvalue}"
-                                                 for="{{item.weight.weightvalue}}">
-                                            {{item.weight.weightvalue}}
-                                          </label>
-                                        </div>
-                                      
-                                        <div class="radio-container">
-                                          <input type="radio" name="weight" id="create" ng-click="resetformw()" ng-model="showbtn_them"
-                                                 style="display: none;"> <!-- Ẩn input radio -->
-                                          <label for="create" class="create-label" ng-class="{'selected-create': showbtn_them}">
-                                            Thêm
-                                          </label>
-                                        </div>
-                                      </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label>Loại sản phẩm</label>
-                                        <input type="text" ng-model="productweight.product.category.name" class="form-control" readonly="readonly" style="background-color: white;"></input>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Số lượng:</label>
-                                        <input ng-model="productweight.quantity" class="form-control"></input>
-                                    </div><br>
-                                    <div class="form-group">
-                                        <select ng-show="showsel == true" class="custom-select mr-sm-2"
-                                            ng-model="productweight.weight.id">
-                                            <option value="">Chọn trọng lượng sản phẩm</option>
-                                            <option ng-repeat="w in weight" ng-value="{{w.id}}" >{{w.weightvalue}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <a ng-show="showbtn_addweight == true" ng-click="addweight(productweight)" class="btn btn-danger">Thêm</a>
-                                        <a ng-show="showbtn_del_upd == true" ng-click="updateweight()" class="btn btn-danger">Sửa </a>
-                                        <a ng-show="showbtn_del_upd == true" class="btn btn-danger" ng-click="deleteweight(productweight.product.id)">Xóa</a>
-                                    </div>
-                                </div>
-                                <!-- Small table -->
-                                <div class="col-md-12 my-4">
-                                    <h2 class="h4 mb-1">Danh sách trọng lượng sản phẩm</h2>
-                                    <div class="card shadow">
-                                        <div class="card-body">
-                                            <div class="toolbar">
-                                                <form class="form">
-                                                    <div class="form-row">
-                                                        <div class="form-group col-auto mr-auto">
-                                                       
-                                                        </div>
-                                                        <div class="form-group col-auto">
-                                                            <label for="search" class="sr-only">Search</label>
-                                                            <input type="text" class="form-control" id="search1"
-                                                                value="" placeholder="Search">
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- table -->
-                                            <table class="table table-borderless table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Id</th>
-                                                        <th>Hình ảnh</th>
-                                                        <th>Tên sản phẩm</th>
-                                                        <th>Loại sản phẩm</th>
-                                                        <th>Giá tiền</th>
-                                                        <th>Trọng lượng</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+			<main role="main" class="main-content">
+				<div class="container-fluid">
+					<div class="row justify-content-center">
+						<div class="col-12">
+							<div class="row">
+								<div class="col-lg-4">
+									<div ng-if="imgaedefault == false" class="form-group img-thumbnail">
+										<img src="../../images/product/{{productweight.product.image}}" class="container"
+											style="border-radius: 10px;" width="250px" height="250px">
+									</div>
+									<div ng-if="imgaedefault == true" class="form-group img-thumbnail">
+										<img src="../../images/product/default.png" style="border-radius: 10px;" class="container"
+											width="250px" height="250px">
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<div class="form-group" hidden="hidden">
+										<label for="">Mã sản phẩm: </label>
+										<input type="text" ng-model="productweight.product.id" class="form-control"
+											readonly="readonly" style="background-color: white;"></input>
+									</div>
+									<div class="form-group">
+										<label for="">Tên sản phẩm: </label>
+										<input type="text" ng-model="productweight.product.name" class="form-control"
+											readonly="readonly" style="background-color: white;"></input>
+									</div>
+									<div class="form-group">
+										<label for="">Giá tiền:</label>
+										<input class="form-control" ng-model="productweight.price"></input>
+									</div>
+									<h5 class="title ng-scope">Trọng lượng</h5>
+									<div class="form-group custom-radio">
 
-                                                    <tr ng-repeat="item in pager.itempros">
-                                                        <td><strong>{{item.id}}</strong></td>
-                                                        <td>
-                                                            <div class="avatar avatar-md">
-                                                                <img src="../../images/product/{{item.image}}"
-                                                                    width="80px" height="50px"
-                                                                    style="border-radius: 10px;">
-                                                            </div>
-                                                        </td>
-                                                        <td><strong>{{item.name}}</strong></td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted">
-                                                                <strong>{{item.category.name}}</strong></p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0 text-muted">{{item.price}}</p>
-                                                        </td>
-                                                        <td>
-                                                            <a ng-click="weightadmin(item.id,item.price)"
-                                                                class="btn btn-warning">Đơn vị</a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <nav aria-label="Table Paging" class="mb-0 text-muted">
-                                                <ul class="pagination justify-content-center mb-0">
-                                                    <li class="page-item"><a class="page-link"
-                                                            ng-click="pager.prev()">Previous</a></li>
-                                                    <li class="page-item"><a class="page-link">{{pager.page}}</a></li>
-                                                    <li class="page-item active"><a
-                                                            class="page-link">{{pager.page + 1 }}</a></li>
-                                                    <li class="page-item"><a class="page-link">{{pager.page + 2}}</a>
-                                                    </li>
-                                                    <li class="page-item"><a class="page-link"
-                                                            ng-click="pager.next()">Next</a></li>
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </div>
-                                </div> <!-- customized table -->
-                            </div> <!-- end section -->
+										<div class="radio-container" ng-repeat="item in productweights">
+											<input id="{{item.weight.weightvalue}}"
+												ng-click="weightquantityandprice(item.product.id, item.weight.id)"
+												type="radio" name="weight" ng-value="{{item.weight.weightvalue}}"
+												style="display: none;"> <!-- Ẩn input radio -->
 
-            </main> <!-- main -->
+											<label ng-if="item.weight.weightvalue" class="radio-label"
+												ng-class="{'selected': weightvalue === item.weight.weightvalue}"
+												for="{{item.weight.weightvalue}}">
+												{{item.weight.weightvalue}}
+											</label>
+										</div>
+
+										<div class="radio-container">
+											<input type="radio" name="weight" id="create" ng-click="resetformw()"
+												ng-model="showbtn_them" style="display: none;"> <!-- Ẩn input radio -->
+											<label for="create" class="create-label"
+												ng-class="{'selected-create': showbtn_them}">
+												Thêm
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<div class="form-group">
+										<label>Loại sản phẩm</label>
+										<input type="text" ng-model="productweight.product.category.name"
+											class="form-control" readonly="readonly"
+											style="background-color: white;"></input>
+									</div>
+									<div class="form-group">
+										<label for="">Số lượng:</label>
+										<input ng-model="productweight.quantity" class="form-control"></input>
+									</div><br>
+									<div class="form-group">
+										<select ng-show="showsel == true" class="custom-select mr-sm-2"
+											ng-model="productweight.weight.id">
+											<option value="">Chọn trọng lượng sản phẩm</option>
+											<option ng-repeat="w in weight" ng-value="{{w.id}}">{{w.weightvalue}}
+											</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<a style="color: white;font-weight: bold;" ng-show="showbtn_addweight == true"
+											ng-click="addweight(productweight)" class="btn btn-danger">Thêm</a>
+										<a style="color: white;font-weight: bold;" ng-show="showbtn_del_upd == true"
+											ng-click="updateweight()" class="btn btn-danger">Sửa </a>
+										<a style="color: white;font-weight: bold;" ng-show="showbtn_del_upd == true"
+											class="btn btn-danger"
+											ng-click="deleteweight(productweight.product.id)">Xóa</a>
+									</div>
+								</div>
+								<!-- Small table -->
+								<div class="col-md-12 my-4">
+									<h2 class="h4 mb-1">Danh sách trọng lượng sản phẩm</h2>
+									<div class="card shadow">
+										<div class="card-body">
+											<div class="toolbar">
+												<form class="form">
+													<div class="form-row">
+														<div class="form-group col-auto mr-auto">
+
+														</div>
+															<div class="form-group col-auto"> <input type="text"
+														ng-change="submitFormProduct()" ng-model="searchKeyword"
+														class="form-control" id="search1" value=""
+														placeholder="Tìm kiếm"></div>
+													</div>
+												</form>
+											</div>
+											<!-- table -->
+											<table class="table table-borderless table-hover">
+												<thead>
+													<tr>
+														<th>Id</th>
+														<th>Hình ảnh</th>
+														<th>Tên sản phẩm</th>
+														<th>Loại sản phẩm</th>
+														<th>Giá tiền</th>
+														<th>Trọng lượng</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+
+													<tr ng-repeat="item in pager.itempros">
+														<td><strong>{{item.id}}</strong></td>
+														<td>
+															<div class="avatar avatar-md">
+																<img src="../../images/product/{{item.image}}"
+																	width="80px" height="50px"
+																	style="border-radius: 10px;">
+															</div>
+														</td>
+														<td><strong>{{item.name}}</strong></td>
+														<td>
+															<p class="mb-0 text-muted">
+																<strong>{{item.category.name}}</strong>
+															</p>
+														</td>
+														<td>
+															<p class="mb-0 text-muted">{{item.price}}</p>
+														</td>
+														<td>
+															<a style="color: white;font-weight: bold;"
+																ng-click="weightadmin(item.id,item.price)"
+																class="btn btn-warning">Đơn vị</a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<nav aria-label="Table Paging" class="mb-0 text-muted">
+												<ul class="pagination justify-content-center mb-0">
+													<li class="page-item"><a class="page-link" ng-click="pager.prev()">Trang sau</a></li>
+													<li ng-show="pager.page != 0" class="page-item"><a class="page-link" ng-click="pager.prev()">{{pager.page}}</a></li>
+													<li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a></li>
+													<li ng-show="pager.page != pager.count - 1" class="page-item"><a class="page-link" ng-click="pager.next()">{{pager.page + 2}}</a></li>
+													<li class="page-item"><a class="page-link" ng-click="pager.next()">Trang trước</a></li>
+												  </ul>
+											</nav>
+										</div>
+									</div>
+								</div> <!-- customized table -->
+							</div> <!-- end section -->
+
+			</main> <!-- main -->
 
 
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(title,view)">
+	<link rel="icon" type="image/png" href="../../images/icon_dav.png">
 
 <head>
 	<meta charset="UTF-8">
@@ -437,6 +438,88 @@
 			border-color: #ff2b00;
 			border-radius: 1px
 		}
+		#snowflakeContainer{position:absolute;left:0px;top:0px;}
+	.snowflake{padding-left:15px;font-size:14px;line-height:24px;position:fixed;color:#ebebeb;user-select:none;z-index:1000;-moz-user-select:none;-ms-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
+	.snowflake:hover {cursor:default}
+  body {
+     
+    }
+
+    @media (min-width: 768px) {
+      body {
+      
+      }
+    }
+
+    .navbar-brand img {
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    .jumbotron {
+      background-color: #f8f9fa;
+      padding: 2rem;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: #343a40;
+    }
+
+    h2 {
+     
+      padding-bottom: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* Add your custom styles here */
+
+    .container {
+      max-width: 800px;
+    }
+	.custom-link {
+  background-image: linear-gradient(
+    to right,
+    #F35022,
+    #F35022 50%,
+    #000 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+  display: inline-block;
+  padding: 5px 0;
+  position: relative;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-link:before {
+  content: '';
+  background: #54b3d6;
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.custom-link:hover {
+  background-position: 0;
+}
+
+.custom-link:hover::before {
+  width: 100%;
+}
+
 	</style>
 </head>
 <div th:replace="~{/layout/boostrap.html}"></div>
@@ -463,6 +546,8 @@
 			s[0].parentNode.insertBefore(ga, s[0]);
 		})();
 	</script>
+	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 </body>
 
 </html>

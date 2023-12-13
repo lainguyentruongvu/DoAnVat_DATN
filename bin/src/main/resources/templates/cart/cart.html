@@ -7,7 +7,7 @@
 
 </head>
 
-<body class="js">
+<body class="js" style="font-family: Arial, Helvetica, sans-serif;">
 
 	<!-- Breadcrumbs -->
 	<div class="breadcrumbs">
@@ -16,8 +16,8 @@
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="blog-single.html">Cart</a></li>
+							<li><a href="/">Trang chủ<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="/cart">Giỏ hàng</a></li>
 						</ul>
 					</div>
 				</div>
@@ -25,31 +25,43 @@
 		</div>
 	</div>
 	<!-- End Breadcrumbs -->
-
+	<div ng-if="!cartdetails || cartdetails.length === 0">
+		<!-- Hình ảnh hoặc thông báo khi orderuser rỗng -->
+		<img src="../images/khongcodonhang.jpg" alt="Empty Order" />
+	</div>
 	<!-- Shopping Cart -->
 	<div class="shopping-cart section">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
+
 					<!-- Shopping Summery -->
 					<table class="table shopping-summery">
 						<thead>
 							<tr class="main-hading">
 								<th></th>
 								<th>Hình ảnh</th>
-								<th>Tên</th>
-								<th class="text-center">Giá</th>
+								<th>Tên sản phẩm</th>
+								<th class="text-center">Giá sản phẩm</th>
 								<th class="text-center">Số lượng</th>
-								<th class="text-center">Tổng</th>
+								<th class="text-center">Tổng tiền</th>
 								<th class="text-center"><i class="ti-trash remove-icon"></i></th>
 							</tr>
 						</thead>
 						<tbody>
 
 							<tr ng-repeat="item in cartdetails">
-								<td> <input ng-model="item.selected" ng-click="batdk()" name="cdid"
+
+
+								<td>
+									
+									
+
+									<input ng-model="item.selected" ng-click="batdk()" name="cdid"
 										ng-change="toggleSelected(item)" type="checkbox">
 								</td>
+
+
 								<td class="image"><img src="../images/product/{{item.product.image}}"
 										alt="{{item.image}}"></td>
 								<td class="product-des" data-title="Description">
@@ -99,10 +111,10 @@
 								<div class="left">
 									<div class="coupon">
 										<form>
-											<input type="text" ng-change="giamgia()" ng-model="coupon"
-												placeholder="Nhập mã giảm giá">
+											<input type="text" ng-model="coupon" placeholder="Nhập mã giảm giá">
 											<button ng-click="giamgia()" class="btn" id="voucher"
-												style="background-color: orange; color: black;" disabled>Áp
+												style="background-color: orange; color: white; font-family: Arial, Helvetica, sans-serif;font-weight: bold;"
+												disabled>Áp
 												dụng</button>
 										</form>
 									</div>
@@ -117,14 +129,19 @@
 									<ul>
 										<li>Tổng tiền<span>{{totalPrice | number :0}} VNĐ</span></li>
 										<!--										<li>Shipping<span>Free</span></li>-->
-										<li>Giảm giá<span>{{viewgiamgia | number:0}}</span></li>
-										<li class="last">Tổng thanh toán<span id="toltalcheckout">{{total | number:0}}</span></li>
+										<li>Giảm giá<span>{{viewgiamgia | number:0}} </span></li>
+										<li class="last">Tổng thanh toán<span id="toltalcheckout">{{total | number:0}}
+												VNĐ</span></li>
 									</ul>
 									<div class="button5">
 
-										<a ng-click="dathang()"> <button class="btn" id="place-order">Đặt
+										<a ng-click="dathang()"> <button
+												style="background-color: orange; color: white; font-family: Arial, Helvetica, sans-serif;font-weight: bold;"
+												class="btn" id="place-order">Đặt
 												hàng</button></a>
-										<a href="/" class="btn">Tiếp tục mua sắm</a>
+										<a href="/"
+											style="color: white; font-family: Arial, Helvetica, sans-serif;font-weight: bold;"
+											class="btn">Tiếp tục mua sắm</a>
 									</div>
 								</div>
 							</div>
@@ -138,15 +155,15 @@
 	<!--/ End Shopping Cart -->
 
 	<!-- Start Shop Services Area  -->
-	<section class="shop-services section">
+	<section class="shop-services section" style="padding-bottom: 70px;">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 col-md-6 col-12">
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-rocket"></i>
-						<h4>Free shiping</h4>
-						<p>Orders over $100</p>
+						<h4>Giao hàng giá rẻ</h4>
+						<p>Giao động từ 10-30k</p>
 					</div>
 					<!-- End Single Service -->
 				</div>
@@ -154,8 +171,8 @@
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-reload"></i>
-						<h4>Free Return</h4>
-						<p>Within 30 days returns</p>
+						<h4>Hoàn tiền</h4>
+						<p>Hư hỏng hoàn tiền</p>
 					</div>
 					<!-- End Single Service -->
 				</div>
@@ -163,8 +180,8 @@
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-lock"></i>
-						<h4>Sucure Payment</h4>
-						<p>100% secure payment</p>
+						<h4>Thanh toán</h4>
+						<p>Thanh toán bảo mật an toàn</p>
 					</div>
 					<!-- End Single Service -->
 				</div>
@@ -172,8 +189,8 @@
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-tag"></i>
-						<h4>Best Peice</h4>
-						<p>Guaranteed price</p>
+						<h4>giá tốt</h4>
+						<p>Giá tốt cạnh tranh</p>
 					</div>
 					<!-- End Single Service -->
 				</div>
@@ -182,28 +199,6 @@
 	</section>
 	<!-- End Shop Newsletter -->
 
-	<!-- Start Shop Newsletter  -->
-	<section class="shop-newsletter section">
-		<div class="container">
-			<div class="inner-top">
-				<div class="row">
-					<div class="col-lg-8 offset-lg-2 col-12">
-						<!-- Start Newsletter Inner -->
-						<div class="inner">
-							<h4>Newsletter</h4>
-							<p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-							<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-								<input name="EMAIL" placeholder="Your email address" required="" type="email">
-								<button class="btn">Subscribe</button>
-							</form>
-						</div>
-						<!-- End Newsletter Inner -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Shop Newsletter -->
 
 
 </body>

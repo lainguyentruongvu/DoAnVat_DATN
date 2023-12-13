@@ -13,10 +13,17 @@
 		</button>
 
 		<ul class="nav">
-			<li class="nav-item"><a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light"> <i
-						class="fe fe-sun fe-16"></i>
+			<li class="nav-item"><a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
+				<i class="fe fe-sun fe-16"></i>
 				</a></li>
+			
+			<li class="nav-item" style="cursor: pointer;font-size: 15px;">
+				<a class="nav-link text-muted my-2">
+				<strong><i class="bi bi-person-circle"></i> [[${#request.remoteUser}]]</strong>
+				</a>
+			  </li>
 		</ul>
+		
 	</nav>
 
 

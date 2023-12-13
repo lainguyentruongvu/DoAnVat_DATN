@@ -15,8 +15,8 @@
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="blog-single.html">Checkout</a></li>
+							<li><a href="/">Trang chủ<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="">Thanh toán</a></li>
 						</ul>
 					</div>
 				</div>
@@ -30,16 +30,16 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-12">
-					<div class="checkout-form">
-						<h2>Make Your Checkout Here</h2>
-						<p>Please register in order to checkout more quickly</p>
+					<div class="checkout-form" style="font-family: Arial, Helvetica, sans-serif;">
+						<h2>THANH TOÁN ĐƠN HÀNG</h2>
+						<p>Vui lòng điền thông tin nhận hàng và thanh toán</p>
 						<!-- Form -->
 						<form class="form" method="post" action="#">
 							<div class="row">
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
 										<label>Họ và tên<span>*</span></label>
-										<input type="text" name="name" placeholder="" required="required"
+										<input type="text" id="name" name="name" placeholder="" required="required"
 											value="{{account.name}}">
 									</div>
 								</div>
@@ -47,7 +47,7 @@
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
 										<label>Số điện thoại<span>*</span></label>
-										<input type="number" ng-model="phone" id="phone" name="number" placeholder=""
+										<input type="number" id="phone" name="phone" placeholder=""
 											value="{{account.phone}}" required="required">
 									</div>
 								</div>
@@ -78,17 +78,17 @@
 
 								<div class="col-lg-6 col-md-6 col-12">
 									<div class="form-group">
-										<label class="form-label" for="servece">Phương thức
-											vận chuyển</label> <select class="form-select form-control" id="service">
-											<option value="">Phương thức vận chuyển</option>
-										</select>
+										<label class="form-label" for="servece">Địa chỉ giao hàng
+										</label> <input  type="text" id="result" 
+											placeholder="">
 									</div>
 								</div>
 
 								<div class="col-lg-12 ">
 									<div class="form-group">
-										<label>Lời nhắn cho người bán<span>*</span></label>
-										<input type="text" id="message" name="message" placeholder="">
+										<label>Lời nhắn cho người bán</label>
+										<input ng-model="message" type="text" id="message" name="message"
+											placeholder="">
 									</div>
 								</div>
 
@@ -97,14 +97,14 @@
 						<!--/ End Form -->
 					</div>
 				</div>
-				<div class="col-lg-4 col-12">
+				<div class="col-lg-4 col-12" style="font-family: Arial, Helvetica, sans-serif;">
 					<div class="order-details">
 						<!-- Order Widget -->
 						<div class="single-widget">
-							<h2>CART TOTALS</h2>
+							<h2>Chi tiết tiền đơn hàng</h2>
 							<div class="content">
 								<ul>
-									<li>Tổng tiền<span> [[${#numbers.formatDecimal(total, 0, 'POINT', 0,
+									<li>Tổng tiền<span id="total"> [[${#numbers.formatDecimal(total, 0, 'POINT', 0,
 											'POINT').replace('.', ',')}]]
 										</span></li>
 									<li>(+) Phí ship<span id="ship">{{ship | number:0}}</span></li>
@@ -117,7 +117,7 @@
 						<!--/ End Order Widget -->
 						<!-- Order Widget -->
 						<div class="single-widget">
-							<h2>Payments</h2>
+							<h2>Loại thanh toán</h2>
 							<div class="content">
 								<div class="checkboxnew">
 									<label class="checkbox-inline" for="1"><input name="payment" value="1" id="1"
@@ -137,7 +137,7 @@
 						<!-- Payment Method Widget -->
 						<div class="single-widget payement">
 							<div class="content">
-								<img src="../../images/payment-method.png" alt="#">
+								<img src="../../images/VNPAY_LOGO.webp" width="100px" alt="#">
 							</div>
 						</div>
 						<!--/ End Payment Method Widget -->
@@ -145,7 +145,8 @@
 						<div class="single-widget get-button">
 							<div class="content">
 								<div class="button">
-									<button ng-click="cbthanhtoan()" class="btn">Thanh toán</button>
+									<button style="background-color: orange;color: white;font-weight: bold;"
+										ng-click="cbthanhtoan()" class="btn">Thanh toán</button>
 								</div>
 							</div>
 						</div>
@@ -158,15 +159,15 @@
 	<!--/ End Checkout -->
 
 	<!-- Start Shop Services Area  -->
-	<section class="shop-services section home">
+	<section class="shop-services section" style="padding-bottom: 70px;">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 col-md-6 col-12">
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-rocket"></i>
-						<h4>Free shiping</h4>
-						<p>Orders over $100</p>
+						<h4>Giao hàng giá rẻ</h4>
+						<p>Giao động từ 10-30k</p>
 					</div>
 					<!-- End Single Service -->
 				</div>
@@ -174,8 +175,8 @@
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-reload"></i>
-						<h4>Free Return</h4>
-						<p>Within 30 days returns</p>
+						<h4>Hoàn tiền</h4>
+						<p>Hư hỏng hoàn tiền</p>
 					</div>
 					<!-- End Single Service -->
 				</div>
@@ -183,8 +184,8 @@
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-lock"></i>
-						<h4>Sucure Payment</h4>
-						<p>100% secure payment</p>
+						<h4>Thanh toán</h4>
+						<p>Thanh toán bảo mật an toàn</p>
 					</div>
 					<!-- End Single Service -->
 				</div>
@@ -192,33 +193,10 @@
 					<!-- Start Single Service -->
 					<div class="single-service">
 						<i class="ti-tag"></i>
-						<h4>Best Peice</h4>
-						<p>Guaranteed price</p>
+						<h4>giá tốt</h4>
+						<p>Giá tốt cạnh tranh</p>
 					</div>
 					<!-- End Single Service -->
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Shop Services -->
-
-	<!-- Start Shop Newsletter  -->
-	<section class="shop-newsletter section">
-		<div class="container">
-			<div class="inner-top">
-				<div class="row">
-					<div class="col-lg-8 offset-lg-2 col-12">
-						<!-- Start Newsletter Inner -->
-						<div class="inner">
-							<h4>Newsletter</h4>
-							<p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-							<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-								<input name="EMAIL" placeholder="Your email address" required="" type="email">
-								<button class="btn">Subscribe</button>
-							</form>
-						</div>
-						<!-- End Newsletter Inner -->
-					</div>
 				</div>
 			</div>
 		</div>
