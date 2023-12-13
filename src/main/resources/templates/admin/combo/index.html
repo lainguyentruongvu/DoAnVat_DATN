@@ -126,20 +126,20 @@
 												</div>
 												<nav aria-label="Table Paging" class="mb-0 text-muted">
 													<ul class="pagination justify-content-center mb-0">
-														<li class="page-item"><a class="page-link"
+														<li style="cursor: pointer;" class="page-item"><a class="page-link"
 																ng-click="pager.prev()">Trang
 																sau</a></li>
-														<li ng-show="pager.page != 0" class="page-item"><a
+														<li style="cursor: pointer;" ng-show="pager.page != 0" class="page-item"><a
 																class="page-link"
 																ng-click="pager.prev()">{{pager.page}}</a></li>
-														<li class="page-item active"><a
+														<li style="cursor: pointer;" class="page-item active"><a
 																class="page-link">{{pager.page + 1 }}</a>
 														</li>
-														<li ng-show="pager.page != pager.count - 1" class="page-item"><a
+														<li style="cursor: pointer;" ng-show="pager.page != pager.count - 1" class="page-item"><a
 																class="page-link"
 																ng-click="pager.next()">{{pager.page + 2}}</a>
 														</li>
-														<li class="page-item"><a class="page-link"
+														<li style="cursor: pointer;" class="page-item"><a class="page-link"
 																ng-click="pager.next()">Trang trước</a></li>
 													</ul>
 												</nav>
@@ -277,20 +277,20 @@
 
 									</tbody>
 								</table>
-								<nav aria-label="Table Paging" class="mb-0 text-muted">
+								<nav aria-label="Table Paging" class="mb-0 text-muted" >
 									<ul class="pagination justify-content-center mb-0">
-										<li class="page-item"><a class="page-link" ng-click="pagercombo.prev()">Trang
+										<li style="cursor: pointer;" class="page-item"><a class="page-link" ng-click="pagercombo.prev()">Trang
 												sau</a></li>
-										<li ng-show="pagercombo.pagercombo != 0" class="page-item"><a class="page-link"
+										<li style="cursor: pointer;" ng-show="pagercombo.pagercombo != 0" class="page-item"><a class="page-link"
 												ng-click="pagercombo.prev()">{{pagercombo.pagercombo}}</a></li>
-										<li class="page-item active"><a
+										<li style="cursor: pointer;" class="page-item active"><a
 												class="page-link">{{pagercombo.pagercombo + 1 }}</a>
 										</li>
-										<li ng-show="pagercombo.pagercombo != pagercombo.count - 1" class="page-item"><a
+										<li style="cursor: pointer;" ng-show="pagercombo.pagercombo != pagercombo.count - 1" class="page-item"><a
 												class="page-link"
 												ng-click="pagercombo.next()">{{pagercombo.pagercombo + 2}}</a>
 										</li>
-										<li class="page-item"><a class="page-link" ng-click="pagercombo.next()">Trang
+										<li style="cursor: pointer;" class="page-item"><a class="page-link" ng-click="pagercombo.next()">Trang
 												trước</a></li>
 									</ul>
 								</nav>

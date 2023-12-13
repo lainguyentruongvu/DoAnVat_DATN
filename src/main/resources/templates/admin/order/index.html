@@ -146,7 +146,7 @@
 													<div class="form-group col-auto"> <input type="text"
 															ng-change="submitFormOrder()" ng-model="searchKeyword"
 															class="form-control" id="search1" value=""
-															placeholder="Tìm kiếm"></div>
+															placeholder="Tìm kiếm..."></div>
 
 												</div>
 											</form>
@@ -167,11 +167,11 @@
 									<!-- table -->
 									<table class="table table-bordered" style="font-size: 13px;">
 										<thead>
-											<tr>
-												<th colspan="1">Mã ĐH</th>
-												<th colspan="2">Thông tin người đặt</th>
-												<th colspan="4">Thông tin giao hàng</th>
-												<th colspan="4">Xử lý đơn</th>
+											<tr style="text-align: center;">
+												
+												<th colspan="2"><strong>Thông tin mã đơn và người đặt</strong> </th>
+												<th colspan="4"> <strong>Thông tin giao hàng</strong></th>
+												<th colspan="5"><strong>Xử lý đơn</strong></th>
 											</tr>
 											<tr>
 												<th style="width: 2%;">Mã đơn hàng</th>
@@ -240,14 +240,14 @@
 										</tbody>
 									</table>
 									<nav aria-label="Table Paging" class="mb-0 text-muted">
-										<ul class="pagination justify-content-center mb-0">
+										<ul class="pagination justify-content-center mb-0" style="cursor: pointer;">
 											<li class="page-item"><a class="page-link"
-													ng-click="pager.prev()">Previous</a></li>
+													ng-click="pager.prev()">Trang trước</a></li>
 											<li class="page-item"><a class="page-link">{{pager.page}}</a></li>
 											<li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a>
 											</li>
 											<li class="page-item"><a class="page-link">{{pager.page + 2}}</a></li>
-											<li class="page-item"><a class="page-link" ng-click="pager.next()">Next</a>
+											<li class="page-item"><a class="page-link" ng-click="pager.next()">Trang sau</a>
 											</li>
 										</ul>
 									</nav>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/layoutad/layout::dynamic(~{::title},~{::body})}">
 
 <head>
-	<title>Thông kê người mua</title>
+	<title>Thống kê người mua</title>
 </head>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -18,43 +18,33 @@
 							<h2 class="h4 mb-1" style="padding-bottom: 20px;">Thống kê người mua</h2>
 							<div class="card shadow">
 								<div class="card-body">
-
-								
-
-									
 										<div class="row form-group">
 											<div class="col-lg-6">
-												<label for=""> Ngày bắt đầu</label>
+												<label for="">NGÀY BẮT ĐẦU</label>
 												<div class="search-container search-container-right">
 													<input type="date" class="form-control" ng-model="startDate">
 												</div>
-
-
 											</div>
-											<div class="col-lg-6">
-												
-												<label for="">Ngày kết thúc</label>
+											<div class="col-lg-6">										
+												<label for="">NGÀY KẾT THÚC</label>
 												<div class="search-container search-container-right">
 													<input type="date" class="form-control" ng-model="endDate">
 												</div>
-
-											</div>
-									
+											</div>									
 										</div>
 									
-
-
 									<button class="btn btn-primary" ng-click="loadProducts()">
 										<i class="bi bi-eye"></i> Xem</button>
 									</div>
+									<div class="container">
 									<!-- table -->
-									<table class="table table-bordered">
-										<thead>
+									<table class="table table-bordered table-hover">
+										<thead style="background-color: orange;">
 											<tr>
-												<th style="width: 13%;">Ngày tạo đơn</th>
-												<th style="width: 10%;">Họ và tên</th>
-												<th style="width: 8%;">Số lượng đơn</th>
-												<th style="width: 8%;">Tổng tiền</th>
+												<th style="color: white;text-align: center;font-weight: bold;" >NGÀY TẠO ĐƠN</th>
+												<th style="color: white;text-align: center;font-weight: bold;">HỌ VÀ TÊN</th>
+												<th style="color: white;text-align: center;font-weight: bold;">SỐ LƯỢNG ĐƠN</th>
+												<th style="color: white;text-align: center;font-weight: bold;">TỔNG TIỀN</th>
 
 											</tr>
 										</thead>
@@ -62,14 +52,14 @@
 											<tr ng-repeat="item in pager.items">
 												<td>{{ item.createDate | date:'dd/MM/yyyy HH:mm' }}</td>
 												<td>{{ item.fullName }}</td>
-												<td>{{ item.orderCount }}</td>
-												<td>{{ item.totalAmount |number:0 }}</td>
+												<td style="text-align: right;">{{ item.orderCount }}</td>
+												<td style="color: orange;font-weight: bold;text-align: right;">{{ item.totalAmount |number:0 }} VNĐ</td>
 
 											</tr>
 										</tbody>
 									</table>
-									<nav aria-label="Table Paging" class="mb-0 text-muted">
-										<ul class="pagination justify-content-center mb-0">
+									<nav aria-label="Table Paging" class="mb-0 text-muted" style="padding-bottom: 10px;">
+										<ul class="pagination justify-content-center mb-0" style="cursor: pointer;">
 											<li class="page-item"><a class="page-link"
 													ng-click="pager.prev()">Previous</a></li>
 											<li class="page-item"><a class="page-link">{{pager.page}}</a></li>
@@ -81,55 +71,14 @@
 										</ul>
 									</nav>
 								</div>
+								</div>
 							</div>
 						</div> <!-- simple table -->
 					</div> <!-- end section -->
 
 
 	</main> <!-- main -->
-	<!-- 				Chi tiết đơn hàng-->
-	<div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="orderDetailModalLabel">
-						Detail</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<table class="data-tables table table-striped table-bordered" style="width: 100%">
-						<thead>
-							<tr>
-								<th style="width: 20%">Hình ảnh</th>
-								<th style="width: 40%">Tên sản phẩm</th>
-								<th style="width: 20%">Giá</th>
-								<th style="width: 20%">Số lượng</th>
-								<th style="width: 20%">Khối lượng</th>
-								<th style="width: 20%">Tổng</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="orderDetail in selectedOrderDetails">
-								<td><img src="/images/product/{{orderDetail.product.image}}" alt=""
-										style="width: 100px"></td>
-								<td>{{ orderDetail.product.name }}</td>
-								<td>{{ orderDetail.price |number :0}}</td>
-								<td>{{ orderDetail.quantity }}</td>
-								<td>{{ orderDetail.weight}}</td>
-								<td>{{ orderDetail.quantity*orderDetail.price |number :0 }}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-secondary" ng-click="closeModal()">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
 </body>
 
 </html>
