@@ -591,9 +591,7 @@
 												</div>
 												<a href="#"> ({{average.totalRatings}})</a>
 											</div>
-
 										</div>
-
 										<h3 style="font-size: 25px;color: orange;font-weight: bold;" id="price"
 											ng-if="check==true">{{productdetail.price |number :0 }} VNĐ</h3>
 										<h3 style="font-size: 25px;color: orange;font-weight: bold;" id="price"
@@ -672,71 +670,80 @@
 								</div>
 								<hr>
 
-								<div class="row" style="width: 550px;padding-top: 50px;padding-left: 50px;">
-
-									<h4>Đánh giá</h4>
-									--------------------------------------------------------------
-									<div class="col-lg-12 form-group">
-										<div ng-repeat="evalute in evalutes" class="col-lg-12 form-group">
-											<div>
-												<img style="height: 70px;
+								<div class="row col-lg-12">
+									<div class="col-lg-11" style="margin: 50px;border-radius: 5px;background-color: #F8F8FF;" >
+										<div style="margin: 10px;">
+											<h4><img src="https://i.ibb.co/FgfbzMZ/rating.png" width="30px"> Đánh giá
+											<img src="https://i.ibb.co/2N9fky9/output-onlinegiftools.gif" width="30px">
+											<img src="https://i.ibb.co/2N9fky9/output-onlinegiftools.gif" width="30px">
+											<img src="https://i.ibb.co/2N9fky9/output-onlinegiftools.gif" width="30px">
+											<img src="https://i.ibb.co/2N9fky9/output-onlinegiftools.gif" width="30px">
+											<img src="https://i.ibb.co/2N9fky9/output-onlinegiftools.gif" width="30px">
+											</h4>
+											--------------------------------------------------------------
+											<div class="col-lg-12 form-group">
+												<div ng-repeat="evalute in evalutes" class="col-lg-12 form-group">
+													<div>
+														<img style="height: 70px;
 											width: 70px;
 											border-radius: 100%;
 											position: absolute;
 											left: 0; padding: 5px;" src="../images/avt/{{evalute.account.image}}">
+													</div>
+													<div style="padding-left: 70px;">
+														<p
+															style="font-weight: bold;font-size: 15px;font-family: Arial, Helvetica, sans-serif;">
+															{{evalute.account.name}}</p>
+
+
+														<div ng-if="evalute.star == 1">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_3.png" width="20px" alt="">
+															<img src="images/star_3.png" width="20px" alt="">
+															<img src="images/star_3.png" width="20px" alt="">
+															<img src="images/star_3.png" width="20px" alt="">
+
+														</div>
+														<div ng-if="evalute.star == 2">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_3.png" width="20px" alt="">
+															<img src="images/star_3.png" width="20px" alt="">
+															<img src="images/star_3.png" width="20px" alt="">
+
+														</div>
+														<div ng-if="evalute.star == 3">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_3.png" width="20px" alt="">
+															<img src="images/star_3.png" width="20px" alt="">
+
+														</div>
+														<div ng-if="evalute.star == 4">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_3.png" width="20px" alt="">
+
+														</div>
+														<div ng-if="evalute.star == 5">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_2.png" width="20px" alt="">
+															<img src="images/star_2.png" width="20px" alt="">
+
+														</div>
+
+														<p style="font-size: 15px;">{{evalute.commentdate}}</p>
+														</p>
+														<p style="font-size: 20px;">{{evalute.comment}}</p>
+													</div>
+													<hr>
+												</div>
 											</div>
-											<div style="padding-left: 70px;">
-												<p
-													style="font-weight: bold;font-size: 15px;font-family: Arial, Helvetica, sans-serif;">
-													{{evalute.account.name}}</p>
-
-
-												<div ng-if="evalute.star == 1">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_3.png" width="20px" alt="">
-													<img src="images/star_3.png" width="20px" alt="">
-													<img src="images/star_3.png" width="20px" alt="">
-													<img src="images/star_3.png" width="20px" alt="">
-
-												</div>
-												<div ng-if="evalute.star == 2">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_3.png" width="20px" alt="">
-													<img src="images/star_3.png" width="20px" alt="">
-													<img src="images/star_3.png" width="20px" alt="">
-
-												</div>
-												<div ng-if="evalute.star == 3">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_3.png" width="20px" alt="">
-													<img src="images/star_3.png" width="20px" alt="">
-
-												</div>
-												<div ng-if="evalute.star == 4">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_3.png" width="20px" alt="">
-
-												</div>
-												<div ng-if="evalute.star == 5">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_2.png" width="20px" alt="">
-													<img src="images/star_2.png" width="20px" alt="">
-
-												</div>
-
-												<p style="font-size: 15px;">{{evalute.commentdate}}</p>
-												</p>
-												<p style="font-size: 20px;">{{evalute.comment}}</p>
-											</div>
-											<hr>
 										</div>
 									</div>
 								</div>
