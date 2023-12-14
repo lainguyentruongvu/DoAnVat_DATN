@@ -19,12 +19,17 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.stereotype.Service;
 
 import poly.store.dao.AccountDAO;
+import poly.store.dao.AuthorityDAO;
 import poly.store.entity.Account;
+import poly.store.entity.Authority;
+import poly.store.entity.Role;
 
 @Service
 public class UserService implements UserDetailsService {
 	@Autowired
 	AccountDAO accountdao;
+	@Autowired
+	AuthorityDAO audao;
 	@Autowired
 	AccountService accountService;
 
@@ -36,27 +41,27 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	    try {
-	        Account user = accountService.findById(username);
-	        session.set("user", user);
-	        session.set("username", user.getUsername());
+		try {
+			Account user = accountService.findById(username);
+			session.set("user", user);
+			session.set("username", user.getUsername());
 
-	        if (!user.activeted()) {
-	            throw new RuntimeException("Tài khoản bạn đã bị khoá");
-	        }
+			if (!user.activeted()) {
+				throw new RuntimeException("Tài khoản bạn đã bị khoá");
+			}
 
-	        String password = pe.encode(user.getPassword()); // Mã hóa mật khẩu
-	        String[] roles = user.getAuthorities().stream().map(er -> er.getRole().getId()).collect(Collectors.toList())
-	                .toArray(new String[0]);
-	        Map<String, Object> authentication = new HashMap<>();
-	        authentication.put("user", user);
-	        byte[] token = (username + ":" + user.getPassword()).getBytes();
-	        authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
-	        session.set("authentication", authentication);
-	        return User.withUsername(username).password(password).roles(roles).build();
-	    } catch (NoSuchElementException e) {
-	        throw new UsernameNotFoundException(username + " not found!");
-	    }
+			String password = pe.encode(user.getPassword()); // Mã hóa mật khẩu
+			String[] roles = user.getAuthorities().stream().map(er -> er.getRole().getId()).collect(Collectors.toList())
+					.toArray(new String[0]);
+			Map<String, Object> authentication = new HashMap<>();
+			authentication.put("user", user);
+			byte[] token = (username + ":" + user.getPassword()).getBytes();
+			authentication.put("token", "Basic " + Base64.getEncoder().encodeToString(token));
+			session.set("authentication", authentication);
+			return User.withUsername(username).password(password).roles(roles).build();
+		} catch (NoSuchElementException e) {
+			throw new UsernameNotFoundException(username + " not found!");
+		}
 	}
 
 	/*
@@ -91,10 +96,17 @@ public class UserService implements UserDetailsService {
 
 		session.set("username", email);
 		Account acc = new Account(); // new Date(),
+		Authority au = new Authority();
+		Role rl = new Role();
+		rl.setId("CUST");
 		acc.setUsername(email);
 		acc.setName(fullname);
 		acc.setPhone(phoneNumber);
 		acc.setactiveted(true);
+		au.setAccount(acc);
+		au.setRole(rl);
 		accountdao.save(acc);
+		audao.save(au);
+
 	}
 }

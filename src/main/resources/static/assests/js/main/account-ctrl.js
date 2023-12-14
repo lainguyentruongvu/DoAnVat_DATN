@@ -4,10 +4,10 @@ app.controller("account-ctrl", function($scope, $http) {
 	$scope.items = [];
 	$scope.form = {};
 	$scope.roles = {};
-
 	$scope.initialize = function() {
 		$http.get('/rest/accounts').then(function(response) {
 			$scope.items = response.data;
+			$('#activated').prop('checked', true);
 		});
 	}
 
@@ -20,7 +20,7 @@ app.controller("account-ctrl", function($scope, $http) {
 			}
 		}).then(function(response) {
 			$scope.items = response.data;
-
+			$scope.pager.first();
 		}).catch(error => {
 			console.log("Error", error);
 		});
@@ -472,7 +472,6 @@ app.controller("authority-ctrl", function($scope, $http, $location) {
 		}
 	}
 	$scope.set = function(acc, role) {
-
 		$http.get(`/rest/authorities/${acc.username}/${role.id}`).then(resp => {
 			sweetalert("Thay đổi quyền thành công!");
 			$scope.initialize();
@@ -536,7 +535,7 @@ app.controller("product-ctrl", function($scope, $http) {
 			}
 		}).then(function(response) {
 			$scope.itempros = response.data;
-
+			$scope.pager.first();
 		}).catch(error => {
 			console.log("Error", error);
 		});
@@ -626,8 +625,7 @@ app.controller("product-ctrl", function($scope, $http) {
 			})
 			Swal.fire({
 				type: 'success',
-				title: 'Thêm thành công',
-				text: 'Người dùng được sắp xếp theo tên',
+				title: 'Thêm thành công',			
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -635,8 +633,7 @@ app.controller("product-ctrl", function($scope, $http) {
 			$scope.reset_smooth_table();
 		}).catch(error => {
 			Swal.fire({
-				type: 'error',
-				title: 'Lỗi thêm người dùng',
+				type: 'error',			
 				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
@@ -826,12 +823,13 @@ app.controller("product-ctrl", function($scope, $http) {
 			if (resp.data.length == 0) {
 				$http.post("/rest/products/productweight", $scope.productweight).then(resp => {
 					$scope.weightadmin(item.product.id, item.product.price)
-					alert("Thêm trọn lượng thành công")
+
+					Swal.fire("Thành công", "Thêm trọng lượng thành công!", "success");
 				}).catch(error => {
 					console.log("Error", error);
 				})
 			} else {
-				alert("Trong lượng đã có");
+				Swal.fire("Thất bại", "Trọng lượng đã có!", "error");
 			}
 		}).catch(error => {
 
@@ -852,6 +850,7 @@ app.controller("product-ctrl", function($scope, $http) {
 		}).catch(error => {
 			Swal.fire("Lỗi", "Cập nhật thất bại!", "error");
 			console.log("Error", error);
+
 		})
 	}
 
@@ -866,7 +865,7 @@ app.controller("product-ctrl", function($scope, $http) {
 					console.log("Error", error);
 				})
 			} else {
-				alert("Trọng lượng mặc định không được xóa")
+				Swal.fire("Lỗi", "Trọng lượng mặc định không được xóa!", "error");
 			}
 		}).catch(error => {
 			console.log("Error", error);
@@ -995,7 +994,7 @@ app.controller("order-ctrl", function($scope, $http) {
 
 		}).then(function(response) {
 			$scope.orderlist = response.data;
-
+			$scope.pager.first();
 		}).catch(error => {
 			console.log("Error", error);
 		});
@@ -1151,7 +1150,7 @@ app.controller("order-ctrl", function($scope, $http) {
 
 	$scope.pager = {
 		page: 0,
-		size: 10,
+		size: 8,
 		get orderlist() {
 			var start = this.page * this.size;
 			return $scope.orderlist.slice(start, start + this.size);
@@ -1243,20 +1242,9 @@ app.controller("home-ctrl", function($scope, $http) {
 
 
 	$scope.initialize = function() {
-
 		var lineChart = document.getElementById('lineChart').getContext('2d'),
 			barChart = document.getElementById('barChart').getContext('2d'),
 			pieChart = document.getElementById('pieChart').getContext('2d');
-
-
-
-
-
-
-
-
-
-
 		//Thống kê theo năm
 		$scope.getYearRevenue = function() {
 			$http.get("/rest/static/getYearRevenue").then(resp => {
@@ -1476,9 +1464,6 @@ app.controller("voucher-ctrl", function($scope, $http) {
 	$scope.items = [];
 	$scope.form = {};
 	$scope.roles = {};
-
-
-
 	$scope.initialize = function() {
 		$http.get('/rest/voucher').then(function(response) {
 			$scope.items = response.data;
@@ -1577,14 +1562,6 @@ app.controller("voucher-ctrl", function($scope, $http) {
 					console.log("Error", error);
 				})
 			})
-
-
-
-
-
-
-
-
 
 		}
 	}
@@ -1704,9 +1681,6 @@ app.controller("discount-ctrl", function($scope, $http) {
 	$scope.items = [];
 	$scope.form = {};
 	$scope.roles = {};
-
-
-
 	$scope.initialize = function() {
 		$http.get('/rest/discount').then(function(response) {
 			$scope.items = response.data;
@@ -1722,28 +1696,41 @@ app.controller("discount-ctrl", function($scope, $http) {
 		});
 
 	}
-
-
 	$scope.initialize();
 
 
 
 
 
-
-	//Tìm kiếm sản phẩm
-	$scope.searchKeywordProduct = "";
-	$scope.submitFormProducts = function() {
-		$http.get('/rest/products/search', {
-			params: {
-				keyword: $scope.searchKeywordProduct
+	$scope.pager = {
+		page: 0,
+		size: 4,
+		get items() {
+			var start = this.page * this.size;
+			return $scope.items.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.items.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
 			}
-		}).then(function(response) {
-			$scope.product = response.data;
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
 
-		}).catch(error => {
-			console.log("Error", error);
-		});
 	}
 
 
@@ -1787,6 +1774,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 			}
 		}).then(function(response) {
 			$scope.items = response.data;
+			$scope.pager.first();
 
 		}).catch(error => {
 			console.log("Error", error);
@@ -1951,36 +1939,7 @@ app.controller("discount-ctrl", function($scope, $http) {
 		});
 	};
 
-	$scope.pager = {
-		page: 0,
-		size: 4,
-		get items() {
-			var start = this.page * this.size;
-			return $scope.items.slice(start, start + this.size);
-		},
-		get count() {
-			return Math.ceil(1.0 * $scope.items.length / this.size);
-		},
-		first() {
-			this.page = 0;
-		},
-		prev() {
-			this.page--;
-			if (this.page < 0) {
-				this.last();
-			}
-		},
-		next() {
-			this.page++;
-			if (this.page >= this.count) {
-				this.first();
-			}
-		},
-		last() {
-			this.page = this.count - 1;
-		}
 
-	}
 
 
 
@@ -2009,7 +1968,7 @@ app.controller("category-ctrl", function($scope, $http) {
 			}
 		}).then(function(response) {
 			$scope.items = response.data;
-
+			$scope.pager.first();
 		}).catch(error => {
 			console.log("Error", error);
 		});
@@ -2431,30 +2390,6 @@ app.controller("static-ctrl", function($scope, $http) {
 		}
 
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3097,6 +3032,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 				showConfirmButton: false,
 				timer: 2000
 			})
+			$scope.initialize();
 			$scope.reset_smooth_table();
 		}).catch(function(error) {
 			Swal.fire({
@@ -3196,7 +3132,7 @@ app.controller("statusOR-ctrl", function($scope, $http) {
 			}
 		}).then(function(response) {
 			$scope.items = response.data;
-
+			$scope.pager.first();
 		}).catch(error => {
 			console.log("Error", error);
 		});

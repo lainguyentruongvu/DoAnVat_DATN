@@ -76,6 +76,10 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		var url = `/rest/category/product/${id}`;
 		$http.get(url).then(resp => {
 			$scope.products = resp.data;
+			var productContainer = document.getElementById('productContainer');
+			if (productContainer) {
+				productContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
 			//			$scope.pager.first();
 		});
 	}
@@ -1414,40 +1418,40 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	//Hiển thị đơn hàng người dùng theo trang thái
 	$scope.status1 = function(idstatus) {
-		var url = `/rest/order/${$scope.username}/${idstatus}`;
+		var url = `/rest/order/${$scope.username}/1`;
 		$http.get(url).then(resp => {
 			$scope.orderuser1 = resp.data;
 		});
 	}
 
 
-	$scope.status2 = function(idstatus) {
-		var url = `/rest/order/${$scope.username}/${idstatus}`;
-		console.log(idstatus);
+	$scope.status2 = function() {
+		var url = `/rest/order/${$scope.username}/2`;
+	
 		$http.get(url).then(resp => {
 			$scope.orderuser2 = resp.data;
 
 		});
 	}
-	$scope.status3 = function(idstatus) {
-		var url = `/rest/order/${$scope.username}/${idstatus}`;
-		console.log(idstatus);
+	$scope.status3 = function() {
+		var url = `/rest/order/${$scope.username}/3`;
+	
 		$http.get(url).then(resp => {
 			$scope.orderuser3 = resp.data;
 
 		});
 	}
-	$scope.status4 = function(idstatus) {
-		var url = `/rest/order/${$scope.username}/${idstatus}`;
-		console.log(idstatus);
+	$scope.status4 = function() {
+		var url = `/rest/order/${$scope.username}/4`;
+		
 		$http.get(url).then(resp => {
 			$scope.orderuser4 = resp.data;
 
 		});
 	}
-	$scope.status5 = function(idstatus) {
-		var url = `/rest/order/${$scope.username}/${idstatus}`;
-		console.log(idstatus);
+	$scope.status5 = function() {
+		var url = `/rest/order/${$scope.username}/5`;
+		
 		$http.get(url).then(resp => {
 			$scope.orderuser5 = resp.data;
 
