@@ -106,4 +106,8 @@ public class Admincontroller {
 	public String combo() {
 		return "admin/combo/index";
 	}
+	@RequestMapping("/admin/qlDanhGia")
+	public String quanLyDanhGia() {
+		return "admin/quanLyDanhGia/index";
+	}
 }
