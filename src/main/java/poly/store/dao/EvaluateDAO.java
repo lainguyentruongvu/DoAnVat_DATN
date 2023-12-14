@@ -20,11 +20,6 @@ public interface EvaluateDAO extends JpaRepository<Evaluate, Integer> {
 
 	Evaluate findByProductAndAccount(Product product, Account account);
 
-//	 @Query("SELECT new map(r.product AS product, COUNT(r) AS totalRatings) " +
-//	           "FROM Rating r " +
-//	           "WHERE r.product.id = :productId " +
-//	           "GROUP BY r.product")
-//	    List<Map<String, Object>> getRatingSumByProductId(@Param("productId") Long productId);
 
 	@Query("SELECT new map(COUNT(r) AS totalRatings, AVG(r.star) AS averageRating) " + "FROM Evaluate r "
 			+ "WHERE r.product.id = :productId " + "GROUP BY r.product")
