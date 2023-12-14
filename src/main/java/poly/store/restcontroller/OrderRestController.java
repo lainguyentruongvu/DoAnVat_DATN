@@ -6,7 +6,6 @@ import java.util.List;
 
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -91,7 +90,7 @@ public class OrderRestController {
 	public List<Order> orderliststatus(Model model) {
 		return orderDao.getProductsSortedByDate();
 	}
-	
+
 	@GetMapping("/search")
 	public List<Order> findByUsernameLike(@RequestParam(name = "name") String name) {
 		return orderDao.findByUsernameLike(name);
@@ -216,8 +215,8 @@ public class OrderRestController {
 	public List<OrderWithDetailsDTO> getOrderAndOrderdetailOrderId(@PathVariable("id") Integer id) {
 		List<OrderWithDetailsDTO> data = orderDao.getOrdersWithDetailsById(id);
 		List<OrderWithDetailsDTO> groupedData = OrderWithDetailsDTO.groupByOrderId(data);
+		Collections.reverse(groupedData);
 		return groupedData;
 	}
-	
 
 }

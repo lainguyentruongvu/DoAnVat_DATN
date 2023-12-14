@@ -107,7 +107,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	}
 	$scope.pagerproduct = {
 		page: 0,
-		size: 8,
+		size: 12,
 		get products() {
 			var start = this.page * this.size;
 			return $scope.products.slice(start, start + this.size);
@@ -276,6 +276,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 						$scope.checkweight = resp.data; //trả về 1 đối tượng cartdetail bởi producid, cartid, weightvalue (đặt biệt)
 
 						if ($scope.checkweight.length == 0) {
+
 							$scope.data = {
 								price: $("#price").text().replace(/,/g, ''),
 								quantity: $scope.quantity,
@@ -287,6 +288,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 									id: $scope.cartid
 								}
 							}
+						
 							$http.post("/rest/cart/addcart", $scope.data).then(resp => {
 								$scope.data = {};
 								Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
@@ -308,6 +310,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 									id: $scope.cartid
 								}
 							}
+								console.log($scope.data);
 							$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweight.id, $scope.data).then(resp => {
 								$scope.data = {};
 								Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
@@ -816,7 +819,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 							localStorage.clear();
 							setTimeout(function() {
 								$window.location.href = "/order/detail/" + resp.data.id;
-							}, 3000);
+							}, 2000);
 
 						}
 					}
