@@ -8,477 +8,488 @@
 </head>
 
 <body class="js">
-	<!-- Slider Area -->
-	<section class="hero-slider">
-		<!-- Single Slider -->
-		<div class="single-slider">
-			<img src="../../images/banner/{{banner_1900x700.image}}" alt=""
-				style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
-		</div>
-		<!--/ End Single Slider -->
-	</section>
-	<!--/ End Slider Area -->
+	<div class="">
+		<div class="">
 
-	<!-- Start Small Banner  -->
-	<section class="small-banner section">
-		<div class="container-fluid">
-			<div class="row">
-				<!-- Single Banner  -->
-				<div class="col-lg-4 col-md-6 col-12">
-					<div class="single-banner">
-						<img src="../../images/banner/{{anhphu1_600x370.image}}" alt="#">
-						<div class="content">
-
-						</div>
-					</div>
+			<!-- Slider Area -->
+			<section class="hero-slider">
+				<!-- Single Slider -->
+				<div class="single-slider">
+					<img src="../../images/banner/{{banner_1900x700.image}}" alt=""
+						style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
 				</div>
-				<!-- /End Single Banner  -->
-				<!-- Single Banner  -->
-				<div class="col-lg-4 col-md-6 col-12">
-					<div class="single-banner">
-						<img src="../../images/banner/{{anhphu2_600x370.image}}" alt="#">
-						<div class="content">
+				<!--/ End Single Slider -->
+			</section>
+			<!--/ End Slider Area -->
 
+			<!-- Start Small Banner  -->
+			<section class="small-banner section">
+				<div class="container-fluid">
+					<div class="row">
+						<!-- Single Banner  -->
+						<div class="col-lg-4 col-md-6 col-12">
+							<div class="single-banner">
+								<img src="../../images/banner/{{anhphu1_600x370.image}}" alt="#">
+								<div class="content">
+
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<!-- /End Single Banner  -->
-				<!-- Single Banner  -->
-				<div class="col-lg-4 col-12">
-					<div class="single-banner tab-height">
-						<img src="../../images/banner/{{anhphu3_600x370.image}}" alt="#">
-						<!-- <div class="content">
+						<!-- /End Single Banner  -->
+						<!-- Single Banner  -->
+						<div class="col-lg-4 col-md-6 col-12">
+							<div class="single-banner">
+								<img src="../../images/banner/{{anhphu2_600x370.image}}" alt="#">
+								<div class="content">
+
+								</div>
+							</div>
+						</div>
+						<!-- /End Single Banner  -->
+						<!-- Single Banner  -->
+						<div class="col-lg-4 col-12">
+							<div class="single-banner tab-height">
+								<img src="../../images/banner/{{anhphu3_600x370.image}}" alt="#">
+								<!-- <div class="content">
 							<p>Flash Sale</p>
 							<h3>Mid Season <br> Up to <span>40%</span> Off</h3>
 							<a href="#">Discover Now</a>
 						</div> -->
+							</div>
+						</div>
+						<!-- /End Single Banner  -->
 					</div>
 				</div>
-				<!-- /End Single Banner  -->
-			</div>
-		</div>
-	</section>
-	<!-- End Small Banner -->
+			</section>
+			<!-- End Small Banner -->
 
-	<!-- Start Product Area -->
-	<div class="product-area section">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="section-title">
-						<h2 style="font-family: Arial, Helvetica, sans-serif; font-weight: bolder;">SẢN PHẨM ĐANG BÁN</h2>
+			<!-- Start Product Area -->
+			<div class="product-area section">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="section-title">
+								<h2 style="font-family: Arial, Helvetica, sans-serif; font-weight: bolder;">SẢN PHẨM
+									ĐANG BÁN</h2>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12">
-					<div id="productContainer" class="product-info">
-						<div class="tab-content" id="myTabContent">
-							<!-- Start Single Tab -->
-							<div class="tab-pane fade show active" id="man" role="tabpanel">
-								<div class="tab-single">
-									<div class="row">
-										<div ng-repeat="item in pagerproduct.products"
-											class="col-xl-3 col-lg-4 col-md-4 col-12">
-											<div class="single-product">
-												<div class="product-img">
-													<a ng-click="productdetails(item.id)" data-toggle="modal"
-														data-target="#exampleModal">
-														<img style=" height: 300px;" class="default-img"
-															src="../../images/product/{{item.image}}" alt="#">
-														<img style="  height: 300px;" class="hover-img"
-															src="../../images/product/{{item.image}}" alt="#">
-														<span class="out-of-stock">Hot</span>
-													</a>
-													<div class="button-head">
-														<div class="product-action">
-															<a ng-click="productdetails(item.id);evalute(item.id)"
-																data-toggle="modal" data-target="#exampleModal"
-																title=""><i style="size: 50px;"
-																	class=" ti-eye"></i><span>Xem</span></a>
-															<a title="" ng-click="checkAddOrRemove(item.id)"><i
-																	class=" ti-heart "></i><span>Yêu thích
-																</span></a>
+					<div class="row">
+						<div class="col-12">
+							<div id="productContainer" class="product-info">
+								<div class="tab-content" id="myTabContent">
+									<!-- Start Single Tab -->
+									<div class="tab-pane fade show active" id="man" role="tabpanel">
+										<div class="tab-single">
+											<div class="row">
+												<div ng-repeat="item in pagerproduct.products"
+													class="col-xl-3 col-lg-4 col-md-4 col-12">
+													<div class="single-product">
+														<div class="product-img">
+															<a ng-click="productdetails(item.id)" data-toggle="modal"
+																data-target="#exampleModal">
+																<img style=" height: 300px;" class="default-img"
+																	src="../../images/product/{{item.image}}" alt="#">
+																<img style="  height: 300px;" class="hover-img"
+																	src="../../images/product/{{item.image}}" alt="#">
+																<span class="out-of-stock">Hot</span>
+															</a>
+															<div class="button-head">
+																<div class="product-action">
+																	<a ng-click="productdetails(item.id);evalute(item.id)"
+																		data-toggle="modal" data-target="#exampleModal"
+																		title=""><i style="size: 50px;"
+																			class=" ti-eye"></i><span>Xem</span></a>
+																	<a title="" ng-click="checkAddOrRemove(item.id)"><i
+																			class=" ti-heart "></i><span>Yêu thích
+																		</span></a>
 
+																</div>
+																<div class="product-action-2 ">
+																	<a title="Add to cart" ng-click="addcart(item)">Thêm
+																		vào giỏ
+																		hàng</a>
+																</div>
+															</div>
 														</div>
-														<div class="product-action-2 ">
-															<a title="Add to cart" ng-click="addcart(item)">Thêm vào giỏ
-																hàng</a>
+														<div class="product-content">
+															<h3><a
+																	style="font-size: 20px;font-family: Arial, Helvetica, sans-serif;cursor: pointer;font-weight: bold;">{{item.name}}</a>
+															</h3>
+															<div class="product-price">
+																<span
+																	style="color: orange;font-weight: bold; cursor: pointer;">{{item.price
+																	|
+																	number :0}}</span>&emsp13;<span
+																	style="color: orange;font-weight: bold;cursor: pointer">VNĐ</span>
+															</div>
 														</div>
 													</div>
 												</div>
-												<div class="product-content">
-													<h3><a
-															style="font-size: 20px;font-family: Arial, Helvetica, sans-serif;cursor: pointer;font-weight: bold;">{{item.name}}</a>
-													</h3>
-													<div class="product-price">
-														<span
-															style="color: orange;font-weight: bold; cursor: pointer;">{{item.price
-															|
-															number :0}}</span>&emsp13;<span
-															style="color: orange;font-weight: bold;cursor: pointer">VNĐ</span>
-													</div>
+											</div>
+
+											<div class="container" style="margin-top: 20px;">
+												<div class="text-center">
+													<button style="background-color: orange;"
+														ng-click="pagerproduct.first()" class="page-link btn">Trang
+														đầu</button>
+													<button style="background-color: orange;"
+														ng-click="pagerproduct.prev()" class="page-link btn">Trang
+														sau</button>
+													<button style="background-color: orange;"
+														class="page-link btn">{{pagerproduct.page + 1}}
+														trên {{pagerproduct.count}}</button>
+													<button style="background-color: orange;"
+														ng-click="pagerproduct.next()" class="page-link btn">Trang
+														tiếp</button>
+													<button style="background-color: orange;"
+														ng-click="pagerproduct.last()" class="page-link btn">Trang
+														cuối</button>
 												</div>
 											</div>
 										</div>
 									</div>
+									<!--/ End Single Tab -->
 
-									<div class="container" style="margin-top: 20px;">
-										<div class="text-center">
-											<button style="background-color: orange;" ng-click="pagerproduct.first()"
-												class="page-link btn">Trang đầu</button>
-											<button style="background-color: orange;" ng-click="pagerproduct.prev()"
-												class="page-link btn">Trang sau</button>
-											<button style="background-color: orange;"
-												class="page-link btn">{{pagerproduct.page + 1}}
-												trên {{pagerproduct.count}}</button>
-											<button style="background-color: orange;" ng-click="pagerproduct.next()"
-												class="page-link btn">Trang tiếp</button>
-											<button style="background-color: orange;" ng-click="pagerproduct.last()"
-												class="page-link btn">Trang cuối</button>
+
+
+
+
+
+								</div>
+							</div>
+						</div>
+						<!--/ End Single Tab -->
+					</div>
+				</div>
+			</div>
+
+			<!-- End Product Area -->
+
+			<!-- Start Midium Banner  -->
+			<section class="midium-banner">
+				<div class="container">
+					<div class="row">
+						<!-- Single Banner  -->
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="single-banner">
+								<img src="../../images/banner/{{banner1_600x370.image}}" alt="#">
+								<div class="content">
+
+								</div>
+							</div>
+						</div>
+						<!-- /End Single Banner  -->
+						<!-- Single Banner  -->
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="single-banner">
+								<img src="../../images/banner/{{banner2_600x370.image}}" alt="#">
+								<div class="content">
+
+								</div>
+							</div>
+						</div>
+						<!-- /End Single Banner  -->
+					</div>
+				</div>
+			</section>
+			<!-- End Midium Banner -->
+
+			<!-- Start Most Popular -->
+			<div class="product-area most-popular section">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="section-title">
+								<h2 style="font-family: Arial, Helvetica, sans-serif;">Mặt hàng bán chạy</h2>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div class="row">
+								<div ng-repeat="item in top10product" class="col-xl-3 col-lg-4 col-md-4 col-12">
+									<div class="single-product">
+										<div class="product-img">
+											<a ng-click="productdetails(item.id)" data-toggle="modal"
+												data-target="#exampleModal">
+												<img style=" height: 300px;" class="default-img"
+													src="../../images/product/{{item.image}}" alt="#">
+												<img style="  height: 300px;" class="hover-img"
+													src="../../images/product/{{item.image}}" alt="#">
+												<span class="out-of-stock">Hot</span>
+											</a>
+											<div class="button-head">
+
+												<div class="product-action">
+													<a ng-click="productdetails(item.id);evalute(item.id)"
+														data-toggle="modal" data-target="#exampleModal" title=""><i
+															class=" ti-eye"></i><span>Xem</span></a>
+													<a ng-click="checkAddOrRemove(item.id)">
+														<i class=" ti-heart "></i><span>Yêu thích</span></a>
+
+												</div>
+												<div class="product-action-2 ">
+													<a title="THÊM VÀO GIỎ" ng-click="addcart(item)">Thêm vào giỏ
+														hàng</a>
+												</div>
+											</div>
+										</div>
+										<div class="product-content">
+											<h3><a
+													style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;cursor: pointer;font-weight: bold;">{{item.name}}</a>
+											</h3>
+											<div class="product-price">
+												<span
+													style="color: orange;font-family: Arial, Helvetica, sans-serif;font-weight: bold;cursor: pointer;">{{item.price
+													| number :0}} &emsp13;VNĐ</span>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<!--/ End Single Tab -->
-
-
-
-
-
-
 						</div>
 					</div>
 				</div>
-				<!--/ End Single Tab -->
 			</div>
-		</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	<!-- End Product Area -->
+			<!-- End Most Popular Area -->
 
-	<!-- Start Midium Banner  -->
-	<section class="midium-banner">
-		<div class="container">
-			<div class="row">
-				<!-- Single Banner  -->
-				<div class="col-lg-6 col-md-6 col-12">
-					<div class="single-banner">
-						<img src="../../images/banner/{{banner1_600x370.image}}" alt="#">
-						<div class="content">
-
-						</div>
-					</div>
-				</div>
-				<!-- /End Single Banner  -->
-				<!-- Single Banner  -->
-				<div class="col-lg-6 col-md-6 col-12">
-					<div class="single-banner">
-						<img src="../../images/banner/{{banner2_600x370.image}}" alt="#">
-						<div class="content">
-
-						</div>
-					</div>
-				</div>
-				<!-- /End Single Banner  -->
-			</div>
-		</div>
-	</section>
-	<!-- End Midium Banner -->
-
-	<!-- Start Most Popular -->
-	<div class="product-area most-popular section">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="section-title">
-						<h2 style="font-family: Arial, Helvetica, sans-serif;">Mặt hàng bán chạy</h2>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12">
+			<!-- Start Shop Home List  -->
+			<section class="shop-home-list section" style="font-family: Arial, Helvetica, sans-serif;">
+				<div class="container">
 					<div class="row">
-						<div ng-repeat="item in top10product" class="col-xl-3 col-lg-4 col-md-4 col-12">
-							<div class="single-product">
-								<div class="product-img">
-									<a ng-click="productdetails(item.id)" data-toggle="modal"
-										data-target="#exampleModal">
-										<img style=" height: 300px;" class="default-img"
-											src="../../images/product/{{item.image}}" alt="#">
-										<img style="  height: 300px;" class="hover-img"
-											src="../../images/product/{{item.image}}" alt="#">
-										<span class="out-of-stock">Hot</span>
-									</a>
-									<div class="button-head">
-
-										<div class="product-action">
-											<a ng-click="productdetails(item.id);evalute(item.id)" data-toggle="modal"
-												data-target="#exampleModal" title=""><i
-													class=" ti-eye"></i><span>Xem</span></a>
-											<a ng-click="checkAddOrRemove(item.id)">
-												<i class=" ti-heart "></i><span>Yêu thích</span></a>
-
-										</div>
-										<div class="product-action-2 ">
-											<a title="THÊM VÀO GIỎ" ng-click="addcart(item)">Thêm vào giỏ
-												hàng</a>
-										</div>
-									</div>
-								</div>
-								<div class="product-content">
-									<h3><a
-											style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;cursor: pointer;font-weight: bold;">{{item.name}}</a>
-									</h3>
-									<div class="product-price">
-										<span
-											style="color: orange;font-family: Arial, Helvetica, sans-serif;font-weight: bold;cursor: pointer;">{{item.price
-											| number :0}} &emsp13;VNĐ</span>
+						<div class="col-lg-4 col-md-6 col-12">
+							<div class="row">
+								<div class="col-12">
+									<div class="shop-section-title">
+										<h1>Giảm giá</h1>
 									</div>
 								</div>
 							</div>
+							<!-- Start Single List  -->
+							<div ng-repeat="item in bestseller" class="single-list">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-12">
+										<div class="list-image overlay">
+											<img src="images/product/{{item.product.image}}" alt="#">
+											<a ng-click="addcartbestseller(item,item.product.price - (item.product.price * (item.discount / 100)), calculateRemainingTime(item.enddate))"
+												class="buy"><i class="fa fa-shopping-bag"></i></a>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-12 no-padding">
+										<div class="content">
+											<h4 class="title"><a href="#">{{item.product.name}}</a> <a
+													href="#">{{item.weightvalue}}</a></h4>
+											<p><del> {{item.product.price| number:0}} VNĐ </del></p>
+											<p class="price with-discount">{{
+												item.product.price - (item.product.price * (item.discount / 100)) |
+												number:0 }} VNĐ ✓</p>
+											<h4 class="title"><a>{{
+													calculateRemainingTime(item.enddate) }} Giảm Giá</a></h4>
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Single List  -->
+
+
+						</div>
+						<div class="col-lg-4 col-md-6 col-12">
+							<div class="row">
+								<div class="col-12">
+									<div class="shop-section-title">
+										<h1>Bán chạy</h1>
+									</div>
+								</div>
+							</div>
+							<!-- Start Single List  -->
+							<div ng-repeat="item in top3product" class="single-list">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-12">
+										<div class="list-image overlay">
+											<img src="../../images/product/{{item.image}}" alt="#">
+											<a ng-click="addcart(item)" class="buy"><i
+													class="fa fa-shopping-bag"></i></a>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-12 no-padding">
+										<div class="content">
+											<h5 class="title"><a href="#">{{item.name}}</a></h5>
+											<p class="price with-discount">{{item.price | number :0}} VNĐ</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Single List  -->
+						</div>
+						<div class="col-lg-4 col-md-6 col-12">
+							<div class="row">
+								<div class="col-12">
+									<div class="shop-section-title">
+										<h1>Quan tâm nhiều</h1>
+									</div>
+								</div>
+							</div>
+							<!-- Start Single List  -->
+							<div ng-repeat="item in findTop3MostLikedProducts" class="single-list">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-12">
+										<div class="list-image overlay">
+											<img src="../../images/product/{{item.image}}" alt="#">
+											<a ng-click="addcart(item)" class="buy"><i
+													class="fa fa-shopping-bag"></i></a>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-12 no-padding">
+										<div class="content">
+											<h5 class="title"><a href="#">{{item.name}}</a></h5>
+											<p class="price with-discount">{{item.price | number :0}} VNĐ</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Single List  -->
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Most Popular Area -->
+			</section>
+			<!-- End Shop Home List  -->
 
-	<!-- Start Shop Home List  -->
-	<section class="shop-home-list section" style="font-family: Arial, Helvetica, sans-serif;">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-6 col-12">
+			<!-- Start Cowndown Area -->
+			<section class="cown-down">
+				<div class="section-inner ">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-6 col-12 padding-right">
+								<div class="image">
+									<img src="images/BANNER_750x590.jpg" alt="#">
+								</div>
+							</div>
+							<div class="col-lg-6 col-12 padding-left">
+								<div class="content">
+									<div class="heading-block">
+										<p class="small-title"
+											style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold;">
+											Chương trình giảm giá</p>
+										<h3 class="title"
+											style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-weight: bold;">
+											COMBO
+											Bánh nước siêu hời</h3>
+										<p class="text">Chỉ với 389k bạn đã có nguyên combo siêu xịn sò, có cả ly nước
+											siêu
+											cute. </p>
+										<h1 class="price">389.000 VNĐ <s> 499.000 VNĐ</s></h1>
+										<div class="coming-time">
+											<div class="clearfix" data-countdown="2023/10/30"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- /End Cowndown Area -->
+
+			<!-- Start Shop Blog  -->
+			<section class="shop-blog section">
+				<div class="container">
 					<div class="row">
 						<div class="col-12">
-							<div class="shop-section-title">
-								<h1>Giảm giá</h1>
+							<div class="section-title">
+								<h2 style="font-family: Arial, Helvetica, sans-serif;">Thông tin mới</h2>
 							</div>
 						</div>
 					</div>
-					<!-- Start Single List  -->
-					<div ng-repeat="item in bestseller" class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="images/product/{{item.product.image}}" alt="#">
-									<a ng-click="addcartbestseller(item,item.product.price - (item.product.price * (item.discount / 100)), calculateRemainingTime(item.enddate))"
-										class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h4 class="title"><a href="#">{{item.product.name}}</a> <a
-											href="#">{{item.weightvalue}}</a></h4>
-									<p><del> {{item.product.price| number:0}} VNĐ </del></p>
-									<p class="price with-discount">{{
-										item.product.price - (item.product.price * (item.discount / 100)) |
-										number:0 }} VNĐ ✓</p>
-									<h4 class="title"><a>{{
-											calculateRemainingTime(item.enddate) }} Giảm Giá</a></h4>
-
-
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
-
-
-				</div>
-				<div class="col-lg-4 col-md-6 col-12">
 					<div class="row">
-						<div class="col-12">
-							<div class="shop-section-title">
-								<h1>Bán chạy</h1>
-							</div>
-						</div>
-					</div>
-					<!-- Start Single List  -->
-					<div ng-repeat="item in top3product" class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="../../images/product/{{item.image}}" alt="#">
-									<a ng-click="addcart(item)" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
+						<div class="col-lg-4 col-md-6 col-12">
+							<!-- Start Single Blog  -->
+							<div class="shop-single-blog">
+								<img src="../../images/banner/{{bannerthongtin1_370x300.image}}" alt="#">
 								<div class="content">
-									<h5 class="title"><a href="#">{{item.name}}</a></h5>
-									<p class="price with-discount">{{item.price | number :0}} VNĐ</p>
+									<p class="date">{{bannerthongtin1_370x300.createdate |date:'dd/MM/yyyy'}}</p>
+									<a href="#" class="title">{{bannerthongtin1_370x300.discription}}</a>
 								</div>
 							</div>
+							<!-- End Single Blog  -->
+						</div>
+						<div class="col-lg-4 col-md-6 col-12">
+							<!-- Start Single Blog  -->
+							<div class="shop-single-blog">
+								<img src="../../images/banner/{{bannerthongtin2_370x300.image}}" alt="#">
+								<div class="content">
+									<p class="date">{{bannerthongtin2_370x300.createdate|date:'dd/MM/yyyy'}}</p>
+									<a href="#" class="title">{{bannerthongtin2_370x300.discription}}</a>
+								</div>
+							</div>
+							<!-- End Single Blog  -->
+						</div>
+						<div class="col-lg-4 col-md-6 col-12">
+							<!-- Start Single Blog  -->
+							<div class="shop-single-blog">
+								<img src="../../images/banner/{{bannerthongtin3_370x300.image}}" alt="#">
+								<div class="content">
+									<p class="date">{{bannerthongtin3_370x300.createdate|date:'dd/MM/yyyy'}}</p>
+									<a href="#" class="title">{{bannerthongtin3_370x300.discription}}</a>
+								</div>
+							</div>
+							<!-- End Single Blog  -->
 						</div>
 					</div>
-					<!-- End Single List  -->
 				</div>
-				<div class="col-lg-4 col-md-6 col-12">
+			</section>
+			<!-- End Shop Blog  -->
+
+			<!-- Start Shop Services Area -->
+			<section class="shop-services section home">
+				<div class="container">
 					<div class="row">
-						<div class="col-12">
-							<div class="shop-section-title">
-								<h1>Quan tâm nhiều</h1>
+						<div class="col-lg-3 col-md-6 col-12">
+							<!-- Start Single Service -->
+							<div class="single-service">
+								<i class="ti-rocket"></i>
+								<h4>Giao hàng tiết kiệm</h4>
+								<p>Giao động từ 20-30k tùy sản phẩm</p>
 							</div>
+							<!-- End Single Service -->
 						</div>
-					</div>
-					<!-- Start Single List  -->
-					<div ng-repeat="item in findTop3MostLikedProducts" class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="../../images/product/{{item.image}}" alt="#">
-									<a ng-click="addcart(item)" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
+						<div class="col-lg-3 col-md-6 col-12">
+							<!-- Start Single Service -->
+							<div class="single-service">
+								<i class="ti-reload"></i>
+								<h4>Đổi trả</h4>
+								<p>30 ngày sản phẩm hư hỏng</p>
 							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">{{item.name}}</a></h5>
-									<p class="price with-discount">{{item.price | number :0}} VNĐ</p>
-								</div>
+							<!-- End Single Service -->
+						</div>
+						<div class="col-lg-3 col-md-6 col-12">
+							<!-- Start Single Service -->
+							<div class="single-service">
+								<i class="ti-lock"></i>
+								<h4>Sản phẩm được đảm bảo</h4>
+								<p>An toàn vệ sinh thực phẩm</p>
 							</div>
+							<!-- End Single Service -->
 						</div>
-					</div>
-					<!-- End Single List  -->
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Shop Home List  -->
-
-	<!-- Start Cowndown Area -->
-	<section class="cown-down">
-		<div class="section-inner ">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-6 col-12 padding-right">
-						<div class="image">
-							<img src="images/BANNER_750x590.jpg" alt="#">
-						</div>
-					</div>
-					<div class="col-lg-6 col-12 padding-left">
-						<div class="content">
-							<div class="heading-block">
-								<p class="small-title"
-									style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold;">
-									Chương trình giảm giá</p>
-								<h3 class="title"
-									style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-weight: bold;">COMBO
-									Bánh nước siêu hời</h3>
-								<p class="text">Chỉ với 389k bạn đã có nguyên combo siêu xịn sò, có cả ly nước siêu
-									cute. </p>
-								<h1 class="price">389.000 VNĐ <s> 499.000 VNĐ</s></h1>
-								<div class="coming-time">
-									<div class="clearfix" data-countdown="2023/10/30"></div>
-								</div>
+						<div class="col-lg-3 col-md-6 col-12">
+							<!-- Start Single Service -->
+							<div class="single-service">
+								<i class="ti-tag"></i>
+								<h4>Giá tốt</h4>
+								<p>Giá tốt nhất các hệ thống</p>
 							</div>
+							<!-- End Single Service -->
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</section>
-	<!-- /End Cowndown Area -->
+			</section>
+			<!-- End Shop Services Area -->
 
-	<!-- Start Shop Blog  -->
-	<section class="shop-blog section">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="section-title">
-						<h2 style="font-family: Arial, Helvetica, sans-serif;">Thông tin mới</h2>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-4 col-md-6 col-12">
-					<!-- Start Single Blog  -->
-					<div class="shop-single-blog">
-						<img src="../../images/banner/{{bannerthongtin1_370x300.image}}" alt="#">
-						<div class="content">
-							<p class="date">{{bannerthongtin1_370x300.createdate |date:'dd/MM/yyyy'}}</p>
-							<a href="#" class="title">{{bannerthongtin1_370x300.discription}}</a>
-						</div>
-					</div>
-					<!-- End Single Blog  -->
-				</div>
-				<div class="col-lg-4 col-md-6 col-12">
-					<!-- Start Single Blog  -->
-					<div class="shop-single-blog">
-						<img src="../../images/banner/{{bannerthongtin2_370x300.image}}" alt="#">
-						<div class="content">
-							<p class="date">{{bannerthongtin2_370x300.createdate|date:'dd/MM/yyyy'}}</p>
-							<a href="#" class="title">{{bannerthongtin2_370x300.discription}}</a>
-						</div>
-					</div>
-					<!-- End Single Blog  -->
-				</div>
-				<div class="col-lg-4 col-md-6 col-12">
-					<!-- Start Single Blog  -->
-					<div class="shop-single-blog">
-						<img src="../../images/banner/{{bannerthongtin3_370x300.image}}" alt="#">
-						<div class="content">
-							<p class="date">{{bannerthongtin3_370x300.createdate|date:'dd/MM/yyyy'}}</p>
-							<a href="#" class="title">{{bannerthongtin3_370x300.discription}}</a>
-						</div>
-					</div>
-					<!-- End Single Blog  -->
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Shop Blog  -->
+			<!-- Start Shop Newsletter  -->
 
-	<!-- Start Shop Services Area -->
-	<section class="shop-services section home">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-rocket"></i>
-						<h4>Giao hàng tiết kiệm</h4>
-						<p>Giao động từ 20-30k tùy sản phẩm</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-reload"></i>
-						<h4>Đổi trả</h4>
-						<p>30 ngày sản phẩm hư hỏng</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-lock"></i>
-						<h4>Sản phẩm được đảm bảo</h4>
-						<p>An toàn vệ sinh thực phẩm</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-tag"></i>
-						<h4>Giá tốt</h4>
-						<p>Giá tốt nhất các hệ thống</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Shop Services Area -->
-
-	<!-- Start Shop Newsletter  -->
-
-	<!-- <section class="shop-newsletter section">
+			<!-- <section class="shop-newsletter section">
 		<div class="container">
 			<div class="inner-top">
 				<div class="row">
@@ -500,214 +511,233 @@
 	</section>
  -->
 
-	<!-- End Shop Newsletter -->
+			<!-- End Shop Newsletter -->
 
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
 
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close"
-							aria-hidden="true"></span></button>
-				</div>
-				<div class="modal-body">
-					<div class="row no-gutters">
-						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-							<!-- Product Slider -->
-							<div class="product-gallery">
-								<div class="quickview-slider">
-									<div class="single-slider">
-										<img src="../../images/product/{{productdetail.image}}" alt="">
-									</div>
-								</div>
-							</div>
-							<!-- End Product slider -->
+						<div class="modal-header">
+							<a type="button" class="close" data-dismiss="modal" aria-label="Close"
+								style="padding-right: 30px;cursor: pointer;"><span class="ti-close"
+									aria-hidden="true"></span></a>
+
 						</div>
-						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-							<div class="quickview-content">
-								<strong style="font-size: 20px;">{{productdetail.name}}
-									{{average1.totalRatings}}</strong>
-								<strong style="font-size: 20px;" ng-if="check==true"
-									id="weightvalue">{{weightvalue}}</strong>&emsp13;
-								<strong style="font-size: 20px;" ng-if="check==false"
-									id="weightvalue">{{weightvalue}}</strong>
-								<div class="quickview-ratting-review">
-									<div ng-repeat="average in averages" class="quickview-ratting-wrap">
-										<div ng-if="average.averageRating == 1" class="quickview-ratting">
-											<i class="yellow fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
+						<div class="modal-body">
+							<div class="row no-gutters">
+								<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+									<!-- Product Slider -->
+									<div class="product-gallery">
+										<div class="quickview-slider">
+											<div class="single-slider">
+												<img src="../../images/product/{{productdetail.image}}" alt="">
+											</div>
 										</div>
-
-										<div ng-if="average.averageRating == 2" class="quickview-ratting">
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-
-										<div ng-if="average.averageRating == 3" class="quickview-ratting">
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-
-										<div ng-if="average.averageRating == 4" class="quickview-ratting">
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-
-										<div ng-if="average.averageRating == 5" class="quickview-ratting">
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-											<i class="yellow fa fa-star"></i>
-										</div>
-										<a href="#"> ({{average.totalRatings}})</a>
 									</div>
-									<br>
-									<div class="quickview-stock">
-										<p ng-if="check==false">Số lượng:</p>
-										<p ng-if="check==false" id="checkqtt">{{quantityandprice.quantity}}</p>
-										<p ng-if="check==true" id="checkqtt">Số lượng: {{quantityview}}</p>
-									</div>
+									<!-- End Product slider -->
 								</div>
+								<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+									<div class="quickview-content" style="font-family: Arial, Helvetica, sans-serif;">
+										<strong style="font-size: 35px;">{{productdetail.name}}
+											{{average1.totalRatings}}</strong>
 
-								<h3 id="price" ng-if="check==true">{{productdetail.price |number :0 }}</h3>
-								<h3 id="price" ng-if="check==false">{{quantityandprice.price |number :0 }}</h3>
+										<strong style="font-size: 20px;" ng-if="check==true"
+											id="weightvalue">{{weightvalue}}</strong>&emsp13;
 
-								<div class="quickview-peragraph">
-									<p>{{productdetail.discription}}</p>
-								</div>
-								<div class="size">
-									<div class="row">
-										<div class="col-lg-12 col-12">
-											<h5 ng-if="weightvalue" class="title">Trọng lượng</h5>
+										<strong style="font-size: 20px;" ng-if="check==false"
+											id="weightvalue">{{weightvalue}}</strong>
 
-											<div ng-repeat="item in productweight">
-												<input class="weight" id="{{item.weight.weightvalue}}"
-													ng-click="weightquantityandprice(item.product.id,item.weight.id)"
-													type="radio" name="weight" value="{{item.weight.weightvalue}}">
+										<div class="quickview-ratting-review">
+											<div ng-repeat="average in averages" class="quickview-ratting-wrap">
+												<div ng-if="average.averageRating == 1" class="quickview-ratting">
+													<i class="yellow fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
 
-												<label ng-if="item.weight.weightvalue"
-													ng-style="{'border': (weightvalue === item.weight.weightvalue) ? 'rgb(255, 128, 64)solid 3px' : '#000 solid 3px'}"
-													class="weight"
-													for="{{item.weight.weightvalue}}">{{item.weight.weightvalue}}</label>
+												<div ng-if="average.averageRating == 2" class="quickview-ratting">
+													<i class="yellow fa fa-star"></i>
+													<i class="yellow fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+
+												<div ng-if="average.averageRating == 3" class="quickview-ratting">
+													<i class="yellow fa fa-star"></i>
+													<i class="yellow fa fa-star"></i>
+													<i class="yellow fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+
+												<div ng-if="average.averageRating == 4" class="quickview-ratting">
+													<i class="yellow fa fa-star"></i>
+													<i class="yellow fa fa-star"></i>
+													<i class="yellow fa fa-star"></i>
+													<i class="yellow fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+
+												<div ng-if="average.averageRating == 5" class="quickview-ratting">
+													<i class="yellow fa fa-star"></i>
+													<i class="yellow fa fa-star"></i>
+													<i class="yellow fa fa-star"></i>
+													<i class="yellow fa fa-star"></i>
+													<i class="yellow fa fa-star"></i>
+												</div>
+												<a href="#"> ({{average.totalRatings}})</a>
 											</div>
 
 										</div>
+
+										<h3 style="font-size: 25px;color: orange;font-weight: bold;" id="price"
+											ng-if="check==true">{{productdetail.price |number :0 }} VNĐ</h3>
+										<h3 style="font-size: 25px;color: orange;font-weight: bold;" id="price"
+											ng-if="check==false">{{quantityandprice.price |number :0 }} VNĐ</h3>
+
+										<div class="quickview-peragraph">
+											<p>{{productdetail.discription}}</p>
+										</div>
+										<div class="size">
+											<div class="row">
+												<div class="col-lg-12 col-12">
+													<div class="row">
+														<div class="col-lg-12">
+															<p ng-if="check==false" class="quantity-label"
+																style="font-size: 15px;">Số lượng:</p>
+															<p ng-if="check==false" id="checkqtt" class="quantity-value"
+																style="font-size: 15px;">{{quantityandprice.quantity}}
+															</p>
+														</div>
+
+														<div class="col-lg-12">
+															<p ng-if="check==true" id="checkqtt" class="quantity-value"
+																style="font-size: 15px;">Số lượng: {{quantityview}}</p>
+														</div>
+													</div>
+
+													<h5 ng-if="weightvalue" class="title">Trọng lượng</h5>
+
+													<div ng-repeat="item in productweight">
+														<input class="weight" id="{{item.weight.weightvalue}}"
+															ng-click="weightquantityandprice(item.product.id,item.weight.id)"
+															type="radio" name="weight"
+															value="{{item.weight.weightvalue}}">
+
+														<label ng-if="item.weight.weightvalue"
+															ng-style="{'border': (weightvalue === item.weight.weightvalue) ? 'rgb(255, 128, 64)solid 3px' : '#000 solid 3px'}"
+															class="weight"
+															for="{{item.weight.weightvalue}}">{{item.weight.weightvalue}}</label>
+													</div>
+
+												</div>
+											</div>
+										</div>
+
+										<div class="quantity form-group">
+											<!-- Input Order -->
+											<div class="input-group">
+												<div class="button minus">
+													<button ng-click="productdetaireduce()"
+														class="btn btn-primary btn-number" data-type="minus"
+														data-field="quant[1]">
+														<i class="ti-minus"></i>
+													</button>
+												</div>
+												<input readonly ng-model="quantity" type="number" name="quantity"
+													class="input-number" data-min="1" max="{{quantityview}}">
+												<div class="button plus">
+													<button ng-click="productdetailincrease()"
+														class="btn btn-primary btn-number" data-type="plus"
+														data-field="quant[1]">
+														<i class="ti-plus"></i>
+													</button>
+												</div>
+											</div>
+											<!--/ End Input Order -->
+										</div>
+
+										<div class="add-to-cart">
+											<a ng-click="addcartdetail(productdetail)" class="btn">THÊM VÀO GIỎ</a>
+											<a ng-click="checkAddOrRemove(productdetail.id)" class="btn min"><i
+													class="ti-heart"></i></a>
+
+										</div>
+
 									</div>
 								</div>
+								<hr>
 
-								<div class="quantity form-group">
-									<!-- Input Order -->
-									<div class="input-group">
-										<div class="button minus">
-											<button ng-click="productdetaireduce()" class="btn btn-primary btn-number"
-												data-type="minus" data-field="quant[1]">
-												<i class="ti-minus"></i>
-											</button>
-										</div>
-										<input readonly ng-model="quantity" type="number" name="quantity"
-											class="input-number" data-min="1" max="{{quantityview}}">
-										<div class="button plus">
-											<button ng-click="productdetailincrease()"
-												class="btn btn-primary btn-number" data-type="plus"
-												data-field="quant[1]">
-												<i class="ti-plus"></i>
-											</button>
-										</div>
-									</div>
-									<!--/ End Input Order -->
-								</div>
+								<div class="row" style="width: 550px;padding-top: 50px;padding-left: 50px;">
 
-								<div class="add-to-cart">
-									<a ng-click="addcartdetail(productdetail)" class="btn">THÊM VÀO GIỎ</a>
-									<a ng-click="checkAddOrRemove(productdetail.id)" class="btn min"><i
-											class="ti-heart"></i></a>
-
-								</div>
-								<div class="default-social">
-									<h4 class="share-now">Share:</h4>
-									<ul>
-										<li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-										<li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-										<li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-										<li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
-									</ul>
-
-
-								</div>
-							</div>
-						</div>
-						<div class="row ">
-							<div class="col-lg-12 form-group">
-								<div ng-repeat="evalute in evalutes" class="col-lg-12 form-group">
-									<div>
-										<img style="height: 70px;
+									<h4>Đánh giá</h4>
+									--------------------------------------------------------------
+									<div class="col-lg-12 form-group">
+										<div ng-repeat="evalute in evalutes" class="col-lg-12 form-group">
+											<div>
+												<img style="height: 70px;
 											width: 70px;
 											border-radius: 100%;
 											position: absolute;
 											left: 0; padding: 5px;" src="../images/avt/{{evalute.account.image}}">
-									</div>
-									<div style="padding-left: 70px;">
-										<p style="font-weight: bold;font-size: 15px;"> {{evalute.account.name}}
+											</div>
+											<div style="padding-left: 70px;">
+												<p
+													style="font-weight: bold;font-size: 15px;font-family: Arial, Helvetica, sans-serif;">
+													{{evalute.account.name}}</p>
 
-											<br>
-										<div ng-if="evalute.star == 1">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_3.png" width="20px" alt="">
-											<img src="images/star_3.png" width="20px" alt="">
-											<img src="images/star_3.png" width="20px" alt="">
-											<img src="images/star_3.png" width="20px" alt="">
 
+												<div ng-if="evalute.star == 1">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_3.png" width="20px" alt="">
+													<img src="images/star_3.png" width="20px" alt="">
+													<img src="images/star_3.png" width="20px" alt="">
+													<img src="images/star_3.png" width="20px" alt="">
+
+												</div>
+												<div ng-if="evalute.star == 2">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_3.png" width="20px" alt="">
+													<img src="images/star_3.png" width="20px" alt="">
+													<img src="images/star_3.png" width="20px" alt="">
+
+												</div>
+												<div ng-if="evalute.star == 3">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_3.png" width="20px" alt="">
+													<img src="images/star_3.png" width="20px" alt="">
+
+												</div>
+												<div ng-if="evalute.star == 4">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_3.png" width="20px" alt="">
+
+												</div>
+												<div ng-if="evalute.star == 5">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_2.png" width="20px" alt="">
+													<img src="images/star_2.png" width="20px" alt="">
+
+												</div>
+
+												<p style="font-size: 15px;">{{evalute.commentdate}}</p>
+												</p>
+												<p style="font-size: 20px;">{{evalute.comment}}</p>
+											</div>
+											<hr>
 										</div>
-										<div ng-if="evalute.star == 2">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_3.png" width="20px" alt="">
-											<img src="images/star_3.png" width="20px" alt="">
-											<img src="images/star_3.png" width="20px" alt="">
-
-										</div>
-										<div ng-if="evalute.star == 3">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_3.png" width="20px" alt="">
-											<img src="images/star_3.png" width="20px" alt="">
-
-										</div>
-										<div ng-if="evalute.star == 4">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_3.png" width="20px" alt="">
-
-										</div>
-										<div ng-if="evalute.star == 5">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_2.png" width="20px" alt="">
-											<img src="images/star_2.png" width="20px" alt="">
-
-										</div>
-										<br>
-										<p style="font-size: 13px;">{{evalute.commentdate}}</p>
-										</p>
-										<p style="font-size: 20px;">{{evalute.comment}}</p>
 									</div>
 								</div>
 							</div>
@@ -716,12 +746,11 @@
 				</div>
 			</div>
 		</div>
+		<!-- Modal end -->
 	</div>
 	</div>
-	<!-- Modal end -->
-
-
-
+	</div>
+	</div>
 </body>
 
 </html>

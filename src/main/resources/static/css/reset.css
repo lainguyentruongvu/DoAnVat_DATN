@@ -1,14 +1,4 @@
-/* =====================================
-Template Name: Eshop
-Author Name: Naimur Rahman
-Author URI: http://www.wpthemesgrid.com/
-Description: Eshop - eCommerce HTML5 Template.
-Version:1.0
-========================================*/
 
-/*--------------------------------------------------------------
-# Normalize
---------------------------------------------------------------*/
 html {
 	font-family: 'Poppins', sans-serif;
 	-moz-text-size-adjust: 100%;
@@ -1235,41 +1225,10 @@ object {
 	}
 }
 
-.modal-dialog .modal-content .modal-header .close {
-	color: #fff;
-	cursor: pointer;
-	opacity: 1;
-	padding: 0;
-	margin: 0;
-	width: 40px;
-	height: 40px;
-	line-height: 40px;
-	text-shadow: none;
-	font-size: 11px;
-	background: transparent;
-	color: #737373;
-	border-radius: 100%;
-	border: 1px solid #eee;
-	-webkit-transition: all 0.4s ease;
-	-moz-transition: all 0.4s ease;
-	transition: all 0.4s ease;
-	
-}
 
-@media only screen and (max-width: 767px) {
-	.modal-dialog .modal-content .modal-header .close {
-		width: 34px;
-		height: 34px;
-		line-height: 34px;
-		font-size: 15px;
-	}
-}
 
-.modal-dialog .modal-content .modal-header .close:hover {
-	color: #fff;
-	border-color: transparent;
-	background: #F7941D;
-}
+
+
 
 .modal-dialog .modal-content .modal-body {
 	padding: 0px;
