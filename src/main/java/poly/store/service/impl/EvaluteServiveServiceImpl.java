@@ -20,10 +20,14 @@ public class EvaluteServiveServiceImpl implements EvaluteServive {
 		return dao.save(evaluate);
 	}
 
+	
+
 	@Override
-	public List<Evaluate> findByProduct(Product product) {
-		return dao.findByProduct(product);
+	public List<Evaluate> findAll() {		
+		return dao.findAll();
 	}
+
+
 
 	
 }

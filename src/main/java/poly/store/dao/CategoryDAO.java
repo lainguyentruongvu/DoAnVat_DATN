@@ -12,4 +12,6 @@ import poly.store.entity.Category;
 public interface CategoryDAO extends JpaRepository<Category, Integer> {
 	@Query("SELECT u FROM Category u WHERE u.name LIKE %:name%")
 	List<Category> findByCategoryLike(@Param("name") String name);
+	
+	
 }

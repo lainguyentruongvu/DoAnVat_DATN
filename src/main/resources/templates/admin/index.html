@@ -139,6 +139,12 @@
 								<div class="card">
 									<div class="card-header">
 										<div class="card-title">Thống kê loại hàng</div>
+										<select>
+											<option>AAA</option>
+											<option>BBB</option>
+											<option>CCC</option>
+											<option>DDD</option>
+										</select>
 									</div>
 									<div class="card-body">
 										<div class="chart-container">
@@ -148,7 +154,7 @@
 								</div>
 							</div>
 
-							
+
 
 
 
@@ -159,7 +165,8 @@
 										<div class="card-title">Đơn hàng hôm nay </div>
 									</div>
 									<div class="card-body">
-										<table class="table table-borderless table-striped table-hover" style="font-size: 13px;">
+										<table class="table table-borderless table-striped table-hover"
+											style="font-size: 13px;">
 											<thead>
 												<tr role="row">
 													<th>Mã hóa đơn</th>
@@ -177,7 +184,7 @@
 											<tbody>
 												<tr ng-repeat="item in ddhanghna">
 													<th>{{item.id}}</th>
-													<td >{{item.createdate}}</td>
+													<td>{{item.createdate}}</td>
 													<td>{{item.account.name}}</td>
 													<td>{{item.phone}}</td>
 													<td>{{item.address}}</td>
@@ -328,7 +335,7 @@
 			</div>
 		</main> <!-- main -->
 	</div> <!-- .wrapper -->
-	
+
 </body>
 
 </html>

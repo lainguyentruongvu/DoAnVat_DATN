@@ -625,7 +625,7 @@ app.controller("product-ctrl", function($scope, $http) {
 			})
 			Swal.fire({
 				type: 'success',
-				title: 'Thêm thành công',			
+				title: 'Thêm thành công',
 				icon: "success",
 				showConfirmButton: false,
 				timer: 2000
@@ -633,7 +633,7 @@ app.controller("product-ctrl", function($scope, $http) {
 			$scope.reset_smooth_table();
 		}).catch(error => {
 			Swal.fire({
-				type: 'error',			
+				type: 'error',
 				text: "Lỗi",
 				icon: "error",
 				showConfirmButton: false,
@@ -1245,6 +1245,10 @@ app.controller("home-ctrl", function($scope, $http) {
 		var lineChart = document.getElementById('lineChart').getContext('2d'),
 			barChart = document.getElementById('barChart').getContext('2d'),
 			pieChart = document.getElementById('pieChart').getContext('2d');
+
+
+
+
 		//Thống kê theo năm
 		$scope.getYearRevenue = function() {
 			$http.get("/rest/static/getYearRevenue").then(resp => {
@@ -1611,7 +1615,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 	$scope.delete = function(item) {
 		Swal.fire({
 			title: 'Xóa người dùng!',
-			text: "Bạn chắc chắn muốn xóa người dùng này chứ ?",
+			text: "Bạn chắc chắn muốn xóa voucher này chứ ?",
 			type: 'warning',
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
@@ -1950,8 +1954,6 @@ app.controller("category-ctrl", function($scope, $http) {
 	$scope.items = [];
 	$scope.form = {};
 	$scope.roles = {};
-
-
 
 	$scope.initialize = function() {
 		$http.get('/rest/category').then(function(response) {
@@ -3668,4 +3670,93 @@ app.controller("combo-ctrl", function($scope, $http) {
 	// $scope.autodelete();
 	$scope.listproduct();
 	$scope.listcombo();
+})
+
+app.controller("evaluate-ctrl", function($scope, $http) {
+	$scope.initialize = function() {
+		$http.get('/rest/evaluates').then(function(response) {
+			$scope.items = response.data;
+			console.log($scope.items);
+		});
+	}
+	$scope.form = {};
+	$scope.edit = function(item) {
+		$scope.form = angular.copy(item);
+		$scope.index = -1;
+	}
+
+
+	$scope.updateevaluatean = function(item) {
+
+		$scope.data = {
+			id: item.id,
+			account: {
+				username: item.account.username
+			},
+			product: {
+				id: item.product.id
+			},
+			commentdate: item.commentdate,
+			star: item.star,
+			comment: item.comment,
+			status: false
+		}
+
+		$http.put(`/rest/evaluates/`, $scope.data).then(function(response) {
+			$scope.evaluate = response.data;
+			$scope.initialize();
+		});
+	}
+	$scope.updateevaluatehien = function(item) {
+
+		$scope.data = {
+			id: item.id,
+			account: {
+				username: item.account.username
+			},
+			product: {
+				id: item.product.id
+			},
+			commentdate: item.commentdate,
+			star: item.star,
+			comment: item.comment,
+			status: true
+		}
+
+		$http.put(`/rest/evaluates/`, $scope.data).then(function(response) {
+			$scope.evaluate = response.data;
+			$scope.initialize();
+		});
+	}
+
+	$scope.initialize();
+	$scope.pager = {
+		page: 0,
+		size: 5,
+		get items() {
+			var start = this.page * this.size;
+			return $scope.items.slice(start, start + this.size);
+		},
+		get count() {
+			return Math.ceil(1.0 * $scope.items.length / this.size);
+		},
+		first() {
+			this.page = 0;
+		},
+		prev() {
+			this.page--;
+			if (this.page < 0) {
+				this.last();
+			}
+		},
+		next() {
+			this.page++;
+			if (this.page >= this.count) {
+				this.first();
+			}
+		},
+		last() {
+			this.page = this.count - 1;
+		}
+	}
 })

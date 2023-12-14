@@ -45,6 +45,10 @@ public class Account implements Serializable {
 	@OneToMany(mappedBy = "account")
 	List<Order> order;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "account")
+	List<Evaluate> evaluate;
+	
 	public boolean activeted() {
         return activeted;
     }

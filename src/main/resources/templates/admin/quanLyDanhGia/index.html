@@ -6,7 +6,7 @@
 
 </head>
 
-<body class="vertical light" ng-app="app" ng-controller="voucher-ctrl">
+<body class="vertical light" ng-app="app" ng-controller="evaluate-ctrl">
 
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 	<div class="">
@@ -28,7 +28,7 @@
 												<thead>
 													<tr>
 														<th>TÊN TÀI KHOẢN</th>
-														
+
 														<th>NGÀY ĐÁNH GIÁ</th>
 														<th>TÊN SẢN PHẨM</th>
 														<th>SỐ SAO ĐÁNH GIÁ</th>
@@ -39,26 +39,60 @@
 
 												</thead>
 												<tbody>
-													<tr>
-														<td>Linhpn</td>	
-														<td>14/12/2023 10:20</td>
-														<td>Khô bò</td>
-														<td>
-														<img src="../images/star_2.png"
-															width="20px" alt="">
-														<img src="../images/star_3.png"
-															width="20px" alt="">
-														<img src="../images/star_3.png"
-															width="20px" alt="">
-														<img src="../images/star_3.png"
-															width="20px" alt="">
-														<img src="../images/star_3.png"
-															width="20px" alt="">
+													<tr ng-repeat="item in pager.items">
+														<td>{{item.account.name}}</td>
+														<td>{{item.commentdate}}</td>
+														<td>{{item.product.name}}</td>
+														<div>
+															<td ng-if="item.star==1">
+																<img src="../images/star_2.png" width="20px" alt="">
+																<img src="../images/star_3.png" width="20px" alt="">
+																<img src="../images/star_3.png" width="20px" alt="">
+																<img src="../images/star_3.png" width="20px" alt="">
+																<img src="../images/star_3.png" width="20px" alt="">
+															</td>
+														</div>
+
+														<td ng-if="item.star==2">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_3.png" width="20px" alt="">
+															<img src="../images/star_3.png" width="20px" alt="">
+															<img src="../images/star_3.png" width="20px" alt="">
 														</td>
+
+
+														<td ng-if="item.star==3">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_3.png" width="20px" alt="">
+															<img src="../images/star_3.png" width="20px" alt="">
+														</td>
+
+
+														<td ng-if="item.star==4">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_3.png" width="20px" alt="">
+														</td>
+
+
+														<td ng-if="item.star==5">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_2.png" width="20px" alt="">
+															<img src="../images/star_2.png" width="20px" alt="">
+														</td>
+
 														<td>Hiển thị</td>
 														<td>
 															<!-- Button trigger modal -->
-															<a style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal">
+															<a ng-click="edit(item)" style="cursor: pointer;"
+																data-toggle="modal" data-target="#exampleModal">
 																Xem chi tiết
 															</a>
 
@@ -84,6 +118,7 @@
 																						<label for="">Tên tài
 																							khoản:</label>
 																						<input type="text"
+																							ng-model="form.account.username"
 																							class="form-control">
 																					</div>
 																				</div>
@@ -91,6 +126,7 @@
 																					<div class="form-group">
 																						<label for="">Họ và tên:</label>
 																						<input type="text"
+																							ng-model="form.account.name"
 																							class="form-control">
 																					</div>
 																				</div>
@@ -100,7 +136,9 @@
 																					<div class="form-group">
 																						<label for="">Ngày đánh
 																							giá:</label>
-																						<input type="text"
+																						<input
+																							ng-model="form.commentdate"
+																							type="text"
 																							class="form-control">
 																					</div>
 																				</div>
@@ -109,6 +147,7 @@
 																						<label for="">Tên sản phẩm đánh
 																							giá:</label>
 																						<input type="text"
+																							ng-model="form.product.name"
 																							class="form-control">
 																					</div>
 																				</div>
@@ -118,16 +157,78 @@
 																					<div class="form-group">
 																						<label for="">Số sao đánh
 																							giá:</label>
-																						<img src="../images/star_2.png"
-																							width="30px" alt="">
-																						<img src="../images/star_3.png"
-																							width="30px" alt="">
-																						<img src="../images/star_3.png"
-																							width="30px" alt="">
-																						<img src="../images/star_3.png"
-																							width="30px" alt="">
-																						<img src="../images/star_3.png"
-																							width="30px" alt="">
+																						<div ng-if="form.star==1">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																						</div>
+																						<div ng-if="form.star==2">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																						</div>
+																						<div ng-if="form.star==3">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																						</div>
+																						<div ng-if="form.star==3">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																						</div>
+																						<div ng-if="form.star==4">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_3.png"
+																								width="30px" alt="">
+																						</div>
+																						<div ng-if="form.star==5">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																							<img src="../images/star_2.png"
+																								width="30px" alt="">
+																						</div>
 																					</div>
 																				</div>
 																			</div>
@@ -136,8 +237,10 @@
 																					<div class="form-group">
 																						<label for="">Nội dung đánh
 																							giá:</label>
-																						<textarea class="form-control"
-																							name="" id="" cols="10"
+																						<textarea
+																							ng-model="form.comment"
+																							class="form-control" name=""
+																							id="" cols="10"
 																							rows="3"></textarea>
 																					</div>
 																				</div>
@@ -156,9 +259,14 @@
 														<td>
 
 
-															<button class="btn btn-danger" href="#"
+															<button ng-if="item.status==true" ng-click="updateevaluatean(item)"
+																class="btn btn-danger"
 																style="color: white;font-weight: bold;"><i
 																	class="bi bi-eye-slash"></i> Ẩn</button>
+															<button ng-if="item.status==false" ng-click="updateevaluatehien(item)"
+																class="btn btn-success"
+																style="color: white;font-weight: bold;"><i
+																	class="bi bi-eye-slash"></i> Bật</button>
 
 														</td>
 													</tr>
@@ -174,8 +282,8 @@
 												<li class="page-item"><a class="page-link" ng-click="pager.prev()">Trang
 														trước</a></li>
 												<li class="page-item"><a class="page-link">{{pager.page}}</a></li>
-												<li class="page-item active"><a
-														class="page-link">{{pager.page + 1 }}</a>
+												<li class="page-item active"><a class="page-link">{{pager.page + 1
+														}}</a>
 												</li>
 												<li class="page-item"><a class="page-link">{{pager.page + 2}}</a></li>
 												<li class="page-item"><a class="page-link" ng-click="pager.next()">Trang

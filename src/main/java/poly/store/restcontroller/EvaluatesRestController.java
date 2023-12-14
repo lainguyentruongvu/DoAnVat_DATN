@@ -1,7 +1,5 @@
 package poly.store.restcontroller;
 
-
-
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,27 +24,40 @@ import poly.store.services.EvaluteServive;
 @RestController
 @RequestMapping("/rest/evaluates")
 public class EvaluatesRestController {
-	@Autowired EvaluteServive evaluteServive;
-	@Autowired EvaluateDAO evalutedao;
-	
+	@Autowired
+	EvaluteServive evaluteServive;
+	@Autowired
+	EvaluateDAO evalutedao;
+
 	@PostMapping
 	public Evaluate create(@RequestBody Evaluate evaluate) {
 		return evaluteServive.create(evaluate);
 	}
+
 	@GetMapping("{id}")
 	public List<Evaluate> getEvaluteProduct(@PathVariable("id") Product product) {
-		return evaluteServive.findByProduct(product);
+		return evalutedao.findByProductAndStatus(product,true);
 	}
+
+	@PutMapping()
+	public Evaluate getEvalute(@RequestBody Evaluate evaluate) {
+		return evalutedao.save(evaluate);
+	}
+
+	@GetMapping()
+	public List<Evaluate> getAll() {
+		return evaluteServive.findAll();
+	}
+
 	@GetMapping("average/{id}")
 	public List<Map<String, Object>> getcalculateAverageRatingByProductId(@PathVariable("id") Integer product) {
 		return evalutedao.getAverageRatingByProductId(product);
 	}
-	
+
 	@GetMapping("checkProductUsername/{id}/{username}")
-	public Evaluate getcalculateAverageRatingByProductId(@PathVariable("id") Product id ,@PathVariable("username") Account username) {
-		return evalutedao.findByProductAndAccount(id,username);
+	public Evaluate getcalculateAverageRatingByProductId(@PathVariable("id") Product id,
+			@PathVariable("username") Account username) {
+		return evalutedao.findByProductAndAccount(id, username);
 	}
-	
-	
-	
+
 }

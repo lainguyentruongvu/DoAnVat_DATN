@@ -865,12 +865,13 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		if ($scope.address == null || $scope.ship == null || phone == [] || name == []) {
 			if ($scope.address == null) {
 				Swal.fire("Lỗi", "Vui lòng chọn địa chỉ", "error");
-			} if ($scope.ship == null) {
-				Swal.fire("Lỗi", "Vui lòng chọn phương thức vận chuyển", "error");
+				return
 			} if (phone == []) {
 				Swal.fire("Lỗi", "Số điện thoại không được bỏ trống", "error");
+				return
 			} if (name == []) {
 				Swal.fire("Lỗi", "Họ và tên không được bỏ trống", "error");
+				return
 			}
 		} else {
 
@@ -1427,7 +1428,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 	$scope.status2 = function() {
 		var url = `/rest/order/${$scope.username}/2`;
-	
+
 		$http.get(url).then(resp => {
 			$scope.orderuser2 = resp.data;
 
@@ -1435,7 +1436,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	}
 	$scope.status3 = function() {
 		var url = `/rest/order/${$scope.username}/3`;
-	
+
 		$http.get(url).then(resp => {
 			$scope.orderuser3 = resp.data;
 
@@ -1443,7 +1444,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	}
 	$scope.status4 = function() {
 		var url = `/rest/order/${$scope.username}/4`;
-		
+
 		$http.get(url).then(resp => {
 			$scope.orderuser4 = resp.data;
 
@@ -1451,7 +1452,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	}
 	$scope.status5 = function() {
 		var url = `/rest/order/${$scope.username}/5`;
-		
+
 		$http.get(url).then(resp => {
 			$scope.orderuser5 = resp.data;
 
@@ -1614,7 +1615,9 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			},
 			comment: $scope.formData.comment,
 			star: $scope.formData.rating,
-			commentdatenew: new Date().toISOString().slice(0, 10)
+			commentdatenew: new Date().toISOString().slice(0, 10),
+			status: true,
+
 
 		}
 
@@ -1625,7 +1628,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 					Swal.fire({
 						icon: 'success',
 						title: 'Thành công',
-						text: 'Đánh giá đơn hàng thành công',
+						text: 'Đánh giá sản phẩm thành công',
 						confirmButtonText: 'Đóng'
 					});
 
@@ -1636,7 +1639,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				Swal.fire({
 					icon: 'info',
 					title: 'Thất bại',
-					text: 'Đơn hàng đã được đánh giá',
+					text: 'Sản phẩm đã được đánh giá',
 					confirmButtonText: 'Đóng'
 				});
 			}

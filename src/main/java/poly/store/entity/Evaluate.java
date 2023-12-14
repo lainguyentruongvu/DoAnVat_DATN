@@ -18,11 +18,15 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @SuppressWarnings("serial")
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Evaluates")
 public class Evaluate implements Serializable{
 	@Id
@@ -33,7 +37,7 @@ public class Evaluate implements Serializable{
 	@Temporal(TemporalType.DATE)
 	@Column(name = "Commentdate")
 	Date commentdate = new Date();
-	
+	Boolean status;
 	@ManyToOne
 	@JoinColumn(name = "Username")
 	Account account;

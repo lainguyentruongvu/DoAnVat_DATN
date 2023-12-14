@@ -15,6 +15,7 @@ public interface EvaluateDAO extends JpaRepository<Evaluate, Integer> {
 
 	List<Evaluate> findByProduct(Product product);
 
+
 	@Query("SELECT AVG(e.star) FROM Evaluate e WHERE e.product.id = :productId")
 	Double calculateAverageRatingByProductId(Integer productId);
 
@@ -28,5 +29,8 @@ public interface EvaluateDAO extends JpaRepository<Evaluate, Integer> {
 	@Query("SELECT NEW poly.store.entity.ProductReviewsStatistics(p.name AS productName, AVG(e.star) AS averageRating, COUNT(e) AS totalReviews) " + "FROM Product p "
 			+ "JOIN Evaluate e ON p.id = e.product.id " + "GROUP BY p.name")
 	List<ProductReviewsStatistics> getProductReviewsStatistics();
+
+
+	List<Evaluate> findByProductAndStatus(Product product, boolean status);
 
 }
