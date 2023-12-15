@@ -149,6 +149,7 @@ public class OrderRestController {
 	@PutMapping("/{orderId}/status")
 	public ResponseEntity<String> changeOrderStatus(@PathVariable Integer orderId, @RequestParam Integer newStatusId) {
 		Order order = orderservice.getOne(orderId);
+	
 		if (order == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
 		}

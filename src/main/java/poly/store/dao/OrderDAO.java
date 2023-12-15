@@ -63,7 +63,7 @@ public interface OrderDAO extends JpaRepository<Order, Integer> {
 	@Query("SELECT NEW Revenuestatistics(MONTH(o.createdate), SUM(o.totalamount)) FROM Order o WHERE o.statusorder = true GROUP BY MONTH(o.createdate)")
 	List<Revenuestatistics> getMonthRevenue();
 
-	@Query("SELECT NEW Revenuestatistics(FUNCTION('DAY', o.createdate), SUM(o.totalamount)) FROM Order o WHERE o.statusorder = true GROUP BY FUNCTION('DAY', o.createdate)")
+	@Query("SELECT NEW Revenuestatistics(DAY(o.createdate), SUM(o.totalamount)) FROM Order o WHERE o.statusorder = true AND MONTH(o.createdate) = MONTH(GETDATE()) AND YEAR(o.createdate) = YEAR(GETDATE()) GROUP BY DAY(o.createdate)")
 	List<Revenuestatistics> getDateRevenue();
 
 	@Query("SELECT NEW OrderStatistics(MONTH(o.createdate), COUNT(o)) " + "FROM Order o "

@@ -288,7 +288,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 									id: $scope.cartid
 								}
 							}
-						
+
 							$http.post("/rest/cart/addcart", $scope.data).then(resp => {
 								$scope.data = {};
 								Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
@@ -310,7 +310,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 									id: $scope.cartid
 								}
 							}
-								console.log($scope.data);
+							console.log($scope.data);
 							$http.post("/rest/cart/addcartbyid?id=" + $scope.checkweight.id, $scope.data).then(resp => {
 								$scope.data = {};
 								Swal.fire("Thành công", "Thêm giỏ hàng thành công", "success");
@@ -1543,6 +1543,38 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 
 	function performStatusChange(orderId, newStatusId) {
+	
+
+
+		$http.put("/rest/order/" + orderId + "/status?newStatusId=" + newStatusId )
+			.then(function(response) {
+				$scope.items.push(response.data);
+				for (var i = 0; i < $scope.items.length; i++) {
+					if ($scope.items[i].id === orderId) {
+						$scope.items[i].status.id = newStatusId;
+						break;
+					}
+				}
+				$scope.orderuserfc();
+			}).catch(function(error) {
+				$scope.trangthai(newStatusId);
+				$scope.orderuserstatuss();
+				$scope.orderuserfc();
+				$scope.status1();
+				$scope.status2();
+				$scope.status3();
+				$scope.status4();
+				$scope.status5();
+				Swal.fire({
+					icon: 'success',
+					title: 'Thành công',
+					text: 'Trạng thái đơn hàng được cập nhật thành công',
+					confirmButtonText: 'Đóng'
+				});
+			});
+	}
+
+	function performStatusChangeH(orderId, newStatusId) {
 		$http.put("/rest/order/" + orderId + "/status?newStatusId=" + newStatusId)
 			.then(function(response) {
 				$scope.items.push(response.data);
