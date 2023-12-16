@@ -97,22 +97,22 @@ public class StaticRestController {
 	public List<OrderStatistics> countOrdersByMonth() {
 		return orderDao.countOrdersByMonth();
 	}
-
+	//Thống kê loại
 	@GetMapping("/sumSoldProductsByCategory")
 	public List<CategoryStatistics> sumSoldProductsByCategory() {
 		return orderdetailDao.sumSoldProductsByCategory();
 	}
-
+	//Thống kê đánh giá sản phẩm list
 	@GetMapping("/getProductReviewsStatistics")
 	public List<ProductReviewsStatistics> getProductReviewsStatistics() {
 		return evaluateDao.getProductReviewsStatistics();
 	}
-
+	//Thống kê yêu thích list
 	@GetMapping("/getFavoriteCountPerProduct")
 	public List<FavoriteStatistics> getFavoriteCountPerProduct() {
 		return productDao.getFavoriteCountPerProduct();
 	}
-
+	//Hiển thị sản phâm
 	@GetMapping("/findTopSellingProducts")
 	public List<ProductStatistics> findTopSellingProducts() {
 		return productDao.findTopSellingProducts();

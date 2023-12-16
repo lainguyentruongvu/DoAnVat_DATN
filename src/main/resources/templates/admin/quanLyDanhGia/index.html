@@ -25,6 +25,13 @@
 										<div class="card-body">
 											<!-- table -->
 											<table class="table datatables table-hover" id="dataTable-1">
+												<select ng-model="star" ng-change="getSelectedStar()">
+													<option>1</option>
+													<option>2</option>
+													<option>3</option>
+													<option>4</option>
+													<option>5</option>
+												</select>
 												<thead>
 													<tr>
 														<th>TÊN TÀI KHOẢN</th>
@@ -88,7 +95,7 @@
 															<img src="../images/star_2.png" width="20px" alt="">
 														</td>
 
-														<td>Hiển thị</td>
+														<td>{{item.status ? 'Hiển thị' : 'Không hoạt động'}}</td>
 														<td>
 															<!-- Button trigger modal -->
 															<a ng-click="edit(item)" style="cursor: pointer;"
@@ -231,6 +238,14 @@
 																						</div>
 																					</div>
 																				</div>
+																				<div class="col">
+																					<div class="form-group">
+																						<label for="">Email:</label>
+																						<input type="text"
+																							ng-model="form.account.email"
+																							class="form-control">
+																					</div>
+																				</div>
 																			</div>
 																			<div class="row">
 																				<div class="col">
@@ -245,25 +260,20 @@
 																					</div>
 																				</div>
 																			</div>
-
-
 																		</div>
-
 																	</div>
 																</div>
 															</div>
-
-
-
 														</td>
 														<td>
 
 
-															<button ng-if="item.status==true" ng-click="updateevaluatean(item)"
-																class="btn btn-danger"
+															<button ng-if="item.status==true"
+																ng-click="updateevaluatean(item)" class="btn btn-danger"
 																style="color: white;font-weight: bold;"><i
 																	class="bi bi-eye-slash"></i> Ẩn</button>
-															<button ng-if="item.status==false" ng-click="updateevaluatehien(item)"
+															<button ng-if="item.status==false"
+																ng-click="updateevaluatehien(item)"
 																class="btn btn-success"
 																style="color: white;font-weight: bold;"><i
 																	class="bi bi-eye-slash"></i> Bật</button>

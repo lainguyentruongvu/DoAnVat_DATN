@@ -102,8 +102,8 @@
 																<span>Trạng thái hoạt động</span>
 															</div>
 															<div class="switch-toggle">
-																<input type="checkbox" id="activated"
-																	ng-model="form.activated">
+																<input type="checkbox" id="activeted"
+																	ng-model="form.activeted">
 																<label for="activeted"></label>
 															</div>
 														</div>
@@ -295,7 +295,7 @@
 														ng-click="edit(item)">
 														<i class="bi bi-pencil-square"></i> Sửa</a>
 
-													<a style="color: white;font-weight: bold;" class="btn btn-danger"
+													<a hidden="true" style="color: white;font-weight: bold;" class="btn btn-danger"
 														ng-click="delete(item)"><i class="bi bi-trash"></i> Xóa</a>
 												</td>
 											</tr>

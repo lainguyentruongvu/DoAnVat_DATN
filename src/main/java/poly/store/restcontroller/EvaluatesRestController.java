@@ -59,5 +59,9 @@ public class EvaluatesRestController {
 			@PathVariable("username") Account username) {
 		return evalutedao.findByProductAndAccount(id, username);
 	}
+	@GetMapping("star/{id}")
+	public List<Evaluate> getStar(@PathVariable("id") Integer star) {
+		return evalutedao.findByStar(star);
+	}
 
 }

@@ -80,7 +80,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			if (productContainer) {
 				productContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			}
-			//			$scope.pager.first();
 		});
 	}
 
@@ -96,6 +95,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		}).then(function(response) {
 			$scope.products = response.data;
 			console.log('Search results:', response.data);
+
 			var productContainer = document.getElementById('productContainer');
 			if (productContainer) {
 				productContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -452,7 +452,9 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	// xóa sản phẩm khỏi giỏ hàng và localStorage
 	$scope.deleteid = function(id) {
 		$scope.selectedItems = JSON.parse(localStorage.getItem("selectedItems"))
+
 		var index = $scope.selectedItems.findIndex(function(p) {
+
 			return p.id === id;
 		});
 		var currentUrl = $location.absUrl(); // Lấy URL hoàn chỉnh
@@ -468,9 +470,11 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 				console.log("Error", error);
 			})
 		} else {
+
 			$scope.batdk();
 			$scope.checkbox();
 			$http.delete(`/rest/cart/delete/${id}`).then(resp => {
+				console.log(id)
 				$scope.getcartdetails();
 				if (index !== -1) {
 					$scope.selectedItems.splice(index, 1);
@@ -509,7 +513,6 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 	//Giảm số lượng sản phẩm
 	$scope.updatereduce = function(cd, newquantity) {
 		if (cd.quantity <= 1) {
-			localStorage.clear();
 			$scope.deleteid(cd.id)
 		} else {
 			cd.quantity--;
@@ -1223,10 +1226,10 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 		});
 	}
 	$scope.listaccounts();
+
+
 	$scope.account = {};
 	$scope.updateAccount = function() {
-
-
 		var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
 		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 		if (filter.test($scope.account.email) == false) {
@@ -1543,10 +1546,10 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 
 	function performStatusChange(orderId, newStatusId) {
-	
 
 
-		$http.put("/rest/order/" + orderId + "/status?newStatusId=" + newStatusId )
+
+		$http.put("/rest/order/" + orderId + "/status?newStatusId=" + newStatusId)
 			.then(function(response) {
 				$scope.items.push(response.data);
 				for (var i = 0; i < $scope.items.length; i++) {

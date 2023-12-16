@@ -60,8 +60,8 @@ public class CategoryRestController {
 		return categoryservice.create(discount);
 	}
 
-	@PutMapping("{categoryid}")
-	public Category update(@PathVariable("statusid") Integer statusid, @RequestBody Category Discount) {
+	@PutMapping()
+	public Category update(@RequestBody Category Discount) {
 		return categoryservice.update(Discount);
 	}
 

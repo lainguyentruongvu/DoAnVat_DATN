@@ -33,4 +33,7 @@ public interface EvaluateDAO extends JpaRepository<Evaluate, Integer> {
 
 	List<Evaluate> findByProductAndStatus(Product product, boolean status);
 
+
+	List<Evaluate> findByStar(Integer star);
+
 }

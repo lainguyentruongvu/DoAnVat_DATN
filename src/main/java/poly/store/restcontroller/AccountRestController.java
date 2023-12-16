@@ -76,8 +76,7 @@ public class AccountRestController {
 	
 	@PutMapping("updatepassword/{username}")
 	public Account put1(@PathVariable("username") String username, @RequestBody String matkhau) {
-		Account ac=accountService.findByUsername(username);
-		
+		Account ac=accountService.findByUsername(username);	
 		ac.setPassword(matkhau);
 		return accountService.update(ac);
 	}
