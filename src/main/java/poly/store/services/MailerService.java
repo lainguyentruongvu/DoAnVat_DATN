@@ -14,4 +14,8 @@ public interface MailerService {
 
 	void sendEmail(String recipientEmail, String link) throws MessagingException, UnsupportedEncodingException;
 
+	void queue(Mailer mail);
+
+	void queue(String to, String subject, String body);
+
 }

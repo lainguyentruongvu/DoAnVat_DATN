@@ -24,7 +24,7 @@
 		<div>
 			<h2><img src="../../images/logo_noback.png" alt="" style="width: 250px;"><br>Đăng ký tài khoản</h2>
 			<form th:action="@{/create}" method="post" th:object="${account}">
-				<h6 style="color: red;">[[${message}]]</h6>
+				<h6 style="color: white; text-align: center;" >[[${message}]]</h6>
 				<label>Tên đăng nhập</label>
 				<input type="text" name="username" th:field="*{username}" required>
 				<label>Gmail</label>

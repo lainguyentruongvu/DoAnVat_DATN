@@ -1549,7 +1549,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 
 
 
-		$http.put("/rest/order/" + orderId + "/status?newStatusId=" + newStatusId)
+		$http.put(`/rest/order/${orderId}/${newStatusId}`)
 			.then(function(response) {
 				$scope.items.push(response.data);
 				for (var i = 0; i < $scope.items.length; i++) {

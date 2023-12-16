@@ -1117,7 +1117,8 @@ app.controller("order-ctrl", function($scope, $http) {
 
 
 	function performStatusChange(orderId, newStatusId) {
-		$http.put("/rest/order/" + orderId + "/status?newStatusId=" + newStatusId)
+		
+		$http.put(`/rest/order/${orderId}/${newStatusId}`)
 			.then(function(response) {
 				$scope.items.push(response.data);
 				for (var i = 0; i < $scope.items.length; i++) {

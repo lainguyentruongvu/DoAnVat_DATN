@@ -6,6 +6,8 @@ import java.util.List;
 
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -37,6 +39,7 @@ import poly.store.entity.Product;
 import poly.store.entity.Productweight;
 import poly.store.entity.Status;
 import poly.store.entity.Weight;
+import poly.store.service.impl.MailerServiceImpl;
 import poly.store.services.AccountService;
 import poly.store.services.OrderService;
 import poly.store.services.OrderdetailService;
@@ -49,7 +52,8 @@ import poly.store.services.StatusService;
 public class OrderRestController {
 	@Autowired
 	OrderService orderservice;
-
+	@Autowired
+	MailerServiceImpl mailer;
 	@Autowired
 	ProductService productservice;
 
@@ -146,10 +150,11 @@ public class OrderRestController {
 
 	}
 
-	@PutMapping("/{orderId}/status")
-	public ResponseEntity<String> changeOrderStatus(@PathVariable Integer orderId, @RequestParam Integer newStatusId) {
+	@PutMapping("{orderId}/{newStatusId}")
+	public ResponseEntity<String> changeOrderStatus(@PathVariable Integer orderId, @PathVariable Integer newStatusId)
+			throws MessagingException {
 		Order order = orderservice.getOne(orderId);
-	
+
 		if (order == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
 		}
@@ -158,6 +163,14 @@ public class OrderRestController {
 		if (newStatus == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid new status");
 		}
+		String thongBao = "<html>" + "<head>" + "<style>" + "    body {font-family: Arial, sans-serif;}"
+				+ "    p {margin-bottom: 10px;}" + "</style>" + "</head>" + "<body>"
+				+ "<p><strong>Thông báo: Trạng thái đơn hàng của bạn đã thay đổi</strong></p>" + "<p>Kính gửi: "+order.getAccount().getName()+"</p>"
+				+ "<p>Chúng tôi thông báo rằng trạng thái đơn hàng của quý khách đã được cập nhật. Vui lòng kiểm tra chi tiết bên dưới:</p>"
+				+ "<p><strong>Trạng thái đơn hàng:</strong> " + newStatus.getName() + "</p>"
+				+ "<p>Xin cảm ơn quý khách đã tin tưởng và sử dụng DAV-6 SHOP.</p>" + "<p>Trân trọng,<br/>DAV 6</p>"
+				+ "</body>" + "</html>";
+		mailer.send(order.getAccount().getEmail(), "Thông báo đơn hàng", thongBao);
 		order.setStatusorder(true);
 		order.setStatus(newStatus);
 		orderservice.save(order);
