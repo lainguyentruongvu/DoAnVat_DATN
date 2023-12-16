@@ -8,6 +8,7 @@
 	#snowflakeContainer{position:absolute;left:0px;top:0px;}
 	.snowflake{padding-left:15px;font-size:14px;line-height:24px;position:fixed;color:#ebebeb;user-select:none;z-index:1000;-moz-user-select:none;-ms-user-select:none;-khtml-user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
 	.snowflake:hover {cursor:default}
+	
 </style>
 <body th:object="${order}" class="vertical light" ng-app="app" ng-controller="ctrl"
 	style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
@@ -26,13 +27,73 @@
 				</div>
 				<div class="col-md-6">
 					<h2>Giới Thiệu - DAV-6</h2>
-					<p>Chào mừng bạn đến với DAV-6, địa chỉ tin cậy cho những loại đồ ăn vặt ngon. Chúng tôi đam mê mang đến những loại đồ ăn vặt chất lượng và thơm ngon để làm hài lòng khẩu vị của bạn. Bộ sưu tập đa dạng của chúng tôi phục vụ mọi sở thích và sự ưa chuộng. Cho dù bạn là người thích ngọt hay người yêu thích đồ ăn mặn, chúng tôi đều có đủ sự lựa chọn.</p>
-					<p>Tại DAV-6, chúng tôi cam kết mang lại trải nghiệm thú vị khi thưởng thức đồ ăn vặt. Sự cam kết của chúng tôi đảm bảo bạn sẽ tận hưởng từng miếng đồ ăn được chọn lọc cẩn thận của chúng tôi. Hãy thoải mái khám phá menu của chúng tôi và khám phá những món ưa thích mới của bạn.</p>
-					<p>Cảm ơn bạn đã lựa chọn DAV-6. Chúng tôi mong được phục vụ bạn với những loại đồ ăn ngon nhất!</p>
+					<p>
+						Chào mừng bạn đến với DAV-6, địa chỉ tin cậy cho những loại đồ ăn vặt ngon. Chúng tôi đam mê mang đến những loại đồ ăn vặt chất lượng và thơm ngon để làm hài lòng khẩu vị của bạn. Bộ sưu tập đa dạng của chúng tôi phục vụ mọi sở thích và sự ưa chuộng. Cho dù bạn là người thích ngọt hay người yêu thích đồ ăn mặn, chúng tôi đều có đủ sự lựa chọn.
+					</p>
+					<p>
+						Tại DAV-6, chúng tôi cam kết mang lại trải nghiệm thú vị khi thưởng thức đồ ăn vặt. Sự cam kết của chúng tôi đảm bảo bạn sẽ tận hưởng từng miếng đồ ăn được chọn lọc cẩn thận của chúng tôi. Hãy thoải mái khám phá menu của chúng tôi và khám phá những món ưa thích mới của bạn.
+					</p>
+					<p>
+						Cảm ơn bạn đã lựa chọn DAV-6. Chúng tôi mong được phục vụ bạn với những loại đồ ăn ngon nhất!
+					</p>
 				</div>
+				
 			</div>
 		</div>
 
+		<!-- Start Shop Services Area  -->
+		<section class="shop-services section" style="padding-bottom: 10px;">
+			<div class="container">
+			  <div class="row">
+				<div class="col-lg-3 col-md-6 col-12">
+				  <!-- Start Single Service -->
+				  <div class="single-service" >
+					<i class="fa fa-volume-control-phone" aria-hidden="true"></i>
+					<h4 style="font-size: 25px;">HOTLINE</h4>
+					<p style="color: red;font-weight: bold;">1800 123 456</p>
+				  </div>   
+				  <!-- End Single Service -->
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+				  <!-- Start Single Service -->
+				  <div class="single-service">
+					
+					<i class="fa fa-facebook" aria-hidden="true"></i>
+					<h4>Facebook</h4>
+					<p><a href="https://www.facebook.com/doanvatdav/">Đi đến trang</a></p>
+				  </div>
+				  <!-- End Single Service -->
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+				  <!-- Start Single Service -->
+				  <div class="single-service">
+					<i class="fa fa-map-marker" aria-hidden="true"></i>
+					<h4>Địa chỉ văn phòng đại diện</h4>
+					<p>Số 42 Phường An Khánh, 30 Tháng 4 Quận Ninh Kiều, Thành Phố Cần Thơ.</p>
+				  </div>
+				  <!-- End Single Service -->
+				</div>
+				<div class="col-lg-3 col-md-6 col-12">
+				  <!-- Start Single Service -->
+				  <div class="single-service">
+					<i class="fa fa-envelope" aria-hidden="true"></i>
+					<h4>Email</h4>
+					<p>dav-6@gmail.com</p>
+				  </div>
+				  <!-- End Single Service -->
+				</div>
+			  </div>
+			</div>
+		  </section>
+		  <!-- End Shop Newsletter -->
+		<section>
+			<h2>Bản Đồ</h2>
+			<div>
+				<!-- Thay đổi mã nhúng Google Maps dưới đây -->
+				<iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d477.12298624594865!2d105.78110894495713!3d10.030894457215902!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1702731669342!5m2!1svi!2s" width="1950" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					
+			</div>
+		</section>
 
 		<style>
 			#snowflakeContainer{position:absolute;left:0px;top:0px;}
