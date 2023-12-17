@@ -1544,7 +1544,8 @@ app.controller("voucher-ctrl", function($scope, $http) {
 				showConfirmButton: false,
 				timer: 2000
 			})
-		} else {
+		}
+		 else {
 			$http.get(`/rest/voucher`).then(function(response) {
 				$scope.voucher = response.data;
 				console.log($scope.voucher);
@@ -1641,29 +1642,39 @@ app.controller("voucher-ctrl", function($scope, $http) {
 
 	// Xóa
 	$scope.delete = function(item) {
+		
+		// Show a confirmation dialog
 		Swal.fire({
-			title: 'Xóa người dùng!',
-			text: "Bạn chắc chắn muốn xóa voucher này chứ ?",
-			type: 'warning',
+			title: 'Xóa mã giảm giá!',
+			text: "Bạn chắc chắn muốn xóa mã giảm giá này chứ?",
+			icon: 'warning',
+			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
+			cancelButtonText: 'Hủy',
 			confirmButtonText: 'Vâng, Tôi đồng ý!'
 		}).then(function(result) {
-			if (result.value) {
+			if (result.isConfirmed) {
+				// If user confirms deletion, send delete request
 				$http.delete(`/rest/voucher/${item.id}`).then(function(response) {
-					var index = $scope.items.findIndex(p => p.id == item.id);
+					// Remove the item from the items array
+					var index = $scope.items.findIndex(p => p.voucherid == item.voucherid);
 					$scope.items.splice(index, 1);
+					$scope.initialize();
 					$scope.reset();
+
+					// Show success message
 					Swal.fire(
 						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
 				}).catch(function(err) {
+					// Show error message if deletion fails
 					Swal.fire({
 						type: 'error',
-						title: 'Lỗi xóa người dùng',
-						text: 'Voucher đang ở trạng thái hoạt động !',
+						title: 'Lỗi xóa ',
+						text: 'mã giảm giá đang hoạt động!',
 						icon: "error",
 						showConfirmButton: false,
 						timer: 2000
@@ -1672,6 +1683,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 				});
 			}
 		});
+		
 	};
 
 	$scope.pager = {
@@ -1948,12 +1960,22 @@ app.controller("discount-ctrl", function($scope, $http) {
 
 	// Xóa
 	$scope.delete = function(item) {
+		
 		Swal.fire({
-			title: 'Xóa sản phẩm giảm giá!',
+			/*title: 'Xóa sản phẩm giảm giá!',
 			text: 'Bạn chắc chắn muốn xóa sản phẩm giảm giá này chứ ?',
 			type: 'warning',
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
+			confirmButtonText: 'Vâng, Tôi đồng ý!'*/
+			
+			title: 'Xóa giảm giá sản phẩm!',
+			text: "Bạn chắc chắn muốn xóa giảm giá sản phẩm này chứ?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			cancelButtonText: 'Hủy',
 			confirmButtonText: 'Vâng, Tôi đồng ý!'
 		}).then(function(result) {
 			if (result.isConfirmed) {
