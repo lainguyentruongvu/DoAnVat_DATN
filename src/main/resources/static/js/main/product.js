@@ -82,8 +82,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			}
 		});
 	}
-
-
+	
 
 	//Tìm kiếm theo ký tự	
 	$scope.searchKeyword = '';

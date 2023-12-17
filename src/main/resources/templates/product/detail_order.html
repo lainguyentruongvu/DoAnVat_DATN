@@ -195,10 +195,8 @@
 								<label for="" style="font-size: 20px;"> Thành tiền: <label
 										style="color: #F35022; font-weight: bold;">[[*{#numbers.formatDecimal(totalamount,0,'COMMA',0,'POINT')}]]VNĐ</label></label>
 
-								<label for="" style="font-size: 15px;"><i class="bi bi-wallet2"></i> Phương thức
-									thanh toán:
-									<label style="color: #F35022; font-weight: bold;">[[*{statusorder ? 'VNPAY' : 'Thanh
-										toán khi nhận hàng'}]]</label></label>
+								<label for="" style="font-size: 15px;"><i class="bi bi-wallet2"></i> Thanh toán:
+									<label style="color: #F35022; font-weight: bold;">[[*{statusorder ? 'Đã thanh toán' : 'Chưa thanh toán'}]]</label></label>
 
 							</div>
 						</div>
