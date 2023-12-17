@@ -178,7 +178,11 @@ app.controller("account-ctrl", function($scope, $http) {
 		}
 		if (item.password != null) {
 			if (item.password === item.repassword) {
-				item.image = 'default.png'
+
+				if (item.image == null) {
+					item.image = 'default.png'
+				}
+				console.log(item.image)
 				$http.post(`/rest/accounts`, item).then(resp => {
 					// $scope.data_author = {
 					// 	account: {id: item.username},
@@ -1117,7 +1121,7 @@ app.controller("order-ctrl", function($scope, $http) {
 
 
 	function performStatusChange(orderId, newStatusId) {
-		
+
 		$http.put(`/rest/order/${orderId}/${newStatusId}`)
 			.then(function(response) {
 				$scope.items.push(response.data);
@@ -1641,29 +1645,37 @@ app.controller("voucher-ctrl", function($scope, $http) {
 
 	// Xóa
 	$scope.delete = function(item) {
+		// Show a confirmation dialog
 		Swal.fire({
-			title: 'Xóa người dùng!',
-			text: "Bạn chắc chắn muốn xóa voucher này chứ ?",
-			type: 'warning',
+			title: 'Xóa mã giảm giá!',
+			text: "Bạn chắc chắn muốn xóa mã giảm giá này chứ?",
+			icon: 'warning',
+			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
+			cancelButtonText: 'Hủy',
 			confirmButtonText: 'Vâng, Tôi đồng ý!'
 		}).then(function(result) {
-			if (result.value) {
+			if (result.isConfirmed) {
+				// If user confirms deletion, send delete request
 				$http.delete(`/rest/voucher/${item.id}`).then(function(response) {
-					var index = $scope.items.findIndex(p => p.id == item.id);
-					$scope.items.splice(index, 1);
+					// Remove the item from the items array
+					
+					$scope.initialize();
 					$scope.reset();
+
+					// Show success message
 					Swal.fire(
 						'Xóa!',
 						'Đã xóa thành công',
 						'success'
 					);
 				}).catch(function(err) {
+					// Show error message if deletion fails
 					Swal.fire({
 						type: 'error',
-						title: 'Lỗi xóa người dùng',
-						text: 'Voucher đang ở trạng thái hoạt động !',
+						title: 'Lỗi xóa ',
+						text: 'Mã giảm giá đang hoạt động!',
 						icon: "error",
 						showConfirmButton: false,
 						timer: 2000
@@ -1949,11 +1961,20 @@ app.controller("discount-ctrl", function($scope, $http) {
 	// Xóa
 	$scope.delete = function(item) {
 		Swal.fire({
-			title: 'Xóa sản phẩm giảm giá!',
+			/*title: 'Xóa sản phẩm giảm giá!',
 			text: 'Bạn chắc chắn muốn xóa sản phẩm giảm giá này chứ ?',
 			type: 'warning',
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
+			confirmButtonText: 'Vâng, Tôi đồng ý!'*/
+
+			title: 'Xóa giảm giá sản phẩm!',
+			text: "Bạn chắc chắn muốn xóa giảm giá sản phẩm này chứ?",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			cancelButtonText: 'Hủy',
 			confirmButtonText: 'Vâng, Tôi đồng ý!'
 		}).then(function(result) {
 			if (result.isConfirmed) {
@@ -3072,7 +3093,7 @@ app.controller("weightvalue2-ctrl", function($scope, $http) {
 	// Cập nhật
 	$scope.update = function() {
 		var item = angular.copy($scope.form);
-		if (item.weightvalue == null||item.weightvalue == []||item.weightvalue == "") {
+		if (item.weightvalue == null || item.weightvalue == [] || item.weightvalue == "") {
 
 			Swal.fire({
 				type: 'error',

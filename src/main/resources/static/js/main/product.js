@@ -82,7 +82,7 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			}
 		});
 	}
-	
+
 
 	//Tìm kiếm theo ký tự	
 	$scope.searchKeyword = '';
@@ -104,6 +104,9 @@ app.controller("ctrl", function($scope, $http, $location, $window, $interval, $f
 			console.log("Error", error);
 		});
 	}
+
+
+
 	$scope.pagerproduct = {
 		page: 0,
 		size: 12,
