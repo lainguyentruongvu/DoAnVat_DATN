@@ -25,13 +25,19 @@
 										<div class="card-body">
 											<!-- table -->
 											<table class="table datatables table-hover" id="dataTable-1">
-												<select ng-model="star" ng-change="getSelectedStar()">
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
+												<div class="col-md-2">
+													<select class="form-group form-control" ng-model="star"
+														ng-change="getSelectedStar()" ng-init="star='Lọc theo sao'">
+														<option>Lọc theo sao</option>
+														<option>1</option>
+														<option>2</option>
+														<option>3</option>
+														<option>4</option>
+														<option>5</option>
+													</select>
+
+												</div>
+
 												<thead>
 													<tr>
 														<th>TÊN TÀI KHOẢN</th>
@@ -276,7 +282,7 @@
 																ng-click="updateevaluatehien(item)"
 																class="btn btn-success"
 																style="color: white;font-weight: bold;"><i
-																	class="bi bi-eye-slash"></i> Bật</button>
+																	class="bi bi-eye"></i> Bật</button>
 
 														</td>
 													</tr>

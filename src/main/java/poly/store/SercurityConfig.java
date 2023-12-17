@@ -69,7 +69,7 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().permitAll();
 		// Đăng nhập
 		http.formLogin().loginPage("/auth/login/form").loginProcessingUrl("/auth/login")
-				.defaultSuccessUrl("/auth/login/success", false).failureUrl("/auth/login/error");
+				.defaultSuccessUrl("/auth/login/success", true).failureUrl("/auth/login/error");
 		http.rememberMe().tokenValiditySeconds(86400); // remember me
 		// Điều khiển lỗi truy cập không đúng quyền
 		http.exceptionHandling().accessDeniedPage("/auth/unauthoried");
