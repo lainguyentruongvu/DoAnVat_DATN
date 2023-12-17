@@ -710,7 +710,8 @@ app.controller("product-ctrl", function($scope, $http) {
 
 	$scope.updatepro = function() {
 		var item = angular.copy($scope.form);
-		console.log(item)
+		var proweight = angular.copy($scope.formprow)
+		item.createdate = new Date()
 		if (item.name == null || item.category == null || item.price == null || proweight.weight == null || proweight.quantity == null || item.discription == null) {
 			Swal.fire({
 				type: 'error',
