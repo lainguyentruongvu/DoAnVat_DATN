@@ -157,7 +157,7 @@
 													aria-expanded="false"> Công cụ </button>
 												<div class="dropdown-menu" aria-labelledby="actionMenuButton">
 													<a class="dropdown-item" ng-click="exportToExcel()">Xuất excel</a>
-													
+
 												</div>
 											</div>
 										</div>
@@ -181,7 +181,7 @@
 												<th>Trạng thái đơn hàng</th>
 												<th>Trạng thái thanh toán</th>
 												<th style="width: 10%;">Xem chi tiết</th>
-												<th>Công cụ</th>
+												<th>Công cụ </th>
 											</tr>
 										</thead>
 										<tbody>
@@ -217,13 +217,13 @@
 														chi tiết</a></td>
 
 												<td>
-
-													<button style="color: white;font-weight: bold;"
+													
+													<button id="loadButton" style="color: white;font-weight: bold;"
 														ng-if="item.status.id === 1" ng-click="changeStatus(item.id, 2)"
 														class="btn btn-primary my-2"><i class="bi bi-truck"></i> Vận
 														chuyển</button>
 
-													<button style="color: white;font-weight: bold;"
+													<button id="loadButton" style="color: white;font-weight: bold;"
 														ng-if="item.status.id === 1" ng-click="changeStatus(item.id, 4)"
 														class="btn btn-danger bg-danger"><i class="bi bi-x-circle"></i>
 														Hủy đơn</button>
@@ -238,13 +238,14 @@
 									</table>
 									<nav aria-label="Table Paging" class="mb-0 text-muted">
 										<ul class="pagination justify-content-center mb-0" style="cursor: pointer;">
-											<li class="page-item"><a class="page-link"
-													ng-click="pager.prev()">Trang trước</a></li>
+											<li class="page-item"><a class="page-link" ng-click="pager.prev()">Trang
+													trước</a></li>
 											<li class="page-item"><a class="page-link">{{pager.page}}</a></li>
 											<li class="page-item active"><a class="page-link">{{pager.page + 1 }}</a>
 											</li>
 											<li class="page-item"><a class="page-link">{{pager.page + 2}}</a></li>
-											<li class="page-item"><a class="page-link" ng-click="pager.next()">Trang sau</a>
+											<li class="page-item"><a class="page-link" ng-click="pager.next()">Trang
+													sau</a>
 											</li>
 										</ul>
 									</nav>

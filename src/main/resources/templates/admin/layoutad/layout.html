@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(title,view)">
 <link rel="icon" type="image/png" href="../../images/icon_dav.png">
+
 <head>
 	<meta charset="UTF-8">
 	<title th:replace="${title}"></title>
@@ -8,210 +9,216 @@
 </head>
 <div th:replace="~{/admin/layoutad/bootstrap.html}"></div>
 <style>
+	
+
 	.custom-radio {
-  display: flex;
-  align-items: center;
-}
+		display: flex;
+		align-items: center;
+	}
 
-.radio-container {
-  margin-right: 10px;
-  position: relative;
-}
+	.radio-container {
+		margin-right: 10px;
+		position: relative;
+	}
 
-.radio-label {
-  font-size: 20px;
-  margin-left: 5px;
-  padding: 10px;
-  border: 2px solid #000;
-  border-radius: 0;
-  cursor: pointer;
-}
+	.radio-label {
+		font-size: 20px;
+		margin-left: 5px;
+		padding: 10px;
+		border: 2px solid #000;
+		border-radius: 0;
+		cursor: pointer;
+	}
 
-.selected {
-  border-color: rgb(255, 128, 64);
-  border-radius: 10px;
-}
+	.selected {
+		border-color: rgb(255, 128, 64);
+		border-radius: 10px;
+	}
 
-#create {
-  display: none;
-}
+	#create {
+		display: none;
+	}
 
-.create-label {
-  font-size: 20px;
-  margin-left: 5px;
-  padding: 10px;
-  border: #000 solid 2px;
-  cursor: pointer;
-}
+	.create-label {
+		font-size: 20px;
+		margin-left: 5px;
+		padding: 10px;
+		border: #000 solid 2px;
+		cursor: pointer;
+	}
 
-.selected-create {
-  border-color: rgb(255, 128, 64);
-  border-radius: 10px;
-}
-.custom-radio {
-  display: flex;
-  align-items: center;
-}
+	.selected-create {
+		border-color: rgb(255, 128, 64);
+		border-radius: 10px;
+	}
 
-.radio-container {
-  margin-right: 10px;
-  position: relative;
-}
+	.custom-radio {
+		display: flex;
+		align-items: center;
+	}
 
-.radio-label,
-.create-label {
-  font-size: 20px;
-  margin-left: 5px;
-  padding: 10px;
-  border: 2px solid #000;
-  border-radius: 0;
-  cursor: pointer;
-}
+	.radio-container {
+		margin-right: 10px;
+		position: relative;
+	}
 
-.selected,
-.selected-create {
-  border-color: rgb(255, 128, 64);
-  border-radius: 10px;
-}
-        .switch-holder {
-  display: flex;
-  padding: 10px 20px;
-  border-radius: 10px;
-  /* box-shadow: -8px -8px 15px rgba(255, 255, 255, .7),
+	.radio-label,
+	.create-label {
+		font-size: 20px;
+		margin-left: 5px;
+		padding: 10px;
+		border: 2px solid #000;
+		border-radius: 0;
+		cursor: pointer;
+	}
+
+	.selected,
+	.selected-create {
+		border-color: rgb(255, 128, 64);
+		border-radius: 10px;
+	}
+
+	.switch-holder {
+		display: flex;
+		padding: 10px 20px;
+		border-radius: 10px;
+		/* box-shadow: -8px -8px 15px rgba(255, 255, 255, .7),
         10px 10px 10px rgba(0, 0, 0, .2),
         inset 8px 8px 15px rgba(255, 255, 255, .7),
         inset 10px 10px 10px rgba(0, 0, 0, .2); */
-  justify-content: space-between;
-  align-items: center;
-}
+		justify-content: space-between;
+		align-items: center;
+	}
 
-.switch-label {
-  padding: 0 20px 0 10px
-}
+	.switch-label {
+		padding: 0 20px 0 10px
+	}
 
-.switch-label i {
-  margin-right: 5px;
-}
+	.switch-label i {
+		margin-right: 5px;
+	}
 
-.switch-toggle {
-  height: 40px;
-}
+	.switch-toggle {
+		height: 40px;
+	}
 
-.switch-toggle input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-  z-index: -2;
-}
+	.switch-toggle input[type="checkbox"] {
+		position: absolute;
+		opacity: 0;
+		z-index: -2;
+	}
 
-.switch-toggle input[type="checkbox"]+label {
-  position: relative;
-  display: inline-block;
-  width: 100px;
-  height: 40px;
-  border-radius: 20px;
-  margin: 0;
-  cursor: pointer;
-  box-shadow: inset -8px -8px 15px rgba(255, 255, 255, .6),
-        inset 10px 10px 10px rgba(0, 0, 0, .25);
-}
+	.switch-toggle input[type="checkbox"]+label {
+		position: relative;
+		display: inline-block;
+		width: 100px;
+		height: 40px;
+		border-radius: 20px;
+		margin: 0;
+		cursor: pointer;
+		box-shadow: inset -8px -8px 15px rgba(255, 255, 255, .6),
+			inset 10px 10px 10px rgba(0, 0, 0, .25);
+	}
 
-.switch-toggle input[type="checkbox"]+label::before {
-  position: absolute;
-  content: 'OFF';
-  font-size: 13px;
-  text-align: center;
-  line-height: 25px;
-  top: 8px;
-  left: 8px;
-  width: 45px;
-  height: 25px;
-  border-radius: 20px;
-  background-color: #eeeeee;
-  box-shadow: -3px -3px 5px rgba(255, 255, 255, .5),
-        3px 3px 5px rgba(0, 0, 0, .25);
-  transition: .3s ease-in-out;
-}
+	.switch-toggle input[type="checkbox"]+label::before {
+		position: absolute;
+		content: 'OFF';
+		font-size: 13px;
+		text-align: center;
+		line-height: 25px;
+		top: 8px;
+		left: 8px;
+		width: 45px;
+		height: 25px;
+		border-radius: 20px;
+		background-color: #eeeeee;
+		box-shadow: -3px -3px 5px rgba(255, 255, 255, .5),
+			3px 3px 5px rgba(0, 0, 0, .25);
+		transition: .3s ease-in-out;
+	}
 
-.switch-toggle input[type="checkbox"]:checked+label::before {
-  left: 50%;
-  content: 'ON';
-  color: #fff;
-  background-color: #00b33c;
-  box-shadow: -3px -3px 5px rgba(255, 255, 255, .5),
-        3px 3px 5px #00b33c;
-}
-.checkbox-wrapper:hover .check {
-  stroke-dashoffset: 0;
-}
+	.switch-toggle input[type="checkbox"]:checked+label::before {
+		left: 50%;
+		content: 'ON';
+		color: #fff;
+		background-color: #00b33c;
+		box-shadow: -3px -3px 5px rgba(255, 255, 255, .5),
+			3px 3px 5px #00b33c;
+	}
 
-.checkbox-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-}
+	.checkbox-wrapper:hover .check {
+		stroke-dashoffset: 0;
+	}
 
-.checkbox-wrapper .background {
-  fill: orange;
-  transition: ease all 0.6s;
-  -webkit-transition: ease all 0.6s;
-}
+	.checkbox-wrapper {
+		position: relative;
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+	}
 
-.checkbox-wrapper .stroke {
-  fill: none;
-  stroke: #fff;
-  stroke-miterlimit: 10;
-  stroke-width: 2px;
-  stroke-dashoffset: 100;
-  stroke-dasharray: 100;
-  transition: ease all 0.6s;
-  -webkit-transition: ease all 0.6s;
-}
+	.checkbox-wrapper .background {
+		fill: orange;
+		transition: ease all 0.6s;
+		-webkit-transition: ease all 0.6s;
+	}
 
-.checkbox-wrapper .check {
-  fill: none;
-  stroke: #fff;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2px;
-  stroke-dashoffset: 22;
-  stroke-dasharray: 22;
-  transition: ease all 0.6s;
-  -webkit-transition: ease all 0.6s;
-}
+	.checkbox-wrapper .stroke {
+		fill: none;
+		stroke: #fff;
+		stroke-miterlimit: 10;
+		stroke-width: 2px;
+		stroke-dashoffset: 100;
+		stroke-dasharray: 100;
+		transition: ease all 0.6s;
+		-webkit-transition: ease all 0.6s;
+	}
 
-.checkbox-wrapper input[type=checkbox] {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  margin: 0;
-  opacity: 0;
-  -appearance: none;
-  -webkit-appearance: none;
-}
+	.checkbox-wrapper .check {
+		fill: none;
+		stroke: #fff;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 2px;
+		stroke-dashoffset: 22;
+		stroke-dasharray: 22;
+		transition: ease all 0.6s;
+		-webkit-transition: ease all 0.6s;
+	}
 
-.checkbox-wrapper input[type=checkbox]:hover {
-  cursor: pointer;
-}
+	.checkbox-wrapper input[type=checkbox] {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+		margin: 0;
+		opacity: 0;
+		-appearance: none;
+		-webkit-appearance: none;
+	}
 
-.checkbox-wrapper input[type=checkbox]:checked + svg .background {
-  fill: orange;
-}
+	.checkbox-wrapper input[type=checkbox]:hover {
+		cursor: pointer;
+	}
 
-.checkbox-wrapper input[type=checkbox]:checked + svg .stroke {
-  stroke-dashoffset: 0;
-}
+	.checkbox-wrapper input[type=checkbox]:checked+svg .background {
+		fill: orange;
+	}
 
-.checkbox-wrapper input[type=checkbox]:checked + svg .check {
-  stroke-dashoffset: 0;
-}
+	.checkbox-wrapper input[type=checkbox]:checked+svg .stroke {
+		stroke-dashoffset: 0;
+	}
 
+	.checkbox-wrapper input[type=checkbox]:checked+svg .check {
+		stroke-dashoffset: 0;
+	}
 </style>
-<body >
+
+<body>
 	<nav th:replace="admin/layoutad/nav"></nav>
 	<aside th:replace="admin/layoutad/aside"></aside>
 	<main th:replace="${view}"></main>
 </body>
+
 </html>

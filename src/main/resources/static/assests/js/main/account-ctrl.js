@@ -620,42 +620,55 @@ app.controller("product-ctrl", function($scope, $http) {
 	$scope.createpro = function() {
 		$scope.form.createdate = $scope.createdate;
 		var item = angular.copy($scope.form);
-		$http.post(`/rest/products`, item).then(resp => {
-			$scope.initialize();
-			var proweight = angular.copy($scope.formprow);
-			$scope.productweight = {
-				product: {
-					id: resp.data.id
-				},
-				weight: {
-					id: proweight.weight.id
-				},
-				price: $scope.form.price,
-				quantity: proweight.quantity
-			}
-			$http.post(`/rest/products/productweight`, $scope.productweight).then(resp => {
-				$scope.reset_smooth_table();
-			}).catch(error => {
-				console.log("Error", error);
-			})
-			Swal.fire({
-				type: 'success',
-				title: 'Thêm thành công',
-				icon: "success",
-				showConfirmButton: false,
-				timer: 2000
-			})
-			$scope.reset_smooth_table();
-		}).catch(error => {
+		var proweight = angular.copy($scope.formprow)
+		console.log(item)
+		if (item.name == null || item.category == null || item.price == null || proweight.weight == null || proweight.quantity == null || item.discription == null) {
 			Swal.fire({
 				type: 'error',
-				text: "Lỗi",
+				title: 'Vui lòng không bỏ trống dữ liệu',
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
 			})
-			console.log("Error", error);
-		})
+			return;
+		} else {
+			$http.post(`/rest/products`, item).then(resp => {
+				$scope.initialize();
+				$scope.productweight = {
+					product: {
+						id: resp.data.id
+					},
+					weight: {
+						id: proweight.weight.id
+					},
+					price: $scope.form.price,
+					quantity: proweight.quantity
+				}
+				$http.post(`/rest/products/productweight`, $scope.productweight).then(resp => {
+					$scope.reset_smooth_table();
+				}).catch(error => {
+					console.log("Error", error);
+				})
+				Swal.fire({
+					type: 'success',
+					title: 'Thêm thành công',
+					icon: "success",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				$scope.reset_smooth_table();
+			}).catch(error => {
+				Swal.fire({
+					type: 'error',
+					text: "Lỗi",
+					icon: "error",
+					showConfirmButton: false,
+					timer: 2000
+				})
+				console.log("Error", error);
+			})
+		}
+
 	}
 
 
@@ -698,63 +711,66 @@ app.controller("product-ctrl", function($scope, $http) {
 	$scope.updatepro = function() {
 		var item = angular.copy($scope.form);
 		console.log(item)
-		$http.put(`/rest/products/${item.id}`, item).then(resp => {
-			var index = $scope.itempros.findIndex(p => p.id == item.id);
-			$scope.itempros[index] = item;
-			$scope.initialize();
-			Swal.fire("Thành công", "Cập nhật thành công!", "success");
-		}).catch(error => {
-			Swal.fire("Lỗi", "Cập nhật thất bại!", "error");
-			console.log("Error", error);
-		})
-	}
-
-	$scope.reset = function() {
-		$scope.form = {};
-		$scope.formprow = {}
-		$scope.index = 0;
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
-		});
-	}
-
-	//Xóa sản phẩm
-	$scope.deletepro = function(item) {
-		if (item.activeted == false) {
-			$http.delete(`/rest/products/${item.id}`).then(resp => {
-				var index = $scope.itempros.findIndex(p => p.id == item.id);
-				$scope.itempros.splice(index, 1);
-				$scope.reset();
-				Swal.fire("Thành công", "Xóa sản phẩm thành công!", "success");
-			}).catch(error => {
-				$http.put(`/rest/products/${item.id}`, item).then(resp => {
-					var index = $scope.itempros.findIndex(p => p.id == item.id);
-					$scope.itempros[index] = item;
-					$scope.initialize();
-					Swal.fire("Thành công", "Đã tắt trạng thái hoạt động sản phẩm!", "success");
-				}).catch(error => {
-					Swal.fire("Lỗi", "Không thể tắt trạng thái hoạt động sản phẩm!", "error");
-					console.log("Error", error);
-				})
-				console.log("Error", error);
-			})
-		} else {
+		if (item.name == null || item.category == null || item.price == null || proweight.weight == null || proweight.quantity == null || item.discription == null) {
 			Swal.fire({
 				type: 'error',
-				title: 'Lỗi xóa sản phẩm',
-				text: 'Sản phẩm đang ở trạng thái hoạt động !',
+				title: 'Vui lòng không bỏ trống dữ liệu',
 				icon: "error",
 				showConfirmButton: false,
 				timer: 2000
 			})
+			return;
+		} else {
+			$http.put(`/rest/products/${item.id}`, item).then(resp => {
+				var index = $scope.itempros.findIndex(p => p.id == item.id);
+				$scope.itempros[index] = item;
+				$scope.initialize();
+				Swal.fire("Thành công", "Cập nhật thành công!", "success");
+			}).catch(error => {
+				Swal.fire("Lỗi", "Cập nhật thất bại!", "error");
+				console.log("Error", error);
+			})
 		}
+	}
+
+	//Xóa sản phẩm
+	$scope.deletepro = function(item) {
+		// if (item.activeted == false) {
+		// $http.delete(`/rest/products/${item.id}`).then(resp => {
+		// 	var index = $scope.itempros.findIndex(p => p.id == item.id);
+		// 	$scope.itempros.splice(index, 1);
+		// 	$scope.reset();
+		// 	Swal.fire("Thành công", "Xóa sản phẩm thành công!", "success");
+		// }).catch(error => {
+		item.activeted == false
+		$http.put(`/rest/products/${item.id}`, item).then(resp => {
+			var index = $scope.itempros.findIndex(p => p.id == item.id);
+			$scope.itempros[index] = item;
+			$scope.initialize();
+			Swal.fire("Thành công", "Đã tắt trạng thái hoạt động sản phẩm!", "success");
+		}).catch(error => {
+			Swal.fire("Lỗi", "Không thể tắt trạng thái hoạt động sản phẩm!", "error");
+			console.log("Error", error);
+		})
+		// 	console.log("Error", error);
+		// })
+		// } else {
+		// 	Swal.fire({
+		// 		type: 'error',
+		// 		title: 'Lỗi xóa sản phẩm',
+		// 		text: 'Sản phẩm đang ở trạng thái hoạt động !',
+		// 		icon: "error",
+		// 		showConfirmButton: false,
+		// 		timer: 2000
+		// 	})
+		// }
 
 	}
 
+
 	$scope.pager = {
 		page: 0,
-		size: 4,
+		size: 8,
 		get itempros() {
 			var start = this.page * this.size;
 			return $scope.itempros.slice(start, start + this.size);
@@ -834,46 +850,68 @@ app.controller("product-ctrl", function($scope, $http) {
 
 	$scope.addweight = function(item) {
 		$scope.productweight = angular.copy(item)
-		$http.get(`/rest/products/weight/quantityandprice/${$scope.productweight.product.id}/${$scope.productweight.weight.id}`).then(resp => {
-			if (resp.data.length == 0) {
-				$http.post("/rest/products/productweight", $scope.productweight).then(resp => {
-					$scope.weightadmin(item.product.id, item.product.price)
 
-					Swal.fire("Thành công", "Thêm trọng lượng thành công!", "success");
-				}).catch(error => {
-					console.log("Error", error);
-				})
-			} else {
-				Swal.fire("Thất bại", "Trọng lượng đã có!", "error");
-			}
-		}).catch(error => {
+		if ($scope.productweight.price == null || $scope.productweight.quantity == null || $scope.productweight.weight.id == null) {
+			Swal.fire({
+				type: 'error',
+				title: 'Vui lòng không bỏ trống dữ liệu',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			return;
+		} else {
+			$http.get(`/rest/products/weight/quantityandprice/${$scope.productweight.product.id}/${$scope.productweight.weight.id}`).then(resp => {
+				if (resp.data.length == 0) {
+					$http.post("/rest/products/productweight", $scope.productweight).then(resp => {
+						$scope.weightadmin(item.product.id, item.product.price)
 
-			console.log("Error", error);
-		})
+						Swal.fire("Thành công", "Thêm trọng lượng thành công!", "success");
+					}).catch(error => {
+						console.log("Error", error);
+					})
+				} else {
+					Swal.fire("Thất bại", "Trọng lượng đã có!", "error");
+				}
+			}).catch(error => {
 
+				console.log("Error", error);
+			})
+		}
 
 
 	}
 
 	$scope.updateweight = function() {
 		var item = angular.copy($scope.productweight);
-		$http.put(`/rest/products/productweight/${item.id}`, item).then(resp => {
-			var index = $scope.itempros.findIndex(p => p.id == item.id);
-			$scope.productweight[index] = item;
-			if ($scope.checkprice == $scope.productweight[index].product.price) {
-				var product = $scope.productweight[index].product
-				product.price = $scope.productweight[index].price
-				$http.post(`/rest/products`, product).then(resp => {
-					$scope.initialize();
-				})
-			}
+		console.log(item)
+		if (item.price.length == 0 || item.quantity.length == 0) {
+			Swal.fire({
+				type: 'error',
+				title: 'Vui lòng không bỏ trống dữ liệu',
+				icon: "error",
+				showConfirmButton: false,
+				timer: 2000
+			})
+			return;
+		} else {
+			$http.put(`/rest/products/productweight/${item.id}`, item).then(resp => {
+				var index = $scope.itempros.findIndex(p => p.id == item.id);
+				$scope.productweight[index] = item;
+				if ($scope.checkprice == $scope.productweight[index].product.price) {
+					var product = $scope.productweight[index].product
+					product.price = $scope.productweight[index].price
+					$http.post(`/rest/products`, product).then(resp => {
+						$scope.initialize();
+					})
+				}
+				Swal.fire("Thành công", "Cập nhật thành công!", "success");
+			}).catch(error => {
+				Swal.fire("Lỗi", "Cập nhật thất bại!", "error");
+				console.log("Error", error);
 
-			Swal.fire("Thành công", "Cập nhật thành công!", "success");
-		}).catch(error => {
-			Swal.fire("Lỗi", "Cập nhật thất bại!", "error");
-			console.log("Error", error);
-
-		})
+			})
+		}
 	}
 
 	$scope.deleteweight = function(idpro) {
@@ -1660,7 +1698,7 @@ app.controller("voucher-ctrl", function($scope, $http) {
 				// If user confirms deletion, send delete request
 				$http.delete(`/rest/voucher/${item.id}`).then(function(response) {
 					// Remove the item from the items array
-					
+
 					$scope.initialize();
 					$scope.reset();
 
